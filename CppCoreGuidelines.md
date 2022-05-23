@@ -590,10 +590,10 @@ Without a philosophical basis, the more concrete/specific/checkable rules lack r
 * [P.7: 実行時エラーは早い段階で捕捉しよう](#Rp-early)
 * [P.8: あらゆるリソースリークを防ごう](#Rp-leak)
 * [P.9: 時間とスペースを無駄にしないようにしよう](#Rp-waste)
-* [P.10: Prefer immutable data to mutable data](#Rp-mutable)
-* [P.11: Encapsulate messy constructs, rather than spreading through the code](#Rp-library)
-* [P.12: Use supporting tools as appropriate](#Rp-tools)
-* [P.13: Use support libraries as appropriate](#Rp-lib)
+* [P.10: 変更可能なデータより変更不可能なデータを使おう](#Rp-mutable)
+* [P.11: 乱雑な構造はカプセル化しよう](#Rp-library)
+* [P.12: 必要に応じてサポートツールを使いましょう](#Rp-tools)
+* [P.13: 必要に応じてサポートライブラリを使いましょう](#Rp-lib)
 
 原理的なルールは一般的には機械的にチェックできません。
 しかし、個々のルールはこれらの原理的なテーマを反映しています。
@@ -1762,8 +1762,8 @@ C++だからです。
 
 より詳細なルール群が、シンプルさと無用な無駄を排除するという全体的な目標を狙っています。
 
-### <a name="Rp-mutable"></a>P.10: Prefer immutable data to mutable data
-
+### <a name="Rp-mutable"></a>P.10: 変更可能なデータより変更不可能なデータを使おう(Prefer immutable data to mutable data)
+<!--
 ##### Reason
 
 It is easier to reason about constants than about variables.
@@ -1772,9 +1772,18 @@ Sometimes immutability enables better optimization.
 You can't have a data race on a constant.
 
 See [Con: Constants and immutability](#S-const)
+-->
+##### 理由
 
-### <a name="Rp-library"></a>P.11: Encapsulate messy constructs, rather than spreading through the code
+定数は変数よりも推測が簡単です。
+不変なものは不意に変更されません。
+時には、不変なものはより良く最適化されます。
+定数にはデータ競合は発生しません。
 
+See [Con: Constants and immutability](#S-const)
+
+### <a name="Rp-library"></a>P.11: 乱雑な構造はカプセル化しよう(Encapsulate messy constructs, rather than spreading through the code)
+<!--
 ##### Reason
 
 Messy code is more likely to hide bugs and harder to write.
@@ -1821,10 +1830,55 @@ This is a variant of the [subset of superset principle](#R0) that underlies thes
 ##### Enforcement
 
 * Look for "messy code" such as complex pointer manipulation and casting outside the implementation of abstractions.
+-->
+##### 理由
 
+乱雑なコードはバグを隠しやすく、書くのが大変です。
+良いインタフェースは安全でかつ、使いやすいです。
+乱雑でローレベルなコードは、そのようなコードをさらに生み出します。
 
-### <a name="Rp-tools"></a>P.12: Use supporting tools as appropriate
+##### 例
 
+    int sz = 100;
+    int* p = (int*) malloc(sizeof(int) * sz);
+    int count = 0;
+    // ...
+    for (;;) {
+        // ... read an int into x, exit loop if end of file is reached ...
+        // ... check that x is valid ...
+        if (count == sz)
+            p = (int*) realloc(p, sizeof(int) * sz * 2);
+        p[count++] = x;
+        // ...
+    }
+
+これはローレベルで、冗長で、エラーが発生しやすいものです。
+例えば、メモリが足りなくなる場合のテストを「忘れて」しまいました。
+代わりに、 `vector`が使えます:
+
+    vector<int> v;
+    v.reserve(100);
+    // ...
+    for (int x; cin >> x; ) {
+        // ... check that x is valid ...
+        v.push_back(x);
+    }
+
+##### ノート
+
+標準ライブラリとGSLはこの哲学の例です。
+例えば、配列や共用体、キャスト、トリッキーな生存期間の問題、`gsl::owner`などをいじるかわりに、
+`vector`、 `span`、 `lock_guard`、や `future`のように主要な概念が実装されたものが必要であり、
+私たちが通常持っているよりも多くの時間と専門知識を費やして、設計と実装がされたライブラリを使います。
+同様に、私たちは、ユーザー(しばしば私たち自身)を離れ、ローレベルなコードをよりよくする挑戦のために、さらに特殊化されたライブラリを設計、実装できるし、するべきです。
+これはこのガイドラインの [subset of superset principle](#R0) の亜種です。
+
+##### 実施
+
+* 抽象化の外側での、複雑なポインタ操作やキャストのような「乱雑なコード」を探しましょう。
+
+### <a name="Rp-tools"></a>P.12: 必要に応じてサポートツールを使いましょう(Use supporting tools as appropriate)
+<!--
 ##### Reason
 
 There are many things that are done better "by machine".
@@ -1850,10 +1904,35 @@ but those are beyond the scope of these guidelines.
 
 Be careful not to become dependent on over-elaborate or over-specialized tool chains.
 Those can make your otherwise portable code non-portable.
+-->
+##### 理由
 
+「機械に」やらせたほうが良いことは多く存在します。
+コンピュータは繰り返しの作業に、疲れたり飽きることはありません。
+通常、私たちにはルーチンワークを繰り返すよりも、やるべきことがあります。
 
-### <a name="Rp-lib"></a>P.13: Use support libraries as appropriate
+##### 例
 
+あなたのコードが従うべきガイドラインに沿っているのかを検証するために、静的解析を走らせます。
+
+##### ノート
+
+See
+
+* [Static analysis tools](???)
+* [Concurrency tools](#Rconc-tools)
+* [Testing tools](???)
+
+ソースコードリポジトリ、ビルドツールなど、他にも多くの種類のツールがあります。
+しかし、それらはこのガイドラインの範囲を超えています。
+
+##### ノート
+
+過度に複雑または過度に専門化されたツールチェーンに依存しないように注意してください。
+これらは、他の方法で移植可能なコードを移植不可能にする可能性があります。
+
+### <a name="Rp-lib"></a>P.13: 必要に応じてサポートライブラリを使いましょう(Use support libraries as appropriate)
+<!--
 ##### Reason
 
 Using a well-designed, well-documented, and well-supported library saves time and effort;
@@ -1883,6 +1962,35 @@ By default use
 
 If no well-designed, well-documented, and well-supported library exists for an important domain,
 maybe you should design and implement it, and then use it.
+-->
+##### 理由
+
+適切に設計され、十分に文書化され、十分にサポートされているライブラリを使用すると、時間と労力を節約できます。
+もし、時間の大部分を実装に費やす必要がある場合は、その品質とドキュメントは、あなたができることよりも優れている可能性があります。
+ライブラリのコスト（時間、労力、お金など）は、多くのユーザー間で共有できます。
+広く使用されているライブラリは、個々のアプリケーションよりも最新の状態に保たれ、新しいシステムに移植される可能性が高くなります。
+広く使用されているライブラリの知識は、他の/将来のプロジェクトの時間を節約できます。
+したがって、アプリケーションドメインに適したライブラリが存在する場合は、それを使用してください。
+
+##### 例
+
+    std::sort(begin(v), end(v), std::greater<>());
+
+あなたがソートアルゴリズムの専門家であり、かつ、十分な時間でもない限り、
+特定のアプリケーション用にあなたが作成したものよりも正しく、高速に実行される可能性が高くなります。
+標準ライブラリ（またはアプリケーションが使用する基本ライブラリ）を使用する理由ではなく、使用しない理由が必要です。
+
+##### ノート
+
+By default use
+
+* The [ISO C++ Standard Library](#S-stdlib)
+* The [Guidelines Support Library](#S-gsl)
+
+##### ノート
+
+重要な領域に対して、適切に設計され、十分に文書化され、十分にサポートされているライブラリが存在しない場合、
+おそらく、あなたはそれを設計して実装し、そしてそれを使うべきです。
 
 
 # <a name="S-interfaces"></a>I: インターフェース(Interfaces)
@@ -1942,13 +2050,13 @@ Interface rule summary:
 * [I.11: Never transfer ownership by a raw pointer (`T*`) or reference (`T&`)](#Ri-raw)
 * [I.12: Declare a pointer that must not be null as `not_null`](#Ri-nullptr)
 * [I.13: Do not pass an array as a single pointer](#Ri-array)
-* [I.22: Avoid complex initialization of global objects](#Ri-global-init)
-* [I.23: Keep the number of function arguments low](#Ri-nargs)
-* [I.24: Avoid adjacent unrelated parameters of the same type](#Ri-unrelated)
-* [I.25: Prefer abstract classes as interfaces to class hierarchies](#Ri-abstract)
+* [I.22: グローバルオブジェクトの複雑な初期化は避けよう](#Ri-global-init)
+* [I.23: 関数の引数は少なく保とう](#Ri-nargs)
+* [I.24: 同じ型で無関係なパラメータが隣接することを避けよう](#Ri-unrelated)
+* [I.25: クラス階層よりもインタフェースとしての抽象クラスを使おう](#Ri-abstract)
 * [I.26: If you want a cross-compiler ABI, use a C-style subset](#Ri-abi)
 * [I.27: For stable library ABI, consider the Pimpl idiom](#Ri-pimpl)
-* [I.30: Encapsulate rule violations](#Ri-encapsulate)
+* [I.30: ルール違反はカプセル化しよう](#Ri-encapsulate)
 
 **See also**:
 
@@ -3053,8 +3161,8 @@ But when doing so, use `string_span` from the [GSL](#GSL) to prevent range error
 * (Simple) ((Bounds)) Warn for any expression that would rely on implicit conversion of an array type to a pointer type. Allow exception for zstring/czstring pointer types.
 * (Simple) ((Bounds)) Warn for any arithmetic operation on an expression of pointer type that results in a value of pointer type. Allow exception for zstring/czstring pointer types.
 
-### <a name="Ri-global-init"></a>I.22: Avoid complex initialization of global objects
-
+### <a name="Ri-global-init"></a>I.22: グローバルオブジェクトの複雑な初期化は避けよう (Avoid complex initialization of global objects)
+<!--
 ##### Reason
 
 Complex initialization can lead to undefined order of execution.
@@ -3086,9 +3194,41 @@ It is usually best to avoid global (namespace scope) objects altogether.
 
 * Flag initializers of globals that call non-`constexpr` functions
 * Flag initializers of globals that access `extern` objects
+-->
+##### 理由
 
-### <a name="Ri-nargs"></a>I.23: Keep the number of function arguments low
+複雑な初期化は実行順序が未定義になりえる。
 
+##### 例
+
+    // file1.c
+
+    extern const X x;
+
+    const Y y = f(x);   // read x; write y
+
+    // file2.c
+
+    extern const Y y;
+
+    const X x = g(y);   // read y; write x
+
+`x` と `y`は異なる翻訳単位内にあり、`f()` と `g()`の呼び出し順序は定義されていない;
+どちらか一方は未定義の`const`をアクセスするだろう。
+これは、グローバル(namespace scope)オブジェクトに対する初期化順序問題はグローバル *変数*に限定されないことを示している。
+
+##### ノート
+
+初期時価順序問題は並列プログラミングコードで特に扱うことが難しくなる。
+グローバルオブジェクトを完全に回避することがベストです。
+
+##### 実施
+
+* `constexpr`でない関数によって初期化しているグローバル変数に注意
+* `extern`オブジェクトにアクセスして初期化しているグローバル変数に注意
+
+### <a name="Ri-nargs"></a>I.23: 関数の引数は少なく保とう(Keep the number of function arguments low)
+<!--
 ##### Reason
 
 Having many arguments opens opportunities for confusion. Passing lots of arguments is often costly compared to alternatives.
@@ -3163,9 +3303,84 @@ There are functions that are best expressed with four individual parameters, but
 
 * Warn when a function declares two iterators (including pointers) of the same type instead of a range or a view.
 * (Not enforceable) This is a philosophical guideline that is infeasible to check directly.
+-->
+##### 理由
 
-### <a name="Ri-unrelated"></a>I.24: Avoid adjacent unrelated parameters of the same type
+多くの引数があると混乱を起こしやすい。多くの引数を渡すことは別の方法に比べてコストがかかる。
 
+##### 議論
+
+関数のパラメーターが多すぎる2つの最も一般的な理由は、次のとおりです:
+
+1. *抽象化の欠落*
+   抽象化が欠落しているため、不変性が保証された1つのオブジェクトでなく
+   複合された値が個々の要素として渡されます。
+   これにより、パラメータリストが増加されるだけでなく、もはや値の不変条件が保証されていないため
+   複合された値が原因でエラーが発生します。
+
+2. *「1つの機能、1つの責任」の違反*
+   関数は複数のジョブを実行しようとしているため、おそらくリファクタリングする必要があります。
+
+##### 例
+
+標準ライブラリの `merge()`は私たちが快適に扱える限界にあります:
+
+    template<class InputIterator1, class InputIterator2, class OutputIterator, class Compare>
+    OutputIterator merge(InputIterator1 first1, InputIterator1 last1,
+                         InputIterator2 first2, InputIterator2 last2,
+                         OutputIterator result, Compare comp);
+
+これはさきほどの問題1の抽象化の欠落のためだということに注意しましょう。範囲(抽象化されたもの)を渡すかわりにSTLはイテレータの対(カプセル化されていない複合値)を渡していました。
+
+ここには、4つのテンプレート引数と、6つの関数引数があります。
+最も頻繁かつシンプルな使い方を単純にするために、比較演算子の引数はデフォルトに`<`を設定できます:
+
+    template<class InputIterator1, class InputIterator2, class OutputIterator>
+    OutputIterator merge(InputIterator1 first1, InputIterator1 last1,
+                         InputIterator2 first2, InputIterator2 last2,
+                         OutputIterator result);
+
+これはトータルの複雑度を下げてはいませんが、多くのユーザーに対して表面的な複雑度は下げています。
+引数の数を本質的に下げるために、引数をより高レベルな抽象化にバンドルする必要があります:
+
+    template<class InputRange1, class InputRange2, class OutputIterator>
+    OutputIterator merge(InputRange1 r1, InputRange2 r2, OutputIterator result);
+
+引数を「バンドル」することは、引数の数を減らし、チェックの機会を増やすための一般的なテクニックです。
+
+他には、cencepts(ISO TS で定義)を使って、マージのために使われるべき3つの型の概念を定義することもできます:
+
+    Mergeable{In1, In2, Out}
+    OutputIterator merge(In1 r1, In2 r2, Out result);
+
+##### 例
+
+safety Profilesは以下を
+
+    void f(int* some_ints, int some_ints_length);  // 悪い: Cスタイル, 危険
+
+以下に置き換えることを推奨します:
+
+    void f(gsl::span<int> some_ints);              // 良い: 安全, 範囲がチェックされる
+
+このように、抽象化は安全性とロバスト性をもたらし、そして自然とパラメータ数も減少します。
+
+##### ノート
+
+いくつのパラメータ数なら多すぎるのか? 4つ未満のパラメータになるよう試みましょう。
+4つの個別パラメータを持つわかりやすい関数はありますが、そう多くはありません。
+
+**別の公式**: 良い抽象化をしよう: 引数を意味のあるオブジェクトにまとめ、オブジェクトとして渡そう(値または参照渡し)。
+
+**別の公式**: もっとも多くのケースでの呼び出しを、より少ない引数で呼び出すことを可能にするために、デフォルト引数かオーバーロードを使いましょう。
+
+##### 実施
+
+* 範囲やビューの代わりに、同じ型の2つのイテレータ(ポインタを含む)を宣言している関数を注意しよう。
+* (Not enforceable) これは哲学的なガイドラインのためダイレクトにチェックすることは不可能。
+
+### <a name="Ri-unrelated"></a>I.24: 同じ型で無関係なパラメータが隣接することを避けよう(Avoid adjacent unrelated parameters of the same type)
+<!--
 ##### Reason
 
 Adjacent arguments of the same type are easily swapped by mistake.
@@ -3211,9 +3426,54 @@ are often filled in by name at the call site.
 ##### Enforcement
 
 (Simple) Warn if two consecutive parameters share the same type.
+-->
+##### 理由
 
-### <a name="Ri-abstract"></a>I.25: Prefer abstract classes as interfaces to class hierarchies
+同じ型で隣り合った引数は、順番を間違えやすい。
 
+##### 悪い例
+
+以下を考えてみよう:
+
+    void copy_n(T* p, T* q, int n);  // copy from [p:p + n) to [q:q + n)
+
+これはK&RのCスタイルのインタフェースの厄介な種類のものです。引数の"to"と"from"を逆にして間違えやすいです。
+
+引数"from"に`const`をつけましょう:
+
+    void copy_n(const T* p, T* q, int n);  // copy from [p:p + n) to [q:q + n)
+
+##### 例外
+
+パラメータの順序が重要でない場合は問題ありません:
+
+    int max(int a, int b);
+
+##### 別の公式
+
+配列はポインタとして渡さず、範囲を表すオブジェクトとして渡そう。(例: `span`):
+
+    void copy_n(span<const T> p, span<T> q);  // copy from p to q
+
+##### 別の公式
+
+パラメータタイプとして`struct`を定義し、それに応じてそれらのパラメータのフィールドに名前を付けます。
+
+    struct SystemParams {
+        string config_file;
+        string output_path;
+        seconds timeout;
+    };
+    void initialize(SystemParams p);
+
+これは、呼び出し時にしばしばパラメータが名前によって代入されるため、将来の読み手に明解にする傾向があります。
+
+##### 実施
+
+(シンプル) 同じ型の2つの連続したパラメータを注意しよう。
+
+### <a name="Ri-abstract"></a>I.25: クラス階層よりもインタフェースとしての抽象クラスを使おう(Prefer abstract classes as interfaces to class hierarchies)
+<!--
 ##### Reason
 
 Abstract classes are more likely to be stable than base classes with state.
@@ -3250,6 +3510,44 @@ This will force every derived class to compute a center -- even if that's non-tr
 ##### Enforcement
 
 (Simple) Warn if a pointer/reference to a class `C` is assigned to a pointer/reference to a base of `C` and the base class contains data members.
+-->
+##### 理由
+
+抽象クラスは状態を持ったベースクラスよりも安定しやすい。
+
+##### 悪い例
+
+You just knew that `Shape` would turn up somewhere :-)
+
+    class Shape {  // 悪い: データをもつインタフェースクラス
+    public:
+        Point center() const { return c; }
+        virtual void draw() const;
+        virtual void rotate(int);
+        // ...
+    private:
+        Point c;
+        vector<Point> outline;
+        Color col;
+    };
+
+これはあらゆる派生クラスに対して、centerが自明でなかったり決して使われない場合においてさえも、centerを計算することを強制します。
+同様に、すべての`Shape`が`Color`を持つわけでなく、`Point`の並びでアウトラインが定義されるわけでもありません。抽象クラスはユーザーにこのようなクラスを書くことを抑制するために発明されました。
+
+    class Shape {    // 良い: Shapeは純粋なインタフェース
+    public:
+        virtual Point center() const = 0;   // 純粋仮想関数
+        virtual void draw() const = 0;
+        virtual void rotate(int) = 0;
+        // ...
+        // ... no data members ...
+        // ...
+        virtual ~Shape() = default;
+    };
+
+##### 実施
+
+(シンプル) クラス`C`へのポインタや参照が`C`のベースクラスへのポインタや参照に割り当てられており、かつ、そのベースクラスがデータメンバを持つ場合を注意しよう。
 
 ### <a name="Ri-abi"></a>I.26: If you want a cross-compiler ABI, use a C-style subset
 
@@ -3320,8 +3618,8 @@ See [GOTW #100](https://herbsutter.com/gotw/_100/) and [cppreference](http://en.
 
 (Not enforceable) It is difficult to reliably identify where an interface forms part of an ABI.
 
-### <a name="Ri-encapsulate"></a>I.30: Encapsulate rule violations
-
+### <a name="Ri-encapsulate"></a>I.30: ルール違反はカプセル化しよう (Encapsulate rule violations)
+<!--
 ##### Reason
 
 To keep code simple and safe.
@@ -3382,8 +3680,66 @@ Presumably, a bit of checking for potential errors would be added in real code.
 
 * Hard, it is hard to decide what rule-breaking code is essential
 * Flag rule suppression that enable rule-violations to cross interfaces
+-->
+##### 理由
 
-# <a name="S-functions"></a>F: Functions
+コードをシンプルかつ安全に保つため。
+論理的またはパフォーマンス上の理由から、醜い、安全でない、またはエラーが発生しやすい手法が必要になる場合があります。
+その場合は、それらをインタフェースに「感染」せさないでローカルに保ちましょう。より多くのプログラマがその繊細さを気にしなくてよいようにするためです。
+実装の複雑さは、可能であれば、インターフェースを介してユーザーコードに漏れないようにする必要があります。
+
+##### 例
+
+いくつかの入力形式によって(例 `main`への引数)、ファイル、またはコマンドライン、あるいは標準入力からの入力を受け取るプログラムを考えてみましょう。
+私たちは以下のように書くかもしれません。
+
+    bool owned;
+    owner<istream*> inp;
+    switch (source) {
+    case std_in:        owned = false; inp = &cin;                       break;
+    case command_line:  owned = true;  inp = new istringstream{argv[2]}; break;
+    case file:          owned = true;  inp = new ifstream{argv[2]};      break;
+    }
+    istream& in = *inp;
+
+これは規則 [against uninitialized variables](#Res-always),
+[against ignoring ownership](#Ri-raw),
+[against magic constants](#Res-magic)
+に違反しています。
+特に、ある人がどこかで以下のように書くことを覚えておく必要があります。
+
+    if (owned) delete inp;
+
+私たちはこの特殊な例を、`cin`に対しては何もしない特殊なデリータをもった`unique_ptr`を使うことで扱えます。
+しかし、それは(この問題に遭遇しやすい)初心者には複雑であり、そしてこの例は、静的であるとみなしたいもの(ここでは 所有権)がまれに動的に扱わざるをえない一般的な例になっています。
+一般的で、最も頻繁で、最も安全な例は静的に処理できるため、それらにコストと複雑さを追加したくありません。
+しかし一方で、私たちは珍しく、安全性が低く、そしてより高価なケースにも対処しなくてはなりません。
+そのような例は [[Str15]](http://www.stroustrup.com/resource-model.pdf) で議論されています。
+
+そこで、私たちはクラスを書きます。
+
+    class Istream { [[gsl::suppress(lifetime)]]
+    public:
+        enum Opt { from_line = 1 };
+        Istream() { }
+        Istream(zstring p) :owned{true}, inp{new ifstream{p}} {}            // read from file
+        Istream(zstring p, Opt) :owned{true}, inp{new istringstream{p}} {}  // read from command line
+        ~Istream() { if (owned) delete inp; }
+        operator istream& () { return *inp; }
+    private:
+        bool owned = false;
+        istream* inp = &cin;
+    };
+
+こうすることで、`istream`の所有権の動的な性質はカプセル化されました。
+おそらく、実際のコードには、潜在的なエラーをチェックするコードがもう少し追加されるでしょう。
+
+##### 実施
+
+* 難しい。 ルールに違反するコードが本質的なのか決定することは難しい。
+* ルール違反がインタフェースに及ぶことを可能にするルールの抑制に注意。
+
+# <a name="S-functions"></a>F: 関数 (Functions)
 
 <!--
 A function specifies an action or a computation that takes the system from one consistent state to the next. It is the fundamental building block of programs.
@@ -3460,7 +3816,7 @@ Function definition rules:
 * [F.1: 意味のある操作は注意して名前付き関数に「パッケージ」しよう](#Rf-package)
 * [F.2: A function should perform a single logical operation](#Rf-logical)
 * [F.3: 関数は短くシンプルにしよう](#Rf-single)
-* [F.4: If a function may have to be evaluated at compile time, declare it `constexpr`](#Rf-constexpr)
+* [F.4: コンパイル時に関数を評価する必要があるかもしれない場合は、`constexpr`を宣言しよう](#Rf-constexpr)
 * [F.5: If a function is very small and time-critical, declare it inline](#Rf-inline)
 * [F.6: If your function may not throw, declare it `noexcept`](#Rf-noexcept)
 * [F.7: For general use, take `T*` or `T&` arguments rather than smart pointers](#Rf-smart)
@@ -3846,8 +4202,8 @@ Consider:
 * 複雑すぎる関数に注意しましょう。複雑すぎるというのはどの程度でしょうか?
   あなたは循環的複雑度(cyclomatic complexity)を用いることができます。「10論理パス以上」を試しましょう。1つのシンプルな分岐を1パスとしてカウントします。
 
-### <a name="Rf-constexpr"></a>F.4: If a function may have to be evaluated at compile time, declare it `constexpr`
-
+### <a name="Rf-constexpr"></a>F.4: コンパイル時に関数を評価する必要があるかもしれない場合は、`constexpr`を宣言しよう (If a function may have to be evaluated at compile time, declare it `constexpr`)
+<!--
 ##### Reason
 
  `constexpr` is needed to tell the compiler to allow compile-time evaluation.
@@ -3899,6 +4255,55 @@ that API would have to be refactored or drop `constexpr`.
 
 Impossible and unnecessary.
 The compiler gives an error if a non-`constexpr` function is called where a constant is required.
+-->
+##### 理由
+
+ `constexpr`はコンパイラに、コンパイル時の評価を許すことを伝えるために必要。
+ 
+##### 例
+
+有名な階乗:
+
+    constexpr int fac(int n)
+    {
+        constexpr int max_exp = 17;      // constexprは max_expを Expects内で使うことを可能にする
+        Expects(0 <= n && n < max_exp);  // ミスとオーバーフロー防止
+        int x = 1;
+        for (int i = 2; i <= n; ++i) x *= i;
+        return x;
+    }
+
+これはC++14です。
+C++11では、再帰的な`fac()`を使いましょう。
+
+##### ノート
+
+`constexpr`はコンパイル時の評価を保証するものではありません;
+それは単に、プログラマがコンパイル時の評価を要求したり、コンパイラが最適化のためにそうすることを決めた場合に、その関数が定数式引数に対しては、コンパイル時に評価されることが可能であると保証するだけです。
+
+    constexpr int min(int x, int y) { return x < y ? x : y; }
+
+    void test(int v)
+    {
+        int m1 = min(-1, 2);            // おそらくコンパイル時に評価
+        constexpr int m2 = min(-1, 2);  // コンパイル時に評価
+        int m3 = min(-1, v);            // 実行時に評価
+        constexpr int m4 = min(-1, v);  // エラー: コンパイル時に評価不可能
+    }
+
+##### ノート
+
+すべての関数を`constexpr`にしようとしないでください。
+ほとんどの計算は実行時に行われるのがベストです。
+
+##### ノート
+
+最終的に高レベルのランタイム構成やビジネスロジックに依存する可能性のあるAPIを`constexpr`にするべきではありません。そのようなカスタマイズはコンパイラには評価できません。そしてそのようなAPIに依存するあらゆる`constexpr`はリファクタリングするか `constexpr`を削除する必要があります。
+
+##### 実施
+
+不可能であり、不必要。
+定数が要求される場所での 非`constexpr`関数の呼び出しは、コンパイラエラーになります。
 
 ### <a name="Rf-inline"></a>F.5: If a function is very small and time-critical, declare it `inline`
 

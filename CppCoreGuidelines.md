@@ -3977,8 +3977,9 @@ Similarly, lambdas used as callback arguments are sometimes non-trivial, yet unl
 *「[関数は短くシンプルに](#Rf-single)」を参照しよう
 * 異なる場所で使われている、同一あるいはとても良く似たlambdaに注意しよう
 
-### <a name="Rf-logical"></a>F.2: A function should perform a single logical operation
+### <a name="Rf-logical"></a>F.2: 関数は単一の論理操作を行うようにしましょう (A function should perform a single logical operation)
 
+<!--
 ##### Reason
 
 A function that performs a single operation is simpler to understand, test, and reuse.
@@ -4036,6 +4037,67 @@ If there was a need, we could further templatize `read()` and `print()` on the d
 * Consider functions with more than one "out" parameter suspicious. Use return values instead, including `tuple` for multiple return values.
 * Consider "large" functions that don't fit on one editor screen suspicious. Consider factoring such a function into smaller well-named suboperations.
 * Consider functions with 7 or more parameters suspicious.
+-->
+##### 理由
+
+単一の論理操作を行う関数は、理解、テスト、そして再利用が簡単です。
+
+##### 例
+
+考えてみよう:
+
+    void read_and_print()    // bad
+    {
+        int x;
+        cin >> x;
+        // check for errors
+        cout << x << "\n";
+    }
+
+これは、特定の入力に結びついた一枚岩であり、他の異なる利用も決してできないでしょう。代わりに、関数を適切な論理部品に分解し、パラメタライズします:
+
+    int read(istream& is)    // better
+    {
+        int x;
+        is >> x;
+        // check for errors
+        return x;
+    }
+
+    void print(ostream& os, int x)
+    {
+        os << x << "\n";
+    }
+
+これらは必要であれば組み合わせることができます:
+
+    void read_and_print()
+    {
+        auto x = read(cin);
+        print(cout, x);
+    }
+
+ここで必要であれば、`read()` や `print()`のデータ型、I/Oメカニズム、エラーレスポンスなどをさらにテンプレート化できます。
+例:
+
+    auto read = [](auto& input, auto& value)    // better
+    {
+        input >> value;
+        // check for errors
+    };
+
+    auto print(auto& output, const auto& value)
+    {
+        output << value << "\n";
+    }
+
+(訳注) print()は C++20の 「autoパラメータによる関数テンプレートの簡易定義」を利用している
+
+##### 実施
+
+* 複数の"出力"パラメータをもつ関数を疑いましょう。代わりに返り値を使いましょう。`tuple`ならば複数の値を返すこともできます。
+* エディタの1画面に収まらない"大きな"関数を疑いましょう。そのような関数をより小さな名前の付いたサブオペレーションに分解することを検討してください。
+* 7つあるいはそれ以上のパラメータを持つ関数を疑いましょう。
 
 ### <a name="Rf-single"></a>F.3: 関数は短くシンプルにしよう(Keep functions short and simple)
 
@@ -18020,10 +18082,10 @@ Constant rule summary:
 定数ルールまとめ:
 
 * [Con.1: デフォルトでは、オブジェクトは不変にしよう](#Rconst-immutable)
-* [Con.2: デフォルトでは、メンバー関数は`const`にしよう](#Rconst-fct)
-* [Con.3: By default, pass pointers and references to `const`s](#Rconst-ref)
-* [Con.4: Use `const` to define objects with values that do not change after construction](#Rconst-const)
-* [Con.5: Use `constexpr` for values that can be computed at compile time](#Rconst-constexpr)
+* [Con.2: デフォルトでは、メンバ関数は`const`にしよう](#Rconst-fct)
+* [Con.3: デフォルトでは、ポインタや参照渡しには `const`をつけよう](#Rconst-ref)
+* [Con.4: コンストラクト後に変更しないオブジェクトを定義するのに`const`を使おう](#Rconst-const)
+* [Con.5: コンパイル時に計算可能な値には `constexpr`を使おう](#Rconst-constexpr)
 
 ### <a name="Rconst-immutable"></a>Con.1: デフォルトでは、オブジェクトは不変にしよう(By default, make objects immutable)
 
@@ -18079,7 +18141,7 @@ Note that function parameter is a local variable so changes to it are local.
 * 非`const`の変数で変更されていないもの(多くの誤検出を避けるためパラメータは除く)に注意しよう。
 
 
-### <a name="Rconst-fct"></a>Con.2: デフォルトでは、メンバー関数は`const`にしよう(By default, make member functions `const`)
+### <a name="Rconst-fct"></a>Con.2: デフォルトでは、メンバ関数は`const`にしよう(By default, make member functions `const`)
 
 <!--
 ##### Reason
@@ -18161,7 +18223,7 @@ it offers to its users.
 -->
 ##### 理由
 
-メンバー関数はオブジェクトの観測可能な状態の変化を行わないかぎり、`const`とマークするべきです。
+メンバ関数はオブジェクトの観測可能な状態の変化を行わないかぎり、`const`とマークするべきです。
 こうすることで、設計意図がより明確に表され、信頼性が向上し、コンパイラによってより多くのエラーが検出され、時には最適化の機会が増えます。
 
 ##### 悪い例
@@ -18190,7 +18252,7 @@ If it doesn't now, it might do so later without forcing recompilation.
 あなたは以下のことができます。
 
 * 長期的な解決策としては`const`を正しくつけるようにライブラリを更新しましょう。
-* `const`をキャストで剥しましょう; [best avoided](#Res-casts-const)
+* `const`をキャストで剥しましょう; [避けるのが最善](#Res-casts-const)
 * ラッパー関数を与えましょう。
 
 例:
@@ -18201,11 +18263,11 @@ If it doesn't now, it might do so later without forcing recompilation.
 このラッパーによる解決策は`f()`の宣言を変えることができないときに限り使うべきパッチであることに注意しましょう。
 例: あなたが変更できないライブラリのような場合
 
-##### Note
+##### ノート
 
-A `const` member function can modify the value of an object that is `mutable` or accessed through a pointer member.
-A common use is to maintain a cache rather than repeatedly do a complicated computation.
-For example, here is a `Date` that caches (mnemonizes) its string representation to simplify repeated uses:
+`const`メンバ関数は `mutable`なオブジェクトやポインタの参照先の値を書き換えることができます。
+一般的には、複雑な計算を繰り返す代わりにキャッシュを保持することに使用します。
+例えば、`Date`という自身の文字列表現をキャッシュするクラスがあるとします:
 
     class Date {
     public:
@@ -18217,25 +18279,24 @@ For example, here is a `Date` that caches (mnemonizes) its string representation
         }
         // ...
     private:
-        void compute_string_rep() const;    // compute string representation and place it in string_val
+        void compute_string_rep() const;    // 文字列表現を求め、それをstring_valに代入する
         mutable string string_val;
         // ...
     };
 
-Another way of saying this is that `const`ness is not transitive.
-It is possible for a `const` member function to change the value of `mutable` members and the value of objects accessed
-through non-`const` pointers.
-It is the job of the class to ensure such mutation is done only when it makes sense according to the semantics (invariants)
-it offers to its users.
+別の言い方をすれば、`const`性は推移的ではないということです。
+`const`メンバ関数は`mutable`メンバ変数や非`const`なポインタを介して、その値を変更することができます。
+ユーザーに提供する不変性が意味を成す場合にのみそのような変更を行わせるのは、クラスの仕事です。
 
 **See also**: [Pimpl](#Ri-pimpl)
 
-##### Enforcement
+##### 実施
 
-* Flag a member function that is not marked `const`, but that does not perform a non-`const` operation on any member variable.
+* `const`とマークされていないメンバ関数なのに、いかなるメンバ変数も変更していないものをチェックしましょう。
 
-### <a name="Rconst-ref"></a>Con.3: By default, pass pointers and references to `const`s
+### <a name="Rconst-ref"></a>Con.3: デフォルトでは、ポインタや参照渡しには `const`をつけよう (By default, pass pointers and references to `const`s)
 
+<!--
 ##### Reason
 
  To avoid a called function unexpectedly changing the value.
@@ -18284,6 +18345,57 @@ As `x` is not `const`, we must assume that it is modified somewhere in the loop.
 ##### Enforcement
 
 * Flag unmodified non-`const` variables.
+-->
+##### 理由
+
+ 呼び出された関数が意図しない値の書き換えを避けるためです。
+ 呼び出された関数が状態を書き換えない場合は、プログラムを推理することがはるかに簡単になります。
+
+##### 例
+
+    void f(char* p);        // fは *pを変更する? (おそらくすると推測される)
+    void g(const char* p);  // gは *pを変更しない
+
+##### ノート
+
+
+非`const`のポインタまたは参照を渡すことは本質的に悪いことではありません。
+ただし、これは、呼び出された関数がオブジェクトを変更すると想定されるときのみ行うべきです。
+
+##### ノート
+
+[`const`をキャストで除去しないようにしよう](#Res-casts-const).
+
+##### 実施
+
+* 非`const`のポインタまたは参照で渡されたオブジェクトを、内容を変更していない関数をチェックしよう。
+* `const`のポインタまたは参照で渡されたオブジェクトを、(キャストによって)内容を変更している関数をチェックしよう。
+
+### <a name="Rconst-const"></a>Con.4: コンストラクト後に変更しないオブジェクトを定義するのに`const`を使おう (Use `const` to define objects with values that do not change after construction)
+
+<!--
+##### Reason
+
+ Prevent surprises from unexpectedly changed object values.
+
+##### Example
+
+    void f()
+    {
+        int x = 7;
+        const int y = 9;
+
+        for (;;) {
+            // ...
+        }
+        // ...
+    }
+
+As `x` is not `const`, we must assume that it is modified somewhere in the loop.
+
+##### Enforcement
+
+* Flag unmodified non-`const` variables.
 
 ### <a name="Rconst-constexpr"></a>Con.5: Use `constexpr` for values that can be computed at compile time
 
@@ -18304,6 +18416,68 @@ See F.4.
 ##### Enforcement
 
 * Flag `const` definitions with constant expression initializers.
+-->
+##### 理由
+
+ 予期しないオブジェクトの変更を防ぐため。
+
+##### 例
+
+    void f()
+    {
+        int x = 7;
+        const int y = 9;
+
+        for (;;) {
+            // ...
+        }
+        // ...
+    }
+
+`x`は非`const`のため、我々はloop内のどこかで変更されると推測するに違いありません。
+
+##### 実施
+
+* 非`const`で変更されない変数をチェックしましょう。
+
+### <a name="Rconst-constexpr"></a>Con.5: コンパイル時に計算可能な値には `constexpr`を使おう (Use `constexpr` for values that can be computed at compile time)
+
+<!--
+##### Reason
+
+Better performance, better compile-time checking, guaranteed compile-time evaluation, no possibility of race conditions.
+
+##### Example
+
+    double x = f(2);            // possible run-time evaluation
+    const double y = f(2);      // possible run-time evaluation
+    constexpr double z = f(2);  // error unless f(2) can be evaluated at compile time
+
+##### Note
+
+See F.4.
+
+##### Enforcement
+
+* Flag `const` definitions with constant expression initializers.
+-->
+##### 理由
+
+より良いパフォーマンス。より良いコンパイル時チェック。コンパイル時の評価を保証。競合状態が原理的に発生しない。
+
+##### 例
+
+    double x = f(2);            // 実行時に評価される可能性
+    const double y = f(2);      // 実行時に評価される可能性
+    constexpr double z = f(2);  // f(2)がコンパイル時に評価できない場合はコンパイルエラー
+
+##### ノート
+
+F.4 を参照。
+
+##### 実施
+
+* 定数式で初期化している`const`定義をチェックしよう。
 
 # <a name="S-templates"></a>T: Templates and generic programming
 
@@ -22067,7 +22241,7 @@ Non-rule summary:
 * [NR.1: やってはダメ: すべての宣言は関数の先頭で行おう](#Rnr-top)
 * [NR.2: やってはダメ: 関数内はただ1つの`return`を持つようにしよう](#Rnr-single-return)
 * [NR.3: やってはダメ: 例外を使わないようにしよう](#Rnr-no-exceptions)
-* [NR.4: Don't: Place each class declaration in its own source file](#Rnr-lots-of-files)
+* [NR.4: やってはダメ: それぞれのクラス宣言は、それぞれのソースファイル内に置こう](#Rnr-lots-of-files)
 * [NR.5: やってはダメ: コンストラクタ内で多くの仕事をしないようにしよう; 代わりに2段階初期化を使おう](#Rnr-two-phase-init)
 * [NR.6: やってはダメ: すべてのクリーンアップ処理は関数の最後に置いて、`goto exit`しよう](#Rnr-goto-exit)
 * [NR.7: やってはダメ: すべてのデータメンバは`protected`にしよう](#Rnr-protected-data)
@@ -22346,8 +22520,8 @@ Remember
 * [RAII](#Re-raii)
 * 契約(contract)/アサーション: GSLの`Expects`と`Ensures`を使おう(契約をサポートする言語が得られるまでは)
 
-### <a name="Rnr-lots-of-files"></a>NR.4: Don't: Place each class declaration in its own source file
-
+### <a name="Rnr-lots-of-files"></a>NR.4: やってはダメ: それぞれのクラス宣言は、それぞれのソースファイル内に置こう(Don't: Place each class declaration in its own source file)
+<!--
 ##### Reason (not to follow this rule)
 
 The resulting number of files are hard to manage and can slow down compilation.
@@ -22360,6 +22534,19 @@ Individual classes are rarely a good logical unit of maintenance and distributio
 ##### Alternative
 
 * Use namespaces containing logically cohesive sets of classes and functions.
+-->
+##### ダメな理由
+
+その結果のファイル数は管理困難となり、コンパイル速度の低下も引き起こす可能性があります。
+個々のクラスが、保守と配布の優れた論理単位になることはめったにありません。
+
+##### 例
+
+    ???
+
+##### 代替策
+
+* 論理的にまとまりのあるクラスと関数のセットを含む名前空間を使用しよう。
 
 ### <a name="Rnr-two-phase-init"></a>NR.5: やってはダメ: コンストラクタ内で多くの仕事をしないようにしよう; 代わりに2段階初期化を使おう(Don't: Don't do substantive work in a constructor; instead use two-phase initialization)
 

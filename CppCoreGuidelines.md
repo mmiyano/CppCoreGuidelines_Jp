@@ -4432,7 +4432,7 @@ Flag `inline` functions that are more than three statements and could have been 
 
 ##### 実施
 
-三行以上のステートメントを持ち、宗旨違いな`inline`関数をチェックしよう。
+三行以上のステートメントを持ち、場違いな(例えばクラスのメンバ関数のような)`inline`関数をチェックしよう。
 
 ### <a name="Rf-noexcept"></a>F.6: 関数が例外を投げない場合は、`noexcept`と宣言しよう (If your function may not throw, declare it `noexcept`)
 <!--

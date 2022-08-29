@@ -3814,12 +3814,12 @@ Function rule summary:
 Function definition rules:
 
 * [F.1: 意味のある操作は注意して名前付き関数に「パッケージ」しよう](#Rf-package)
-* [F.2: A function should perform a single logical operation](#Rf-logical)
+* [F.2: 関数は単一の論理操作を行うようにしましょう](#Rf-logical)
 * [F.3: 関数は短くシンプルにしよう](#Rf-single)
 * [F.4: コンパイル時に関数を評価する必要があるかもしれない場合は、`constexpr`を宣言しよう](#Rf-constexpr)
-* [F.5: If a function is very small and time-critical, declare it inline](#Rf-inline)
-* [F.6: If your function may not throw, declare it `noexcept`](#Rf-noexcept)
-* [F.7: For general use, take `T*` or `T&` arguments rather than smart pointers](#Rf-smart)
+* [F.5: 関数がとても小さく、速度が要求されるのであれば、`inline`と宣言しよう](#Rf-inline)
+* [F.6: 関数が例外を投げない場合は、`noexcept`と宣言しよう](#Rf-noexcept)
+* [F.7: 通常の場合は、スマートポインタでなく`T*` や `T&`の引数を受け取ろう](#Rf-smart)
 * [F.8: 純粋関数を使おう](#Rf-pure)
 * [F.9: 未使用パラメータは無名にしよう](#Rf-unused)
 
@@ -4191,7 +4191,7 @@ Small simple functions are easily inlined where the cost of a function call is s
 
 ##### 例
 
-Consider:
+考えてみよう:
 
     double simple_func(double val, int flag1, int flag2)
         // simple_func: 2つのモードフラグと、値を受け取り、期待されるASIC出力を計算する
@@ -4367,8 +4367,8 @@ C++11では、再帰的な`fac()`を使いましょう。
 不可能であり、不必要。
 定数が要求される場所での 非`constexpr`関数の呼び出しは、コンパイラエラーになります。
 
-### <a name="Rf-inline"></a>F.5: If a function is very small and time-critical, declare it `inline`
-
+### <a name="Rf-inline"></a>F.5: 関数がとても小さく、速度が要求されるのであれば、`inline`と宣言しよう(If a function is very small and time-critical, declare it `inline`)
+<!--
 ##### Reason
 
 Some optimizers are good at inlining without hints from the programmer, but don't rely on it.
@@ -4400,9 +4400,42 @@ Template functions (incl. template member functions) are normally defined in hea
 ##### Enforcement
 
 Flag `inline` functions that are more than three statements and could have been declared out of line (such as class member functions).
+-->
+##### 理由
 
-### <a name="Rf-noexcept"></a>F.6: If your function may not throw, declare it `noexcept`
+一部のオプティマイザはプログラマによるヒントがなくてもインライン化を上手に行えますが、それに頼らないでください.。
+40年以上にわたって、人間からのヒントなしに人間以上に上手にインライン化するコンパイラが約束されてきました。
+しかし我々はまだそれを待ち続けています。
+`inline`指定をすることでコンパイラはより良い仕事を行います。
 
+##### 例
+
+    inline string cat(const string& s, const string& s2) { return s + s2; }
+
+##### 例外
+
+変更されないことが確実でない限り、安定したインターフェイスであることを意味するものに`inline`関数を配置しないでください。
+インライン関数は ABI の一部です。
+(訳注) [ABI=Application Binary Interface](https://ja.wikipedia.org/wiki/%E3%82%A2%E3%83%97%E3%83%AA%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E3%83%90%E3%82%A4%E3%83%8A%E3%83%AA%E3%82%A4%E3%83%B3%E3%82%BF%E3%83%95%E3%82%A7%E3%83%BC%E3%82%B9)
+
+##### ノート
+
+`constexpr`は`inline`を意味します。
+
+##### ノート
+
+クラス宣言内で定義されたメンバ関数はデフォルトで`inline`です。
+
+##### 例外
+
+テンプレート関数(テンプレートメンバ関数も含みます)は通常はヘッダで定義され、そこではインラインになります。
+
+##### 実施
+
+三行以上のステートメントを持ち、宗旨違いな`inline`関数をチェックしよう。
+
+### <a name="Rf-noexcept"></a>F.6: 関数が例外を投げない場合は、`noexcept`と宣言しよう (If your function may not throw, declare it `noexcept`)
+<!--
 ##### Reason
 
 If an exception is not supposed to be thrown, the program cannot be assumed to cope with the error and should be terminated as soon as possible. Declaring a function `noexcept` helps optimizers by reducing the number of alternative execution paths. It also speeds up the exit after failure.
@@ -4461,9 +4494,61 @@ Destructors, `swap` functions, move operations, and default constructors should 
 
 * Flag functions that are not `noexcept`, yet cannot throw.
 * Flag throwing `swap`, `move`, destructors, and default constructors.
+-->
+##### 理由
 
-### <a name="Rf-smart"></a>F.7: For general use, take `T*` or `T&` arguments rather than smart pointers
+例外がスローされることが想定されていない場合、プログラムはエラーに対処できると想定できず、できるだけ早く終了する必要があります。 関数に`noexcept`を宣言すると、オプティマイザーは代替実行パスの数を減らすことができます。 また、失敗後の終了を高速化します。
 
+##### 例
+
+C言語や例外を持たないその他言語で100%書かれた関数にはすべて`noexcept`をつけましょう。
+C++ 標準ライブラリは、C標準ライブラリのすべての関数に対して暗黙的にこれを行います。
+
+##### ノート
+
+`constexpr`関数は実行時の評価中に例外を投げることができます。したがってそれらにいくつかには`noexcept`をつけることが必要になるでしょう。
+
+##### 例
+
+例外を投げることができる関数でさえも`noexcept`を使うことができます:
+
+    vector<string> collect(istream& is) noexcept
+    {
+        vector<string> res;
+        for (string s; is >> s;)
+            res.push_back(s);
+        return res;
+    }
+
+もし`collect()`がメモリ不足になったら、プログラムはクラッシュします。
+プログラムがメモリの枯渇に耐えるように作成されていない限り、それは正しいことかもしれません。
+`terminate()` は、適切なエラーログ情報を生成する場合があります (ただし、メモリが不足すると、巧妙なことを行うのは困難です)。
+
+##### ノート
+
+関数に`noexcept`をつけるかどうかを決定するさいは、とくに例外とメモリ割り当ての問題のために、あなたのコードの実行環境に注意することが必要です。
+コードが完全に一般的であるように意図されているなら(例えば 標準ライブラリやその種の他のユーティリティコード)、`bad_alloc`例外が有意義に扱われるであろう環境を
+サポートする必要があります。
+しかしながら、メモリ割り当て失敗を有意義に扱えないたいていのプログラムや環境では、プログラムを終了させることが、メモリ割り当て失敗に対して、最もクリーンでシンプルな対処となります。
+もしもあなたのアプリケーションが割り当て失敗に対して対処できないことが分かっているのであれば、メモリ割り当てを行う関数にさえも`noexcept`をつけることが適切かもしれません。
+
+別の言い方をすれば: ほとんどのプログラムでは、ほとんどの関数がスローできます(たとえば、
+`new`を使用するか、例外を投げる関数を内部で呼び出すか、エラーを例外で報告するライブラリを関数することによって)。
+したがって考えられる例外をハンドルできるかどうかの検討なしに、`noexcept`をあちこちにまき散らしてはいけません。
+
+`noexcept`はローレベル関数では最も有益で(そして最も綺麗で正しい)、頻繁に使われます。
+
+##### ノート
+
+デストラクタ、`swap`関数、ムーブ操作、そしてデフォルトコンストラクタは決して例外を投げてはいけません。
+
+##### 実施
+
+* 例外を投げないのに`noexcept`指定がされていない関数をチェックしましょう。
+* 例外を投げる`swap`、`move`、デストラクタ、デフォルトコンストラクタをチェックしましょう。
+
+### <a name="Rf-smart"></a>F.7: 通常の場合は、スマートポインタでなく`T*` や `T&`の引数を受け取ろう (For general use, take `T*` or `T&` arguments rather than smart pointers)
+<!--
 ##### Reason
 
 Passing a smart pointer transfers or shares ownership and should only be used when ownership semantics are intended (see [R.30](#Rr-smartptrparam)).
@@ -4515,6 +4600,59 @@ that is
 
 * copyable but never copied/moved from or movable but never moved
 * and that is never modified or passed along to another function that could do so.
+-->
+##### 理由
+
+スマートポインタを渡すことは、所有権を譲渡または共有します。そしてそれは所有権のセマンティクスが意図された場合に限り使う必要があります。([R.30](#Rr-smartptrparam)を参照)。
+スマートポインタを渡すことは、呼び出し元もスマートポインタを使う制約が生じます。
+共有スマートポインタ(例. `std::shared_ptr`)を渡すことは、実行時のコストを意味します。
+
+##### 例
+
+    // どんな int* も許容します
+    void f(int*);
+
+    // 所有権を譲渡したいintのみ許容します
+    void g(unique_ptr<int>);
+
+    // 所有権を共有したいintのみ許容します
+    void g(shared_ptr<int>);
+
+    // 所有権を変更しません。しかし呼び出し元に特定の所有権を要求します。
+    void h(const unique_ptr<int>&);
+
+    // あらゆるintを許容します
+    void h(int&);
+
+##### 悪い例
+
+    // 呼び出され側
+    void f(shared_ptr<widget>& w)
+    {
+        // ...
+        use(*w); // 単にwを使っているだけ -- 寿命は一切関係ない
+        // ...
+    };
+
+さらなる話題は [R.30](#Rr-smartptrparam) を参照。
+
+##### ノート
+
+ダングリングポインタは静的にキャッチできるため、ダングリングポインタによる違反を回避するためにリソース管理に頼る必要はありません。
+(訳注)ダングリングポインタ = 無効領域を指すポインタ
+
+**See also**:
+
+* [Prefer `T*` over `T&` when "no argument" is a valid option](#Rf-ptr-ref)
+* [Smart pointer rule summary](#Rr-summary-smartptrs)
+
+##### 実施
+
+所有権のセマンティクスが使われていない、スマートポインタ型のパラメータをチェックしよう。
+以下のようなものです。
+
+* コピー可能だが、決してコピーやムーブされていないもの。あるいはムーブ可能だが決してムーブされていないもの。
+* そして決して変更されず、他の関数に決して渡されないもの。
 
 ### <a name="Rf-pure"></a>F.8: 純粋関数を使おう(Prefer pure functions)
 

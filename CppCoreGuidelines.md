@@ -3809,9 +3809,9 @@ A function specifies an action or a computation that takes the system from one c
 It should be possible to name a function meaningfully, to specify the requirements of its argument, and clearly state the relationship between the arguments and the result. An implementation is not a specification. Try to think about what a function does as well as about how it does it.
 Functions are the most critical part in most interfaces, so see the interface rules.
 
-Function rule summary:
+関数ルールまとめ:
 
-Function definition rules:
+関数定義ルール:
 
 * [F.1: 意味のある操作は注意して名前付き関数に「パッケージ」しよう](#Rf-package)
 * [F.2: 関数は単一の論理操作を行うようにしましょう](#Rf-logical)
@@ -3823,18 +3823,18 @@ Function definition rules:
 * [F.8: 純粋関数を使おう](#Rf-pure)
 * [F.9: 未使用パラメータは無名にしよう](#Rf-unused)
 
-Parameter passing expression rules:
+パラメータの渡し方の表現ルール:
 
-* [F.15: Prefer simple and conventional ways of passing information](#Rf-conventional)
-* [F.16: For "in" parameters, pass cheaply-copied types by value and others by reference to `const`](#Rf-in)
-* [F.17: For "in-out" parameters, pass by reference to non-`const`](#Rf-inout)
-* [F.18: For "will-move-from" parameters, pass by `X&&` and `std::move` the parameter](#Rf-consume)
+* [F.15: シンプルで慣習的な情報の渡し方をしよう](#Rf-conventional)
+* [F.16: "入力"パラメータに対しては、コピーが安価なものに対しては値渡し、そうでないものには`const`参照渡ししましょう](#Rf-in)
+* [F.17: "入力-出力"パラメータに対しては、非`const`参照渡しをしましょう](#Rf-inout)
+* [F.18: "will-move-from"パラメータに対して、`X&&`と`std::move`でパラメータを渡しましょう](#Rf-consume)
 * [F.19: For "forward" parameters, pass by `TP&&` and only `std::forward` the parameter](#Rf-forward)
-* [F.20: For "out" output values, prefer return values to output parameters](#Rf-out)
+* [F.20: "出力"値に対しては出力パラメータよりも返り値を使いましょう](#Rf-out)
 * [F.21: To return multiple "out" values, prefer returning a struct or tuple](#Rf-out-multi)
 * [F.60: Prefer `T*` over `T&` when "no argument" is a valid option](#Rf-ptr-ref)
 
-Parameter passing semantic rules:
+パラメータの渡し方の意味ルール:
 
 * [F.22: Use `T*` or `owner<T*>` to designate a single object](#Rf-ptr)
 * [F.23: Use a `not_null<T>` to indicate that "null" is not a valid value](#Rf-nullptr)
@@ -3843,7 +3843,7 @@ Parameter passing semantic rules:
 * [F.26: Use a `unique_ptr<T>` to transfer ownership where a pointer is needed](#Rf-unique_ptr)
 * [F.27: Use a `shared_ptr<T>` to share ownership](#Rf-shared_ptr)
 
-<a name="Rf-value-return"></a>Value return semantic rules:
+<a name="Rf-value-return"></a>返り値の意味ルール:
 
 * [F.42: Return a `T*` to indicate a position (only)](#Rf-return-ptr)
 * [F.43: Never (directly or indirectly) return a pointer or a reference to a local object](#Rf-dangle)
@@ -3853,7 +3853,7 @@ Parameter passing semantic rules:
 * [F.47: Return `T&` from assignment operators](#Rf-assignment-op)
 * [F.48: Don't `return std::move(local)`](#Rf-return-move-local)
 
-Other function rules:
+その他の関数のルール:
 
 * [F.50: Use a lambda when a function won't do (to capture local variables, or to write a local function)](#Rf-capture-vs-overload)
 * [F.51: Where there is a choice, prefer default arguments over overloading](#Rf-default-args)
@@ -3862,7 +3862,7 @@ Other function rules:
 * [F.54: If you capture `this`, capture all variables explicitly (no default capture)](#Rf-this-capture)
 * [F.55: Don't use `va_arg` arguments](#F-varargs)
 
-Functions have strong similarities to lambdas and function objects.
+関数はラムダ式や関数オブジェクトと非常によく似ています。
 
 **See also**: [C.lambdas: Function objects and lambdas](#SS-lambdas)
 
@@ -4723,12 +4723,16 @@ Flag named unused parameters.
 
 未使用の名前付きパラメータに注意しよう。
 
-## <a name="SS-call"></a>F.call: Parameter passing
+## <a name="SS-call"></a>F.call: パラメータの渡し方(Parameter passing)
 
+<!--
 There are a variety of ways to pass parameters to a function and to return values.
+-->
+関数にパラメータを渡したり、返り値を返す多くの方法があります。
 
-### <a name="Rf-conventional"></a>F.15: Prefer simple and conventional ways of passing information
+### <a name="Rf-conventional"></a>F.15: シンプルで慣習的な情報の渡し方をしよう(Prefer simple and conventional ways of passing information)
 
+<!--
 ##### Reason
 
 Using "unusual and clever" techniques causes surprises, slows understanding by other programmers, and encourages bugs.
@@ -4745,9 +4749,27 @@ Advanced parameter passing:
 ![Advanced parameter passing table](./param-passing-advanced.png "Advanced parameter passing")
 
 Use the advanced techniques only after demonstrating need, and document that need in a comment.
+-->
+##### 理由
 
-### <a name="Rf-in"></a>F.16: For "in" parameters, pass cheaply-copied types by value and others by reference to `const`
+「特殊で賢い」テクニックを使うことは、他のプログラマに驚きを与え、理解を遅いものにし、バグを誘発します。
+もし、一般的な手法を超えた最適化の必要性を感じている場合は、それが本当に改善なのであるかを測定し、その改善に移植性がない理由を文書化/コメントしてください。
 
+次の表は F.16-21のガイドラインのアドバイスをまとめたものです。
+
+通常のパラメータの渡し方:
+
+![Normal parameter passing table](./param-passing-normal.png "Normal parameter passing")
+
+進んだパラメータの渡し方:
+
+![Advanced parameter passing table](./param-passing-advanced.png "Advanced parameter passing")
+
+必要性を示した後でのみ、進んだテクニックを使用し、その必要性をコメントで文書化しましょう。
+
+### <a name="Rf-in"></a>F.16: "入力"パラメータに対しては、コピーが安価なものに対しては値渡し、そうでないものには`const`参照渡ししましょう (For "in" parameters, pass cheaply-copied types by value and others by reference to `const`)
+
+<!--
 ##### Reason
 
 Both let the caller know that a function will not modify the argument, and both allow initialization by rvalues.
@@ -4765,6 +4787,25 @@ When copying is cheap, nothing beats the simplicity and safety of copying, and f
 
     void f4(const int& x);     // bad: overhead on access in f4()
 
+-->
+##### 理由
+
+両方とも、関数が引数を変更しないことを呼び出し側が知ることができます。そして両方とも、右辺値による初期化が可能なことも知ることができます。
+
+"コピーが安価"の意味はマシンのアーキテクチャに依存します。しかし2または3ワード(double, ポインタ, 参照)ならば通常は値渡しが最善です。
+コピーが安価であるとき、簡潔さや安全性において値渡しに勝るものはありません。そして小さなオブジェクト(高々2または3ワード)に対しても、参照渡しよりも速くなります。なぜなら余分な間接参照の必要がないためです。
+
+##### 例
+
+    void f1(const string& s);  // OK: const参照渡し. 常に低コスト.
+
+    void f2(string s);         // bad: 潜在的に高価
+
+    void f3(int x);            // OK: 最強
+
+    void f4(const int& x);     // bad: f4()内でオーバーヘッドがある
+
+<!--
 For advanced uses (only), where you really need to optimize for rvalues passed to "input-only" parameters:
 
 * If the function is going to unconditionally move from the argument, take it by `&&`. See [F.18](#Rf-consume).
@@ -4780,7 +4821,24 @@ For advanced uses (only), where you really need to optimize for rvalues passed t
     string& concatenate(string&, const string& suffix);
 
     void sink(unique_ptr<widget>);  // input only, and moves ownership of the widget
+-->
 
+For advanced uses (only), where you really need to optimize for rvalues passed to "input-only" parameters:
+
+* もし関数が無条件に引数をムーブしたい場合は `&&`で受け取りましょう。 [F.18](#Rf-consume)を参照。
+* もし関数がコピーも備えたい場合は、(左辺値用の)`const&`渡しに加えて、(右辺値用の)`&&`渡しのオーバーロードを追加し、関数本体内で`std::move`で宛先に渡しましょう。 基本的にこれは"will-move-from"をオーバーロードします。[F.18](#Rf-consume)を参照。
+* 複数の"入力 + コピー"パラメータのような特殊なケースでは、完全転送(Perfect forwarding)を考慮しましょう。 [F.19](#Rf-forward)を参照。
+
+##### 例
+
+    int multiply(int, int); // 単なるintの入力. 値渡し
+
+    // suffix は入力オンリーのパラメータだがintほど安価ではない. const参照渡し
+    string& concatenate(string&, const string& suffix);
+
+    void sink(unique_ptr<widget>);  // 入力オンリー、widgetの所有権を移動
+
+<!--
 Avoid "esoteric techniques" such as:
 
 * Passing arguments as `T&&` "for efficiency".
@@ -4801,7 +4859,29 @@ Assuming that `Matrix` has move operations (possibly by keeping its elements in 
     Matrix x = m1 + m2;  // move constructor
 
     y = m3 + m3;         // move assignment
+-->
+次のような"難解なテクニック"を避けましょう:
 
+* "効率のために"パラメータを`T&&`で渡すこと。
+  `&&` を渡すことによるパフォーマンスの向上に関する噂のほとんどは、間違っているか、もろいものです。(ただし [F.18](#Rf-consume) と [F.19](#Rf-forward)も参照してください)
+* 代入演算子やそれと似た操作において、`const T&`で返すこと。 ([F.47](#Rf-assignment-op)を参照)
+
+##### 例
+
+`Matrix`はムーブ演算子を持っているものと仮定します。(おそらくその要素を`std::vector`で保持しています):
+
+    Matrix operator+(const Matrix& a, const Matrix& b)
+    {
+        Matrix res;
+        // ... fill res with the sum ...
+        return res;
+    }
+
+    Matrix x = m1 + m2;  // ムーブコンストラクタ
+
+    y = m3 + m3;         // ムーブ代入演算子
+
+<!--
 ##### Notes
 
 The return value optimization doesn't handle the assignment case, but the move assignment does.
@@ -4816,9 +4896,26 @@ If you need the notion of an optional value, use a pointer, `std::optional`, or 
   Suggest using a reference to `const` instead.
 * (Simple) ((Foundation)) Warn when a `const` parameter being passed by reference has a size less than `3 * sizeof(int)`. Suggest passing by value instead.
 * (Simple) ((Foundation)) Warn when a `const` parameter being passed by reference is `move`d.
+-->
 
-### <a name="Rf-inout"></a>F.17: For "in-out" parameters, pass by reference to non-`const`
+##### ノート
 
+返り値最適化(RVO)は代入演算を扱いませんが、ムーブ代入演算子は扱います。
+
+参照は有効なオブジェクトを参照していると仮定されます(言語ルール)。
+(正当な)"null参照"は存在しません。
+もしもオプション値の概念が必要な場合は、ポインタを使うか、`std::optional`を使うか、あるいは"値なし"であることを表す特殊値を使いましょう。
+
+##### 実施
+
+* (シンプル) ((基本的)) サイズが`4 * sizeof(int)`よりも大きいパラメータを値渡ししているときに注意しましょう。
+  代わりに`const`参照渡しにしましょう。
+* (シンプル) ((基本的)) サイズが`3 * sizeof(int)`よりも小さいパラメータを`const`参照渡ししているときに注意しましょう。代わりに値渡しにしましょう。
+* (シンプル) ((基本的)) `const`参照渡しされているパラメータが`move`されているときに注意しましょう。
+
+### <a name="Rf-inout"></a>F.17: "入出力"パラメータに対しては、非`const`参照渡しをしましょう。 (For "in-out" parameters, pass by reference to non-`const`)
+
+<!--
 ##### Reason
 
 This makes it clear to callers that the object is assumed to be modified.
@@ -4851,9 +4948,43 @@ A bad logic error can happen if the writer of `g()` incorrectly assumes the size
 
 * (Moderate) ((Foundation)) Warn about functions regarding reference to non-`const` parameters that do *not* write to them.
 * (Simple) ((Foundation)) Warn when a non-`const` parameter being passed by reference is `move`d.
+-->
+##### 理由
 
-### <a name="Rf-consume"></a>F.18: For "will-move-from" parameters, pass by `X&&` and `std::move` the parameter
+これは、呼び出し側に対して、そのオブジェクトを変更するであろうことを明確にします。
 
+##### 例
+
+    void update(Record& r);  // rに対して更新が発生することが推測されます
+
+##### ノート
+
+`T&`の引数は出力と同様に関数に情報を渡します。
+したがって `T&`は入出力パラメータにすることができます。これ自体が問題となり、エラーの原因になる可能性があります:
+
+    void f(string& s)
+    {
+        s = "New York";  // non-obvious error
+    }
+
+    void g()
+    {
+        string buffer = ".................................";
+        f(buffer);
+        // ...
+    }
+
+ここで、`g()`の書き手は `f()`に対して bufferを満たして与えています。しかし`f()`はそれを単純に置換します(文字の単純なコピーよりもいくらか高いコストで)。
+もしも`g()`の書き手が `buffer`のサイズに対して誤った仮定をしてしまうと、良くない論理エラーが発生するでしょう。
+
+##### 実施
+
+* (適度) ((基本的)) 非`const`参照渡しのパラメータに対して変更していない関数に注意しましょう。
+* (シンプル) ((基本的)) 非`const`参照渡しのパラメータが`move`されているときに注意しましょう。
+
+### <a name="Rf-consume"></a>F.18: "will-move-from"パラメータに対して、`X&&`と`std::move`でパラメータを渡しましょう。 (For "will-move-from" parameters, pass by `X&&` and `std::move` the parameter)
+
+<!--
 ##### Reason
 
 It's efficient and eliminates bugs at the call site: `X&&` binds to rvalues, which requires an explicit `std::move` at the call site if passing an lvalue.
@@ -4886,9 +5017,44 @@ For example:
 * Flag all `X&&` parameters (where `X` is not a template type parameter name) where the function body uses them without `std::move`.
 * Flag access to moved-from objects.
 * Don't conditionally move from objects
+-->
+##### 理由
 
-### <a name="Rf-forward"></a>F.19: For "forward" parameters, pass by `TP&&` and only `std::forward` the parameter
+効率性と呼び出し側でのバグの排除: `X&&`が右辺値をバインドするとき、呼び出し側は左辺値を渡す場合は明示的な`std::move`が必要です。
 
+##### 例
+
+    void sink(vector<int>&& v) {   // sinkは引数が所有するあらゆるものの所有権を受け取る
+        // たいていは、ここでvに対してのconstアクセスがあります
+        store_somewhere(std::move(v));
+        // たいていは、ここではvに対してのアクセスはありません; すでにムーブされています
+    }
+
+`std::move`は`store_somewhere()`に対して、`v`をムーブ前の状態にしておくこともできることに注意しましょう。
+[これには危険性があります](#Rc-move-semantic)。
+
+
+##### 例外
+
+ユニーク所有タイプはムーブオンリーで、かつ、ムーブのコストが安いものです。例えば`unique_ptr`もより簡潔に同様の効果を持つ値渡しをすることが可能です。
+値を渡すときに1回多くの(安価な)ムーブ操作が生成されますが、簡潔さと明確さを優先しましょう。
+
+例えば:
+
+    template <class T>
+    void sink(std::unique_ptr<T> p) {
+        // use p ... possibly std::move(p) onward somewhere else
+    }   // p gets destroyed
+
+##### 実施
+
+* 関数本体内で`std::move`されていないすべての`X&&`パラメータに注意しましょう。(ここで`X`はテンプレートパラメータ名ではありません)。
+* ムーブされたオブジェクトに対してのアクセスに注意しましょう。
+* 条件付きのオブジェクトのムーブを行わないようにしましょう。
+
+### <a name="Rf-forward"></a>F.19: "転送"パラメータに対しては、`TP&&`で渡し、`std::forward`のみ行いましょう (For "forward" parameters, pass by `TP&&` and only `std::forward` the parameter)
+
+<!--
 ##### Reason
 
 If the object is to be passed onward to other code and not directly used by this function, we want to make this function agnostic to the argument `const`-ness and rvalue-ness.
@@ -4907,8 +5073,27 @@ In that case, and only that case, make the parameter `TP&&` where `TP` is a temp
 ##### Enforcement
 
 * Flag a function that takes a `TP&&` parameter (where `TP` is a template type parameter name) and does anything with it other than `std::forward`ing it exactly once on every static path.
+-->
+##### 理由
 
-### <a name="Rf-out"></a>F.20: For "out" output values, prefer return values to output parameters
+もしも、オブジェクトがこの関数内では直接的な使用がなく、他のコードに渡される場合は、この関数は引数の`const`性や右辺値性にとらわれたくありません。
+
+このような場合では、そしてこのような場合でのみ、`TP`がテンプレート型パラメータなら`TP&&`にしましょう。これは`const`性と右辺値性を*無視*し、*保存*します。 したがって`TP&&`を使っているあらゆるコードは、それが変数の`const`性や右辺値性に対して気にしていないことを暗黙的に宣言しています(それらは無視されるためです)。しかし、値を他のコードに渡す際には`const`性と右辺値性を気にしていることも意図しています(それらは保持されるためです)。`TP&&`のパラメータは安全です。なぜなら関数に渡されたあらゆる一時オブジェクトは関数呼び出しの間は生存しているためです。`TP&&`のパラメータは基本的にいつでも関数内の`std::forward`によって転送されます。
+
+##### 例
+
+    template <class F, class... Args>
+    inline auto invoke(F f, Args&&... args) {
+        return f(forward<Args>(args)...);
+    }
+
+    ??? calls ???
+
+##### 実施
+
+* `TP&&`のパラメータを受け取る関数(ここで`TP`はテンプレート型パラメータ名)で、`std::forward`を、あらゆる実行パスにおいて正確に1度だけ使っていないものに注意しましょう。
+
+### <a name="Rf-out"></a>F.20: "出力"値に対しては出力パラメータよりも返り値を使いましょう (For "out" output values, prefer return values to output parameters)
 
 ##### Reason
 
@@ -11730,27 +11915,32 @@ The fix is simple -- take a local copy of the pointer to "keep a ref count" for 
 
 * (Simple) Warn if a pointer or reference obtained from a smart pointer variable (`Unique_ptr` or `Shared_ptr`) that is nonlocal, or that is local but potentially aliased, is used in a function call. If the smart pointer is a `Shared_ptr` then suggest taking a local copy of the smart pointer and obtain a pointer or reference from that instead.
 
-# <a name="S-expr"></a>ES: Expressions and statements
+# <a name="S-expr"></a>ES: 式とステートメント (Expressions and statements)
 
+<!--
 Expressions and statements are the lowest and most direct way of expressing actions and computation. Declarations in local scopes are statements.
 
 For naming, commenting, and indentation rules, see [NL: Naming and layout](#S-naming).
+-->
+式とステートメントは最も低レベルで直接的な動作と計算の表現方法です. ローカルスコープでの宣言はステートメントです.
+
+命名、コメント、インデントのルールについては [NL: Naming and layout](#S-naming)を参照してください.
 
 General rules:
 
-* [ES.1: Prefer the standard library to other libraries and to "handcrafted code"](#Res-lib)
-* [ES.2: Prefer suitable abstractions to direct use of language features](#Res-abstr)
+* [ES.1: 他のライブラリやお手製コードより標準ライブラリを使うようにしましょう (Prefer the standard library to other libraries and to "handcrafted code")](#Res-lib)
+* [ES.2: 言語機能を直接使用するよりも、適切な抽象化を優先しましょう (Prefer suitable abstractions to direct use of language features)](#Res-abstr)
 
 Declaration rules:
 
-* [ES.5: Keep scopes small](#Res-scope)
-* [ES.6: Declare names in for-statement initializers and conditions to limit scope](#Res-cond)
-* [ES.7: Keep common and local names short, and keep uncommon and nonlocal names longer](#Res-name-length)
-* [ES.8: Avoid similar-looking names](#Res-name-similar)
-* [ES.9: Avoid `ALL_CAPS` names](#Res-not-CAPS)
-* [ES.10: Declare one name (only) per declaration](#Res-name-one)
-* [ES.11: Use `auto` to avoid redundant repetition of type names](#Res-auto)
-* [ES.12: Do not reuse names in nested scopes](#Res-reuse)
+* [ES.5: スコープは小さく保ちましょう (Keep scopes small)](#Res-scope)
+* [ES.6: スコープを限定するためにfor文の初期化ステートメントや条件文内で名前を宣言しましょう (Declare names in for-statement initializers and conditions to limit scope)](#Res-cond)
+* [ES.7: 一般的でローカルなものには短い名前を、特殊でローカルでないものには長い名前をつけましょう (Keep common and local names short, and keep uncommon and nonlocal names longer)](#Res-name-length)
+* [ES.8: 見た目の似た名前は避けましょう (Avoid similar-looking names)](#Res-name-similar)
+* [ES.9: すべて大文字の名前は避けましょう (Avoid `ALL_CAPS` names)](#Res-not-CAPS)
+* [ES.10: 1つの宣言では1つの名前だけを宣言しましょう (Declare one name (only) per declaration)](#Res-name-one)
+* [ES.11: 型名の冗長な繰り返しを避けるために `auto` を使用しましょう (Use `auto` to avoid redundant repetition of type names)](#Res-auto)
+* [ES.12: ネストされたスコープでの名前の再利用はしないようにしましょう (Do not reuse names in nested scopes)](#Res-reuse)
 * [ES.20: 常にオブジェクトは初期化しよう](#Res-always)
 * [ES.21: Don't introduce a variable (or constant) before you need to use it](#Res-introduce)
 * [ES.22: Don't declare a variable until you have a value to initialize it with](#Res-init)
@@ -11816,8 +12006,9 @@ Arithmetic rules:
 * [ES.106: Don't try to avoid negative values by using `unsigned`](#Res-nonnegative)
 * [ES.107: Don't use `unsigned` for subscripts, prefer `gsl::index`](#Res-subscripts)
 
-### <a name="Res-lib"></a>ES.1: Prefer the standard library to other libraries and to "handcrafted code"
+### <a name="Res-lib"></a>ES.1: 他のライブラリやお手製コードより標準ライブラリを使うようにしましょう (Prefer the standard library to other libraries and to "handcrafted code")
 
+<!--
 ##### Reason
 
 Code using a library can be much easier to write than code working directly with language features, much shorter, tend to be of a higher level of abstraction, and the library code is presumably already tested.
@@ -11846,9 +12037,39 @@ Large parts of the standard library rely on dynamic allocation (free store). The
 ##### Enforcement
 
 Not easy. ??? Look for messy loops, nested loops, long functions, absence of function calls, lack of use of non-built-in types. Cyclomatic complexity?
+-->
+##### 理由
 
-### <a name="Res-abstr"></a>ES.2: Prefer suitable abstractions to direct use of language features
+ライブラリを使ったコードは、言語機能を直接操作するコードよりもはるかに簡単に記述でき、はるかに短く、抽象化レベルが高くなる傾向があり、ライブラリコードはおそらく既にテストされています。
+ISO C++ 標準ライブラリは、最も広く知られ、最もよくテストされたライブラリの 1 つです。
+これは、すべての C++ 実装の一部として利用できます。
 
+##### 例
+
+    auto sum = accumulate(begin(a), end(a), 0.0);   // グッド
+
+`accumulate`の範囲バージョンはさらに優れています:
+
+    auto sum = accumulate(v, 0.0); // さらによい
+
+逆に、よく知られたアルゴリズムを手で書いてはいけません:
+
+    int max = v.size();   // 悪い: 冗長で目的が不明
+    double sum = 0.0;
+    for (int i = 0; i < max; ++i)
+        sum = sum + v[i];
+
+##### 例外
+
+標準ライブラリの大部分は、動的割り当て(フリー ストア) に依存しています。これらの部分、アルゴリズムではなく特にコンテナにおいて、一部のハードリアルタイムおよび組み込みアプリケーションには適していません。そのような場合は、同様の機能を提供/使用することを検討してください。たとえば、プールアロケータを使用して実装された標準ライブラリ スタイルのコンテナです。
+
+##### 実施
+
+簡単ではありません。??? 乱雑なループ、ネストされたループ、長い関数、関数呼び出しの欠如、非組み込み型の使用の欠如を探しましょう。循環的複雑度?
+
+### <a name="Res-abstr"></a>ES.2: 言語機能を直接使用するよりも、適切な抽象化を優先しましょう (Prefer suitable abstractions to direct use of language features)
+
+<!--
 ##### Reason
 
 A "suitable abstraction" (e.g., library or class) is closer to the application concepts than the bare language, leads to shorter and clearer code, and is likely to be better tested.
@@ -11883,13 +12104,110 @@ Once the checking for overflow and error handling has been added that code gets 
 ##### Enforcement
 
 Not easy. ??? Look for messy loops, nested loops, long functions, absence of function calls, lack of use of non-built-in types. Cyclomatic complexity?
+-->
+##### 理由
 
-## ES.dcl: Declarations
+「適切な抽象化」 (ライブラリやクラスなど) は、むき出しの言語よりもアプリケーションの概念に近く、コードが短く明確になり、より適切にテストされる可能性が高くなります。
 
+##### 例
+
+    vector<string> read1(istream& is)   // グッド
+    {
+        vector<string> res;
+        for (string s; is >> s;)
+            res.push_back(s);
+        return res;
+    }
+
+より伝統的で低レベルのほぼ同等のものは、長く、乱雑で、正しく理解するのが難しく、おそらく遅くなります:
+
+    char** read2(istream& is, int maxelem, int maxstring, int* nread)   // 悪い: 冗長で不完全
+    {
+        auto res = new char*[maxelem];
+        int elemcount = 0;
+        while (is && elemcount < maxelem) {
+            auto s = new char[maxstring];
+            is.read(s, maxstring);
+            res[elemcount++] = s;
+        }
+        nread = &elemcount;
+        return res;
+    }
+
+オーバーフローとエラー処理のチェックが追加されると、コードは非常に厄介になりますし、返されたポインターと配列に含まれる Cスタイルの文字列を忘れずに`削除`しなければならないという問題もあります。
+
+##### 実施
+
+簡単ではありません。 ??? 乱雑なループ、ネストされたループ、長い関数、関数呼び出しの欠如、非組み込み型の使用の欠如を探しましょう。循環的複雑度?
+
+## ES.dcl: 宣言 (Declarations)
+
+宣言はステートメントです。宣言はスコープ内に名前を導入し、名前付きオブジェクトの構築をするかもしれません。
+<!--
 A declaration is a statement. A declaration introduces a name into a scope and may cause the construction of a named object.
+-->
 
-### <a name="Res-scope"></a>ES.5: Keep scopes small
+### <a name="Res-scope"></a>ES.5: スコープは小さく保ちましょう (Keep scopes small)
 
+##### 理由
+
+読みやすさ。リソース保持の最小化。偶発的な値の誤用を避けましょう。
+
+**別のルール**: 不必要に大きなスコープで名前を宣言しない。
+
+##### 例
+
+    void use()
+    {
+        int i;    // 悪い: iはループの後にアクセスする必要がない
+        for (i = 0; i < 20; ++i) { /* ... */ }
+        // ここではiの使用は意図していない
+        for (int i = 0; i < 20; ++i) { /* ... */ }  // 良い: iはforループ内でローカル
+
+        if (auto pc = dynamic_cast<Circle*>(ps)) {  // 良い: pcはif文内でローカル
+            // ... Circleに対する処理 ...
+        }
+        else {
+            // ... エラー処理 ...
+        }
+    }
+
+##### 悪い例
+
+    void use(const string& name)
+    {
+        string fn = name + ".txt";
+        ifstream is {fn};
+        Record r;
+        is >> r;
+        // ... fn や isの利用を意図していない 200行のコード ...
+    }
+
+どう考えてもこの関数は長すぎるのですが、ポイントは `fn` が使うリソースと `is` が持つファイルハンドルです。
+必要以上に長く保持され、予期しない `is` と `fn` の使用が関数の後半で発生する可能性があります。
+この場合、読み取りを除外することをお勧めします:
+
+
+    Record load_record(const string& name)
+    {
+        string fn = name + ".txt";
+        ifstream is {fn};
+        Record r;
+        is >> r;
+        return r;
+    }
+
+    void use(const string& name)
+    {
+        Record r = load_record(name);
+        // ... 200行のコード ...
+    }
+
+##### 実施
+
+* ループ外で宣言されているがループ後に使用されていないループ変数をチェックしましょう。
+* ファイルハンドルやロックのような高価なリソースが N行(Nはケースごとの適切な値)に渡って使用されていない場合をチェックしましょう。
+<!--
 ##### Reason
 
 Readability. Minimize resource retention. Avoid accidental misuse of value.
@@ -11947,9 +12265,55 @@ In this case, it might be a good idea to factor out the read:
 
 * Flag loop variable declared outside a loop and not used after the loop
 * Flag when expensive resources, such as file handles and locks are not used for N-lines (for some suitable N)
+-->
 
-### <a name="Res-cond"></a>ES.6: Declare names in for-statement initializers and conditions to limit scope
+### <a name="Res-cond"></a>ES.6: スコープを限定するためにfor文の初期化ステートメントや条件文内で名前を宣言しましょう (Declare names in for-statement initializers and conditions to limit scope)
 
+##### 理由
+
+可読性。リソース保持の最小化。
+
+##### 例
+
+    void use()
+    {
+        for (string s; cin >> s;)
+            v.push_back(s);
+
+        for (int i = 0; i < 20; ++i) {   // 良い: iはforループ内でローカル
+            // ...
+        }
+
+        if (auto pc = dynamic_cast<Circle*>(ps)) {   // 良い: pcはif文内でローカル
+            // ... Circleに対して処理 ...
+        }
+        else {
+            // ... エラー処理 ...
+        }
+    }
+
+##### 実施
+
+* ループ外で宣言されているがループ後に使用されていないループ変数をチェックしましょう。
+* (困難) ループの前に宣言されていて、ループ後に関係のない用途で使用されているループ変数をチェックしましょう。
+
+##### C++17 および C++20 での例
+
+ノート: C++17 および C++20 では `if`、`switch`そして範囲`for`に初期化ステートメントが追加されました。 これらはC++17およびC++20のサポートが必要です。
+
+    map<int, string> mymap;
+
+    if (auto result = mymap.insert(value); result.second) {
+        // insertは成功し、resultはこのブロック内で有効
+        use(result.first);  // ok
+        // ...
+    } // resultはここで破棄される
+
+##### C++17 および C++20 での実施 (C++17またはC++20のコンパイラを利用している場合)
+
+* 条件/ループ変数で、本体の前に宣言されていて、本体の後に使用されていないものをチェックしましょう。
+* (困難) 条件/ループ変数で、本体の前に宣言されていて、本体の後に関係のない用途で使用されているものをチェックしましょう。
+<!--
 ##### Reason
 
 Readability. Minimize resource retention.
@@ -11994,11 +12358,79 @@ Note: C++17 and C++20 also add `if`, `switch`, and range-`for` initializer state
 
 * Flag selection/loop variables declared before the body and not used after the body
 * (hard) Flag selection/loop variables declared before the body and used after the body for an unrelated purpose.
+-->
 
 
+### <a name="Res-name-length"></a>ES.7: 一般的でローカルなものには短い名前を、特殊でローカルでないものには長い名前をつけましょう (Keep common and local names short, and keep uncommon and nonlocal names longer)
 
-### <a name="Res-name-length"></a>ES.7: Keep common and local names short, and keep uncommon and nonlocal names longer
+##### 理由
 
+可読性。Readability. 非ローカルで関係がない名前との衝突の機会を下げる。
+
+##### 例
+
+短いローカルな慣習的な名前は可読性を向上させます:
+
+    template<typename T>    // 良い
+    void print(ostream& os, const vector<T>& v)
+    {
+        for (gsl::index i = 0; i < v.size(); ++i)
+            os << v[i] << '\n';
+    }
+
+インデックスは慣習的に`i`と呼ばれます。そしてこのジェネリック関数の中では vectorの意味についてヒントがないため、`v`はどの名前よりも適切です。以下と比べてください:
+
+    template<typename Element_type>   // 悪い: 冗長で、読みにくい
+    void print(ostream& target_stream, const vector<Element_type>& current_vector)
+    {
+        for (gsl::index current_element_index = 0;
+             current_element_index < current_vector.size();
+             ++current_element_index
+        )
+        target_stream << current_vector[current_element_index] << '\n';
+    }
+
+はい、これは風刺画的です。しかももっと悪いものを私たちは見てきました。
+
+##### 例
+
+非慣習的で、短く、ローカルでない名前はコードを曖昧にします:
+
+    void use1(const string& s)
+    {
+        // ...
+        tt(s);   // 悪い: tt()とは何?
+        // ...
+    }
+
+より良くするには、ローカルでないエントリには読みやすい名前を与えましょう:
+
+    void use1(const string& s)
+    {
+        // ...
+        trim_tail(s);   // 良くなった
+        // ...
+    }
+
+この例では、読み手は`trim_tail`が何を意味するかを知るチャンスがありますし、あるいは読み手はそれを調べて後で思い出すことができます。
+
+##### 悪い例
+
+大きな関数の引数名は、事実上非ローカルであり、意味のあるものにする必要があります:
+
+    void complicated_algorithm(vector<Record>& vr, const vector<int>& vi, map<string, int>& out)
+    // viで指定されたインデックスを使って, イベントからvrに読み込みます(使用されたRecordをマーク)。
+    // そしてoutに(name, index)のペアを出力します。
+    {
+        // ... vr, vi, outを使用する500行のコード ...
+    }
+
+関数を短くすることをお勧めしますが、この規則は普遍的に守られているわけではなく、命名はそれを反映する必要があります。
+
+##### 実施
+
+ローカルとそうでないものの名前の長さをチェックしましょう。さらに関数の長さもチェックしましょう。
+<!--
 ##### Reason
 
 Readability. Lowering the chance of clashes between unrelated non-local names.
@@ -12066,9 +12498,35 @@ We recommend keeping functions short, but that rule isn't universally adhered to
 ##### Enforcement
 
 Check length of local and non-local names. Also take function length into account.
+-->
 
-### <a name="Res-name-similar"></a>ES.8: Avoid similar-looking names
+### <a name="Res-name-similar"></a>ES.8: 見た目の似た名前は避けましょう (Avoid similar-looking names)
 
+##### 理由
+
+コードの明確さと可読性。 名前があまりにも似ていると、理解が遅くなり、エラーの可能性が高くなります。
+
+##### 悪い例
+
+    if (readable(i1 + l1 + ol + o1 + o0 + ol + o1 + I0 + l0)) surprise();
+
+##### 悪い例
+
+同じスコープ内の型と同じ名前の型でないものを宣言しないでください。こうすることで、曖昧さを取り除くための`struct` や `enum`などのキーワードが不要になります。また、ルックアップが失敗した場合に `struct X` が暗黙的に `X` を宣言できるため、エラーの原因も取り除かれます。
+
+    struct foo { int n; };
+    struct foo foo();       // ダメ。 fooはこのスコープですでに型になっている
+    struct foo x = foo();   // 明確化が必要
+
+##### 例外
+
+骨董品レベルのヘッダーファイルは、同じスコープ内で同じ名前の非型と型を宣言している場合があります。
+
+##### 実施
+
+* 紛らわしい既知の文字と数字の組み合わせのリストと照らし合わせて、名前を確認しましょう。
+* 同じスコープで宣言されたクラスまたは列挙を隠す変数、関数、または列挙子の宣言をチェックしましょう。
+<!--
 ##### Reason
 
 Code clarity and readability. Too-similar names slow down comprehension and increase the likelihood of error.
@@ -12093,9 +12551,39 @@ Antique header files might declare non-types and types with the same name in the
 
 * Check names against a list of known confusing letter and digit combinations.
 * Flag a declaration of a variable, function, or enumerator that hides a class or enumeration declared in the same scope.
+-->
 
-### <a name="Res-not-CAPS"></a>ES.9: Avoid `ALL_CAPS` names
+### <a name="Res-not-CAPS"></a>ES.9: すべて大文字の名前は避けましょう (Avoid `ALL_CAPS` names)
 
+##### 理由
+
+そのような名前は通常マクロで利用されています。したがって、すべてが大文字の名前(以下`ALL_CAPS`)は、意図しないマクロ置換に対して脆弱です。
+
+##### 例
+
+    // どこかのヘッダのどこかの場所で:
+    #define NE !=
+
+    // 別のどこかのヘッダのどこかの場所で:
+    enum Coord { N, NE, NW, S, SE, SW, E, W };
+
+    // またどこかの貧弱なプログラマのcppファイルで:
+    switch (direction) {
+    case N:
+        // ...
+    case NE:
+        // ...
+    // ...
+    }
+
+##### ノート
+
+定数がかつてマクロだったという理由だけで、定数に`ALL_CAPS`の名前をつけないでください。
+
+##### 実施
+
+すべての`ALL_CAPS`の使用箇所をチェックしましょう。古いコードでは、`ALL_CAPS`のマクロ名は許容し、`ALL_CAPS`でないマクロ名はチェックしましょう。
+<!--
 ##### Reason
 
 Such names are commonly used for macros. Thus, `ALL_CAPS` name are vulnerable to unintended macro substitution.
@@ -12124,9 +12612,66 @@ Do not use `ALL_CAPS` for constants just because constants used to be macros.
 ##### Enforcement
 
 Flag all uses of ALL CAPS. For older code, accept ALL CAPS for macro names and flag all non-ALL-CAPS macro names.
+-->
 
-### <a name="Res-name-one"></a>ES.10: Declare one name (only) per declaration
+### <a name="Res-name-one"></a>ES.10: 1つの宣言では1つの名前だけを宣言しましょう (Declare one name (only) per declaration)
 
+##### 理由
+
+宣言を 1 行に 1 つにすることで、読みやすさが向上し、C/C++の文法に関連した間違いを回避できます。また、より説明的な行末コメントへのスペースを残します。
+
+##### 悪い例
+
+    char *p, c, a[7], *pp[7], **aa[10];   // こいつはくせえッー！
+
+##### 例外
+
+関数宣言には、複数の関数引数宣言を含めることができます。
+
+##### 例外
+
+構造化束縛(C++17)は、いくつかの変数を導入するために特別にデザインされています:
+
+    auto [iter, inserted] = m.insert_or_assign(k, val);
+    if (inserted) { /* 新しいエントリが挿入された */ }
+
+##### 例
+
+    template <class InputIterator, class Predicate>
+    bool any_of(InputIterator first, InputIterator last, Predicate pred);
+
+あるいはコンセプトを使ってさらに良くすると:
+
+    bool any_of(InputIterator auto first, InputIterator auto last, Predicate auto pred);
+
+(*訳注) コンセプトのこの例については[このページ](https://cpprefjp.github.io/lang/cpp20/concepts.html)の「関数テンプレートの簡略構文を使用する」を参照
+
+##### 例
+
+    double scalbn(double x, int n);   // OK: x * pow(FLT_RADIX, n); FLT_RADIX is usually 2
+
+または:
+
+    double scalbn(    // さらに良い: x * pow(FLT_RADIX, n); FLT_RADIX is usually 2
+        double x,     // ベース値
+        int n         // 指数
+    );
+
+または:
+
+    // さらに良い: base * pow(FLT_RADIX, exponent); FLT_RADIX is usually 2
+    double scalbn(double base, int exponent);
+
+##### 悪い例
+
+    int a = 7, b = 9, c, d = 10, e = 3;
+
+宣言子の長いリストでは、初期化されていない変数を見落としがちです。
+
+##### 実施
+
+複数同時に宣言された変数と定数をチェックしましょう。 (例: `int* p, q;`)
+<!--
 ##### Reason
 
 One-declaration-per line increases readability and avoids mistakes related to
@@ -12182,9 +12727,57 @@ In a long list of declarators is is easy to overlook an uninitialized variable.
 ##### Enforcement
 
 Flag variable and constant declarations with multiple declarators (e.g., `int* p, q;`)
+-->
 
-### <a name="Res-auto"></a>ES.11: Use `auto` to avoid redundant repetition of type names
+### <a name="Res-auto"></a>ES.11: 型名の冗長な繰り返しを避けるために `auto` を使用しましょう (Use `auto` to avoid redundant repetition of type names)
 
+##### 理由
+
+* 単純な繰り返しは退屈で、エラーが発生しやすくなります。
+* `auto` を使用すると、宣言されたエンティティの名前が宣言内の固定位置にあるため、読みやすくなります。
+* テンプレート関数宣言では、戻り値の型をメンバー型にすることができます。
+
+##### 例
+
+考えてみましょう:
+
+    auto p = v.begin();   // vector<int>::iterator
+    auto h = t.future();
+    auto q = make_unique<int[]>(s);
+    auto f = [](int x){ return x + 10; };
+
+いずれの場合も、コンパイラは認識しているがプログラマには間違える可能性がある、長くて、覚えにくい型名を書かなくてすんでいます。
+
+##### 例
+
+    template<class T>
+    auto Container<T>::first() -> Iterator;   // Container<T>::Iterator
+
+##### 例外
+
+初期化子リストで、あなたが正確に自分が欲しい型が分かっていて、かつ、初期化子が変換を必要とする場合には、`auto`を避けてください。
+
+##### 例
+
+    auto lst = { 1, 2, 3 };   // lst は初期化子リスト
+    auto x{1};   // x は int (C++17での話. C++11では初期化子リスト)
+(訳注) [このページ](https://cpprefjp.github.io/lang/cpp17/new_rules_for_auto_deduction_from_braced-init-list.html)を参照
+
+##### ノート
+
+コンセプトが有効な場合は、私たちが推測する型についてより明確にすることができますし、そうする必要があります。
+
+    // ...
+    ForwardIterator p = algo(x, y, z);
+
+##### 例 (C++17)
+
+    auto [ quotient, remainder ] = div(123456, 73);   // div_tの返り値のメンバーを分解
+
+##### 実施
+
+宣言内の型名の冗長な繰り返しをチェックしましょう。
+<!--
 ##### Reason
 
 * Simple repetition is tedious and error-prone.
@@ -12230,9 +12823,101 @@ When concepts become available, we can (and should) be more specific about the t
 ##### Enforcement
 
 Flag redundant repetition of type names in a declaration.
+-->
 
-### <a name="Res-reuse"></a>ES.12: Do not reuse names in nested scopes
+### <a name="Res-reuse"></a>ES.12: ネストされたスコープでの名前の再利用はしないようにしましょう (Do not reuse names in nested scopes)
 
+##### 理由
+
+どの変数が使用されているかについて混乱しやすくなります。
+メンテナンスの問題を引き起こす可能性があります。
+
+##### 悪い例
+
+    int d = 0;
+    // ...
+    if (cond) {
+        // ...
+        d = 9;
+        // ...
+    }
+    else {
+        // ...
+        int d = 7;
+        // ...
+        d = value_to_be_returned;
+        // ...
+    }
+
+    return d;
+
+これが大きな `if` 文だと、内部スコープに新しい `d` が導入されていることを見落としやすくなります。
+これはよく知られたバグの原因です。
+このような内部スコープでの名前の再利用は、「シャドウイング(shadowing)」と呼ばれることがあります。
+
+##### ノート
+
+shadowingは主に、関数が大きすぎて複雑すぎる場合に問題になります。
+
+##### 例
+
+最も外側のブロックでの関数引数のshadowingは言語によって禁止されています:
+
+    void f(int x)
+    {
+        int x = 4;  // エラー: 関数引数名の再利用
+
+        if (x) {
+            int x = 7;  // 許可されているが、良くない
+            // ...
+        }
+    }
+
+##### 悪い例
+
+ローカル変数としてメンバー名を再利用することも、同じく問題になります:
+
+    struct S {
+        int m;
+        void f(int x);
+    };
+
+    void S::f(int x)
+    {
+        m = 7;    // メンバーへの代入
+        if (x) {
+            int m = 9;
+            // ...
+            m = 99; // ローカル変数への代入
+            // ...
+        }
+    }
+
+##### 例外
+
+派生クラスで基本クラスの関数名を再利用することがよくあります:
+
+    struct B {
+        void f(int);
+    };
+
+    struct D : B {
+        void f(double);
+        using B::f;
+    };
+
+これはエラーが発生しやすくなります。
+たとえば、using 宣言を忘れてしまうと、`d.f(1)` を呼び出しても `f` の `int` バージョンは見つからないでしょう。
+
+??? クラス階層でのshadowing/hidingについて特定のルールが必要ですか?
+
+##### 実施
+
+* ネストされたローカルスコープでの名前の再利用をチェックしましょう
+* メンバー関数内でローカル変数としての、メンバ名の再利用をチェックしましょう
+* ローカル変数やメンバー名としての、グローバル名の再利用をチェックしましょう
+* 派生クラス内での基底クラスのメンバー名の再利用をチェックしましょう (関数名は除く)
+<!--
 ##### Reason
 
 It is easy to get confused about which variable is used.
@@ -12323,6 +13008,7 @@ For example, had we forgotten the using declaration, a call `d.f(1)` would not h
 * Flag reuse of a member name as a local variable in a member function
 * Flag reuse of a global name as a local variable or a member name
 * Flag reuse of a base class member name in a derived class (except for function names)
+-->
 
 ### <a name="Res-always"></a>ES.20: 常にオブジェクトは初期化しよう(Always initialize an object)
 
@@ -21565,7 +22251,7 @@ Cの配列は安全性が低く、`array`と`vector`に対する利点は全く�
 
 ##### 実施
 
-* Flag declaration of a C array inside a function or class that also declares an STL container (to avoid excessive noisy warnings on legacy non-STL code). To fix: At least change the C array to a `std::array`.
+* 関数やクラス内で宣言されている C配列をチェックしましょう。最低限`std::array`に直しましょう。
 
 ### <a name="Rsl-vector"></a>SL.con.2: 他のコンテナを使う理由がない限りはSTLの`vector`を使おう(Prefer using STL `vector` by default unless you have a reason to use a different container)
 
@@ -21637,8 +22323,8 @@ To initialize a vector with a list of elements, use `{}`-initialization.
 複数個の要素からvectorを初期化するには、`()`初期化子を使いましょう。
 要素のリストからvectorを初期化するには、`{}`初期化子を使いましょう。
 
-    vector<int> v1(20);  // v1 has 20 elements with the value 0 (vector<int>{})
-    vector<int> v2 {20}; // v2 has 1 element with the value 20
+    vector<int> v1(20);  // v1は値が0の要素を20個持つ (vector<int>{})
+    vector<int> v2 {20}; // v2は値が20の要素を1個持つ
 
 [{}初期化子を使おう](#Res-list).
 
@@ -21797,15 +22483,16 @@ This rule is part of the [bounds profile](#SS-bounds).
 
 このルールは[bounds profile](#SS-bounds)の一部です。
 
-**TODO Notes**:
+**TODO ノート**:
 
-* Impact on the standard library will require close coordination with WG21, if only to ensure compatibility even if never standardized.
-* We are considering specifying bounds-safe overloads for stdlib (especially C stdlib) functions like `memcmp` and shipping them in the GSL.
-* For existing stdlib functions and types like `vector` that are not fully bounds-checked, the goal is for these features to be bounds-checked when called from code with the bounds profile on, and unchecked when called from legacy code, possibly using contracts (concurrently being proposed by several WG21 members).
+* 標準ライブラリに影響を与えることは、たとえ標準化されなくとも、互換性を維持するために、WG21との緊密な調整が必要になります。
+* 我々は標準ライブラリ(特にCの標準ライブラリ)に対して`memcmp`のように範囲安全なオーバーロードを規定しようと考えています。それらはGSLの一部としてリリースされます。
+* 既存の標準ライブラリの関数や型は`vetor`のように完全には範囲チェックされません。この機能に対するゴールは、範囲プロファイルがonのコードからは範囲チェックが行われ、レガシーコードからはチェックが行われないことです。契約=contracts(幾人かのWG21メンバーによって現在提案中)を使うことで可能になります。
 
 
 ## <a name="SS-string"></a>SL.str: String
 
+<!--
 Text manipulation is a huge topic.
 `std::string` doesn't cover all of it.
 This section primarily tries to clarify `std::string`'s relation to `char*`, `zstring`, `string_view`, and `gsl::string_span`.
@@ -21832,7 +22519,33 @@ String summary:
 
 * [F.24 span](#Rf-range)
 * [F.25 zstring](#Rf-zstring)
+-->
+文字列操作は巨大なトピックです。
+`std::string` はそのすべてをカバーしていません。
+このセクションの一番の目的は、`char*`、`zstring`、`string_view`、`gsl::string_span`と`std::string`の関係性を明らかにすることです。
+非ASCII文字セットとエンコーディング(例. `wchar_t`、Unicode、UTF-8)に関する重要な問題は他の場所でカバーされるでしょう。
 
+**See also**: [regular expressions](#SS-regex)
+
+Here, we use "sequence of characters" or "string" to refer to a sequence of characters meant to be read as text (somehow, eventually).
+We don't consider
+
+String summary:
+
+* [SL.str.1: Use `std::string` to own character sequences](#Rstr-string)
+* [SL.str.2: Use `std::string_view` or `gsl::string_span` to refer to character sequences](#Rstr-view)
+* [SL.str.3: Use `zstring` or `czstring` to refer to a C-style, zero-terminated, sequence of characters](#Rstr-zstring)
+* [SL.str.4: Use `char*` to refer to a single character](#Rstr-char*)
+* [SL.str.5: 文字を表現する必要がないバイト値には`std::byte`を使おう](#Rstr-byte)
+
+* [SL.str.10: Use `std::string` when you need to perform locale-sensitive string operations](#Rstr-locale)
+* [SL.str.11: Use `gsl::string_span` rather than `std::string_view` when you need to mutate a string](#Rstr-span)
+* [SL.str.12: 標準ライブラリの`string`を意味する文字列リテラルにはサフィックス`s`を使おう](#Rstr-s)
+
+**See also**:
+
+* [F.24 span](#Rf-range)
+* [F.25 zstring](#Rf-zstring)
 
 ### <a name="Rstr-string"></a>SL.str.1: Use `std::string` to own character sequences
 
@@ -22000,8 +22713,25 @@ See [`zstring`](#Rstr-zstring), [`string`](#Rstr-string), and [`string_span`](#R
 
 * Flag uses of `[]` on a `char*`
 
-### <a name="Rstr-byte"></a>SL.str.5: Use `std::byte` to refer to byte values that do not necessarily represent characters
+### <a name="Rstr-byte"></a>SL.str.5: 文字を表現する必要がないバイト値には`std::byte`を使おう (Use `std::byte` to refer to byte values that do not necessarily represent characters)
 
+##### 理由
+
+文字の必要がない何かへのポインタを表現するときに`char*`を使うことは混乱をもたらし、価値のある最適化を無効にします。
+
+##### 例
+
+    ???
+
+##### ノート
+
+C++17
+
+##### 実施
+
+???
+
+<!--
 ##### Reason
 
 Use of `char*` to represent a pointer to something that is not necessarily a character causes confusion
@@ -22018,7 +22748,7 @@ C++17
 ##### Enforcement
 
 ???
-
+-->
 
 ### <a name="Rstr-locale"></a>SL.str.10: Use `std::string` when you need to perform locale-sensitive string operations
 
@@ -22056,8 +22786,9 @@ C++17
 
 The compiler will flag attempts to write to a `string_view`.
 
-### <a name="Rstr-s"></a>SL.str.12: Use the `s` suffix for string literals meant to be standard-library `string`s
+### <a name="Rstr-s"></a>SL.str.12: 標準ライブラリの`string`を意味する文字列リテラルにはサフィックス`s`を使おう (Use the `s` suffix for string literals meant to be standard-library `string`s)
 
+<!--
 ##### Reason
 
 Direct expression of an idea minimizes mistakes.
@@ -22072,6 +22803,23 @@ Direct expression of an idea minimizes mistakes.
 
 
 ##### Enforcement
+
+???
+-->
+##### 理由
+
+考えをダイレクトに表現することは、ミスの可能性を最小化します。
+
+##### 理由
+
+    auto pp1 = make_pair("Tokyo", 9.00);         // {C-style string,double} 意図している?
+    pair<string, double> pp2 = {"Tokyo", 9.00};  // やや冗長
+    auto pp3 = make_pair("Tokyo"s, 9.00);        // {std::string,double}    // C++14
+    pair pp4 = {"Tokyo"s, 9.00};                 // {std::string,double}    // C++17
+
+
+
+##### 実施
 
 ???
 
@@ -22093,22 +22841,49 @@ Iostream rule summary:
 * [SL.io.50: Avoid `endl`](#Rio-endl)
 * [???](#???)
 -->
-`iostream`s is a type safe, extensible, formatted and unformatted I/O library for streaming I/O.
-It supports multiple (and user extensible) buffering strategies and multiple locales.
-It can be used for conventional I/O, reading and writing to memory (string streams),
-and user-defines extensions, such as streaming across networks (asio: not yet standardized).
+`iostream`は型安全で、拡張性があり、整形、非整形のどちらも扱えるI/Oストリーミングライブラリです。
+複数の(そしてユーザーが拡張可能な)バッファリング戦略と複数のロケールをサポートしています。
+従来型のI/Oや、メモリに対する読み込みと書き出し(stringストリーム)、そしてネットワーク越しのストリーミング(asio: まだ標準化されていない)のようなユーザー定義拡張に対して、使用することができます。
 
-Iostream rule summary:
+IOストリームのルールまとめ:
 
-* [SL.io.1: Use character-level input only when you have to](#Rio-low)
-* [SL.io.2: When reading, always consider ill-formed input](#Rio-validate)
-* [SL.io.3: Prefer iostreams for I/O](#Rio-streams)
-* [SL.io.10: Unless you use `printf`-family functions call `ios_base::sync_with_stdio(false)`](#Rio-sync)
+* [SL.io.1: 本当に必要なときに限り、文字レベルの入力を使いましょう](#Rio-low)
+* [SL.io.2: 読み込み時は、常に不正な入力のことを考慮しよう](#Rio-validate)
+* [SL.io.3: I/Oに対しては`iostream`を使おう](#Rio-streams)
+* [SL.io.10: `ios_base::sync_with_stdio(false)`を使わずに`printf`ファミリーの関数を使わないようにしよう`](#Rio-sync)
 * [SL.io.50: `endl`を避けよう](#Rio-endl)
 * [???](#???)
 
-### <a name="Rio-low"></a>SL.io.1: Use character-level input only when you have to
+### <a name="Rio-low"></a>SL.io.1: 本当に必要なときに限り、文字レベルの入力を使いましょう(Use character-level input only when you have to)
 
+##### 理由
+
+本当に個々の文字を扱うだけでない限り、文字レベルの入力を使用すると、ユーザーコードがエラーを起こしやすくなる可能性があります。
+また、文字からのトークンの構成が非効率になる可能性があります。
+
+##### 例
+
+    char c;
+    char buf[128];
+    int i = 0;
+    while (cin.get(c) && !isspace(c) && i < 128)
+        buf[i++] = c;
+    if (i == 128) {
+        // ... handle too long string ....
+    }
+
+より良い例 (シンプルで、おそらく速い):
+
+    string s;
+    s.reserve(128);
+    cin >> s;
+
+そして`reserve(128)`はおそらく不要。
+
+##### 実施
+
+???
+<!--
 ##### Reason
 
 Unless you genuinely just deal with individual characters, using character-level input leads to the user code performing potentially error-prone
@@ -22136,10 +22911,23 @@ and the `reserve(128)` is probably not worthwhile.
 ##### Enforcement
 
 ???
+-->
 
+### <a name="Rio-validate"></a>SL.io.2: 読み込み時は、常に不正な入力のことを考慮しよう(When reading, always consider ill-formed input)
 
-### <a name="Rio-validate"></a>SL.io.2: When reading, always consider ill-formed input
+##### 理由
 
+通常、エラーはできるだけ早く処理するのがベストです。
+入力が検証されない場合は、すべての関数は不正なデータに対応できるように書かれなくてはなりません。(そしてこれは実用的ではありません)。
+
+##### 例
+
+    ???
+
+##### 実施
+
+???
+<!--
 ##### Reason
 
 Errors are typically best handled as soon as possible.
@@ -22152,9 +22940,48 @@ If input isn't validated, every function must be written to cope with bad data (
 ##### Enforcement
 
 ???
+-->
 
-### <a name="Rio-streams"></a>SL.io.3: Prefer `iostream`s for I/O
+### <a name="Rio-streams"></a>SL.io.3: I/Oに対しては`iostream`を使おう (Prefer `iostream`s for I/O)
 
+##### 理由
+
+`iostream`は安全で柔軟で、拡張性があります。
+
+##### 例
+
+    // 複素数の出力:
+    complex<double> z{ 3, 4 };
+    cout << z << '\n';
+
+`complex`はユーザー定義型で、そのI/Oは`iostream`ライブラリの変更なしに定義されています。
+
+##### 例
+
+    // ファイルからの複素数の読み込み:
+    for (complex<double> z; cin >> z; )
+        v.push_back(z);
+
+##### 例外
+
+??? パフォーマンス ???
+
+##### 議論: `iostream` vs. `printf()`ファミリー
+
+`printf()`ファミリーは`iostream`に対して2つの利点があると、しばしば指摘されます(そしてしばしば正しい):
+すなわちフォーマットの柔軟性とパフォーマンスです。
+これは`iostream`の利点と比較検討する必要があります。つまり、ユーザー定義型に対する拡張性や、セキュリティ違反に対する回復力、隠ぺいされたメモリ管理、そして`locale`の扱いです。
+
+もし I/Oパフォーマンスが必要な場合は、ほとんどの場合は`printf()`よりも優れた結果が得られます。
+
+`gets()` `scanf()` で `s`を用いたり、`printf()`で`%s`を用いることはセキュリティに危険性をもたらします(バッファオーバーフローに対して脆弱で、一般的にエラーが発生しやすい)。
+C11では、それらは安全なバージョンの`gets_s()`、`scanf_s()`そして`printf_s()`に置き換えられています。しかしそれらは未だ型安全ではありません。
+
+##### 実施
+
+オプションで`<cstdio>`と`<stdio.h>`にフラグを立てましょう。
+
+<!--
 ##### Reason
 
 `iostream`s are safe, flexible, and extensible.
@@ -22192,9 +23019,27 @@ In C11, they are replaced by `gets_s()`, `scanf_s()`, and `printf_s()` as safer 
 ##### Enforcement
 
 Optionally flag `<cstdio>` and `<stdio.h>`.
+-->
 
-### <a name="Rio-sync"></a>SL.io.10: Unless you use `printf`-family functions call `ios_base::sync_with_stdio(false)`
+### <a name="Rio-sync"></a>SL.io.10: `ios_base::sync_with_stdio(false)`を使わずに`printf`ファミリーの関数を使わないようにしよう (Unless you use `printf`-family functions call `ios_base::sync_with_stdio(false)`)
 
+##### 理由
+
+`iostreams`と`printf-style`のI/Oを同期させることはコストがかかります。
+`cin`と`cout`はデフォルトで `printf`と同期されています。
+
+##### 例
+
+    int main()
+    {
+        ios_base::sync_with_stdio(false);
+        // ... iostreamsの利用 ...
+    }
+
+##### 実施
+
+???
+<!--
 ##### Reason
 
 Synchronizing `iostreams` with `printf-style` I/O can be costly.
@@ -22211,6 +23056,7 @@ Synchronizing `iostreams` with `printf-style` I/O can be costly.
 ##### Enforcement
 
 ???
+-->
 
 ### <a name="Rio-endl"></a>SL.io.50: `endl`を避けよう(Avoid `endl`)
 

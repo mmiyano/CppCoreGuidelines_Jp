@@ -18,7 +18,7 @@ Many of the guidelines make use of the header-only Guidelines Support Library. O
 
 ## Background and scope
 
-The aim of the guidelines is to help people to use modern C++ effectively. By "modern C++" we mean C++11, C++14, and C++17. In other
+The aim of the guidelines is to help people to use modern C++ effectively. By "modern C++" we mean C++11 and newer. In other
 words, what would you like your code to look like in 5 years' time, given that you can start now? In 10 years' time?
 
 The guidelines are focused on relatively higher-level issues, such as interfaces, resource management, memory management, and concurrency. Such
@@ -46,4 +46,6 @@ The rules are meant for gradual introduction into a code base. We plan to build 
 ## Contributions and LICENSE
 
 Comments and suggestions for improvements are most welcome. We plan to modify and extend this document as our understanding improves and the
-language and the set of available libraries improve. More details are found at [CONTRIBUTING](./CONTRIBUTING.md) and [LICENSE](./LICENSE) .
+language and the set of available libraries improve. More details are found at [CONTRIBUTING](./CONTRIBUTING.md) and [LICENSE](./LICENSE).
+
+Thanks to [DigitalOcean](https://www.digitalocean.com/?refcode=32f291566cf7&utm_campaign=Referral_Invite&utm_medium=Referral_Program&utm_source=CopyPaste) for hosting the Standard C++ Foundation website.

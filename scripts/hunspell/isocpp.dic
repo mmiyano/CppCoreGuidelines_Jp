@@ -52,6 +52,7 @@ ASIC
 asio
 AST
 async
+AUTOSAR
 'B'
 b2
 BDE
@@ -96,6 +97,7 @@ completers
 componentization
 composability
 composable
+ComputationCache
 conceptsTS
 cond
 const
@@ -103,7 +105,9 @@ Const
 constcast
 constexpr
 constness
+constref
 copy2
+coro
 CORBA
 cout
 CP
@@ -136,6 +140,7 @@ d2
 D2
 d2's
 dag
+DataRecord
 dcl
 dd
 de
@@ -195,6 +200,7 @@ foobar
 Foobar
 FOOBAR
 fopen
+fprintf's
 fs
 func
 func1
@@ -212,6 +218,7 @@ GitHub
 GOTW
 gp
 GPLv3
+grep
 gsl
 GSL
 GSL's
@@ -219,6 +226,7 @@ gx
 handcoded
 Henricson
 Henricson97
+Herlihy
 hh
 hier
 hierclass
@@ -240,6 +248,7 @@ impactful
 impl
 Impl
 implicitpointercast
+incform
 incomplet
 incorrekt
 increment1
@@ -269,6 +278,7 @@ Jiangang
 jmp
 join's
 JSF
+jthread
 Juhl
 knr
 Koenig97
@@ -277,6 +287,7 @@ Lakos
 Lakos96
 Lavavej
 LCSD05
+legacy_class
 lifecycle
 *life-time
 linearization
@@ -286,11 +297,14 @@ Lomow
 longjmp
 LSP
 lst
+Luchangco
 lvalue
 lvalues
 m1
 m2
 m3
+m_owning;
+m_observer;
 macros2
 malloc
 mallocfree
@@ -301,9 +315,11 @@ md
 memberinit
 members'
 memcmp
+memcpy
 memmove
 memoization
 memoized
+memoizes
 memset
 metameta
 metaprogram
@@ -317,6 +333,7 @@ Meyers96
 Meyers97
 microbenchmarks
 middleware
+MISRA
 mixin
 mixins
 mnemonizes
@@ -330,11 +347,14 @@ Murray93
 mutex
 mutexes
 mx
+MyCustomError
+MyException
 myMap
 MyMap
 myset
 myX
 n'
+naïvely
 namespace
 namespaces
 Namespaces
@@ -344,6 +364,7 @@ Naumann
 ness
 newdelete
 nh
+Nir
 NL
 nodiscard
 noexcept
@@ -372,6 +393,7 @@ optimizable
 O'Reilly
 org
 ostream
+ostringstream
 overabstract
 overconstrain
 overconstrained
@@ -389,6 +411,7 @@ pb2
 pc
 performant
 pessimization
+picture1
 pimpl
 Pimpl
 Pirkelbauer
@@ -433,12 +456,14 @@ rcon
 Rcon
 Rconc
 Rconst
+rcoro
 Rcpl
 *realtime
 Rec2
 refactor
 refactored
 refcount
+refcounted
 regex
 Regex
 RegularFunction
@@ -460,6 +485,7 @@ retryable
 *Re-usability
 reusability
 Reusability
+rf
 Ri
 Rl
 rnd
@@ -469,6 +495,7 @@ Rouquette
 Rp
 Rper
 Rr
+rr
 RRconc
 Rsl
 Rstr
@@ -491,11 +518,14 @@ SemiRegular
 Sergey
 Sewell
 SFINAE
+Shavit
+sharedFoo
 sharedness
 sharedptrparam
 'sharedptrparam'
 setjmp
 SignedIntegral
+signedness
 simpleFunc
 'size'
 sizeof
@@ -508,6 +538,7 @@ smartptrs
 SMS
 Sommerlad
 SomeLargeType
+SomeOtherFunction
 specialization2
 spinlock
 splonk
@@ -534,6 +565,9 @@ Stroustrup15
 Stroustrup94
 Stroustrup's
 struct
+structs
+subobject
+subobjects
 suboperations
 subsetting
 sum1
@@ -563,6 +597,7 @@ tmp
 TMP
 tock
 TODO
+tolower
 toolchains
 TotallyOrdered
 TP
@@ -576,8 +611,10 @@ typesafe
 UB
 u1
 u2
+UDLs
 unaliased
 uncompromised
+uncopyable
 underuse
 undetached
 unencapsulated
@@ -593,6 +630,7 @@ UTF
 util
 v's
 v1
+v17
 v2
 va
 ValueType
@@ -612,7 +650,9 @@ virtuality
 virtuals
 VLAs
 volatile2
+vptr
 vr
+vtable
 vtbls
 vv
 w0
@@ -621,6 +661,8 @@ webby
 Webcolor
 webcolors
 WG21
+WidgetUser
+WorkQueue
 'widen'
 x1
 x2

@@ -1,5 +1,5 @@
 <!--# <a name="main"></a>C++ Core Guidelines-->
-# <a name="main"></a>m
+# <a name="main"></a>C++ Core Guidelines
 
 October 6, 2022
 
@@ -12363,7 +12363,7 @@ General rules:
 
 * [ES.1: 他のライブラリやお手製コードより標準ライブラリを使うようにしましょう (Prefer the standard library to other libraries and to "handcrafted code")](#Res-lib)
 * [ES.2: 言語機能を直接使用するよりも、適切な抽象化を優先しましょう (Prefer suitable abstractions to direct use of language features)](#Res-abstr)
-* [ES.3: Don't repeat yourself, avoid redundant code](#Res-DRY)
+* [ES.3: DRY(同じことを繰り返すな)の原則に従い、冗長なコードは避けましょう (Don't repeat yourself, avoid redundant code)](#Res-DRY)
 
 Declaration rules:
 
@@ -12376,19 +12376,19 @@ Declaration rules:
 * [ES.11: 型名の冗長な繰り返しを避けるために `auto` を使用しましょう (Use `auto` to avoid redundant repetition of type names)](#Res-auto)
 * [ES.12: ネストされたスコープでの名前の再利用はしないようにしましょう (Do not reuse names in nested scopes)](#Res-reuse)
 * [ES.20: 常にオブジェクトは初期化しよう (Always initialize an object)](#Res-always)
-* [ES.21: Don't introduce a variable (or constant) before you need to use it](#Res-introduce)
-* [ES.22: Don't declare a variable until you have a value to initialize it with](#Res-init)
-* [ES.23: Prefer the `{}`-initializer syntax](#Res-list)
-* [ES.24: Use a `unique_ptr<T>` to hold pointers](#Res-unique)
-* [ES.25: Declare an object `const` or `constexpr` unless you want to modify its value later on](#Res-const)
-* [ES.26: Don't use a variable for two unrelated purposes](#Res-recycle)
-* [ES.27: Use `std::array` or `stack_array` for arrays on the stack](#Res-stack)
-* [ES.28: Use lambdas for complex initialization, especially of `const` variables](#Res-lambda-init)
-* [ES.30: Don't use macros for program text manipulation](#Res-macros)
-* [ES.31: Don't use macros for constants or "functions"](#Res-macros2)
-* [ES.32: Use `ALL_CAPS` for all macro names](#Res-ALL_CAPS)
-* [ES.33: If you must use macros, give them unique names](#Res-MACROS)
-* [ES.34: Don't define a (C-style) variadic function](#Res-ellipses)
+* [ES.21: 使う場所より前に変数(または定数)を宣言しないようにしよう (Don't introduce a variable (or constant) before you need to use it)](#Res-introduce)
+* [ES.22: 初期化に用いる値を得るより前に変数を宣言しないようにしよう (Don't declare a variable until you have a value to initialize it with)](#Res-init)
+* [ES.23: `{}`-初期化シンタックスを好みましょう (Prefer the `{}`-initializer syntax)](#Res-list)
+* [ES.24: ポインタを保持するには`unique_ptr<T>`を使いましょう (Use a `unique_ptr<T>` to hold pointers)](#Res-unique)
+* [ES.25: 後で変更するつもりのないオブジェクトは`const`または`constexpr`と宣言しよう (Declare an object `const` or `constexpr` unless you want to modify its value later on)](#Res-const)
+* [ES.26: 1つの変数を無関係な2つの目的で使わないようにしましょう (Don't use a variable for two unrelated purposes)](#Res-recycle)
+* [ES.27: スタック上の配列としては`std::array`か`stack_array`を使いましょう (Use `std::array` or `stack_array` for arrays on the stack)](#Res-stack)
+* [ES.28: とくに`const`変数の複雑な初期化にはラムダ式を使いましょう (Use lambdas for complex initialization, especially of `const` variables)](#Res-lambda-init)
+* [ES.30: ソースコードのテキスト操作にマクロを使わないようにしましょう (Don't use macros for program text manipulation)](#Res-macros)
+* [ES.31: 定数や関数としてマクロを使わないようにしましょう (Don't use macros for constants or "functions")](#Res-macros2)
+* [ES.32: マクロ名には`ALL_CAPS`を使いましょう (Use `ALL_CAPS` for all macro names)](#Res-ALL_CAPS)
+* [ES.33: もしマクロの使用が必要なら、それらにはユニークな名前を付けましょう (If you must use macros, give them unique names)](#Res-MACROS)
+* [ES.34: (Cスタイルの)可変長引数関数を定義しないようにしましょう (Don't define a (C-style) variadic function)](#Res-ellipses)
 
 Expression rules:
 
@@ -12574,8 +12574,9 @@ Not easy. ??? Look for messy loops, nested loops, long functions, absence of fun
 
 簡単ではありません。 ??? 乱雑なループ、ネストされたループ、長い関数、関数呼び出しの欠如、組み込み型の使用の欠如を探しましょう。循環的複雑度?
 
-### <a name="Res-DRY"></a>ES.3: Don't repeat yourself, avoid redundant code
+### <a name="Res-DRY"></a>ES.3: DRY(同じことを繰り返すな)の原則に従い、冗長なコードは避けましょう (Don't repeat yourself, avoid redundant code)
 
+<!--
 Duplicated or otherwise redundant code obscures intent, makes it harder to understand the logic, and makes maintenance harder, among other problems. It often arises from cut-and-paste programming.
 
 Use standard algorithms where appropriate, instead of writing some own implementation.
@@ -12611,6 +12612,42 @@ Use standard algorithms where appropriate, instead of writing some own implement
 
 * Use a static analyzer. It will catch at least some redundant constructs.
 * Code review
+-->
+重複したコードや冗長なコードは意図をあいまいにし、ロジックの理解を難しくし、メンテナンスを困難にします。多くの場合、コピペ プログラミングから発生します。
+
+独自の実装を作成する代わりに、必要に応じて標準アルゴリズムを使用しましょう。
+
+**See also**: [SL.1](#Rsl-lib), [ES.11](#Res-auto)
+
+##### 例
+
+    void func(bool flag)    // ダメ. 重複コード.
+    {
+        if (flag) {
+            x();
+            y();
+        }
+        else {
+            x();
+            z();
+        }
+    }
+
+    void func(bool flag)    // 良い. 重複コードがない.
+    {
+        x();
+
+        if (flag)
+            y();
+        else
+            z();
+    }
+
+
+##### 実施
+
+* 静的解析ツールを使いましょう。少なくともいくつかの冗長な構造をキャッチします。
+* コードレビュー
 
 ## ES.dcl: 宣言 (Declarations)
 
@@ -12781,7 +12818,7 @@ In this case, it might be a good idea to factor out the read:
 * for文内で変更される変数がループの外側で宣言されているが、ループの外側では使われていないときに注意しましょう。
 * (困難) ループの前に宣言されていて、ループ後に関係のない用途で使用されているループ変数をチェックしましょう。
 
-**議論**: ループ変数のスコープをループ本体に限定することはコードの最適化も非常に助けます。 ループ本体内だけからアクセスされるinduction変数(訳注: 固定量だけ増加/現象する変数)は、巻き上げ(hoisting)、演算子強度低減(strength reduction)、Loop-invariant code motionなどのような最適化を可能にします。
+**議論**: ループ変数のスコープをループ本体に限定することはコードの最適化も非常に助けます。 ループ本体内だけからアクセスされるinduction変数(訳注: 固定量だけ増加/減少する変数)は、巻き上げ(hoisting)、演算子強度低減(strength reduction)、Loop-invariant code motionなどのような最適化を可能にします。
 
 ##### C++17 および C++20 での例
 
@@ -12867,7 +12904,7 @@ Note: C++17 and C++20 also add `if`, `switch`, and range-`for` initializer state
 
 ##### 理由
 
-可読性。Readability. 非ローカルで関係がない名前との衝突の機会を下げる。
+可読性。非ローカルで関係がない名前との衝突の機会を下げる。
 
 ##### 例
 
@@ -13524,6 +13561,7 @@ For example, had we forgotten the using declaration, a call `d.f(1)` would not h
 
 ### <a name="Res-always"></a>ES.20: 常にオブジェクトは初期化しよう(Always initialize an object)
 
+<!--
 ##### Reason
 
 Avoid used-before-set errors and their associated undefined behavior.
@@ -13709,9 +13747,195 @@ or maybe:
   Don't flag variables of user-defined types with default constructors.
 * Check that an uninitialized buffer is written into *immediately* after declaration.
   Passing an uninitialized variable as a reference to non-`const` argument can be assumed to be a write into the variable.
+-->
+##### 理由
 
-### <a name="Res-introduce"></a>ES.21: Don't introduce a variable (or constant) before you need to use it
+初期化前の変数の利用と、それに関連する未定義の挙動を避けましょう。
+複雑な初期化の理解に関する問題を避けましょう。
+リファクタリングが簡単にできるようにしましょう。
 
+##### 例
+
+    void use(int arg)
+    {
+        int i;   // ダメ: 未初期化変数
+        // ...
+        i = 7;   // iを初期化
+    }
+
+いいえ、`i = 7`は `i`を初期化していません。代入しているのです。`i`は`...`の部分で読み込むことができてしまいます:
+
+    void use(int arg)   // OK
+    {
+        int i = 7;   // OK: 初期化された
+        string s;    // OK: デフォルトで初期化された
+        // ...
+    }
+
+##### ノート
+
+*常に初期化*ルールは *オブジェクトを使う前には値をセットしよう*言語ルールよりも意図的に強力です。
+後者のより緩やかなルールは、技術的なバグをキャッチしますが、次のようになります:
+
+* 可読性が悪くなる
+* 必要なスコープよりも大きなスコープで名前を宣言してしまいがち
+* コードを読むことが難しくなる
+* 複雑なコードによって、論理バグが発生する
+* リファクタリングの妨げになる
+
+*常に初期化*ルールはメンテナンス性を向上させることを狙ったスタイルルールであり、同時に 未初期化エラーから守るルールでもあります。
+
+##### 例
+
+以下は、初期化に関してより緩和されたルールの必要性を示すために、よく考えられる例です。
+
+    widget i;    // "widget" は初期化が高価な型. おそらく大きなPOD型
+    widget j;
+
+    if (cond) {  // ダメ: iとjの初期化が「遅い」
+        i = f1();
+        j = f2();
+    }
+    else {
+        i = f3();
+        j = f4();
+    }
+
+これを簡単に書き直して、初期化子で `i` と `j` を初期化することはできません。
+デフォルトコンストラクターを持つ型の場合、シンプルに初期化を延期しようとすると、デフォルトの初期化に続いて代入が行われることに注意してください。
+このような例の一般的な理由は「効率性」ですが、私たちが未初期化変数利用エラーを発生させたかどうかを検出できるコンパイラは、冗長な二重初期化を排除することもできます。
+
+`i` と `j` の間に論理的なつながりがあると仮定すると、そのつながりはおそらくコードで表現する必要があります:
+
+    pair<widget, widget> make_related_widgets(bool x)
+    {
+        return (x) ? {f1(), f2()} : {f3(), f4()};
+    }
+
+    auto [i, j] = make_related_widgets(cond);    // C++17
+
+もし `make_related_widgets` 関数が冗長である場合は、
+ラムダ式を使うことでそれを消去できます [ES.28](#Res-lambda-init):
+
+    auto [i, j] = [x] { return (x) ? pair{f1(), f2()} : pair{f3(), f4()} }();    // C++17
+
+「未初期化」を表現する値を使うことは、問題の兆候であり、解決策ではありません:
+
+    widget i = uninit;  // ダメ
+    widget j = uninit;
+
+    // ...
+    use(i);         // 初期化前に使うことが可能
+    // ...
+
+    if (cond) {     // ダメ: i と j の初期化が「遅い」
+        i = f1();
+        j = f2();
+    }
+    else {
+        i = f3();
+        j = f4();
+    }
+
+コンパイラが未初期化変数の利用を単純に検出することさえもできなくなりました。そのうえ、widgetの状態空間に複雑さを導入してしまいました:  `uninit`なwidgetに対して有効な操作とそうでない操作はどれですか?
+
+##### ノート
+
+複雑な初期化は、何十年もの間、賢いプログラマーの間で人気がありました。
+また、エラーや複雑さの主な原因となっています。
+このようなエラーの多くは、最初の実装後の保守期間中に発生します。
+
+##### 例
+
+このルールはメンバー変数もカバーします。
+
+    class X {
+    public:
+        X(int i, int ci) : m2{i}, cm2{ci} {}
+        // ...
+
+    private:
+        int m1 = 7;
+        int m2;
+        int m3;
+
+        const int cm1 = 7;
+        const int cm2;
+        const int cm3;
+    };
+
+コンパイラは `cm3`を未初期化とフラグを立てるでしょう。なぜなら`const`だからです。しかし、`m3`の初期化がされていないことは捕捉しないでしょう。
+一般的に、稀な偽のメンバー変数の初期化をすることの価値は、初期化欠如のエラーをなくし、しばしばオプティマイザが冗長な初期化(例. 代入直前の初期化)を消去させることができる点です。
+
+##### 例外
+
+もし入力から初期化するオブジェクトを宣言する場合は、それは二重初期化になるかもしれません。
+しかしながら、入力を超えた部分に未初期化データが残る可能性に気をつけましょう。これはエラーやセキュリティ違反の肥沃な原因になっています:
+
+    constexpr int max = 8 * 1024;
+    int buf[max];         // OKだが、疑わしい: 未初期化
+    f.read(buf, max);
+
+配列に対する初期化のコストは、いくつかの状況においては極めて高価になりえます。
+ただし、このような例では未初期化変数がアクセス可能なまま残る傾向があるため、それらには疑って扱う必要があります。
+
+    constexpr int max = 8 * 1024;
+    int buf[max] = {};   // すべての要素を0で初期化; ある状況ではベター.
+    f.read(buf, max);
+
+配列および `std::array`に対する初期化ルールの制限のために、この例外の必要性を示す説得力のある例を提供します。
+
+オーバーフローを起こさないことが分かっているライブラリ関数を呼び出すとき。例えば:
+
+    string s;   // s は "" でデフォルト初期化
+    cin >> s;   // s は文字列を保持
+
+シンプルな値に対してはこの例外ルールを適用しようと思わないでください:
+
+    int i;   // ダメ
+    // ...
+    cin >> i;
+
+入力ターゲットと入力操作が分離されるような(そうなってはならないが)、通常でないケースでは、未初期化変数利用エラーのドアが開かれる可能性があります。
+
+    int i2 = 0;   // ベター. i2に対して0が許容されると仮定
+    // ...
+    cin >> i2;
+
+良いオプティマイザは入力操作を知り、冗長な操作を消去すべきです。
+
+
+##### ノート
+
+時々、ラムダ式は未初期化変数をさけるための初期化に使うことができます:
+
+    error_code ec;
+    Value v = [&] {
+        auto p = get_value();   // get_value() は pair<error_code, Value> を返す
+        ec = p.first;
+        return p.second;
+    }();
+
+または:
+
+    Value v = [] {
+        auto p = get_value();   // get_value() は pair<error_code, Value> を返す
+        if (p.first) throw Bad_value{p.first};
+        return p.second;
+    }();
+
+**See also**: [ES.28](#Res-lambda-init)
+
+##### 実施
+
+* すべての未初期化変数をチェックしましょう。
+  デフォルトコンストラクタをもつユーザー定義型の変数については除きましょう。
+* 宣言の後で*即座に*書き出される未初期化バッファをチェックしましょう。
+  未初期化変数を非`const`参照の引数として渡すことは、変数への書き込みと見なすことができます。
+
+### <a name="Res-introduce"></a>ES.21: 使う場所より前に変数(または定数)を宣言しないようにしよう (Don't introduce a variable (or constant) before you need to use it)
+
+<!--
 ##### Reason
 
 Readability. To limit the scope in which the variable can be used.
@@ -13725,9 +13949,24 @@ Readability. To limit the scope in which the variable can be used.
 ##### Enforcement
 
 Flag declarations that are distant from their first use.
+-->
+##### 理由
 
-### <a name="Res-init"></a>ES.22: Don't declare a variable until you have a value to initialize it with
+可読性。変数が利用可能なスコープを制限するため。
 
+##### 例
+
+    int x = 7;
+    // ... ここで xは利用されない ...
+    ++x;
+
+##### 実施
+
+最初の利用から離れた場所で宣言されているものをチェックしよう。
+
+### <a name="Res-init"></a>ES.22: 初期化に用いる値を得るより前に変数を宣言しないようにしよう (Don't declare a variable until you have a value to initialize it with)
+
+<!--
 ##### Reason
 
 Readability. Limit the scope in which a variable can be used. Don't risk used-before-set. Initialization is often more efficient than assignment.
@@ -13765,9 +14004,48 @@ For initializers of moderate complexity, including for `const` variables, consid
 
 * Flag declarations with default initialization that are assigned to before they are first read.
 * Flag any complicated computation after an uninitialized variable and before its use.
+-->
+##### 理由
 
-### <a name="Res-list"></a>ES.23: Prefer the `{}`-initializer syntax
+可読性。変数が利用可能なスコープを限定しよう。未初期化変数の利用エラーのリスクを冒さないようにしよう。初期化は代入よりもしばしばより効率的です。
 
+##### 悪い例
+
+    string s;
+    // ... sはここでは使用しない ...
+    s = "なんて無駄な!";
+
+##### 悪い例
+
+    SomeLargeType var;  // 読みにくい CaMeLcAsEvArIaBlE
+
+    if (cond)   // ある単純でない条件式
+        Set(&var);
+    else if (cond2 || !cond3) {
+        var = Set2(3.14);
+    }
+    else {
+        var = 0;
+        for (auto& e : something)
+            var += e;
+    }
+
+    // varを利用; これが早すぎないことは静的なフロー制御のみで強制できます
+
+`SomeLargeType`のデフォルト初期化がもしあまりに高価でないなら、それが良いでしょう。
+さもなくば、プログラマは条件式の迷路を通過するすべての経路が網羅されているかよく考える必要があります。
+もしそうでないなら、「未初期化変数の利用」バグになります。それはメンテナンスの罠です。
+
+`const`変数を含む、中程度の複雑度の初期化に対してはラムダ式を使うことを考えましょう; see [ES.28](#Res-lambda-init).
+
+##### 実施
+
+* デフォルト初期化をもつ宣言で、最初に読み込まれるより前に代入されているものをチェックしましょう。
+* 未初期化変数で、それが使用されるよりも前に複雑な計算をしている箇所をチェックしましょう。
+
+### <a name="Res-list"></a>ES.23: `{}`-初期化シンタックスを好みましょう (Prefer the `{}`-initializer syntax)
+
+<!--
 ##### Reason
 
 Prefer `{}`. The rules for `{}` initialization are simpler, more general, less ambiguous, and safer than for other forms of initialization.
@@ -13866,9 +14144,108 @@ Use plain `{}`-initialization unless you specifically want to disable explicit c
 
 * Flag uses of `=` to initialize arithmetic types where narrowing occurs.
 * Flag uses of `()` initialization syntax that are actually declarations. (Many compilers should warn on this already.)
+-->
+##### 理由
 
-### <a name="Res-unique"></a>ES.24: Use a `unique_ptr<T>` to hold pointers
+`{}`を好みましょう。 `{}`による初期化のルールは、他の初期化方法よりもシンプルで、一般的で、曖昧さが少なく、安全です。
 
+縮小変換(narrowing conversion)が発生しないことが確かなときに限り`=`を使いましょう。組み込み算術型に対しては `auto`と併せてのときのみ `=`を使いましょう。
+
+構文解析時の曖昧さをなくすため、`()`による初期化を避けましょう。
+
+##### 例
+
+    int x {f(99)};
+    int y = x;
+    vector<int> v = {1, 2, 3, 4, 5, 6};
+
+##### 例外
+
+コンテナに対しては、リストの要素に対しては`{...}`を使い、サイズに対しては`(...)`を使う伝統があります:
+
+    vector<int> v1(10);    // デフォルト値0をもつ10個の要素からなるvector
+    vector<int> v2{10};    // 値10をもつ1個の要素からなるvector
+
+    vector<int> v3(1, 2);  // 値2をもつ1個の要素からなるvector
+    vector<int> v4{1, 2};  // 値1と値2をもつ2個の要素からなるvector
+
+##### ノート
+
+`{}`-初期化は縮小変換を許容しません(これはたいていの場合良いことです)、そして明示的なコンストラクタは許容されます(これは良いことです。意図的に新しい変数を初期化しています)。
+
+##### 例
+
+    int x {7.9};   // エラー: 縮小変換
+    int y = 7.9;   // OK: yは7になる。コンパイラは警告を出すことが望ましい
+    int z = gsl::narrow_cast<int>(7.9);  // OK: あなたはこれを求めた
+
+##### ノート
+
+`{}`初期化はほぼすべての初期化で用いることができます。他の形式では無理です:
+
+    auto p = new vector<int> {1, 2, 3, 4, 5};   // 初期化された vector
+    D::D(int a, int b) :m{a, b} {   // メンバー初期化 (例, mはおそらくpair)
+        // ...
+    };
+    X var {};   // varを空で初期化
+    struct S {
+        int m {7};   // メンバのデフォルト初期化
+        // ...
+    };
+
+このため、`{}`による初期化はしばしば「一様初期化 (uniform initialization)」と呼ばれます(不幸なことにいくつかのイレギュラーが残されていますが)。
+
+##### ノート
+
+一つの値をもち`auto`を使って宣言された変数の初期化(例えば `{v}`)は、C++17以前には驚かされる結果になりました。
+C++17のルールでは驚きは少なくなりました:
+
+    auto x1 {7};        // x1 は値7の int
+    auto x2 = {7};      // x2 は 1つの値7の要素からなる initializer_list<int>
+
+    auto x11 {7, 8};    // エラー: 2つの初期化パラメータ
+    auto x22 = {7, 8};  // x22 は値7と8の要素からなる initializer_list<int>
+
+もし本当に `initializer_list<T>`が欲しいのなら、`={...}`を使いましょう。
+
+    auto fib10 = {1, 1, 2, 3, 5, 8, 13, 21, 34, 55};   // fib10 はリスト
+
+##### ノート
+
+`{}`は直接初期化するのに対して、`={}`はコピー初期化をもたらします。
+コピー初期化と直接初期化の間の違いのように、これは驚きをもたらします。
+`{}`は`explicit`コンストラクタを受け付けますが、`={}`はそうではありません。例えば:
+
+    struct Z { explicit Z() {} };
+
+    Z z1{};     // OK: 直接初期化, したがってexplicitコンストラクタが使える
+    Z z2 = {};  // エラー: コピー初期化, したがって explicitコンストラクタが使えない
+
+explicitコンストラクタを無効にしようとするのでなく、プレインな`{}`初期化を使いましょう。
+
+##### 例
+
+    template<typename T>
+    void f()
+    {
+        T x1(1);    // 1で初期化されたT
+        T x0();     // ダメ: 関数宣言 (しばしば間違い)
+
+        T y1 {1};   // 1で初期化されたT
+        T y0 {};    // デフォルト初期化された T
+        // ...
+    }
+
+**See also**: [Discussion](#???)
+
+##### 実施
+
+* 縮小変換を伴う算術型の初期化を`=`を使っている場所をチェックしましょう。
+* `()`初期化シンタックスを使っている宣言をチェックしましょう。(多くのコンパイラはすでにこれを警告しているはずです。)
+
+### <a name="Res-unique"></a>ES.24: ポインタを保持するには`unique_ptr<T>`を使いましょう (Use a `unique_ptr<T>` to hold pointers)
+
+<!--
 ##### Reason
 
 Using `std::unique_ptr` is the simplest way to avoid leaks. It is reliable, it
@@ -13896,9 +14273,36 @@ The same is the case when `at()` throws. In both cases, the `delete p2` statemen
 ##### Enforcement
 
 Look for raw pointers that are targets of `new`, `malloc()`, or functions that might return such pointers.
+-->
+##### 理由
 
-### <a name="Res-const"></a>ES.25: Declare an object `const` or `constexpr` unless you want to modify its value later on
+`std::unique_ptr`を使うことはリークを避けるための最もシンプルな方法です。それは信頼ができ、型システムに所有権の安全性の検証の多くを行わせることができ、可読性を向上させます。そして、実行時のコストは0またはほぼ0です。
 
+##### 例
+
+    void use(bool leak)
+    {
+        auto p1 = make_unique<int>(7);   // OK
+        int* p2 = new int{7};            // ダメ: リークするかもしれない
+        // ... no assignment to p2 ...
+        if (leak) return;
+        // ... no assignment to p2 ...
+        vector<int> v(7);
+        v.at(7) = 0;                    // 例外がスローされる
+        delete p2;                      // リークを防ぐには遅すぎる
+        // ...
+    }
+
+もしも`leak == true`であるなら `p2`によってポイントされているオブジェクトはリークし、`p1`にポイントされているオブジェクトはリークしない。
+`at()`がスローする場合においても同様です。どちらのケースでも`delete p2`という文には到達しません。
+
+##### 実施
+
+`new`、`malloc()`、あるいはそのようなポインタを返すであろう関数をターゲットとする生のポインタを探しましょう。
+
+### <a name="Res-const"></a>ES.25: 後で変更するつもりのないオブジェクトは`const`または`constexpr`と宣言しよう (Declare an object `const` or `constexpr` unless you want to modify its value later on)
+
+<!--
 ##### Reason
 
 That way you can't change the value by mistake. That way might offer the compiler optimization opportunities.
@@ -13917,9 +14321,27 @@ That way you can't change the value by mistake. That way might offer the compile
 Look to see if a variable is actually mutated, and flag it if
 not. Unfortunately, it might be impossible to detect when a non-`const` was not
 *intended* to vary (vs when it merely did not vary).
+-->
+##### 理由
 
-### <a name="Res-recycle"></a>ES.26: Don't use a variable for two unrelated purposes
+間違いによる値の変更を防ぐ方法です。コンパイラに最適化の機会を与える方法でもあります。
 
+##### 例
+
+    void f(int n)
+    {
+        const int bufmax = 2 * n + 2;  // グッド: 事故による bufmaxを変更が発生しない
+        int xmax = n;                  // 疑わしい: xmaxは変更される意図?
+        // ...
+    }
+
+##### 実施
+
+変数が実際に変更されているかを確認し、そうでなければチェックしましょう。 不幸にも、変更されることが*意図*されていない非`const`の場合に、それを検出することは不可能かもしれません(単にそれが変更されなかった場合に比べて)。
+
+### <a name="Res-recycle"></a>ES.26: 1つの変数を無関係な2つの目的で使わないようにしましょう (Don't use a variable for two unrelated purposes)
+
+<!--
 ##### Reason
 
 Readability and safety.
@@ -13956,9 +14378,48 @@ As an optimization, you might want to reuse a buffer as a scratch pad, but even 
 ##### Enforcement
 
 Flag recycled variables.
+-->
+##### 理由
 
-### <a name="Res-stack"></a>ES.27: Use `std::array` or `stack_array` for arrays on the stack
+可読性と安全性。
 
+##### 悪い例
+
+    void use()
+    {
+        int i;
+        for (i = 0; i < 20; ++i) { /* ... */ }
+        for (i = 0; i < 200; ++i) { /* ... */ } // ダメ: iを再利用
+    }
+
+##### ノート
+
+最適化のために、バッファをスクラッチパッドとして再利用したいかもしれませんが、変数のスコープは可能なかぎり限定するべきです。
+そして、再利用したバッファに残ったデータによってバグが発生していないか注意しましょう。これは典型的なセキュリティのバグの原因です。
+
+    void write_to_file()
+    {
+        std::string buffer;             // 毎回のループごとの再割り当てを回避
+        for (auto& o : objects) {
+            // 処理の最初の部分
+            generate_first_string(buffer, o);
+            write_to_file(buffer);
+
+            // 処理の2番目の部分
+            generate_second_string(buffer, o);
+            write_to_file(buffer);
+
+            // その他...
+        }
+    }
+
+##### 実施
+
+再利用している変数をチェックしましょう。
+
+### <a name="Res-stack"></a>ES.27: スタック上の配列としては`std::array`か`stack_array`を使いましょう (Use `std::array` or `stack_array` for arrays on the stack)
+
+<!--
 ##### Reason
 
 They are readable and don't implicitly convert to pointers.
@@ -14000,9 +14461,52 @@ The definition of `a2` is C but not C++ and is considered a security risk
 
 * Flag arrays with non-constant bounds (C-style VLAs)
 * Flag arrays with non-local constant bounds
+-->
+##### 理由
 
-### <a name="Res-lambda-init"></a>ES.28: Use lambdas for complex initialization, especially of `const` variables
+これらは読みやすく、暗黙のうちにポインタに変換されません。
+これらは組み込み型の配列の非標準の拡張と混乱しません。
 
+##### 悪い例
+
+    const int n = 7;
+    int m = 9;
+
+    void f()
+    {
+        int a1[n];
+        int a2[m];   // エラー: ISO C++ ではない
+        // ...
+    }
+
+##### ノート
+
+`a1`の定義は C++では合法です。
+そのようなコードはたくさんあります。
+しかしながら、とくに境界が非ローカルであるとき、エラーが発生しやすくなります。
+さらに、これは「よくある」エラーの原因となります(バッファオーバーフロー、配列範囲外のポインタなど)。
+`a2`の定義はCではOKですが、C++では非合法です。そしてセキュリティリスクの要因と考えられます。
+
+##### 例
+
+    const int n = 7;
+    int m = 9;
+
+    void f()
+    {
+        array<int, n> a1;
+        stack_array<int> a2(m);
+        // ...
+    }
+
+##### 実施
+
+* 定数ではないサイズをもつ配列をチェックしましょう (C-style VLAs)
+* 非ローカルの定数サイズをもつ配列をチェックしましょう
+
+### <a name="Res-lambda-init"></a>ES.28: とくに`const`変数の複雑な初期化にはラムダ式を使いましょう (Use lambdas for complex initialization, especially of `const` variables)
+
+<!--
 ##### Reason
 
 It nicely encapsulates local initialization, including cleaning up scratch variables needed only for the initialization, without needing to create a needless non-local yet non-reusable function. It also works for variables that should be `const` but only after some initialization work.
@@ -14030,9 +14534,38 @@ If at all possible, reduce the conditions to a simple set of alternatives (e.g.,
 ##### Enforcement
 
 Hard. At best a heuristic. Look for an uninitialized variable followed by a loop assigning to it.
+-->
+##### 理由
 
-### <a name="Res-macros"></a>ES.30: Don't use macros for program text manipulation
+このルールによって、ローカルな初期化はうまくカプセル化され、初期化でのみ必要なスクラッチ変数の掃除をし、非ローカルで再利用しない関数の不必要な作成の必要がなくります。これは `const`にすべきだが後でいくつかの初期化が必要な変数に対しても機能します。
 
+##### 悪い例
+
+    widget x;   // constにすべき、だが:
+    for (auto i = 2; i <= N; ++i) {          // xの初期化に必要な任意の長さのコード
+        x += some_obj.do_something_with(i);  // 
+    }                                        // 
+    // ここからは xはconstにすべき。しかしこのスタイルではそう宣言することができない
+
+##### 良い例
+
+    const widget x = [&] {
+        widget val;                                // widgetはデフォルトコンストラクタを持つと仮定
+        for (auto i = 2; i <= N; ++i) {            // xの初期化に必要な任意の長さのコード
+            val += some_obj.do_something_with(i);  //
+        }                                          //
+        return val;
+    }();
+
+可能であれば、条件を単純な選択肢のセット(例えば `enum`)に減らし、選択と初期化を混同しないようにしましょう。
+
+##### 実施
+
+難しい。せいぜいヒューリスティック。未初期化変数と、それに続くループ代入を探しましょう。
+
+### <a name="Res-macros"></a>ES.30: ソースコードのテキスト操作にマクロを使わないようにしましょう (Don't use macros for program text manipulation)
+
+<!--
 ##### Reason
 
 Macros are a major source of bugs.
@@ -14098,9 +14631,75 @@ In the future, static reflection is likely to eliminate the last needs for the p
 ##### Enforcement
 
 Scream when you see a macro that isn't just used for source control (e.g., `#ifdef`)
+-->
+##### 理由
 
-### <a name="Res-macros2"></a>ES.31: Don't use macros for constants or "functions"
+マクロはバグの主要因の1つです。
+マクロは通常のスコープや型ルールに従いません。
+マクロは、コンパイラが見えるものと違うものを人間に見せます。
+マクロはツール構築を複雑にします。
 
+##### 悪い例
+
+    #define Case break; case   /* ダメ */
+
+この無害に見えるマクロは `C`の代わりの小文字の`c`を、間違ったフロー制御のバグにします。
+
+##### ノート
+
+このルールは `#ifdef`などで使用される「コンフィギュレーション制御」を禁止するためのものではありません。
+
+将来は、モジュールがコンフィギュレーション制御で必要なマクロをほぼ消し去るでしょう。
+
+##### ノート
+
+このルールは、文字列化のための `#`と、連結のための `##` の使用を思いとどまらせることも意図しています。
+マクロの常として、「ほとんど無害」な使用もありますが、しかし、自動補完や静的解析、デバッガなどのツールに問題を引き起こしたりします。
+派手なマクロを使いたいという場合の多くは、設計が過度に複雑であることを示します。
+また`#`と`##`はマクロの定義と仕様を促します:
+
+    #define CAT(a, b) a ## b
+    #define STRINGIFY(a) #a
+
+    void f(int x, int y)
+    {
+        string CAT(x, y) = "asdf";   // ダメ: ツールが扱いにくい (そして醜い)
+        string sx2 = STRINGIFY(x);
+        // ...
+    }
+
+ローレベルな文字列操作マクロの回避策があります。例えば:
+
+    string s = "asdf" "lkjh";   // 通常の文字列リテラルの結合
+
+    enum E { a, b };
+
+    template<int x>
+    constexpr const char* stringify()
+    {
+        switch (x) {
+        case a: return "a";
+        case b: return "b";
+        }
+    }
+
+    void f(int x, int y)
+    {
+        string sx = stringify<x>();
+        // ...
+    }
+
+これはマクロ定義ほど便利ではありません。しかし、使いやすく、オーバーヘッドがなく、型があり、スコープがあります。
+
+将来は、静的リフレクションがソースコードのテキスト操作のためにプリプロセッサに残された最後の要求をほとんど消し去るでしょう。
+
+##### 実施
+
+単なるソース制御(例 `#ifdef`)以外のマクロを見たときは叫びましょう。
+
+### <a name="Res-macros2"></a>ES.31: 定数や関数としてマクロを使わないようにしましょう (Don't use macros for constants or "functions")
+
+<!--
 ##### Reason
 
 Macros are a major source of bugs.
@@ -14122,9 +14721,32 @@ Even if we hadn't left a well-known bug in `SQUARE` there are much better behave
 ##### Enforcement
 
 Scream when you see a macro that isn't just used for source control (e.g., `#ifdef`)
+-->
+##### 理由
 
-### <a name="Res-ALL_CAPS"></a>ES.32: Use `ALL_CAPS` for all macro names
+マクロはバグの主要因の1つです。
+マクロは通常のスコープや型ルールに従いません。
+マクロは通常の引数渡しのルールに従いません。
+マクロは、コンパイラが見えるものと違うものを人間に見せます。
+マクロはツール構築を複雑にします。
 
+##### 悪い例
+
+    #define PI 3.14
+    #define SQUARE(a, b) (a * b)
+
+`SQUARE`の良く知られたバグを残さないとしても、はるかに良い代替策があります。例えば:
+
+    constexpr double pi = 3.14;
+    template<typename T> T square(T a, T b) { return a * b; }
+
+##### 実施
+
+単なるソース制御(例 `#ifdef`)以外のマクロを見たときは叫びましょう。
+
+### <a name="Res-ALL_CAPS"></a>ES.32: マクロ名には`ALL_CAPS`を使いましょう (Use `ALL_CAPS` for all macro names)
+
+<!--
 ##### Reason
 
 Convention. Readability. Distinguishing macros.
@@ -14138,9 +14760,24 @@ Convention. Readability. Distinguishing macros.
 ##### Enforcement
 
 Scream when you see a lower case macro.
+-->
+##### 理由
 
-### <a name="Res-MACROS"></a>ES.33: If you must use macros, give them unique names
+慣習。可読性。マクロの区別。
 
+##### 例
+
+    #define forever for (;;)   /* すごくダメ */
+
+    #define FOREVER for (;;)   /* まだ邪悪。しかし人間にとって少しマシ */
+
+##### 実施
+
+小文字のマクロをみたら叫びましょう。
+
+### <a name="Res-MACROS"></a>ES.33: もしマクロの使用が必要なら、それらにはユニークな名前を付けましょう (If you must use macros, give them unique names)
+
+<!--
 ##### Reason
 
 Macros do not obey scope rules.
@@ -14160,9 +14797,30 @@ If you are forced to use macros, use long names and supposedly unique prefixes (
 ##### Enforcement
 
 Warn against short macro names.
+-->
+##### 理由
 
-### <a name="Res-ellipses"></a> ES.34: Don't define a (C-style) variadic function
+マクロはスコープの規則に従いません。
 
+##### 例
+
+    #define MYCHAR        /* ダメ。どこか別のMYCHARと衝突しやすい */
+
+    #define ZCORP_CHAR    /* まだダメ。だけど衝突の可能性は減った */
+
+##### ノート
+
+可能であればマクロを避けましょう: [ES.30](#Res-macros), [ES.31](#Res-macros2), and [ES.32](#Res-ALL_CAPS)。
+しかしながら、マクロが散らばる数十億行のコードがあり、マクロを使用したり使いすぎたりする長い伝統があります。
+どうしてもマクロを使わざるを得ない場合は、衝突の可能性を下げるために、長い名前とおそらく固有のプレフィックス (例えばあなたの組織名など) を使用してください。
+
+##### 実施
+
+短いマクロ名に警告しましょう。
+
+### <a name="Res-ellipses"></a> ES.34: (Cスタイルの)可変長引数関数を定義しないようにしましょう (Don't define a (C-style) variadic function)
+
+<!--
 ##### Reason
 
 Not type safe.
@@ -14238,6 +14896,82 @@ This is basically the way `printf` is implemented.
 
 * Flag definitions of C-style variadic functions.
 * Flag `#include <cstdarg>` and `#include <stdarg.h>`
+-->
+##### 理由
+
+型安全ではありません。
+正しく機能させるには、キャストとマクロを含む厄介なコードが必要です。
+
+##### 例
+
+    #include <cstdarg>
+
+    // "severity"に 0を終端とするchar*のリストが続く。Cスタイルの文字列としてcerrに書き出す。
+    void error(int severity ...)
+    {
+        va_list ap;             // 引数を保持するマジック型
+        va_start(ap, severity); // 引数のスタートアップ: "severity"はerror()の最初の引数
+
+        for (;;) {
+            // 次の値を char*として扱う。チェックなし: 変装したキャスト
+            char* p = va_arg(ap, char*);
+            if (!p) break;
+            cerr << p << ' ';
+        }
+
+        va_end(ap);             // 引数のクリーンアップ (決して忘れないこと)
+
+        cerr << '\n';
+        if (severity) exit(severity);
+    }
+
+    void use()
+    {
+        error(7, "this", "is", "an", "error", nullptr);
+        error(7); // クラッシュ
+        error(7, "this", "is", "an", "error");  // クラッシュ
+        const char* is = "is";
+        string an = "an";
+        error(7, "this", "is", an, "error"); // クラッシュ
+    }
+
+**代替策**: オーバーロード。テンプレート。可変長テンプレート。
+
+    #include <iostream>
+
+    void error(int severity)
+    {
+        std::cerr << '\n';
+        std::exit(severity);
+    }
+
+    template<typename T, typename... Ts>
+    constexpr void error(int severity, T head, Ts... tail)
+    {
+        std::cerr << head;
+        error(severity, tail...);
+    }
+
+    void use()
+    {
+        error(7); // クラッシュしない!
+        error(5, "this", "is", "not", "an", "error"); // クラッシュしない!
+
+        std::string an = "an";
+        error(7, "this", "is", "not", an, "error"); // クラッシュしない!
+
+        error(5, "oh", "no", nullptr); // コンパイルエラー! nullptrは不要。
+    }
+
+
+##### ノート
+
+これは`printf`を実装する基本的な方法です。
+
+##### 実施
+
+* Cスタイルの可変長引数関数の定義をチェックしましょう。
+* `#include <cstdarg>` と `#include <stdarg.h>`をチェックしましょう。
 
 
 ## ES.expr: Expressions

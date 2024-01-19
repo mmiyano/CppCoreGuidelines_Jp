@@ -1085,7 +1085,7 @@ better
 ベター
 
     void read(span<int> r); // 範囲rに整数を読み込む
-    
+
     int a[100];
     read(a);        // ベター: コンパイラに要素数を知らせている
 
@@ -1645,7 +1645,7 @@ Combine this with enforcement of [the type and bounds profiles](#SS-force) and y
   可能な場合は、(上述の例のような)標準ライブラリのリソースハンドルに置き換えましょう。
   あるいは、[the GSL](#gsl-guidelines-support-library)の`owner`のようなものを使って、所有者とマークしましょう。
 * 裸の`new` と `delete`を探しましょう。
-* 生ポインタを返す、知られたリソース確保関数(`fopen`、`malloc`、`strdup`など)を探しましょう。 
+* 生ポインタを返す、知られたリソース確保関数(`fopen`、`malloc`、`strdup`など)を探しましょう。
 
 ### <a name="Rp-waste"></a>P.9: 時間とスペースを無駄にしないようにしよう(Don't waste time or space)
 
@@ -3246,7 +3246,7 @@ It is usually best to avoid global (namespace scope) objects altogether.
 -->
 ##### 理由
 
-複雑な初期化は実行順序が未定義になりえる。
+複雑な初期化は実行順序が未定義になりえます。
 
 ##### 例
 
@@ -3262,19 +3262,19 @@ It is usually best to avoid global (namespace scope) objects altogether.
 
     const X x = g(y);   // read y; write x
 
-`x` と `y`は異なる翻訳単位内にあり、`f()` と `g()`の呼び出し順序は定義されていない;
-どちらか一方は未定義の`const`をアクセスするだろう。
-これは、グローバル(namespace scope)オブジェクトに対する初期化順序問題はグローバル *変数*に限定されないことを示している。
+`x` と `y`は異なる翻訳単位内にあり、`f()` と `g()`の呼び出し順序は定義されていません;
+どちらか一方は未定義の`const`をアクセスするでしょう。
+これは、グローバル(namespace scope)オブジェクトに対する初期化順序問題はグローバル *変数*に限定されないことを示しています。
 
 ##### ノート
 
-初期時価順序問題は並列プログラミングコードで特に扱うことが難しくなる。
+初期時価順序問題は並列プログラミングコードで特に扱うことが難しくなります。
 グローバルオブジェクトを完全に回避することがベストです。
 
 ##### 実施
 
-* `constexpr`でない関数によって初期化しているグローバル変数に注意
-* `extern`オブジェクトにアクセスして初期化しているグローバル変数に注意
+* `constexpr`でない関数によって初期化しているグローバル変数に注意しましょう
+* `extern`オブジェクトにアクセスして初期化しているグローバル変数に注意しましょう
 
 ### <a name="Ri-nargs"></a>I.23: 関数の引数は少なく保とう(Keep the number of function arguments low)
 <!--
@@ -3356,7 +3356,7 @@ There are functions that are best expressed with four individual parameters, but
 -->
 ##### 理由
 
-多くの引数があると混乱を起こしやすい。多くの引数を渡すことは別の方法に比べてコストがかかる。
+多くの引数があると混乱を起こしやすくなります。多くの引数を渡すことは別の方法に比べてコストがかかります。
 
 ##### 議論
 
@@ -3486,7 +3486,7 @@ We are still looking for a less-simple enforcement.
 -->
 ##### 理由
 
-同じ型で隣り合った引数は、順番を間違えやすい。
+同じ型で隣り合った引数は、順番を間違えやすくなります。
 
 ##### 悪い例
 
@@ -3850,7 +3850,7 @@ Parameter passing semantic rules:
 * [F.47: Return `T&` from assignment operators](#Rf-assignment-op)
 * [F.48: Don't return `std::move(local)`](#Rf-return-move-local)
 * [F.49: Don't return `const T`](#Rf-return-const)
-* 
+*
 Other function rules:
 
 * [F.50: Use a lambda when a function won't do (to capture local variables, or to write a local function)](#Rf-capture-vs-overload)
@@ -3880,7 +3880,7 @@ Functions are the most critical part in most interfaces, so see the interface ru
 * [F.5: 関数がとても小さく、速度が要求されるのであれば、`inline`と宣言しよう (If a function is very small and time-critical, declare it inline)](#Rf-inline)
 * [F.6: 関数が例外をスローしてはいけない場合は、`noexcept`と宣言しよう (If your function must not throw, declare it `noexcept`)](#Rf-noexcept)
 * [F.7: 通常の場合は、スマートポインタでなく`T*` や `T&`の引数を受け取ろう](#Rf-smart)
-* [F.8: 純粋関数を使おう](#Rf-pure)
+* [F.8: 純粋関数を好んで使おう](#Rf-pure)
 * [F.9: 未使用パラメータは無名にしよう](#Rf-unused)
 * [F.10: If an operation can be reused, give it a name](#Rf-name)
 * [F.11: Use an unnamed lambda if you need a simple function object in one place only](#Rf-lambda)
@@ -4383,7 +4383,7 @@ The compiler gives an error if a non-`constexpr` function is called where a cons
 ##### 理由
 
  `constexpr`はコンパイラに、コンパイル時の評価を許すことを伝えるために必要。
- 
+
 ##### 例
 
 有名な階乗:
@@ -4769,7 +4769,7 @@ We can catch many common cases of dangling pointers statically (see [lifetime sa
 * [Prefer `T*` over `T&` when "no argument" is a valid option](#Rf-ptr-ref)
 * [Smart pointer rule summary](#Rr-summary-smartptrs)
 
-### <a name="Rf-pure"></a>F.8: 純粋関数を使おう(Prefer pure functions)
+### <a name="Rf-pure"></a>F.8: 純粋関数を好んで使おう(Prefer pure functions)
 
 <!--
 ##### Reason
@@ -4787,9 +4787,9 @@ Not possible.
 -->
 ##### 理由
 
-純粋関数は、理解が簡単で、時には最適化(さらには並列化)がしやすく、時にはメモ化されることも可能です。 
+純粋関数は、理解が簡単で、時には最適化(さらには並列化)がしやすく、時にはメモ化されることも可能です。
 
-[訳注: 純粋](https://ja.wikipedia.org/wiki/%E5%8F%82%E7%85%A7%E9%80%8F%E9%81%8E%E6%80%A7)  
+[訳注: 純粋](https://ja.wikipedia.org/wiki/%E5%8F%82%E7%85%A7%E9%80%8F%E9%81%8E%E6%80%A7)
 [訳注: メモ化](https://ja.wikipedia.org/wiki/%E3%83%A1%E3%83%A2%E5%8C%96)
 
 ##### 例
@@ -4835,7 +4835,7 @@ Flag named unused parameters.
 -->
 ##### 理由
 
-可読性。 
+可読性。
 未使用パラメータの警告の抑制。
 
 ##### 例
@@ -4846,7 +4846,7 @@ Flag named unused parameters.
 
 無名のパラメータは、この問題に対処するため1980年代の初期に導入されました。
 
-もしパラメータが条件によっては使用されない場合は、`[[maybe_unused]]`属性を宣言しましょう。 
+もしパラメータが条件によっては使用されない場合は、`[[maybe_unused]]`属性を宣言しましょう。
 例:
 
     template <typename Value>
@@ -5081,7 +5081,7 @@ Avoid "esoteric techniques" such as passing arguments as `T&&` "for efficiency".
 Most rumors about performance advantages from passing by `&&` are false or brittle (but see [F.18](#Rf-consume) and [F.19](#Rf-forward)).
 -->
 「効率のために」引数を `T&&` として渡すなどの「難解な手法」は避けてください。
-`&&` を渡すことによるパフォーマンスの利点に関する噂のほとんどは、間違っているか、もろいものです (ただし、[F.18](#Rf-consume) 
+`&&` を渡すことによるパフォーマンスの利点に関する噂のほとんどは、間違っているか、もろいものです (ただし、[F.18](#Rf-consume)
 と [F.19](#Rf-forward) を参照してください)。
 
 <!--
@@ -11483,6 +11483,7 @@ and where consecutive values are undesirable (e.g., to get separate bits as in `
 
 # <a name="S-resource"></a>R: Resource management
 
+<!--
 This section contains rules related to resources.
 A resource is anything that must be acquired and (explicitly or implicitly) released, such as memory, file handles, sockets, and locks.
 The reason it must be released is typically that it can be in short supply, so even delayed release might do harm.
@@ -11493,7 +11494,19 @@ There are a few cases where leaks can be acceptable or even optimal:
 If you are writing a program that simply produces an output based on an input and the amount of memory needed is proportional to the size of the input, the optimal strategy (for performance and ease of programming) is sometimes simply never to delete anything.
 If you have enough memory to handle your largest input, leak away, but be sure to give a good error message if you are wrong.
 Here, we ignore such cases.
+-->
+このセクションはリソースに関連するルールを含んでいます。
+リソースとは、メモリやファイルハンドル、ソケット、ロックのように、取得し、(明示的あるいは暗黙的に)解放すべきものです。
+リソースを解放しなければならない理由としては典型的には、供給が不足する可能性や、解放が遅れることで害を及ぼしたりするためです。
+基本的な狙いは、リソースをリークしないこと、そして、必要以上に長くリソースを保持しないことを保証することです。
+リソースの解放を担当する要素は、所有者(オーナー)と呼ばれます。
 
+リークが許容できる場合、または最適な場合さえあります:
+入力に基づいて出力を生成するだけのプログラムを作成しており、必要なメモリ量が入力のサイズに比例する場合、(パフォーマンスとプログラミングの容易さの) 最適な戦略は、単に何も削除しないことである場合があります。
+最大の入力を処理するのに十分なメモリがある場合は、リークしても問題ありませんが、間違っている場合は適切なエラーメッセージを表示するようにしてください。
+ここではそのようなケースは無視します。
+
+<!--
 * Resource management rule summary:
 
   * [R.1: Manage resources automatically using resource handles and RAII (Resource Acquisition Is Initialization)](#Rr-raii)
@@ -11527,9 +11540,45 @@ Here, we ignore such cases.
   * [R.35: Take a `shared_ptr<widget>&` parameter to express that a function might reseat the shared pointer](#Rr-sharedptrparam)
   * [R.36: Take a `const shared_ptr<widget>&` parameter to express that it might retain a reference count to the object ???](#Rr-sharedptrparam-const)
   * [R.37: Do not pass a pointer or reference obtained from an aliased smart pointer](#Rr-smartptrget)
+-->
 
-### <a name="Rr-raii"></a>R.1: Manage resources automatically using resource handles and RAII (Resource Acquisition Is Initialization)
+* リソース管理ルールまとめ:
 
+  * [R.1: リソースハンドルとRAII(Resource Acquisition Is Initialization)を使用して、リソース管理は自動化しましょう](#Rr-raii)
+  * [R.2: インタフェースでは、生のポインタは個々のオブジェクト(のみ)を示すように使いましょう](#Rr-use-ptr)
+  * [R.3: 生のポインタ(`T*`)は所有権を持たせないようにしましょう](#Rr-ptr)
+  * [R.4: 生の参照(`T&`)は所有権を持たせないようにしましょう](#Rr-ref)
+  * [R.5: スコープ付きオブジェクトを好みましょう。不必要なヒープ割り当てをしないようにしましょう](#Rr-scoped)
+  * [R.6: 非`const`のグローバル変数を避けましょう](#Rr-global)
+
+* 割り当てと解放のルールまとめ:
+
+  * [R.10: `malloc()` と `free()` を避けましょう](#Rr-mallocfree)
+  * [R.11: 明示的な `new` と `delete`の呼び出しを避けましょう](#Rr-newdelete)
+  * [R.12: 明示的なリソース割り当ての結果は、即座に管理オブジェクトに与えましょう](#Rr-immediate-alloc)
+  * [R.13: 単一の式ステートメント内には、明示的なリソース割り当ては最大で1つにしましょう](#Rr-single-alloc)
+  * [R.14: `[]`パラメータを避けましょう。`span`を使いましょう](#Rr-ap)
+  * [R.15: 常に、割り当てと解放をペアにしてオーバーロードしましょう](#Rr-pair)
+
+* <a name="Rr-summary-smartptrs"></a>スマートポインタのルールまとめ:
+
+  * [R.20: 所有権を表現するために`unique_ptr`や`shared_ptr`を使いましょう](#Rr-owner)
+  * [R.21: 共有所有権が必要なければ `shared_ptr`よりも `unique_ptr`を使いましょう](#Rr-unique)
+  * [R.22: `shared_ptr`を作るときは `make_shared()`を使いましょう](#Rr-make_shared)
+  * [R.23: `unique_ptr`を作るときは `make_unique()`を使いましょう](#Rr-make_unique)
+  * [R.24: `shared_ptr`の循環参照を防ぐためには、`std::weak_ptr`を使いましょう](#Rr-weak_ptr)
+  * [R.30: 寿命セマンティクスを明示的に表現したい場合にかぎり、スマートポインタをパラメータとして受け取りましょう](#Rr-smartptrparam)
+  * [R.31: 非`std`のスマートポインタがある場合は、`std`の基本パターンに従いましょう](#Rr-smart)
+  * [R.32: `widget`の所有権を引き受けることを表現するためには、`unique_ptr<widget>`パラメータを受け取りましょう](#Rr-uniqueptrparam)
+  * [R.33: 関数が `widget` を再配置することを表現するためには、`unique_ptr<widget>&`パラメータを使用しましょう](#Rr-reseat)
+  * [R.34: 所有権の共有を表現するためには、`shared_ptr<widget>`パラメータを使用しましょう](#Rr-sharedptrparam-owner)
+  * [R.35: 関数がsharedポインタを再配置するかもしれないことを表現するために、`shared_ptr<widget>&`パラメータを受け取りましょう](#Rr-sharedptrparam)
+  * [R.36: Take a `const shared_ptr<widget>&` parameter to express that it might retain a reference count to the object ???](#Rr-sharedptrparam-const)
+  * [R.37: エイリアスのスマートポインタから得たポインタや参照を、渡さないようにしましょう](#Rr-smartptrget)
+
+### <a name="Rr-raii"></a>R.1: リソースハンドルとRAII(Resource Acquisition Is Initialization)を使用して、リソース管理は自動化しましょう (Manage resources automatically using resource handles and RAII (Resource Acquisition Is Initialization))
+
+<!--
 ##### Reason
 
 To avoid leaks and the complexity of manual resource management.
@@ -11589,9 +11638,71 @@ What is `Port`? A handy wrapper that encapsulates the resource:
 Where a resource is "ill-behaved" in that it isn't represented as a class with a destructor, wrap it in a class or use [`finally`](#Re-finally)
 
 **See also**: [RAII](#Re-raii)
+-->
+##### 理由
 
-### <a name="Rr-use-ptr"></a>R.2: In interfaces, use raw pointers to denote individual objects (only)
+リークを避けるため、また、手動によるリソース管理の複雑さを避けるためです。
+C++言語で強制されるコンストラクタとデストラクタの対称性は、`fopen`/`fclose`、`lock`/`unlock`、そして`new`/`delete`のようなリソースの取得/解放関数のペアに固有の対称性を反映しています。
+ペアの取得/解放関数呼び出しが必要なリソースを扱うときは、そのリソースを、ペアリングを強制するオブジェクトにカプセル化します。つまり、コンストラクタでリソースを取得し、デストラクタで解放します。
 
+##### 悪い例
+
+考えてみましょう:
+
+    void send(X* x, string_view destination)
+    {
+        auto port = open_port(destination);
+        my_mutex.lock();
+        // ...
+        send(port, x);
+        // ...
+        my_mutex.unlock();
+        close_port(port);
+        delete x;
+    }
+
+このコードでは、`unlock`、`close_port`、そして`delete`をすべての経路で忘れないようにしなくてはなりません。そして、それらは確実に一度だけ実行しなければなりません。
+さらには、`...`でマークされたコード内で例外がスローされた場合は、`x`はリークし、`my_mutex`はロックされたままになるでしょう。
+
+##### 例
+
+考えてみましょう:
+
+    void send(unique_ptr<X> x, string_view destination)  // x は X を所有
+    {
+        Port port{destination};            // port は PortHandle を所有
+        lock_guard<mutex> guard{my_mutex}; // guard は ロックを所有
+        // ...
+        send(port, x);
+        // ...
+    } // 自動的に my_mutex はアンロックされ、xのポインタはdeleteされる
+
+すべてのリソース解放は自動化されています。例外が投げられようと、投げられまいと、あらゆる実行経路で一度だけ解放されます。おまけに、関数はポインタの所有権を引き継ぐことを宣伝するようになりました。
+
+`Port`とはどんなもの? リソースをカプセル化した便利なラッパーです:
+
+    class Port {
+        PortHandle port;
+    public:
+        Port(string_view destination) : port{open_port(destination)} { }
+        ~Port() { close_port(port); }
+        operator PortHandle() { return port; }
+
+        // ポートハンドルは通常コピーできない. したがってコピーと代入は必要に応じて無効にする
+        Port(const Port&) = delete;
+        Port& operator=(const Port&) = delete;
+    };
+
+##### ノート
+
+リソースがデストラクターを備えたクラスとして表現されていないという点で「行儀が悪い」場合は、クラスでラップするか、[`finally`](#Re-finally)を使いましょう。
+(訳注)`finally`の代わりに BOOST_SCOPE_EXITでも可
+
+**See also**: [RAII](#Re-raii)
+
+### <a name="Rr-use-ptr"></a>R.2: インタフェースでは、生のポインタは個々のオブジェクト(のみ)を示すように使いましょう(In interfaces, use raw pointers to denote individual objects (only))
+
+<!--
 ##### Reason
 
 Arrays are best represented by a container type (e.g., `vector` (owning)) or a `span` (non-owning).
@@ -11631,9 +11742,50 @@ However, where `nullptr` is a possible value, a reference might not be a reasona
 * Flag pointer arithmetic (including `++`) on a pointer that is not part of a container, view, or iterator.
   This rule would generate a huge number of false positives if applied to an older code base.
 * Flag array names passed as simple pointers
+-->
+##### 理由
 
-### <a name="Rr-ptr"></a>R.3: A raw pointer (a `T*`) is non-owning
+配列は、コンテナ型(たとえば、`vector`(所有)) または`span`(非所有) によって最もよく表されます。
+このようなコンテナーとビューには、範囲チェックを行うのに十分な情報が含まれています。
 
+##### 悪い例
+
+    void f(int* p, int n)   // n は p[]の要素数
+    {
+        // ...
+        p[2] = 7;   // ダメ: 生ポインタの添え字
+        // ...
+    }
+
+コンパイラはコメントを読みません。そしてあなたは、他のコードを読まないと、`p`が本当に `n`個の要素を指しているか、知ることができません。
+代わりに `span`を使いましょう。
+
+##### 例
+
+    void g(int* p, int fmt)   // #fmt フォーマットを使って *pを表示
+    {
+        // ... *p と p[0] のみを利用 ...
+    }
+
+##### 例外
+
+Cスタイル文字列は 0終端の文字のシーケンスを指す1つのポインタとして渡されます。
+その規則に依存していることを示すには、`char*`ではなく`zstring`を使用しましょう。
+
+##### ノート
+
+単一要素を指す多くのポインタは参照になるべきです。
+しかしながら、`nullptr`が可能な値である場合は、参照に置き換えるべきではありません。
+
+##### 実施
+
+* コンテナや、ビュー、イテレータの一部を指していないポインタに対する算術(`++`も含みます)をチェックしましょう。
+  このルールは、古いコードに適用すると、膨大な擬陽性を生み出すでしょう。
+* シンプルなポインタとして渡される配列名をチェックしましょう。
+
+### <a name="Rr-ptr"></a>R.3: 生のポインタ(`T*`)は所有権を持たせないようにしましょう (A raw pointer (a `T*`) is non-owning)
+
+<!--
 ##### Reason
 
 There is nothing (in the C++ standard or in most code) to say otherwise and most raw pointers are non-owning.
@@ -11736,9 +11888,112 @@ If pointer semantics are required (e.g., because the return type needs to refer 
 * (Simple) Warn if the return value of `new` is assigned to a raw pointer.
 * (Simple) Warn if a function returns an object that was allocated within the function but has a move constructor.
   Suggest considering returning it by value instead.
+-->
+##### 理由
 
-### <a name="Rr-ref"></a>R.4: A raw reference (a `T&`) is non-owning
+(C++標準や多くのコードでは)他に言うべきことはありません。多くの生のポインタは非所有です。
+所有権をもつポインタによって、オブジェクトが確実かつ効率的に delete されるように、私たちは所有権をもつポインタを識別する必要があります。
 
+##### 例
+
+    void f()
+    {
+        int* p1 = new int{7};           // ダメ: 生の所有権をもつポインタ
+        auto p2 = make_unique<int>(7);  // OK: int は unique_ptrによって所有される
+        // ...
+    }
+
+`unique_ptr`は所有するオブジェクトの削除を(たとえ例外が発生したとしても)保証することによって、リークから守ります。`T*`はそうではありません。
+
+##### 例
+
+    template<typename T>
+    class X {
+    public:
+        T* p;   // ダメ: pは所有権をもつかどうか明確でない
+        T* q;   // ダメ: qは所有権をもつかどうか明確でない
+        // ...
+    };
+
+所有権を明示させることによってこの問題を修正できます:
+
+    template<typename T>
+    class X2 {
+    public:
+        owner<T*> p;  // OK: p は所有権を持つ
+        T* q;         // OK: q は所有権を持たない
+        // ...
+    };
+
+##### 例外
+
+主な例外はレガシーコード、特に C としてコンパイル可能な状態を維持する必要があるコード、または ABI を介して C および CスタイルC++ のインターフェイスを維持する必要があるコードです。
+`T*`の所有に対するこのルールに違反するコードが何十億行も存在する事実は無視することができません。
+私たちは、プログラム変換ツールが 20 年前の「レガシー」コードを、綺麗な最新のコードに変えるのを見てみたいと思っています。
+私たちはそのようなツールの開発、展開、使用を奨励します。
+このガイドラインがそのようなツールの開発に役立つことを願っています。
+そして私たちはこの分野の研究開発にも貢献しました(そして今も貢献しています)。
+ただし、時間がかかります。古いコードを刷新するよりも早く「レガシーコード」が生成されるため、数年かかることになります。
+
+このコードをすべて書き直すことは (優れたコード変換ソフトウェアを前提としても)、とりわけすぐにはできません。
+この問題は、所有するすべてのポインタを `unique_ptr` および `shared_ptr` に変換することで (大規模に) 解決することはできません。
+その理由の一部は、基本的なリソースハンドルの実装では、単純なポインタだけでなく、所有する「生のポインタ」が必要/使用されるためです。
+例えば、一般的な`vector`の実装では、1つの所有ポインタと2つ非所有ポインタを持ちます。
+多くの ABI (および基本的に C コードへのすべてのインターフェイス) は `T*` を使用しており、その一部は所有しています。
+一部のインターフェイスは、C としてコンパイル可能な状態を維持する必要があるため、単純に`owner`の注釈を付けることができません。
+(ただし、これは、C++ モードでのみ `owner` に展開されるマクロのまれな良い用途になります)。
+
+##### ノート
+
+`owner<T*>` は `T*`以上のデフォルトのセマンティクスを持ちません。ABIへの影響を除いて、いかなる動作の変更も伴いません。
+プログラマや解析ツールへの単なる指示になります。
+たとえば、`owner<T*>`がクラスのメンバーである場合、そのクラスにはそれを`delete`するデストラクタがあったほうがよいでしょう。
+
+##### 悪い例
+
+(生の)ポインタを返すと、呼び出し側に寿命管理の不確実性が課せられます。つまり、指し示されたオブジェクトを削除するのは誰ですか?
+
+    Gadget* make_gadget(int n)
+    {
+        auto p = new Gadget{n};
+        // ...
+        return p;
+    }
+
+    void caller(int n)
+    {
+        auto p = make_gadget(n);   // pの削除を忘れないこと
+        // ...
+        delete p;
+    }
+
+[リーク](#???) による問題に悩まされることに加えて、これにより、偽の割り当ておよび割り当て解除の操作が追加され、不必要に冗長になります。Gadgetが関数からの移動が安価である場合(つまり、小さいか、効率的なムーブ操作を備えている場合)、単に「値で」返しましょう (["out" return values](#Rf-out) を参照):
+
+    Gadget make_gadget(int n)
+    {
+        Gadget g{n};
+        // ...
+        return g;
+    }
+
+##### ノート
+
+このルールはファクトリ関数に適用されます。
+
+##### ノート
+
+もしポインタのセマンティクスが必要な場合(例えば、返り値型がクラス階層のベースクラスへの参照が必要な場合)は、「スマートポインタ」を返しましょう。
+
+##### 実施
+
+* (シンプル) `owner<T>`でない生のポインタへの`delete`に警告しましょう。
+* (適度) すべてのコードパス上のおいて、 `owner<T>` ポインタに対して`reset`するか、明示的に`delete`することに失敗する場合に警告しましょう。
+* (シンプル) `new`の戻り値が生のポインタに割り当てられる場合に警告しましょう。
+* (シンプル) オブジェクトがムーブコンストラクタをもっているのに、関数内でアロケートして返す場合に警告しましょう。代わりに値で返すことを推奨しましょう。
+
+### <a name="Rr-ref"></a>R.4: 生の参照(`T&`)は所有権を持たせないようにしましょう (A raw reference (a `T&`) is non-owning)
+
+<!--
 ##### Reason
 
 There is nothing (in the C++ standard or in most code) to say otherwise and most raw references are non-owning.
@@ -11758,9 +12013,30 @@ We want owners identified so that we can reliably and efficiently delete the obj
 ##### Enforcement
 
 See [the raw pointer rule](#Rr-ptr)
+-->
+##### 理由
 
-### <a name="Rr-scoped"></a>R.5: Prefer scoped objects, don't heap-allocate unnecessarily
+(C++標準や多くのコードでは)他に言うべきことはありません。多くの生の参照は非所有です。
+所有権をもつポインタによって、オブジェクトが確実かつ効率的に delete されるように、私たちは所有者を識別する必要があります。
 
+##### 例
+
+    void f()
+    {
+        int& r = *new int{7};  // ダメ: 生の所有権をもつ参照
+        // ...
+        delete &r;             // ダメ: 生ポインタのdeleteに対するこのルールに違反
+    }
+
+**See also**: [The raw pointer rule](#Rr-ptr)
+
+##### 実施
+
+See [the raw pointer rule](#Rr-ptr)
+
+### <a name="Rr-scoped"></a>R.5: スコープ付きオブジェクトを好みましょう。不必要なヒープ割り当てをしないようにしましょう (Prefer scoped objects, don't heap-allocate unnecessarily)
+
+<!--
 ##### Reason
 
 A scoped object is a local object, a global object, or a member.
@@ -11812,15 +12088,68 @@ A valid use case for a local `const unique_ptr<T[]>` variable:
 
       return local_buffer[size/2];
     }
+    -->
+##### 理由
 
-### <a name="Rr-global"></a>R.6: Avoid non-`const` global variables
+スコープ付きオブジェクトとは、ローカルオブジェクト、グローバルオブジェクト、またはメンバー変数です。
+これは、含まれているスコープまたはオブジェクトにすでに使用されているコストを超える個別の割り当ておよび割り当て解除のコストがないことを意味します。
+スコープ付きオブジェクトのメンバー自体もスコープ付きであり、スコープ付きオブジェクトのコンストラクタとデストラクタがメンバーの寿命を管理します。
+
+##### Example
+
+The following example is inefficient (because it has unnecessary allocation and deallocation), vulnerable to exception throws and returns in the `...` part (leading to leaks), and verbose:
+
+    void f(int n)
+    {
+        auto p = new Gadget{n};
+        // ...
+        delete p;
+    }
+
+Instead, use a local variable:
+
+    void f(int n)
+    {
+        Gadget g{n};
+        // ...
+    }
+
+##### Enforcement
+
+* (Moderate) Warn if an object is allocated and then deallocated on all paths within a function. Suggest it should be a local stack object instead.
+* (Simple) Warn if a local `Unique_pointer` or `Shared_pointer` that is not moved, copied, reassigned or `reset` before its lifetime ends is not declared `const`.
+Exception: Do not produce such a warning on a local `Unique_pointer` to an unbounded array. (See below.)
+
+##### Exception
+
+It is OK to create a local `const unique_ptr<T[]>` to a heap-allocated buffer, as this is a valid way to represent a scoped dynamic array.
+
+##### Example
+
+A valid use case for a local `const unique_ptr<T[]>` variable:
+
+    int get_median_value(const std::list<int>& integers)
+    {
+      const auto size = integers.size();
+
+      // OK: declaring a local unique_ptr<T[]>.
+      const auto local_buffer = std::make_unique_for_overwrite<int[]>(size);
+
+      std::copy_n(begin(integers), size, local_buffer.get());
+      std::nth_element(local_buffer.get(), local_buffer.get() + size/2, local_buffer.get() + size);
+
+      return local_buffer[size/2];
+    }
+
+### <a name="Rr-global"></a>R.6: 非`const`のグローバル変数を避けましょう (Avoid non-`const` global variables)
 
 See [I.2](#Ri-global)
 
-## <a name="SS-alloc"></a>R.alloc: Allocation and deallocation
+## <a name="SS-alloc"></a>R.alloc: 割り当てと解放 (Allocation and deallocation)
 
-### <a name="Rr-mallocfree"></a>R.10: Avoid `malloc()` and `free()`
+### <a name="Rr-mallocfree"></a>R.10: `malloc()` と `free()` を避けましょう (Avoid `malloc()` and `free()`)
 
+<!--
 ##### Reason
 
  `malloc()` and `free()` do not support construction and destruction, and do not mix well with `new` and `delete`.
@@ -11865,9 +12194,55 @@ In such cases, consider the `nothrow` versions of `new`.
 ##### Enforcement
 
 Flag explicit use of `malloc` and `free`.
+-->
+##### 理由
 
-### <a name="Rr-newdelete"></a>R.11: Avoid calling `new` and `delete` explicitly
+`malloc()` と `free()` はコンストラクタとデストラクタをサポートしておらず、`new` や `delete` とうまく組み合わせることはできません。
 
+##### 例
+
+    class Record {
+        int id;
+        string name;
+        // ...
+    };
+
+    void use()
+    {
+        // p1 は nullptrかもしれない
+        // *p1 は初期化されていない; とくに
+        // stringはstringではない, かわりにstringサイズのビットの集まりだ
+        Record* p1 = static_cast<Record*>(malloc(sizeof(Record)));
+
+        auto p2 = new Record;
+
+        // 例外がスローされないかぎり, *p2はデフォルト初期化されている
+        auto p3 = new(nothrow) Record;
+        // p3 はnullptrかもしれない; もしそうでないなら *p3はデフォルト初期化されている
+
+        // ...
+
+        delete p1;    // エラー: malloc()によって割り当てられたオブジェクトは deleteできない
+        free(p2);    // エラー: newによって割り当てられたオブジェクトは free()できない
+    }
+
+いくつかの実装においては この`delete`と`free`は動作するかもしれませんが、実行時エラーを引き起こすかもしれません。
+
+##### 例外
+
+例外(訳注: ここでの例外はC++言語の例外機能のこと)が許容できないアプリケーションやコード片があります。
+それらの最良の例は、命に係わるハードリアルタイムなコードです。
+例外使用の禁止の多くは(悪い)迷信に基づいていることに注意してください。
+あるいは、非体系的なリソース管理を伴う古いコードベースに対する懸念によるものです (残念ながら、必要な場合もあります)。
+このような場合は、`new`の`nothrow`バージョンを検討してください。
+
+##### 実施
+
+明示的な`malloc` と `free`の使用をチェックしましょう。
+
+### <a name="Rr-newdelete"></a>R.11: 明示的な `new` と `delete`の呼び出しを避けましょう (Avoid calling `new` and `delete` explicitly)
+
+<!--
 ##### Reason
 
 The pointer returned by `new` should belong to a resource handle (that can call `delete`).
@@ -11883,9 +12258,26 @@ If you have a naked `new`, you probably need a naked `delete` somewhere, so you 
 ##### Enforcement
 
 (Simple) Warn on any explicit use of `new` and `delete`. Suggest using `make_unique` instead.
+-->
+##### 理由
 
-### <a name="Rr-immediate-alloc"></a>R.12: Immediately give the result of an explicit resource allocation to a manager object
+`new`によって返されたポインタはリソースハンドル(`delete`を呼び出します)に属するべきです。
+もしも `new`によって返されたポインタが、生の裸のポインタに割り当てられると、そのオブジェクトはリークする可能性があります。
 
+##### ノート
+
+大きなプログラムにおいては、裸の `delete`(これは、リソース管理専用のコードの一部ではなく、アプリケーションコードでの`delete`です。)は
+もはやバグです: もしN個の `delete`があったとしたら、 N+1かN-1が必要ないことをどうやって確認できるでしょうか?
+バグは潜在している可能性があります: メンテナンス中にのみ出現する可能性もあります。
+裸の `new` がある場合は、おそらくどこかに裸の `delete` が必要になるため、したがってバグがある可能性があります。
+
+##### 実施
+
+(シンプル) 明示的な `new`と `delete`の使用に警告しましょう。代わりに `make_unique`を推奨しましょう。
+
+### <a name="Rr-immediate-alloc"></a>R.12: 明示的なリソース割り当ての結果は、即座に管理オブジェクトに与えましょう (Immediately give the result of an explicit resource allocation to a manager object)
+
+<!--
 ##### Reason
 
 If you don't, an exception or a return might lead to a leak.
@@ -11916,9 +12308,41 @@ The use of the file handle (in `ifstream`) is simple, efficient, and safe.
 ##### Enforcement
 
 * Flag explicit allocations used to initialize pointers (problem: how many direct resource allocations can we recognize?)
+-->
+##### 理由
 
-### <a name="Rr-single-alloc"></a>R.13: Perform at most one explicit resource allocation in a single expression statement
+そうしないと、例外やreturnによってリークが発生するかもしれません。
 
+##### 悪い例
+
+    void func(const string& name)
+    {
+        FILE* f = fopen(name, "r");            // ファイルオープン
+        vector<char> buf(1024);
+        auto _ = finally([f] { fclose(f); });  // ファイルのクローズを忘れないこと
+        // ...
+    }
+
+`buf`の割り当ては失敗するかもしれません。その場合ファイルハンドルはリークします。
+
+##### 例
+
+    void func(const string& name)
+    {
+        ifstream f{name};   // ファイルオープン
+        vector<char> buf(1024);
+        // ...
+    }
+
+(`ifstream`による)ファイルハンドルを利用することは、シンプルで、効率的で、安全です。
+
+##### 実施
+
+* ポインタを初期化するための明示的な割り当てをチェックしましょう (問題: どれだけの直接的なリソース割り当てを私たちは認識できるでしょうか?)
+
+### <a name="Rr-single-alloc"></a>R.13: 単一の式ステートメント内には、明示的なリソース割り当ては最大で1つにしましょう (Perform at most one explicit resource allocation in a single expression statement)
+
+<!--
 ##### Reason
 
 If you perform two explicit resource allocations in one statement, you could leak resources because the order of evaluation of many subexpressions, including function arguments, is unspecified.
@@ -11952,9 +12376,44 @@ Write your own factory wrapper if there is not one already.
 ##### Enforcement
 
 * Flag expressions with multiple explicit resource allocations (problem: how many direct resource allocations can we recognize?)
+-->
+##### 理由
 
-### <a name="Rr-ap"></a>R.14: Avoid `[]` parameters, prefer `span`
+もしも1つのステートメント内で、2つの明示的なリソース割り当てを行った場合、関数の引数を含む多くの部分式の評価順序が指定されていないため、リソースがリークする可能性があります。
 
+##### 例
+
+    void fun(shared_ptr<Widget> sp1, shared_ptr<Widget> sp2);
+
+この `fun` は次のように呼び出される可能性があります:
+
+    // ダメ: リークの可能性
+    fun(shared_ptr<Widget>(new Widget(a, b)), shared_ptr<Widget>(new Widget(c, d)));
+
+コンパイラが関数の 2つの引数を構築する 2つの式の順序を変更する可能性があるため、これは例外的に安全ではありません。
+特に、コンパイラは次の 2つの式を交互に実行できます。
+最初に両方のオブジェクトに対してメモリ割り当て(`operator new`を呼び出すことによる) を実行し、続いて 2つの`Widget`コンストラクターの呼び出しを試みることができます。
+もしもコンストラクタの1つが例外をスローした場合、別のオブジェクトのメモリは決して解放されません!
+
+この微妙な問題には簡単な解決策があります: 単一の式ステートメントで複数の明示的なリソース割り当てを決して実行しないことです。
+例えば:
+
+    shared_ptr<Widget> sp1(new Widget(a, b)); // ベター,だけど汚い
+    fun(sp1, new Widget(c, d));
+
+最善の解決策は、明示的な割り当てを完全に避け、所有するオブジェクトを返すファクトリ関数を使用することです。
+
+    fun(make_shared<Widget>(a, b), make_shared<Widget>(c, d)); // ベスト
+
+独自のファクトリラッパーが存在しない場合は、独自のファクトリラッパーを書きましょう。
+
+##### 実施
+
+* 複数の明示的なリソース割り当てを伴う式をチェックしましょう (問題: どれだけの直接的なリソース割り当てを私たちは認識できるでしょうか?)
+
+### <a name="Rr-ap"></a>R.14: `[]`パラメータを避けましょう。`span`を使いましょう (Avoid `[]` parameters, prefer `span`)
+
+<!--
 ##### Reason
 
 An array decays to a pointer, thereby losing its size, opening the opportunity for range errors.
@@ -11972,9 +12431,28 @@ Use `span` to preserve size information.
 ##### Enforcement
 
 Flag `[]` parameters. Use `span` instead.
+-->
+##### 理由
 
-### <a name="Rr-pair"></a>R.15: Always overload matched allocation/deallocation pairs
+配列はポインタになり下がるため、サイズの情報が失われ、範囲エラーが発生する可能性があります。
+サイズ情報を保つために `span`を使いましょう。
 
+##### 例
+
+    void f(int[]);          // オススメしない
+
+    void f(int*);           // 複数オブジェクトに対してはオススメしない
+                            // (ポインタは単一のオブジェクトを指すべきです。添え字を付けないでください)
+
+    void f(gsl::span<int>); // グッド, オススメ
+
+##### 実施
+
+`[]`パラメータをチェックしましょう。代わりに `span`を使いましょう。
+
+### <a name="Rr-pair"></a>R.15: 常に、割り当てと解放をペアにしてオーバーロードしましょう (Always overload matched allocation/deallocation pairs)
+
+<!--
 ##### Reason
 
 Otherwise you get mismatched operations and chaos.
@@ -11996,11 +12474,34 @@ Don't leave it undeclared.
 ##### Enforcement
 
 Flag incomplete pairs.
+-->
+##### 理由
 
-## <a name="SS-smart"></a>R.smart: Smart pointers
+そうしないと、操作が不一致になり、混乱が生じます。
 
-### <a name="Rr-owner"></a>R.20: Use `unique_ptr` or `shared_ptr` to represent ownership
+##### 例
 
+    class X {
+        // ...
+        void* operator new(size_t s);
+        void operator delete(void*);
+        // ...
+    };
+
+##### ノート
+
+割り当てを解除できないメモリが必要な場合は、割り当て解除操作を`=delete`します。
+未申告のまま放置しないでください。
+
+##### 実施
+
+不完全なペアをチェックしましょう。
+
+## <a name="SS-smart"></a>R.smart: スマートポインタ (Smart pointers)
+
+### <a name="Rr-owner"></a>R.20: 所有権を表現するために`unique_ptr`や`shared_ptr`を使いましょう (Use `unique_ptr` or `shared_ptr` to represent ownership)
+
+<!--
 ##### Reason
 
 They can prevent resource leaks.
@@ -12022,9 +12523,32 @@ This will leak the object used to initialize `p1` (only).
 
 * (Simple) Warn if the return value of `new` is assigned to a raw pointer.
 * (Simple) Warn if the result of a function returning a raw owning pointer is assigned to a raw pointer.
+-->
+##### 理由
 
-### <a name="Rr-unique"></a>R.21: Prefer `unique_ptr` over `shared_ptr` unless you need to share ownership
+それらはリソースリークを防げます。
 
+##### 例
+
+考えてみましょう:
+
+    void f()
+    {
+        X* p1 { new X };              // ダメ, p1はリークするでしょう
+        auto p2 = make_unique<X>();   // 良い, 単一所有権
+        auto p3 = make_shared<X>();   // 良い, 共有所有権
+    }
+
+ここでは`p1`のみがリークするでしょう。
+
+##### 実施
+
+* (シンプル) `new`の返り値が生ポインタに代入されている場合に警告しましょう。
+* (シンプル) 生の所有ポインタを返す関数の返り値を生ポインタに代入されている場合に警告しましょう。
+
+### <a name="Rr-unique"></a>R.21: 共有所有権が必要なければ `shared_ptr`よりも `unique_ptr`を使いましょう (Prefer `unique_ptr` over `shared_ptr` unless you need to share ownership)
+
+<!--
 ##### Reason
 
 A `unique_ptr` is conceptually simpler and more predictable (you know when destruction happens) and faster (you don't implicitly maintain a use count).
@@ -12052,9 +12576,38 @@ This is more efficient:
 ##### Enforcement
 
 (Simple) Warn if a function uses a `Shared_pointer` with an object allocated within the function, but never returns the `Shared_pointer` or passes it to a function requiring a `Shared_pointer&`. Suggest using `unique_ptr` instead.
+-->
+##### 理由
 
-### <a name="Rr-make_shared"></a>R.22: Use `make_shared()` to make `shared_ptr`s
+`unique_ptr`はより概念的にシンプルで、予測しやすく(いつデストラクトされるか分かりやすい)、そして高速です(暗黙的な参照カウント管理が不要)。
 
+##### 悪い例
+
+この例では参照カウントが不必要に追加、管理されています。
+
+    void f()
+    {
+        shared_ptr<Base> base = make_shared<Derived>();
+        // baseはコピーされずに、ローカルでのみ利用 -- 参照カウントは1を決して超えない
+    } // baseをデストラクト
+
+##### 例
+
+こちらはより効率的です:
+
+    void f()
+    {
+        unique_ptr<Base> base = make_unique<Derived>();
+        // baseはローカルでのみ利用
+    } // baseをデストラクト
+
+##### 実施
+
+(シンプル) 関数が関数内でオブジェクトを割り当てた `Shared_pointer` を使用しているにもかかわらず、`Shared_pointer` を返さない場合、または `Shared_pointer&` を必要とする関数にそれを渡さない場合に警告します。代わりに`unique_ptr`を使用することをお勧めします。
+
+### <a name="Rr-make_shared"></a>R.22: `shared_ptr`を作るときは `make_shared()`を使いましょう (Use `make_shared()` to make `shared_ptr`s)
+
+<!--
 ##### Reason
 
 `make_shared` gives a more concise statement of the construction.
@@ -12072,9 +12625,29 @@ The `make_shared()` version mentions `X` only once, so it is usually shorter (as
 ##### Enforcement
 
 (Simple) Warn if a `shared_ptr` is constructed from the result of `new` rather than `make_shared`.
+-->
+##### 理由
 
-### <a name="Rr-make_unique"></a>R.23: Use `make_unique()` to make `unique_ptr`s
+`make_shared` は、コンストラクトのより簡潔なステートメントを提供します。
+また、`shared_ptr` の参照カウントをそのオブジェクトに連続した領域に配置することで、参照カウントの個別のメモリ割り当てを省略する機会も与えられます。
 
+##### 例
+
+考えてみましょう:
+
+    shared_ptr<X> p1 { new X{2} }; // ダメ
+    auto p = make_shared<X>(2);    // 良い
+
+`make_shared()` バージョンでは `X` が 1回だけ言及されるため、通常は明示的に `new` を使用したバージョンよりも短くなります (また動作も高速になります)。
+(訳注) `make_shared()`では参照カウントに必要なメモリ領域をオブジェクトに連続した領域に確保するため、メモリ割り当て回数が1回ですみ、動作が高速になります。
+
+##### 実施
+
+(シンプル) `new`の返り値によって `shared_ptr`を構築している場合は、代わりに `make_shared`にするように警告しましょう。
+
+### <a name="Rr-make_unique"></a>R.23: `unique_ptr`を作るときは `make_unique()`を使いましょう (Use `make_unique()` to make `unique_ptr`s)
+
+<!--
 ##### Reason
 
 `make_unique` gives a more concise statement of the construction.
@@ -12089,9 +12662,25 @@ It also ensures exception safety in complex expressions.
 ##### Enforcement
 
 (Simple) Warn if a `unique_ptr` is constructed from the result of `new` rather than `make_unique`.
+-->
+##### 理由
 
-### <a name="Rr-weak_ptr"></a>R.24: Use `std::weak_ptr` to break cycles of `shared_ptr`s
+`make_unique` は、コンストラクションのより簡潔なステートメントを提供します。
+また、複雑な式における例外安全性も確保します。
 
+##### 例
+
+    unique_ptr<Foo> p {new Foo{7}};    // OK: しかしFooが繰り返し
+
+    auto q = make_unique<Foo>(7);      // ベター: Fooの繰り返しがない
+
+##### 実施
+
+(シンプル) `new`の返り値によって `unique_ptr`を構築している場合は、代わりに `make_unique`にするように警告しましょう。
+
+### <a name="Rr-weak_ptr"></a>R.24: `shared_ptr`の循環参照を防ぐためには、`std::weak_ptr`を使いましょう (Use `std::weak_ptr` to break cycles of `shared_ptr`s)
+
+<!--
 ##### Reason
 
  `shared_ptr`'s rely on use counting and the use count for a cyclic structure never goes to zero, so we need a mechanism to
@@ -12136,13 +12725,58 @@ You could "temporarily share ownership" simply by using another `shared_ptr`.)
 ##### Enforcement
 
 ??? probably impossible. If we could statically detect cycles, we wouldn't need `weak_ptr`
+-->
+##### 理由
 
-### <a name="Rr-smartptrparam"></a>R.30: Take smart pointers as parameters only to explicitly express lifetime semantics
+`shared_ptr`は参照カウントに依存しており、循環構造の参照カウントは決してゼロにはならないため、循環構造を破棄できるメカニズムが必要です。
+
+##### 例
+
+    #include <memory>
+
+    class bar;
+
+    class foo {
+    public:
+      explicit foo(const std::shared_ptr<bar>& forward_reference)
+        : forward_reference_(forward_reference)
+      { }
+    private:
+      std::shared_ptr<bar> forward_reference_;
+    };
+
+    class bar {
+    public:
+      explicit bar(const std::weak_ptr<foo>& back_reference)
+        : back_reference_(back_reference)
+      { }
+      void do_something()
+      {
+        if (auto shared_back_reference = back_reference_.lock()) {
+          // *shared_back_reference を利用
+        }
+      }
+    private:
+      std::weak_ptr<foo> back_reference_;
+    };
+
+##### ノート
+
+ ??? (HS: A lot of people say "to break cycles", while I think "temporary shared ownership" is more to the point.)
+???(BS: breaking cycles is what you must do; temporarily sharing ownership is how you do it.
+You could "temporarily share ownership" simply by using another `shared_ptr`.)
+
+##### 実施
+
+??? おそらく不可能。 もしも静的に循環を検知できるのであれば、`weak_ptr`自体が不要なはず。
+
+### <a name="Rr-smartptrparam"></a>R.30: 寿命セマンティクスを明示的に表現したい場合にかぎり、スマートポインタをパラメータとして受け取りましょう (Take smart pointers as parameters only to explicitly express lifetime semantics)
 
 See [F.7](#Rf-smart).
 
-### <a name="Rr-smart"></a>R.31: If you have non-`std` smart pointers, follow the basic pattern from `std`
+### <a name="Rr-smart"></a>R.31: 非`std`のスマートポインタがある場合は、`std`の基本パターンに従いましょう (If you have non-`std` smart pointers, follow the basic pattern from `std`)
 
+<!--
 ##### Reason
 
 The rules in the following section also work for other kinds of third-party and custom smart pointers and are very useful for diagnosing common smart pointer errors that cause performance and correctness problems.
@@ -12173,9 +12807,42 @@ Both cases are an error under the [`sharedptrparam` guideline](#Rr-smartptrparam
 `p` is a `Shared_pointer`, but nothing about its sharedness is used here and passing it by value is a silent pessimization;
 these functions should accept a smart pointer only if they need to participate in the widget's lifetime management. Otherwise they should accept a `widget*`, if it can be `nullptr`. Otherwise, and ideally, the function should accept a `widget&`.
 These smart pointers match the `Shared_pointer` concept, so these guideline enforcement rules work on them out of the box and expose this common pessimization.
+-->
+##### 理由
 
-### <a name="Rr-uniqueptrparam"></a>R.32: Take a `unique_ptr<widget>` parameter to express that a function assumes ownership of a `widget`
+次のセクションのルールは、他の種類のサードパーティおよびカスタムスマートポインタにも機能し、パフォーマンスと正確性の問題を引き起こす一般的なスマートポインタのエラーを診断するのに非常に役立ちます。
+使用するすべてのスマート ポインターに対してルールが機能するようにしたいと考えています。
 
+単項演算子 `*` および `->` をオーバーロードする型(プライマリテンプレートまたは特殊化を含む) は、スマートポインターとみなされます:
+
+* もしコピー可能なら、それは参照カウント`shared_ptr`とみなされます。
+* もしコピー不可能なら、それは`unique_ptr`とみなされます。
+
+##### 悪い例
+
+    // Boostの intrusive_ptr を使用
+    #include <boost/intrusive_ptr.hpp>
+    void f(boost::intrusive_ptr<widget> p)  // 'sharedptrparam'ルールに違反
+    {
+        p->foo();
+    }
+
+    // Microsoftの CComPtrを利用
+    #include <atlbase.h>
+    void f(CComPtr<widget> p)               // 'sharedptrparam'ルールに違反
+    {
+        p->foo();
+    }
+
+両方のケースで[`sharedptrparam` guideline](#Rr-smartptrparam)に違反しています:
+`p`は`Shared_pointer`ですが、ここではその共有性については何も使用されておらず、それを値で渡すことはパフォーマンスが良くありません;
+これらの関数は、Widgetの寿命管理に参加する必要がある場合にのみスマートポインターを受け入れる必要があります。
+そうでないなら、`nullptr` を使用できる場合は`widget*` を受け入れる必要があります。それ以外の場合、理想的には関数は `widget&` を受け入れる必要があります。
+これらのスマートポインタは`Shared_pointer`の概念と一致するため、これらのガイドライン適用ルールはすぐに機能し、この一般的な非効率を明らかにします。
+
+### <a name="Rr-uniqueptrparam"></a>R.32: `widget`の所有権を引き受けることを表現するためには、`unique_ptr<widget>`パラメータを受け取りましょう (Take a `unique_ptr<widget>` parameter to express that a function assumes ownership of a `widget`)
+
+<!--
 ##### Reason
 
 Using `unique_ptr` in this way both documents and enforces the function call's ownership transfer.
@@ -12194,9 +12861,29 @@ Using `unique_ptr` in this way both documents and enforces the function call's o
 
 * (Simple) Warn if a function takes a `Unique_pointer<T>` parameter by lvalue reference and does not either assign to it or call `reset()` on it on at least one code path. Suggest taking a `T*` or `T&` instead.
 * (Simple) ((Foundation)) Warn if a function takes a `Unique_pointer<T>` parameter by reference to `const`. Suggest taking a `const T*` or `const T&` instead.
+-->
+##### 理由
 
-### <a name="Rr-reseat"></a>R.33: Take a `unique_ptr<widget>&` parameter to express that a function reseats the `widget`
+この方法で`unique_ptr` を使用すると、関数呼び出しの際の所有権の譲渡が文書化され強制されます。
 
+##### 例
+
+    void sink(unique_ptr<widget>); // widgetの所有権を引き受ける
+
+    void uses(widget*);            // 単にwidgetを使用する
+
+##### 悪い例
+
+    void thinko(const unique_ptr<widget>&); // 大抵はあなたが望むものではない
+
+##### 実施
+
+* (シンプル) もしも関数が`Unique_pointer<T>`パラメータを lvalue参照として受け取り、そしてそれを代入や`reset()`の呼び出しが少なくとも1つのコードパス中にない場合は、代わりに T* や T& を受け取ることを推奨しましょう。
+* (シンプル) ((Foundation)) もしも関数が`Unique_pointer<T>`パラメータを`const`参照として受け取る場合は、代わりに `const T*` や `const T&`で受け取ることを推奨しましょう。
+
+### <a name="Rr-reseat"></a>R.33: 関数が `widget` を再配置することを表現するためには、`unique_ptr<widget>&`パラメータを使用しましょう (Take a `unique_ptr<widget>&` parameter to express that a function reseats the `widget`)
+
+<!--
 ##### Reason
 
 Using `unique_ptr` in this way both documents and enforces the function call's reseating semantics.
@@ -12217,9 +12904,31 @@ Using `unique_ptr` in this way both documents and enforces the function call's r
 
 * (Simple) Warn if a function takes a `Unique_pointer<T>` parameter by lvalue reference and does not either assign to it or call `reset()` on it on at least one code path. Suggest taking a `T*` or `T&` instead.
 * (Simple) ((Foundation)) Warn if a function takes a `Unique_pointer<T>` parameter by reference to `const`. Suggest taking a `const T*` or `const T&` instead.
+-->
+##### 理由
 
-### <a name="Rr-sharedptrparam-owner"></a>R.34: Take a `shared_ptr<widget>` parameter to express shared ownership
+この方法で`unique_ptr` を使用すると、関数呼び出しの際の再配置セマンティクスが文書化され強制されます。
 
+##### ノート
+
+"再配置(reseat)"は"ポインタまたはスマートポインタが異なるオブジェクトを参照するようにすること"を意味します。
+
+##### 例
+
+    void reseat(unique_ptr<widget>&); // ポインタの再配置がおそらく発生
+
+##### 悪い例
+
+    void thinko(const unique_ptr<widget>&); // 大抵はあなたが望んでいるものではない
+
+##### 実施
+
+* (シンプル) もしも関数が`Unique_pointer<T>`パラメータを lvalue参照として受け取り、そしてそれを代入や`reset()`の呼び出しが少なくとも1つのコードパス中にない場合は、代わりに T* や T& を受け取ることを推奨しましょう。
+* (シンプル) ((Foundation)) もしも関数が`Unique_pointer<T>`パラメータを`const`参照として受け取る場合は、代わりに `const T*` や `const T&`で受け取ることを推奨しましょう。
+
+### <a name="Rr-sharedptrparam-owner"></a>R.34: 所有権の共有を表現するためには、`shared_ptr<widget>`パラメータを使用しましょう (Take a `shared_ptr<widget>` parameter to express shared ownership)
+
+<!--
 ##### Reason
 
 This makes the function's ownership sharing explicit.
@@ -12242,9 +12951,33 @@ This makes the function's ownership sharing explicit.
 * (Simple) Warn if a function takes a `Shared_pointer<T>` parameter by lvalue reference and does not either assign to it or call `reset()` on it on at least one code path. Suggest taking a `T*` or `T&` instead.
 * (Simple) ((Foundation)) Warn if a function takes a `Shared_pointer<T>` by value or by reference to `const` and does not copy or move it to another `Shared_pointer` on at least one code path. Suggest taking a `T*` or `T&` instead.
 * (Simple) ((Foundation)) Warn if a function takes a `Shared_pointer<T>` by rvalue reference. Suggesting taking it by value instead.
+-->
+##### 理由
 
-### <a name="Rr-sharedptrparam"></a>R.35: Take a `shared_ptr<widget>&` parameter to express that a function might reseat the shared pointer
+こうすることで関数の所有権の共有が明示されます。
 
+##### 良い例
+
+    class WidgetUser
+    {
+    public:
+        // WidgetUser は widgetの所有権を共有する
+        explicit WidgetUser(std::shared_ptr<widget> w) noexcept:
+            m_widget{std::move(w)} {}
+        // ...
+    private:
+        std::shared_ptr<widget> m_widget;
+    };
+
+##### 実施
+
+* (シンプル) もしも関数が`Shared_pointer<T>`パラメータを lvalue参照として受け取り、そしてそれを代入や`reset()`の呼び出しが少なくとも1つのコードパス中にない場合は、代わりに T* や T& を受け取ることを推奨しましょう。
+* (シンプル) ((Foundation)) もしも関数が`Shared_pointer<T>`パラメータを、値または`const`参照として受け取り、そしてそれを他の`Shared_pointer`へのコピーや移動が少なくとも1つのコードパス中にない場合は、代わりに `T*` や `T&`で受け取ることを推奨しましょう。
+* (シンプル) ((Foundation)) もしも関数が`Shared_pointer<T>`パラメータを rvalue参照として受け取る場合は、代わりにそれを値渡しすることを推奨しましょう。
+
+### <a name="Rr-sharedptrparam"></a>R.35: 関数がsharedポインタを再配置するかもしれないことを表現するために、`shared_ptr<widget>&`パラメータを受け取りましょう (Take a `shared_ptr<widget>&` parameter to express that a function might reseat the shared pointer)
+
+<!--
 ##### Reason
 
 This makes the function's reseating explicit.
@@ -12266,6 +12999,28 @@ This makes the function's reseating explicit.
 * (Simple) Warn if a function takes a `Shared_pointer<T>` parameter by lvalue reference and does not either assign to it or call `reset()` on it on at least one code path. Suggest taking a `T*` or `T&` instead.
 * (Simple) ((Foundation)) Warn if a function takes a `Shared_pointer<T>` by value or by reference to `const` and does not copy or move it to another `Shared_pointer` on at least one code path. Suggest taking a `T*` or `T&` instead.
 * (Simple) ((Foundation)) Warn if a function takes a `Shared_pointer<T>` by rvalue reference. Suggesting taking it by value instead.
+-->
+##### 理由
+
+こうすることで関数が再配置することを明示できます。
+
+##### ノート
+
+"再配置(reseat)"は"ポインタまたはスマートポインタが異なるオブジェクトを参照するようにすること"を意味します。
+
+##### 良い例
+
+    void ChangeWidget(std::shared_ptr<widget>& w)
+    {
+        // 呼び出し側のwidgetを変更
+        w = std::make_shared<widget>(widget{});
+    }
+
+##### 実施
+
+* (シンプル) もしも関数が`Shared_pointer<T>`パラメータを lvalue参照として受け取り、そしてそれを代入や`reset()`の呼び出しが少なくとも1つのコードパス中にない場合は、代わりに T* や T& を受け取ることを推奨しましょう。
+* (シンプル) ((Foundation)) もしも関数が`Shared_pointer<T>`パラメータを、値または`const`参照として受け取り、そしてそれを他の`Shared_pointer`へのコピーや移動が少なくとも1つのコードパス中にない場合は、代わりに `T*` や `T&`で受け取ることを推奨しましょう。
+* (シンプル) ((Foundation)) もしも関数が`Shared_pointer<T>`パラメータを rvalue参照として受け取る場合は、代わりにそれを値渡しすることを推奨しましょう。
 
 ### <a name="Rr-sharedptrparam-const"></a>R.36: Take a `const shared_ptr<widget>&` parameter to express that it might retain a reference count to the object ???
 
@@ -12287,8 +13042,9 @@ This makes the function's ??? explicit.
 * (Simple) ((Foundation)) Warn if a function takes a `Shared_pointer<T>` by value or by reference to `const` and does not copy or move it to another `Shared_pointer` on at least one code path. Suggest taking a `T*` or `T&` instead.
 * (Simple) ((Foundation)) Warn if a function takes a `Shared_pointer<T>` by rvalue reference. Suggesting taking it by value instead.
 
-### <a name="Rr-smartptrget"></a>R.37: Do not pass a pointer or reference obtained from an aliased smart pointer
+### <a name="Rr-smartptrget"></a>R.37: エイリアスのスマートポインタから得たポインタや参照を、渡さないようにしましょう (Do not pass a pointer or reference obtained from an aliased smart pointer)
 
+<!--
 ##### Reason
 
 Violating this rule is the number one cause of losing reference counts and finding yourself with a dangling pointer.
@@ -12347,6 +13103,65 @@ The fix is simple -- take a local copy of the pointer to "keep a ref count" for 
 ##### Enforcement
 
 * (Simple) Warn if a pointer or reference obtained from a smart pointer variable (`Unique_pointer` or `Shared_pointer`) that is non-local, or that is local but potentially aliased, is used in a function call. If the smart pointer is a `Shared_pointer` then suggest taking a local copy of the smart pointer and obtain a pointer or reference from that instead.
+-->
+##### 理由
+
+このルールに違反すると、参照カウントが失われ、ポインタが無効状態になる最大の原因になります。
+関数は、生のポインタと参照を呼び出しチェーンに渡すことを優先する必要があります。
+呼び出しツリーの最上部で、スマートポインタから生のポインタまたは参照を得ることで、オブジェクトを生存したままにします。
+自身以下の呼び出しツリー内からスマートポインタが誤ってリセットまたは再割り当てされないようにする必要があります。
+
+##### ノート
+
+これを行うには、スマートポインタのローカルコピーを取得する必要がある場合があります。これにより、関数と呼び出しツリーの存続期間中、オブジェクトが確実に存続し続けます。
+
+##### 例
+
+次のコードを考えてみましょう:
+
+    // グローバル (スタティックまたはヒープ), または ローカルのエイリアス ...
+    shared_ptr<widget> g_p = ...;
+
+    void f(widget& w)
+    {
+        g();
+        use(w);  // A
+    }
+
+    void g()
+    {
+        g_p = ...; // おっと, もしこれがwidgetへの最後のshared_ptrの場合は, widgetがデストラクトされる
+    }
+
+次のコードはコードレビューを通過させるべきではありません:
+
+    void my_code()
+    {
+        // ダメ: 非ローカルなスマートポインタから得られたポインタや参照は、
+        //       fやそこから呼び出される関数内のどこかで誤ってリセットされる可能性があります
+        f(*g_p);
+
+        // ダメ: 同じ理由, 単に"this"ポインタとして渡している
+        g_p->func();
+    }
+
+これの修正はシンプルです -- "参照カウントを保つ"ために呼び出しツリー内でポインタをローカルにコピーしましょう:
+
+    void my_code()
+    {
+        // コストは安価: 参照カウントの1増加は、この関数およびそれの呼び出しツリー全体に渡ってカバーされます
+        auto pin = g_p;
+
+        // 良い: ローカルな非エイリアスなスマートポインタから得られたポインタや参照を渡す
+        f(*pin);
+
+        // 良い: 同じ理由
+        pin->func();
+    }
+
+##### 実施
+
+* (シンプル) 非ローカルあるいはローカルだけれど潜在的なエイリアスなスマートポインタ(`Unique_pointer`または`Shared_pointer`)から得たポインタや参照が関数呼び出しに使われている場合に警告しましょう。 もしスマートポインタが`Shared_pointer`である場合は、スマートポインタのローカルコピーを行い、代わりにそこから得たポインタや参照を渡すことを推奨しましょう。
 
 # <a name="S-expr"></a>ES: 式とステートメント (Expressions and statements)
 
@@ -12392,52 +13207,52 @@ Declaration rules:
 
 Expression rules:
 
-* [ES.40: Avoid complicated expressions](#Res-complicated)
-* [ES.41: If in doubt about operator precedence, parenthesize](#Res-parens)
-* [ES.42: Keep use of pointers simple and straightforward](#Res-ptr)
-* [ES.43: Avoid expressions with undefined order of evaluation](#Res-order)
-* [ES.44: Don't depend on order of evaluation of function arguments](#Res-order-fct)
-* [ES.45: Avoid "magic constants"; use symbolic constants](#Res-magic)
-* [ES.46: Avoid narrowing conversions](#Res-narrowing)
-* [ES.47: Use `nullptr` rather than `0` or `NULL`](#Res-nullptr)
-* [ES.48: Avoid casts](#Res-casts)
-* [ES.49: If you must use a cast, use a named cast](#Res-casts-named)
-* [ES.50: Don't cast away `const`](#Res-casts-const)
-* [ES.55: Avoid the need for range checking](#Res-range-checking)
+* [ES.40: 複雑な式は避けましょう (Avoid complicated expressions)](#Res-complicated)
+* [ES.41: 演算子の優先順位について疑問がある場合は、括弧で囲みましょう (If in doubt about operator precedence, parenthesize)](#Res-parens)
+* [ES.42: ポインタの利用は、シンプルかつ簡単に (Keep use of pointers simple and straightforward)](#Res-ptr)
+* [ES.43: 評価順序が未定義の式をさけましょう (Avoid expressions with undefined order of evaluation)](#Res-order)
+* [ES.44: 関数引数の評価順序に依存しないようにしましょう (Don't depend on order of evaluation of function arguments)](#Res-order-fct)
+* [ES.45: マジックナンバーは避け、シンボル定数を使いましょう (Avoid "magic constants"; use symbolic constants)](#Res-magic)
+* [ES.46: データが失われる数値変換(narrowing, truncating)は避けましょう (Avoid narrowing conversions)](#Res-narrowing)
+* [ES.47: `0`や`NULL`よりも `nullptr`を使いましょう (Use `nullptr` rather than `0` or `NULL`)](#Res-nullptr)
+* [ES.48: キャストを避けましょう (Avoid casts)](#Res-casts)
+* [ES.49: キャストが必要になったら、名前付きキャストを使いましょう (If you must use a cast, use a named cast)](#Res-casts-named)
+* [ES.50: キャストで`const`を剝がしてはいけません (Don't cast away `const`)](#Res-casts-const)
+* [ES.55: 範囲チェックの必要性を除去しましょう (Avoid the need for range checking)](#Res-range-checking)
 * [ES.56: オブジェクトを別のスコープに明示的に移動させる必要があるときだけ、`std::move()`を書きましょう](#Res-move)
-* [ES.60: Avoid `new` and `delete` outside resource management functions](#Res-new)
-* [ES.61: Delete arrays using `delete[]` and non-arrays using `delete`](#Res-del)
-* [ES.62: Don't compare pointers into different arrays](#Res-arr2)
-* [ES.63: Don't slice](#Res-slice)
-* [ES.64: Use the `T{e}`notation for construction](#Res-construct)
-* [ES.65: Don't dereference an invalid pointer](#Res-deref)
+* [ES.60: リソース管理関数外での `new`と`delete`を避けましょう (Avoid `new` and `delete` outside resource management functions)](#Res-new)
+* [ES.61: 配列のデリートには `delete[]`を使い、配列でないものには `delete`を使いましょう (Delete arrays using `delete[]` and non-arrays using `delete`)](#Res-del)
+* [ES.62: 異なる配列内のポインタを比較しないようにしましょう (Don't compare pointers into different arrays)](#Res-arr2)
+* [ES.63: スライシングしないようにしましょう (Don't slice)](#Res-slice)
+* [ES.64: コンストラクトには `T{e}`記法を使いましょう (Use the `T{e}`notation for construction)](#Res-construct)
+* [ES.65: 無効なポインタの参照剥がしをしてはいけません (Don't dereference an invalid pointer)](#Res-deref)
 
 Statement rules:
 
-* [ES.70: Prefer a `switch`-statement to an `if`-statement when there is a choice](#Res-switch-if)
-* [ES.71: Prefer a range-`for`-statement to a `for`-statement when there is a choice](#Res-for-range)
-* [ES.72: Prefer a `for`-statement to a `while`-statement when there is an obvious loop variable](#Res-for-while)
-* [ES.73: Prefer a `while`-statement to a `for`-statement when there is no obvious loop variable](#Res-while-for)
-* [ES.74: Prefer to declare a loop variable in the initializer part of a `for`-statement](#Res-for-init)
-* [ES.75: Avoid `do`-statements](#Res-do)
-* [ES.76: Avoid `goto`](#Res-goto)
-* [ES.77: Minimize the use of `break` and `continue` in loops](#Res-continue)
-* [ES.78: Don't rely on implicit fallthrough in `switch` statements](#Res-break)
-* [ES.79: Use `default` to handle common cases (only)](#Res-default)
-* [ES.84: Don't try to declare a local variable with no name](#Res-noname)
-* [ES.85: Make empty statements visible](#Res-empty)
-* [ES.86: Avoid modifying loop control variables inside the body of raw for-loops](#Res-loop-counter)
-* [ES.87: Don't add redundant `==` or `!=` to conditions](#Res-if)
+* [ES.70: 選択の場合は、`if`文よりも`switch`文を使いましょう (Prefer a `switch`-statement to an `if`-statement when there is a choice)](#Res-switch-if)
+* [ES.71: 選択肢がある場合は、`for`文よりも範囲`for`文を使いましょう (Prefer a range-`for`-statement to a `for`-statement when there is a choice)](#Res-for-range)
+* [ES.72: 明らかなループ変数があるときは、`while`文よりも `for`文を使いましょう (Prefer a `for`-statement to a `while`-statement when there is an obvious loop variable)](#Res-for-while)
+* [ES.73: 明らかなループ変数がないときは `for`文よりも `while`文を使いましょう (Prefer a `while`-statement to a `for`-statement when there is no obvious loop variable)](#Res-while-for)
+* [ES.74: ループ変数は `for`文の初期化部で宣言するようにしよう (Prefer to declare a loop variable in the initializer part of a `for`-statement)](#Res-for-init)
+* [ES.75: `do`文は使わないようにしよう (Avoid `do`-statements)](#Res-do)
+* [ES.76: `goto`を使わないようにしよう (Avoid `goto`)](#Res-goto)
+* [ES.77: ループ内の `break`と `continue`の使用は最小限にしましょう (Minimize the use of `break` and `continue` in loops)](#Res-continue)
+* [ES.78: `switch`文の暗黙のフォールスルーに頼らないようにしましょう (Don't rely on implicit fallthrough in `switch` statements)](#Res-break)
+* [ES.79: 共通の場合には(そしてそのときだけ) `default`を使いましょう (Use `default` to handle common cases (only))](#Res-default)
+* [ES.84: 無名のローカル変数を宣言しようとしないでください (Don't try to declare a local variable with no name)](#Res-noname)
+* [ES.85: 空の文は可視化しましょう (Make empty statements visible)](#Res-empty)
+* [ES.86: forループ本体内でループ制御変数を変更することを避けましょう (Avoid modifying loop control variables inside the body of raw for-loops)](#Res-loop-counter)
+* [ES.87: 冗長な `==`や `!=`を条件に追加しないようにしましょう (Don't add redundant `==` or `!=` to conditions)](#Res-if)
 
 Arithmetic rules:
 
-* [ES.100: Don't mix signed and unsigned arithmetic](#Res-mix)
-* [ES.101: Use unsigned types for bit manipulation](#Res-unsigned)
-* [ES.102: Use signed types for arithmetic](#Res-signed)
-* [ES.103: Don't overflow](#Res-overflow)
-* [ES.104: Don't underflow](#Res-underflow)
-* [ES.105: Don't divide by integer zero](#Res-zero)
-* [ES.106: Don't try to avoid negative values by using `unsigned`](#Res-nonnegative)
+* [ES.100: signed と unsigned の計算をミックスしないようにしましょう (Don't mix signed and unsigned arithmetic)](#Res-mix)
+* [ES.101: ビット操作にはunsigned型を使いましょう (Use unsigned types for bit manipulation)](#Res-unsigned)
+* [ES.102: 算術計算には signedな型を使いましょう (Use signed types for arithmetic)](#Res-signed)
+* [ES.103: オーバーフローしないようにしましょう (Don't overflow)](#Res-overflow)
+* [ES.104: アンダーフローしないようにしましょう (Don't underflow)](#Res-underflow)
+* [ES.105: 整数値0での割り算はしないようにしましょう (Don't divide by integer zero)](#Res-zero)
+* [ES.106: `unsigned`を用いることで、負の値を避けようとはしないでください (Don't try to avoid negative values by using `unsigned`)](#Res-nonnegative)
 * [ES.107: Don't use `unsigned` for subscripts, prefer `gsl::index`](#Res-subscripts)
 
 ### <a name="Res-lib"></a>ES.1: 他のライブラリやお手製コードより標準ライブラリを使うようにしましょう (Prefer the standard library to other libraries and to "handcrafted code")
@@ -14543,8 +15358,8 @@ Hard. At best a heuristic. Look for an uninitialized variable followed by a loop
 
     widget x;   // constにすべき、だが:
     for (auto i = 2; i <= N; ++i) {          // xの初期化に必要な任意の長さのコード
-        x += some_obj.do_something_with(i);  // 
-    }                                        // 
+        x += some_obj.do_something_with(i);  //
+    }                                        //
     // ここからは xはconstにすべき。しかしこのスタイルではそう宣言することができない
 
 ##### 良い例
@@ -14974,12 +15789,16 @@ This is basically the way `printf` is implemented.
 * `#include <cstdarg>` と `#include <stdarg.h>`をチェックしましょう。
 
 
-## ES.expr: Expressions
+## ES.expr: 式 (Expressions)
 
+<!--
 Expressions manipulate values.
+-->
+式は値を操作します。
 
-### <a name="Res-complicated"></a>ES.40: Avoid complicated expressions
+### <a name="Res-complicated"></a>ES.40: 複雑な式は避けましょう (Avoid complicated expressions)
 
+<!--
 ##### Reason
 
 Complicated expressions are error-prone.
@@ -15046,9 +15865,77 @@ Tricky. How complicated must an expression be to be considered complicated? Writ
 * uses undefined behavior (can we catch all undefined behavior?)
 * implementation defined behavior?
 * ???
+-->
+##### 理由
 
-### <a name="Res-parens"></a>ES.41: If in doubt about operator precedence, parenthesize
+複雑な式はエラーを起こしやすいためです。
 
+##### 例
+
+    // ダメ: 代入が部分式に隠れている
+    while ((c = getc()) != -1)
+
+    // ダメ: 2つの非ローカルな変数への代入が部分式で行われている
+    while ((cin >> c1, cin >> c2), c1 == c2)
+
+    // 良くなった。しかしまだ複雑すぎる
+    for (char c1, c2; cin >> c1 >> c2 && c1 == c2;)
+
+    // OK: もしもiとjに別名が付けられていないならば
+    int x = ++i + ++j;
+
+    // OK: もし i != j かつ i != k ならば
+    v[i] = v[j] + v[k];
+
+    // ダメ: 複数の代入が部分式内に「隠れて」いる
+    x = a + (b = f()) + (c = g()) * 7;
+
+    // ダメ: よく誤解されている優先順位規則に依存している
+    x = a & b + c * d && e ^ f == 7;
+
+    // ダメ: 未定義動作
+    x = x++ + x++ + ++x;
+
+これらの式のいくつかは、無条件に悪いものです(たとえば、未定義の動作に依存しているなど)。他のものは単純に非常に複雑であったり、異常であったりするため、優れたプログラマーであっても急いでいるときはそれらを誤解したり、問題を見落としたりする可能性があります。
+
+##### ノート
+
+C++17では評価順序の規則が厳格になりました(代入が右から左なのを除いて、他の演算子は左から右に評価されます。関数引数の評価順序は未定義です。);[see ES.43](#Res-order))、
+しかし、複雑な式が潜在的に混乱させやすいという事実に変わりはありません。
+(訳注) [C++17の評価順序はここを参照](https://cpprefjp.github.io/lang/cpp17/expression_evaluation_order.html)
+
+##### ノート
+
+プログラマは式の基本的な規則を知って使用するべきです。
+
+##### 例
+
+    x = k * y + z;             // OK
+
+    auto t1 = k * y;           // ダメ: 無駄に冗長
+    x = t1 + z;
+
+    if (0 <= x && x < max)   // OK
+
+    auto t1 = 0 <= x;        // ダメ: 無駄に冗長
+    auto t2 = x < max;
+    if (t1 && t2)            // ...
+
+##### 実施
+
+トリッキー。どの程度複雑なときに式が複雑であるとみなすべきでしょうか? 1つの操作ごとに1つのステートメントで計算処理を書くこともまた混乱を招きます。考慮事項:
+
+* 副作用(side effects): 複数の非ローカルな変数に対する副作用は疑わしいです。とくにその副作用が部分式に分けられたものです。
+* 別名の変数を書くこと
+* N個以上の演算子(Nはいくつにすべき?)
+* 微妙な優先順位規則への依存
+* 未定義動作の使用 (我々はすべての未定義動作をキャッチできるだろうか?)
+* 処理系依存の動作?
+* ???
+
+### <a name="Res-parens"></a>ES.41: 演算子の優先順位について疑問がある場合は、括弧で囲みましょう (If in doubt about operator precedence, parenthesize)
+
+<!--
 ##### Reason
 
 Avoid errors. Readability. Not everyone has the operator table memorized.
@@ -15077,9 +15964,41 @@ You should know enough not to need parentheses for:
 * Flag combinations of bitwise-logical operators and other operators.
 * Flag assignment operators not as the leftmost operator.
 * ???
+-->
+##### 理由
 
-### <a name="Res-ptr"></a>ES.42: Keep use of pointers simple and straightforward
+エラーの回避。可読性。全員が演算子の優先順位を記憶しているわけではありません。
 
+##### 例
+
+    const unsigned int flag = 2;
+    unsigned int a = flag;
+
+    if (a & flag != 0)  // ダメ: a&(flag != 0) を意味する
+
+
+ノート: プログラマーは、算術演算、論理演算の優先順位表を知っておくことをお勧めしますが、ビット論理演算と他の演算子の混在時には、括弧を必要とさせることを検討してください。
+
+
+    if ((a & flag) != 0)  // OK: 意図通りに動作
+
+##### ノート
+
+括弧を必要としなくとも十分であると、知っておきましょう:
+
+    if (a < 0 || a <= max) {
+        // ...
+    }
+
+##### 実施
+
+* ビット論理演算子と他の演算子の組み合わせをチェックしましょう。
+* 左端以外の場所の代入演算子をチェックしましょう。
+* ???
+
+### <a name="Res-ptr"></a>ES.42: ポインタの利用は、シンプルかつ簡単に (Keep use of pointers simple and straightforward)
+
+<!--
 ##### Reason
 
 Complicated pointer manipulation is a major source of errors.
@@ -15275,10 +16194,207 @@ If you want to pass an array, say so:
 * Flag any expression that would rely on implicit conversion of an array type to a pointer type.
 
 This rule is part of the [bounds-safety profile](#SS-bounds).
+-->
+##### 理由
+
+複雑なポインタ操作は主なエラー源のうちの一つです。
+
+##### ノート
+
+`gsl::span` を代わりに使いましょう。
+ポインタは [1つのオブジェクトのみを参照](#Ri-array)すべきです。
+ポインタ演算は壊れやすく、間違いやすく、非常に多くのバグやセキュリティ違反の原因となります。
+`span`は境界チェックされ、配列データへのアクセスが安全です。
+添字として定数を使用した既知の境界を持つ配列へのアクセスは、コンパイラによって検証できます。
+
+##### 悪い例
+
+    void f(int* p, int count)
+    {
+        if (count < 2) return;
+
+        int* q = p + 1;    // ダメ
+
+        ptrdiff_t d;
+        int n;
+        d = (p - &n);      // OK
+        d = (q - p);       // OK
+
+        int n = *p++;      // ダメ
+
+        if (count < 6) return;
+
+        p[4] = 1;          // ダメ
+
+        p[count - 1] = 2;  // ダメ
+
+        use(&p[0], 3);     // ダメ
+    }
+
+##### 良い例
+
+    void f(span<int> a) // 良くなった: 関数宣言でspanを使用
+    {
+        if (a.size() < 2) return;
+
+        int n = a[0];      // OK
+
+        span<int> q = a.subspan(1); // OK
+
+        if (a.size() < 6) return;
+
+        a[4] = 1;          // OK
+
+        a[a.size() - 1] = 2;  // OK
+
+        use(a.data(), 3);  // OK
+    }
+
+##### ノート
+
+変数による添え字は、ツールにとっても人間にとっても、それが安全であることを検証することが難しいです。
+`span`は実行時に境界チェックされ、配列データへのアクセスに対し安全です。
+`at()`は1要素のアクセスに対して境界チェックが保証されたもう1つの代替策です。
+配列にアクセスするためにイテレータが必要な場合は、配列に対して構築された`span`のイテレータを使用しましょう。
+
+##### 悪い例
+
+    void f(array<int, 10> a, int pos)
+    {
+        a[pos / 2] = 1; // ダメ
+        a[pos - 1] = 2; // ダメ
+        a[-1] = 3;    // ダメ (しかしツールによって容易に検知可能) -- 代替策はなし。単にやってはだめ。
+        a[10] = 4;    // ダメ (しかしツールによって容易に検知可能) -- 代替策はなし。単にやってはだめ。
+    }
+
+##### 良い例
+
+`span`を使いましょう:
+
+    void f1(span<int, 10> a, int pos) // A1: パラメータ型に spanを利用
+    {
+        a[pos / 2] = 1; // OK
+        a[pos - 1] = 2; // OK
+    }
+
+    void f2(array<int, 10> arr, int pos) // A2: ローカルなspanを追加し、それを使用
+    {
+        span<int> a = {arr.data(), pos};
+        a[pos / 2] = 1; // OK
+        a[pos - 1] = 2; // OK
+    }
+
+`at()`を使いましょう:
+
+    void f3(array<int, 10> a, int pos) // 別の方法 B: アクセスにat()を使用
+    {
+        at(a, pos / 2) = 1; // OK
+        at(a, pos - 1) = 2; // OK
+    }
+
+##### 悪い例
+
+    void f()
+    {
+        int arr[COUNT];
+        for (int i = 0; i < COUNT; ++i)
+            arr[i] = i; // ダメ、非定数のインデックスは使ってはだめ
+    }
+
+##### 良い例
+
+`span`を使うと:
+
+    void f1()
+    {
+        int arr[COUNT];
+        span<int> av = arr;
+        for (int i = 0; i < COUNT; ++i)
+            av[i] = i;
+    }
+
+`span` と 範囲`for`を使うと:
+
+    void f1a()
+    {
+         int arr[COUNT];
+         span<int, COUNT> av = arr;
+         int i = 0;
+         for (auto& e : av)
+             e = i++;
+    }
+
+`at()`をアクセスに使うと:
+
+    void f2()
+    {
+        int arr[COUNT];
+        for (int i = 0; i < COUNT; ++i)
+            at(arr, i) = i;
+    }
+
+範囲`for`を使うと:
+
+    void f3()
+    {
+        int arr[COUNT];
+        int i = 0;
+        for (auto& e : arr)
+             e = i++;
+    }
+
+##### ノート
+
+ツールは動的なインデックス式の代わりに`at()`を使うように書き換えることもできるでしょう:
+
+    static int a[10];
+
+    void f(int i, int j)
+    {
+        a[i + j] = 12;      // ダメ、次のように書き換え可能...
+        at(a, i + j) = 12;  // OK -- 境界チェックされる
+    }
+
+##### 例
+
+配列をポインタに変換することは(言語は本質的に常にそうするように)チェックの機会がなくなります。したがって避けるべきです。
+
+    void g(int* p);
+
+    void f()
+    {
+        int a[5];
+        g(a);        // ダメ: 配列で渡すようにできないか?
+        g(&a[0]);    // OK: 1つの要素のみを渡している
+    }
+
+もし配列を渡したいなら、こう書きましょう:
+
+    void g(int* p, size_t length);  // 古い (危険な) コード
+
+    void g1(span<int> av); // 良い: g()を変更した
+
+    void f2()
+    {
+        int a[5];
+        span<int> av = a;
+
+        g(av.data(), av.size());   // OKだが他に選択肢がない
+        g1(a);                     // OK -- デメリットはありません。暗黙のspanのコンストラクタを使用
+    }
+
+##### 実施
+
+* ポインタ型の値を返す、ポインタ型の式の算術演算子をチェックしましょう。
+* 配列型(静的配列または`std::array`)の式や変数に対するインデックスの式の中で、`0`以上範囲サイズ未満のコンパイル時定数でない式のインデックスを持ったものをチェックしましょう。
+* 配列型からポインタ型に暗黙的に変換する式をチェックしましょう。
+
+このルールは[bounds-safety profile](#SS-bounds)の一部です。
 
 
-### <a name="Res-order"></a>ES.43: Avoid expressions with undefined order of evaluation
+### <a name="Res-order"></a>ES.43: 評価順序が未定義の式をさけましょう (Avoid expressions with undefined order of evaluation)
 
+<!--
 ##### Reason
 
 You have no idea what such code does. Portability.
@@ -15300,9 +16416,32 @@ A good rule of thumb is that you should not read a value twice in an expression 
 ##### Enforcement
 
 Can be detected by a good analyzer.
+-->
+##### 理由
 
-### <a name="Res-order-fct"></a>ES.44: Don't depend on order of evaluation of function arguments
+そのようなコードが何を行うかわかりません。移植性。
+それがあなたにとって賢明なことをしたとしても、別のコンパイラー(例えば、コンパイラーの次のリリース) または別の最適化設定で何か違うことをするかもしれません。
 
+##### ノート
+
+C++17では評価順序の規則が厳格化されました:
+代入が右から左に評価されることを除いて、左から右に評価されます。また、関数引数の評価順序は未定義です。
+
+しかしながら、あなたのコードがC++17より前のコンパイラでコンパイルされるかもしれないことを覚えておきましょう(例えばコピペ)。したがって賢くなりすぎないようにしましょう。
+
+##### 例
+
+    v[i] = ++i;   //  結果は未定義
+
+確かな経験則は、値を書き込む式で値を 2回読み取らないようにすることをお勧めします。
+
+##### 実施
+
+良い解析ツールによって発見できるでしょう。
+
+### <a name="Res-order-fct"></a>ES.44: 関数引数の評価順序に依存しないようにしましょう (Don't depend on order of evaluation of function arguments)
+
+<!--
 ##### Reason
 
 Because that order is unspecified.
@@ -15333,9 +16472,41 @@ In C++17, these examples work as expected (left to right) and assignments are ev
 ##### Enforcement
 
 Can be detected by a good analyzer.
+-->
+##### 理由
 
-### <a name="Res-magic"></a>ES.45: Avoid "magic constants"; use symbolic constants
+その順序は未定義のためです。
 
+##### ノート
+
+C++17では評価順序の規則が厳格になりました。しかし関数引数の評価順序は依然として未定義です。
+
+##### 例
+
+    int i = 0;
+    f(++i, ++i);
+
+C++17より前では、これは未定義動作であり、あらゆることが発生する可能性があります(例 `f(2, 2)`)。
+C++17以降では、このコードは未定義動作ではなくなりました。しかしどの引数が最初に評価されるかは依然として定義されていません。呼び出しは `f(1, 2)`か `f(2, 1)`になるでしょう。しかしどちらになるかを知ることはできません。
+
+##### 例
+
+オーバーロードされた演算子は評価順序の問題を引き起こす可能性があります:
+
+    f1()->m(f2());          // m(f1(), f2())
+    cout << f1() << f2();   // operator<<(operator<<(cout, f1()), f2())
+
+C++17では、これらの例は期待通りに(左から右へ)動作し、代入は(=のバインディングが右から左なのと同様に)右から左へ評価されます。
+
+    f1() = f2();    // C++14では未定義動作; C++17では f2()はf1()よりも先に評価される
+
+##### 実施
+
+良い解析ツールによって発見できるでしょう。
+
+### <a name="Res-magic"></a>ES.45: マジックナンバーは避け、シンボル定数を使いましょう (Avoid "magic constants"; use symbolic constants)
+
+<!--
 ##### Reason
 
 Unnamed constants embedded in expressions are easily overlooked and often hard to understand:
@@ -15362,9 +16533,37 @@ Better still, don't expose constants:
 ##### Enforcement
 
 Flag literals in code. Give a pass to `0`, `1`, `nullptr`, `\n`, `""`, and others on a positive list.
+-->
+##### 理由
 
-### <a name="Res-narrowing"></a>ES.46: Avoid lossy (narrowing, truncating) arithmetic conversions
+式に埋め込まれた名前のない定数は、見過ごされやすく、理解しにくいことがよくあります:
 
+##### 例
+
+    for (int m = 1; m <= 12; ++m)   // やっちゃダメ: マジックナンバーの12
+        cout << month[m] << '\n';
+
+1年の中に、1から12までの番号が付けられた12の月があることを、我々全員が知っているわけではありません。より良いのは:
+
+    // 月は 1..12でインデックスされる
+    constexpr int first_month = 1;
+    constexpr int last_month = 12;
+
+    for (int m = first_month; m <= last_month; ++m)   // 良い
+        cout << month[m] << '\n';
+
+これも良い。定数を表に出さない:
+
+    for (auto m : month)
+        cout << m << '\n';
+
+##### 実施
+
+コード内のリテラルをチェックしましょう。`0`、`1`、`nullptr`、`\n`、`""`などは、使ってもよいリスト(positive list)に載せましょう。
+
+### <a name="Res-narrowing"></a>ES.46: データが失われる数値変換(narrowing, truncating)は避けましょう (Avoid lossy (narrowing, truncating) arithmetic conversions)
+
+<!--
 ##### Reason
 
 A narrowing conversion destroys information, often unexpectedly so.
@@ -15414,9 +16613,60 @@ A good analyzer can detect all narrowing conversions. However, flagging all narr
 * Flag all floating-point to integer conversions (maybe only `float`->`char` and `double`->`int`. Here be dragons! we need data).
 * Flag all `long`->`char` (I suspect `int`->`char` is very common. Here be dragons! we need data).
 * Consider narrowing conversions for function arguments especially suspect.
+-->
+##### 理由
 
-### <a name="Res-nullptr"></a>ES.47: Use `nullptr` rather than `0` or `NULL`
+縮小変換(narrowing conversion)は情報を破壊しますが、多くの場合、予想外にそうします。
 
+##### 悪い例
+
+キーとなる例は基本的なnarrowingです:
+
+    double d = 7.9;
+    int i = d;    // ダメ: narrowing: iは7になる
+    i = (int) d;  // ダメ: これはまだ十分に明確でないと我々は主張します
+
+    void f(int x, long y, double d)
+    {
+        char c1 = x;   // ダメ: narrowing
+        char c2 = y;   // ダメ: narrowing
+        char c3 = d;   // ダメ: narrowing
+    }
+
+##### ノート
+
+ガイドラインサポートライブラリは、縮小変換が許容できることを表明するための`narrow_cast`を提供します。また、縮小変換によって正しい値でなくなった場合に例外をスローする`narrow`("narrow if")も提供します:
+
+    i = gsl::narrow_cast<int>(d);   // OK (あなたはこれを求めている): narrowing: iは7になる
+    i = gsl::narrow<int>(d);        // OK: narrowing_error をスロー
+
+また、負の浮動小数点数を符号なし整数型に変換するようなデータが失われる数値のキャストも含まれます:
+
+    double d = -7.9;
+    unsigned u = 0;
+
+    u = d;                               // ダメ: narrowing
+    u = gsl::narrow_cast<unsigned>(d);   // OK (あなたはこれを求めている): u は4294967289になる
+    u = gsl::narrow<unsigned>(d);        // OK: narrowing_error をスロー
+
+##### ノート
+
+このルールは[contextual conversions to bool](https://en.cppreference.com/w/cpp/language/implicit_conversion#Contextual_conversions)には適用されません:
+
+    if (ptr) do_something(*ptr);   // OK: ptr は条件として利用
+    bool b = ptr;                  // ダメ: narrowing
+
+##### 実施
+
+良い解析ツールはすべての縮小変換を検出できるでしょう。しかしながら、すべての縮小変換をチェックすることは多くの擬陽性を含むでしょう。提案は:
+
+* すべての 浮動小数点数から整数への変換をチェックしましょう(`float`->`char` と `double`->`int`だけかもしれない。危険な領域! 我々にはデータが必要です)。
+* すべての`long`->`char`の変換をチェックしましょう (`int`->`char` はとても一般的であると私は疑いをもっている。 危険な領域! 我々にはデータが必要です)。
+* 関数引数の縮小変換はとくに疑いましょう。
+
+### <a name="Res-nullptr"></a>ES.47: `0`や`NULL`よりも `nullptr`を使いましょう (Use `nullptr` rather than `0` or `NULL`)
+
+<!--
 ##### Reason
 
 Readability. Minimize surprises: `nullptr` cannot be confused with an
@@ -15436,9 +16686,27 @@ Consider:
 ##### Enforcement
 
 Flag uses of `0` and `NULL` for pointers. The transformation might be helped by simple program transformation.
+-->
+##### 理由
 
-### <a name="Res-casts"></a>ES.48: Avoid casts
+可読性。驚きを最小化しましょう: `nullptr` は `int`と間違えられません。また `nullptr`は明確に定義された(非常に限定的な)型を持つため、型推論が `NULL`や`0`で間違ったことをする可能性があるより多くのシナリオで動作します。
 
+##### 例
+
+考えてみましょう:
+
+    void f(int);
+    void f(char*);
+    f(0);         // f(int) の呼び出し
+    f(nullptr);   // f(char*) の呼び出し
+
+##### 実施
+
+ポインターに対する `0` や `NULL`の使用をチェックしましょう。 単純なプログラム変換によって変換はサポートされるかもしれません。
+
+### <a name="Res-casts"></a>ES.48: キャストを避けましょう (Avoid casts)
+
+<!--
 ##### Reason
 
 Casts are a well-known source of errors and make some optimizations unreliable.
@@ -15502,9 +16770,72 @@ Casts are widely (mis)used. Modern C++ has rules and constructs that eliminate t
 * Flag functional style casts using `Type(value)`. Use `Type{value}` instead which is not narrowing. (See [ES.64](#Res-construct).)
 * Flag [identity casts](#Pro-type-identitycast) between pointer types, where the source and target types are the same (#Pro-type-identitycast).
 * Flag an explicit pointer cast that could be [implicit](#Pro-type-implicitpointercast).
+-->
+##### 理由
 
-### <a name="Res-casts-named"></a>ES.49: If you must use a cast, use a named cast
+キャストはよく知られたエラーの原因であり、一部の最適化の信頼性を低下させます。
 
+##### 悪い例
+
+    double d = 2;
+    auto p = (long*)&d;
+    auto q = (long long*)&d;
+    cout << d << ' ' << *p << ' ' << *q << '\n';
+
+このコード片は何を表示すると思いますか? 結果はせいぜい実装定義です。私は以下になりました。
+
+    2 0 4611686018427387904
+
+以下を追加すると
+
+    *q = 666;
+    cout << d << ' ' << *p << ' ' << *q << '\n';
+
+私は以下になりました。
+
+    3.29048e-321 666 666
+
+驚きました? 私は単純にプログラムがクラッシュしないことに喜びました。
+
+##### ノート
+
+キャストを書くプログラマーは通常、自分が何をしているかを理解していると想定しています。
+また、キャストを書くとプログラムが「読みやすく」なると想定しています。
+実際、値を使用するための一般的なルールを無効にすることがよくあります。
+オーバーロードの解決とテンプレートのインスタンス化は、適切な関数が存在すれば、通常は適切な関数が選択されます。
+もし存在しなければ、局所的な修正(キャスト)を適用するよりも、存在させるべきです。
+
+##### ノート
+
+キャストはシステムプログラミング言語では必要になります。例えば、デバイスのレジスタのアドレスをポインタにどうやって得るのでしょうか? しかしながらキャストは主なエラー要因として深刻に過剰使用されています。
+
+もし多くのキャストが必要であると感じたら、基本的な設計の問題が存在するかもしれません。
+
+[type profile](#Pro-type-reinterpretcast) は`reinterpret_cast`とCスタイルのキャストを消去します。
+
+`[[nodiscard]]`の戻り値を無視するために`(void)`にキャストしてはいけません。
+そのような結果を故意に破棄したい場合は、まずそれが本当に良いアイデアかどうかをよく考えてください (通常は、関数の作成者や戻り値の型の作成者が、最初に `[[nodiscard]]` を使用したのには十分な理由があります)。
+それでも適切だと考え、コードレビュー担当者が同意する場合は、 `std::ignore =` を使用して警告をオフにしましょう。単純で移植性があり、検索(grep) が簡単です。
+
+##### 代替策
+
+キャストは広く(間違って)使われています。モダンなC++では多くの文脈でキャストの必要性を除去する規則や構造を持っています。次のようなものです。
+
+* テンプレートの利用
+* `std::variant`の利用
+* 明確に定義された安全なポインター型間の暗黙的な変換への依存
+* `[[nodiscard]]`な値を無視するための`std::ignore =`の利用
+
+##### 実施
+
+* `void`を含むすべてのCスタイルのキャストをチェックしましょう。
+* `Type(value)`を使った関数スタイルのキャストをチェックしましょう。narrowingではない`Type{value}`を代わりに使いましょう。 (See [ES.64](#Res-construct).)
+* ソースとターゲットの型が同じポインタ間の[identity casts](#Pro-type-identitycast)をチェックしましょう。
+* [implicit](#Pro-type-implicitpointercast)にできる明示的なポインタのキャストをチェックしましょう。
+
+### <a name="Res-casts-named"></a>ES.49: キャストが必要になったら、名前付きキャストを使いましょう (If you must use a cast, use a named cast)
+
+<!--
 ##### Reason
 
 Readability. Error avoidance.
@@ -15565,9 +16896,67 @@ for example.)
 * Flag functional style casts using `Type(value)`. Use `Type{value}` instead which is not narrowing. (See [ES.64](#Res-construct).)
 * The [type profile](#Pro-type-reinterpretcast) bans `reinterpret_cast`.
 * The [type profile](#Pro-type-arithmeticcast) warns when using `static_cast` between arithmetic types.
+-->
+##### 理由
 
-### <a name="Res-casts-const"></a>ES.50: Don't cast away `const`
+可読性。エラーの回避。
+名前付きキャストは Cスタイルや関数スタイルのキャストよりもより明確であるため、コンパイラはいくつかのエラーをキャッチすることができます。
 
+名前付きキャストは:
+
+* `static_cast`
+* `const_cast`
+* `reinterpret_cast`
+* `dynamic_cast`
+* `std::move`         // `move(x)` は `x`へのrvalue参照
+* `std::forward`      // `forward<T>(x)` は `x`へのrvalue または lvalue参照(`T`に依存)
+* `gsl::narrow_cast`  // `narrow_cast<T>(x)` は `static_cast<T>(x)`
+* `gsl::narrow`       // `narrow<T>(x)` は `static_cast<T>(x) == x`の場合は `static_cast<T>(x)`、そうでなければ `narrowing_error`をスロー
+
+##### 例
+
+    class B { /* ... */ };
+    class D { /* ... */ };
+
+    template<typename D> D* upcast(B* pb)
+    {
+        D* pd0 = pb;                        // エラー: B*からD*への暗黙の変換が存在しない
+        D* pd1 = (D*)pb;                    // 合法、しかし何が起こる?
+        D* pd2 = static_cast<D*>(pb);       // エラー: DはBから派生していない
+        D* pd3 = reinterpret_cast<D*>(pb);  // OK: どうなってもしらん!
+        D* pd4 = dynamic_cast<D*>(pb);      // OK: nullptr が返る
+        // ...
+    }
+
+この例は `D`がかつて `B`から派生していたが、だれかが階層をリファクタリングしたことによって発生した現実世界のバグから生成されたものです。
+C スタイルのキャストは、あらゆる種類の変換を行うことができ、(現在または将来の) 間違いからの保護を奪う可能性があるため、危険です。
+
+##### ノート
+
+情報の損失なしに型を変換するときは(例えば`float`から`double`、あるいは、`int32`から`int64`)、括弧による初期化が代わりに使えるかもしれません。
+
+    double d {some_float};
+    int64_t i {some_int32};
+
+これにより、型変換が意図されたものであることが明確になり、精度が失われる可能性のある型間の変換を防止することもできます。 （この例では、この方法で`double`から`float`を初期化しようとすると、コンパイル エラーが発生します。）
+
+##### ノート
+
+`reinterpret_cast`は不可欠な場合がありますが、本質的な用途(例 マシンアドレスからポインタへの変換)では型安全ではありません:
+
+    auto p = reinterpret_cast<Device_register>(0x800);  // 本質的に危険
+
+
+##### 実施
+
+* `void`を含むすべてのCスタイルキャストをチェックしましょう。
+* `Type(value)`を使った関数スタイルのキャストをチェックしましょう。narrowingではない`Type{value}`を代わりに使いましょう。 (See [ES.64](#Res-construct).)
+* [type profile](#Pro-type-reinterpretcast) は `reinterpret_cast` を消し去ります。
+* [type profile](#Pro-type-arithmeticcast) は数値型間で`static_cast` を使用している場合に警告します。
+
+### <a name="Res-casts-const"></a>ES.50: キャストで`const`を剝がしてはいけません (Don't cast away `const`)
+
+<!--
 ##### Reason
 
 It makes a lie out of `const`.
@@ -15744,9 +17133,187 @@ In any variant, we must guard against data races on the `cache` in multi-threade
 
 * Flag `const_cast`s.
 * This rule is part of the [type-safety profile](#Pro-type-constcast) for the related Profile.
+-->
+##### 理由
 
-### <a name="Res-range-checking"></a>ES.55: Avoid the need for range checking
+`const`から嘘をつくことになります。
+変数が実際に `const` として宣言されている場合、それを変更すると未定義の動作が発生します。
 
+##### 悪い例
+
+    void f(const int& x)
+    {
+        const_cast<int&>(x) = 42;   // ダメ
+    }
+
+    static int i = 0;
+    static const int j = 0;
+
+    f(i); // サイレントな副作用
+    f(j); // 未定義動作
+
+##### 例
+
+`const`性だけが異なる 2つのアクセサ関数が同様の実装を持っている場合など、コードの重複を避けるために `const_cast`に頼りたくなる場合があります。例えば:
+
+    class Bar;
+
+    class Foo {
+    public:
+        // ダメ、ロジックが重複
+        Bar& get_bar()
+        {
+            /* 非constのmy_barへの参照を取得するための複雑なロジック */
+        }
+
+        const Bar& get_bar() const
+        {
+            /* constのmy_barへの参照を取得するための同様の複雑なロジック */
+        }
+    private:
+        Bar my_bar;
+    };
+
+代わりに、実装を共有することを好みましょう。通常は、非`const`の関数から `const`関数を呼び出せばよいだけです。ただし、複雑なロジックがある場合、これは引き続き`const_cast`に頼る次のパターンにつながる可能性があります:
+
+    class Foo {
+    public:
+        // グレートではない、非constがconstバージョンを呼び出しているが、const_castに頼っている
+        Bar& get_bar()
+        {
+            return const_cast<Bar&>(static_cast<const Foo&>(*this).get_bar());
+        }
+        const Bar& get_bar() const
+        {
+            /* constのmy_barへの参照を取得するための複雑なロジック */
+        }
+    private:
+        Bar my_bar;
+    };
+
+このパターンは正しく適用された場合は安全です、なぜなら、呼び出し側は呼び出すためには非`const`のオブジェクトを所有する必要があるためです。しかし、理想的ではありません。なぜなら安全性をチェッカールールとして自動的に強制することが難しいためです。
+
+代わりに、共通のコードを共通のヘルパー関数に入れ、`const` を推測できるようにテンプレートにします。これは `const_cast` をまったく使用しません:
+
+    class Foo {
+    public:                         // 良い
+              Bar& get_bar()       { return get_bar_impl(*this); }
+        const Bar& get_bar() const { return get_bar_impl(*this); }
+    private:
+        Bar my_bar;
+
+        template<class T>           // 良い、Tが const か 非const か 推論される
+        static auto& get_bar_impl(T& t)
+            { /* constの可能性もある m_barへの参照を取得するための複雑なロジック */ }
+    };
+
+ノート: テンプレート内で依存関係のない巨大な仕事をしないでください。コードの肥大化へとつながります。たとえば、`get_bar_impl` のすべてまたは一部を非依存にして、共通の非テンプレート関数に分解できれば、コードサイズが大幅に削減される可能性があります。
+
+##### 例外
+
+`const`が正しくない関数を呼び出す場合に、`const`をキャストで消去する必要があるかもしれません。
+そのような関数は、インラインの`const`の正しいラッパー関数で包んで、キャストを 1 か所にカプセル化することをお勧めします。
+
+##### 例
+
+場合によっては、「`const` をキャストで剥がす」ことで、そうでなければ不変なオブジェクトの一時的な情報を更新できるようになります。
+例えば、キャッシュや、メモ化、事前計算(precomputation)です。
+そのような例では、多くの場合、`mutable`や間接参照を使うほうが `const_cast`を使うよりも、同等かより適切に扱われます。
+
+時間のかかる処理に対して以前に計算した結果を保持することを考えてみましょう:
+
+    int compute(int x); // x に対して値を計算する; コストがかかると仮定
+
+    class Cache {   // int->intの操作をキャッシュする型の実装
+    public:
+        pair<bool, int> find(int x) const;   // xに対する値は存在する?
+        void set(int x, int v);             // xに対する値として yを設定
+        // ...
+    private:
+        // ...
+    };
+
+    class X {
+    public:
+        int get_val(int x)
+        {
+            auto p = cache.find(x);
+            if (p.first) return p.second;
+            int val = compute(x);
+            cache.set(x, val); // xに対する値を挿入
+            return val;
+        }
+        // ...
+    private:
+        Cache cache;
+    };
+
+ここで、`get_val()`は論理的にはconstなので、我々は`const`メンバにしたいです。
+これを行うには、`cache` を変更する必要があるため、`const_cast` を使用することがあります:
+
+    class X {   // キャストに基づいた疑わしい解決策
+    public:
+        int get_val(int x) const
+        {
+            auto p = cache.find(x);
+            if (p.first) return p.second;
+            int val = compute(x);
+            const_cast<Cache&>(cache).set(x, val);   // うげーっ
+            return val;
+        }
+        // ...
+    private:
+        Cache cache;
+    };
+
+幸いにも、より良い解決策があります:
+`const`オブジェクトに対して `cache`は変更可能であると表明します:
+
+    class X {   // より良い解決策
+    public:
+        int get_val(int x) const
+        {
+            auto p = cache.find(x);
+            if (p.first) return p.second;
+            int val = compute(x);
+            cache.set(x, val);
+            return val;
+        }
+        // ...
+    private:
+        mutable Cache cache;
+    };
+
+別の解決策は、`cache`へのポインタを保持することでしょう:
+
+    class X {   // OKですが、ちょっと面倒な解決策
+    public:
+        int get_val(int x) const
+        {
+            auto p = cache->find(x);
+            if (p.first) return p.second;
+            int val = compute(x);
+            cache->set(x, val);
+            return val;
+        }
+        // ...
+    private:
+        unique_ptr<Cache> cache;
+    };
+
+この解決策は最も柔軟ですが、`*cache` の明示的な構築と破棄が必要です
+(おそらく`X`のコンストラクタとデストラクタで)。
+
+どの変種でも、おそらく`std::mutex`を使用して、マルチスレッドコードでの`cache`へのデータ競合を防ぐ必要があります。
+
+##### 実施
+
+* `const_cast`をチェックしましょう。
+* プロファイルに関係してこのルールは [type-safety profile](#Pro-type-constcast)の一部です。
+
+### <a name="Res-range-checking"></a>ES.55: 範囲チェックの必要性を除去しましょう (Avoid the need for range checking)
+
+<!--
 ##### Reason
 
 Constructs that cannot overflow do not overflow (and usually run faster):
@@ -15761,8 +17328,23 @@ Constructs that cannot overflow do not overflow (and usually run faster):
 ##### Enforcement
 
 Look for explicit range checks and heuristically suggest alternatives.
+-->
+##### 理由
 
-### <a name="Res-move"></a>ES.56: オブジェクトを別のスコープに明示的に移動させる必要があるときだけ、`std::move()`を書きましょう(Write `std::move()` only when you need to explicitly move an object to another scope)
+オーバーフローしないように構築したものはオーバーフローしません(そして大抵は高速です):
+
+##### 例
+
+    for (auto& x : v)      // vのすべての要素を表示
+        cout << x << '\n';
+
+    auto p = find(v, x);   // vの中から xを検索
+
+##### 実施
+
+明示的な範囲チェックを探し、ヒューリスティックに代替案を提案しましょう。
+
+### <a name="Res-move"></a>ES.56: オブジェクトを別のスコープに明示的に移動させる必要があるときだけ、`std::move()`を書きましょう (Write `std::move()` only when you need to explicitly move an object to another scope)
 
 <!--
 ##### Reason
@@ -15902,19 +17484,19 @@ The language already knows that a returned value is a temporary object that can 
 
 ##### 悪い例
 
-    void sink(X&& x);   // sink takes ownership of x
+    void sink(X&& x);   // sinkは xの所有権を受け取ります
 
     void user()
     {
         X x;
-        // error: cannot bind an lvalue to a rvalue reference
+        // エラー: lvalueはrvalue参照にバインドできません
         sink(x);
-        // OK: sink takes the contents of x, x must now be assumed to be empty
+        // OK: sinkは xの内容を受け取ります、いまやxは空になると仮定しなければなりません
         sink(std::move(x));
 
         // ...
 
-        // probably a mistake
+        // 多分間違い
         use(x);
     }
 
@@ -15925,27 +17507,27 @@ The language already knows that a returned value is a temporary object that can 
     {
         string s1 = "supercalifragilisticexpialidocious";
 
-        string s2 = s1;             // ok, takes a copy
+        string s2 = s1;             // ok, コピーを受け取ります
         assert(s1 == "supercalifragilisticexpialidocious");  // ok
 
-        // bad, if you want to keep using s1's value
+        // もしも s1の値を保持したいのであれば、ダメ
         string s3 = move(s1);
 
-        // bad, assert will likely fail, s1 likely changed
+        // ダメ、s1は多分変更されていて、アサートは多分失敗する
         assert(s1 == "supercalifragilisticexpialidocious");
     }
 
 ##### 例
 
-    void sink(unique_ptr<widget> p);  // pass ownership of p to sink()
+    void sink(unique_ptr<widget> p);  // pの所有権を sink()に渡す
 
     void f()
     {
         auto w = make_unique<widget>();
         // ...
-        sink(std::move(w));               // ok, give to sink()
+        sink(std::move(w));               // ok, sink()に渡す
         // ...
-        sink(w);    // Error: unique_ptr is carefully designed so that you cannot copy it
+        sink(w);    // エラー: unique_ptr は注意深くデザインされているため、あなたはコピーを渡せない
     }
 
 ##### ノート
@@ -15963,8 +17545,8 @@ constオブジェクトに対して決して`std::move()`を書いてはいけ�
     vector<int> make_vector()
     {
         vector<int> result;
-        // ... load result with data
-        return std::move(result);       // bad; just write "return result;"
+        // ... データを resultにロード
+        return std::move(result);       // ダメ; 単に"return result;"と書こう
     }
 
 言語はすでにその変数がムーブの候補であることを知っているので、`return move(local_variable);`と書かないようにしましょう。
@@ -15972,7 +17554,7 @@ constオブジェクトに対して決して`std::move()`を書いてはいけ�
 
 ##### 悪い例
 
-    vector<int> v = std::move(make_vector());   // bad; the std::move is entirely redundant
+    vector<int> v = std::move(make_vector());   // ダメ; std::move は完全に冗長
 
 `f`が値で返す場合は、`x = move(f());`のように返り値に `move`を書かないようにしましょう。
 言語は、戻り値がムーブ可能な一時オブジェクトであることを既に認識しています。
@@ -15982,16 +17564,16 @@ constオブジェクトに対して決して`std::move()`を書いてはいけ�
     void mover(X&& x)
     {
         call_something(std::move(x));         // ok
-        call_something(std::forward<X>(x));   // bad, don't std::forward an rvalue reference
-        call_something(x);                    // suspicious, why not std::move?
+        call_something(std::forward<X>(x));   // ダメ, rvalue参照に対して std::forward してはいけません
+        call_something(x);                    // 疑わしい、なぜ std::moveでないのか?
     }
 
     template<class T>
     void forwarder(T&& t)
     {
-        call_something(std::move(t));         // bad, don't std::move a forwarding reference
+        call_something(std::move(t));         // ダメ、転送参照(forwarding reference)に対して std::move してはいけません
         call_something(std::forward<T>(t));   // ok
-        call_something(t);                    // suspicious, why not std::forward?
+        call_something(t);                    // 疑わしい、なぜ std::forwardでないのか?
     }
 
 ##### 実施
@@ -16001,14 +17583,15 @@ constオブジェクトに対して決して`std::move()`を書いてはいけ�
 * `std::move`でパラメータに引数を渡している箇所に注意しましょう。ただしパラメータ型がrvalue参照`X&&`、あるいは、ムーブオンリーの型で値渡ししているパラメータは除きます。
 * `std::move`が転送参照(`T`がテンプレートパラメータ型のときの`T&&`)に適用されている場合に注意しましょう。代わりに`std::forward`を使いましょう。
 * `std::move`が非constのrvalue参照以外のものに適用されている場合に注意しましょう。
-(More general case of the previous rule to cover the non-forwarding cases.)
+(転送参照でない場合をカバーする、前のルールのより一般的なケース。)
 * rvalue参照(`X`がテンプレートパラメータ型でないときの`X&&`)に`std::forward`が適用されている場合に注意しましょう。代わりに`std::move`を使いましょう。
 * `std::forward`が転送参照以外のものに適用されている場合に注意しましょう。
-(More general case of the previous rule to cover the non-moving cases.)
-* オブジェクトがムーブされる可能性があり、次の操作が`const`操作であるときに注意しましょう; there should first be an intervening non-`const` operation, ideally assignment, to first reset the object's value.
+(移動しない場合をカバーする、前のルールのより一般的なケース。)
+* オブジェクトがムーブされる可能性があり、次の操作が`const`操作であるときに注意しましょう; オブジェクトの値を最初にリセットするための、最初の非`const`操作(理想的には代入)。
 
-### <a name="Res-new"></a>ES.60: Avoid `new` and `delete` outside resource management functions
+### <a name="Res-new"></a>ES.60: リソース管理関数外での `new`と`delete`を避けましょう (Avoid `new` and `delete` outside resource management functions)
 
+<!--
 ##### Reason
 
 Direct resource management in application code is error-prone and tedious.
@@ -16033,9 +17616,35 @@ There can be code in the `...` part that causes the `delete` never to happen.
 ##### Enforcement
 
 Flag naked `new`s and naked `delete`s.
+-->
+##### 理由
 
-### <a name="Res-del"></a>ES.61: Delete arrays using `delete[]` and non-arrays using `delete`
+アプリケーションコードでの直接的なリソース管理は、エラーが発生しやすく、面倒です。
 
+##### ノート
+
+このルールは、「生の`new`を使うな!」としても知られています。
+
+##### 悪い例
+
+    void f(int n)
+    {
+        auto p = new X[n];   // n個のXがデフォルトコンストラクト
+        // ...
+        delete[] p;
+    }
+
+`...`の部分に、`delete`が決して呼ばれなくするようなコードを書くことができてしまいます。
+
+**See also**: [R: Resource management](#S-resource)
+
+##### 実施
+
+生の`new`と生の`delete`をチェックしましょう。
+
+### <a name="Res-del"></a>ES.61: 配列のデリートには `delete[]`を使い、配列でないものには `delete`を使いましょう (Delete arrays using `delete[]` and non-arrays using `delete`)
+
+<!--
 ##### Reason
 
 That's what the language requires and mistakes can lead to resource release errors and/or memory corruption.
@@ -16057,9 +17666,32 @@ This example not only violates the [no naked `new` rule](#Res-new) as in the pre
 
 * If the `new` and the `delete` are in the same scope, mistakes can be flagged.
 * If the `new` and the `delete` are in a constructor/destructor pair, mistakes can be flagged.
+-->
+##### 理由
 
-### <a name="Res-arr2"></a>ES.62: Don't compare pointers into different arrays
+言語が要求することであり、間違えると、リソースリークやメモリ破壊へとつながります。
 
+##### 悪い例
+
+    void f(int n)
+    {
+        auto p = new X[n];   // n個の Xのデフォルトコンストラクト
+        // ...
+        delete p;   // エラー: 配列 p[]でなく、単にオブジェクト pをデリート
+    }
+
+##### ノート
+
+この例は[生の `new`を使うな ルール](#Res-new)に違反しているだけでなく、より多くの問題をはらんでいます。
+
+##### 実施
+
+* もし `new` とその `delete`が同じスコープにあるとき、間違いの可能性をチェックしましょう。
+* もし `new` とその `delete`がコンストラクタとデストラクタのペア内にあるとき、間違いの可能性をチェックしましょう。
+
+### <a name="Res-arr2"></a>ES.62: 異なる配列内のポインタを比較しないようにしましょう (Don't compare pointers into different arrays)
+
+<!--
 ##### Reason
 
 The result of doing so is undefined.
@@ -16081,9 +17713,32 @@ This example has many more problems.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Res-slice"></a>    : Don't slice
+そのようなことをした結果は未定義です。
 
+##### 悪い例
+
+    void f()
+    {
+        int a1[7];
+        int a2[9];
+        if (&a1[5] < &a2[7]) {}       // ダメ: 未定義
+        if (0 < &a1[5] - &a2[7]) {}   // ダメ: 未定義
+    }
+
+##### ノート
+
+この例はさらに多くの問題を含んでいます。
+
+##### 実施
+
+???
+
+### <a name="Res-slice"></a>ES.63: スライシングしないようにしましょう (Don't slice)
+
+<!--
 ##### Reason
 
 Slicing -- that is, copying only part of an object using assignment or initialization -- most often leads to errors because
@@ -16130,9 +17785,56 @@ For example:
 ##### Enforcement
 
 Warn against slicing.
+-->
+##### 理由
 
-### <a name="Res-construct"></a>ES.64: Use the `T{e}`notation for construction
+スライシング(Slicing) -- 代入や初期化によってオブジェクトの一部分だけをコピーすること -- はほとんどの場合エラーにつながります。なぜならばオブジェクトは完全なものとして考えられるためです。
+スライシングが意図的に行われるまれなケースでは、コードは驚くべきものになる可能性があります。
 
+##### 例
+
+    class Shape { /* ... */ };
+    class Circle : public Shape { /* ... */ Point c; int r; };
+
+    Circle c {{0, 0}, 42};
+    Shape s {c};    // CircleのShapeの部分だけをコピーコンストラクト
+    s = c;          // あるいは CircleのShapeの部分だけをコピー代入
+
+    void assign(const Shape& src, Shape& dest)
+    {
+        dest = src;
+    }
+    Circle c2 {{1, 1}, 43};
+    assign(c, c2);   // おっと、すべてのステートがコピーされない
+    assert(c == c2); // もしコピーを供給するなら、比較演算子も同様に供給しなければならない
+                     // しかし、これは falseを返すだろう
+
+中心と半径が `c`と `s`からコピーされないため、この結果は意味がありません。
+これに対する第一の防御策は[ベースクラス`Shape`でこれを許さないように定義することです](#Rc-copy-virtual)。
+
+##### 代替策
+
+もしスライスしたい場合は、そうすることを明示する操作を定義しましょう。
+読み手が混乱することを避けることができます。
+例えば:
+
+    class Smiley : public Circle {
+        public:
+        Circle copy_circle();
+        // ...
+    };
+
+    Smiley sm { /* ... */ };
+    Circle c1 {sm};  // 理想的には Circleの定義で防ぐべき
+    Circle c2 {sm.copy_circle()};
+
+##### 実施
+
+スライシングに対して警告しましょう。
+
+### <a name="Res-construct"></a>ES.64: コンストラクトには `T{e}`記法を使いましょう (Use the `T{e}`notation for construction)
+
+<!--
 ##### Reason
 
 The `T{e}` construction syntax makes it explicit that construction is desired.
@@ -16221,10 +17923,97 @@ The main problem left is to find a suitable name for `Count`.
 ##### Enforcement
 
 Flag the C-style `(T)e` and functional-style `T(e)` casts.
+-->
+##### 理由
+
+`T{e}`によるコンストラクトの文法はコンストラクトを意図していることを明確にします。
+`T{e}`によるコンストラクトの文法は縮小変換を許容しません。
+`T{e}`は 式`e`から 型`T`の値をコンストラクトする安全で一般的な唯一の式です。
+キャスト記法の `T(e)`や `(T)e`は安全でなく、一般的でありません。
+
+##### 例
+
+ビルトイン型に対して、このコンストラクト記法は縮小変換や再翻訳を防ぐことができます。
+
+    void use(char ch, int i, double d, char* p, long long lng)
+    {
+        int x1 = int{ch};     // OK, しかし冗長
+        int x2 = int{d};      // エラー: double->int は縮小変換; 必要ならキャストすること
+        int x3 = int{p};      // エラー: intへのポインタ; 本当に必要なら reinterpret_castを使うこと
+        int x4 = int{lng};    // エラー: long long->int は縮小変換; 必要ならキャストすること
+
+        int y1 = int(ch);     // OK, しかし冗長
+        int y2 = int(d);      // ダメ: double->int は縮小変換; 必要ならキャストすること
+        int y3 = int(p);      // ダメ: intへのポインタ; 本当に必要なら reinterpret_castを使うこと
+        int y4 = int(lng);    // ダメ: long long->int は縮小変換; 必要ならキャストすること
+
+        int z1 = (int)ch;     // OK, しかし冗長
+        int z2 = (int)d;      // ダメ: double->int は縮小変換; 必要ならキャストすること
+        int z3 = (int)p;      // ダメ: intへのポインタ; 本当に必要なら reinterpret_castを使うこと
+        int z4 = (int)lng;    // ダメ: long long->int は縮小変換; 必要ならキャストすること
+    }
+
+`T(e)`や`(T)e`記法による 整数型<->ポインタ の変換は処理系依存であり、異なる整数型やポインタサイズをもつプラットフォーム間で移植性がありません。
+
+##### ノート
+
+[キャストを避けましょう](#Res-casts) (明示的な型変換)、もし必要があるなら [名前付きキャストを使いましょう](#Res-casts-named).
+
+##### ノート
+
+明確な場合、`T{e}`から`T`を取り除くことができます。
+
+    complex<double> f(complex<double>);
+
+    auto z = f({2*pi, 1});
+
+##### ノート
+
+このコンストラクト記法はもっとも一般的な[初期化記法](#Res-list)です。
+
+##### 例外
+
+`std::vector` やその他のコンテナは、我々が`{}`を得る以前から、コンストラクトの記法として定義されていました。
+考えてみましょう:
+
+    vector<string> vs {10};                           // 10個の空の文字列
+    vector<int> vi1 {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};  // 1..10の10個の要素
+    vector<int> vi2 {10};                             // 値が10の1個の要素
+
+デフォルト初期化された 10個の`int`をもった `vector`はどうやって得られるでしょうか?
+
+    vector<int> v3(10); // 値が0の10個の要素
+
+要素数を表すのに `{}`でなく `()`を使うことは伝統的であり(1980年代初頭にさかのぼる)、変更が難しいですが、しかしまだ設計上のエラーがあります: 要素の型が要素の数と混同される可能性があるコンテナの場合に、あいまいさがあり、これは解決されなければなりません。
+従来の解決策は、`{10}` を 1つの要素のリストとして解釈し、`(10)`をサイズとすることで区別することです。
+
+この間違いを新しいコードで繰り返す必要はありません。
+要素の数を表す型を定義できます:
+
+    struct Count { int n; };
+
+    template<typename T>
+    class Vector {
+    public:
+        Vector(Count n);                     // デフォルト初期化されたn個の要素
+        Vector(initializer_list<T> init);    // init.size() 個の要素
+        // ...
+    };
+
+    Vector<int> v1{10};
+    Vector<int> v2{Count{10}};
+    Vector<Count> v3{Count{10}};    // そう、まだとてもマイナーな問題は残っています
+
+残された主な問題は `Count`に対する相応しい名前を探すことです。
+
+##### 実施
+
+Cスタイルの`(T)e`と関数スタイルの `T(e)`のキャストをチェックしましょう。
 
 
-### <a name="Res-deref"></a>ES.65: Don't dereference an invalid pointer
+### <a name="Res-deref"></a>ES.65: 無効なポインタの参照剥がしをしてはいけません (Don't dereference an invalid pointer)
 
+<!--
 ##### Reason
 
 Dereferencing an invalid pointer, such as `nullptr`, is undefined behavior, typically leading to immediate crashes,
@@ -16304,7 +18093,7 @@ There are two potential problems with testing for `nullptr`:
 * the test can be redundant and/or relatively expensive
 * it is not obvious if the test is to protect against a violation or part of the required logic.
 
-<!-- comment needed for code block after list -->
+<!-- comment needed for code block after list --//>
     void f2(int* p) // state that p is not supposed to be nullptr
     {
         assert(p);
@@ -16362,14 +18151,154 @@ This rule is part of the [lifetime safety profile](#SS-lifetime)
 * Flag a dereference of a pointer that might have been invalidated by assigning a `nullptr`
 * Flag a dereference of a pointer that might have been invalidated by a `delete`
 * Flag a dereference to a pointer to a container element that might have been invalidated by dereference
+-->
+##### 理由
+
+`nullptr`のような無効なポインタに対する参照剥がしは、未定義動作であり、典型的には即座のクラッシュや、間違った結果、メモリ破壊につながります。
+
+##### ノート
+
+この規則は明白でよく知られた言語規則ですが、従うのは難しい場合があります。
+大きなオーバーヘッドなしに違反を排除するには、適切なコーディング スタイル、ライブラリ サポート、および静的解析が必要です。
+これは[C++の型およびリソースの安全性モデル](#Stroustrup15)の議論の主な部分です。
+
+**See also**:
+
+* 寿命管理問題をさけるために [RAII](#Rr-raii) を使いましょう。
+* 寿命管理問題をさけるために [unique_ptr](#Rf-unique_ptr) を使いましょう。
+* 寿命管理問題をさけるために [shared_ptr](#Rf-shared_ptr) を使いましょう。
+* `nullptr`の可能性がないときは [参照](#Rf-ptr-ref) を使いましょう。
+* 予期しない `nullptr`を早期に捕捉するために [not_null](#Rf-nullptr) を使いましょう。
+* 範囲エラーを避けるために [bounds profile](#SS-bounds) を使いましょう。
 
 
-## ES.stmt: Statements
+##### 例
 
+    void f()
+    {
+        int x = 0;
+        int* p = &x;
+
+        if (condition()) {
+            int y = 0;
+            p = &y;
+        } // pを無効化
+
+        *p = 42;            // ダメ、 分岐が行われた場合、pは無効になるでしょう
+    }
+
+この問題を解決するために、ポインタが参照する両方のオブジェクトの寿命を延ばし、あるいは、ポインタの寿命を短くしましょう(ポインタが指すオブジェクトの寿命が尽きる前に参照剥がしを移動)。
+
+    void f1()
+    {
+        int x = 0;
+        int* p = &x;
+
+        int y = 0;
+        if (condition()) {
+            p = &y;
+        }
+
+        *p = 42;            // OK、pは xか yのいずれかを指し、それらは両方ともスコープ内
+    }
+
+残念ながら、ほとんどの無効なポインタの問題は、発見も修正も困難です。
+
+##### 例
+
+    void f(int* p)
+    {
+        int x = *p; // ダメ: pが有効だとどうやって知ることができる?
+    }
+
+このようなコードは大量にあります。
+多くのテストの後、ほとんどの場合動作しますが、単独では、`p` が `nullptr` であるかどうかを判断することは不可能です。
+したがって、これもエラーの主な原因です。
+この潜在的な問題に対処するには、多くのアプローチがあります:
+
+    void f1(int* p) // nullptrに対応
+    {
+        if (!p) {
+            // nullptrに対応 (メモリ確保、return、例外をスロー、pが何かを指すようにする、など)
+        }
+        int x = *p;
+    }
+
+`nullptr` のテストには 2 つの潜在的な問題があります:
+
+* `nullptr`を見つけたら何をするかは必ずしも明らかではありません。
+* テストは冗長であるか、および/または、比較的高価になる可能性があります。
+* テストが違反または必要なロジックの一部から保護するためのものかどうかは明らかではありません。
+
+    <!-- comment needed for code block after list -->
+    void f2(int* p) // pがnullptrであることを仮定されていないことを表明
+    {
+        assert(p);
+        int x = *p;
+    }
+
+これは、アサーションチェックが有効な場合にのみコストがかかり、コンパイラ/アナライザに有用な情報を提供します。
+C++ が契約(contract)を直接サポートする場合、これはさらにうまく機能します:
+
+    void f3(int* p) // pがnullptrであることを仮定されていないことを表明
+        [[expects: p]]
+    {
+        int x = *p;
+    }
+
+代替策として、`p`が `nullptr`でないことを明確にするために、`gsl::not_null`を使いこともできます。
+
+    void f(not_null<int*> p)
+    {
+        int x = *p;
+    }
+
+これらの救済策は `nullptr` のみを処理します。
+無効なポインターを取得する方法は他にもあることに注意してください。
+
+##### 例
+
+    void f(int* p)  // 古いコード、doesn't use owner
+    {
+        delete p;
+    }
+
+    void g()        // 古いコード: 生のnewを使っている
+    {
+        auto q = new int{7};
+        f(q);
+        int x = *q; // ダメ: 無効なポインタの参照剥がし
+    }
+
+##### 例
+
+    void f()
+    {
+        vector<int> v(10);
+        int* p = &v[5];
+        v.push_back(99); // vの要素の再割り当てが発生しうる
+        int x = *p; // ダメ: 無効な可能性のあるポインタの参照剥がし
+    }
+
+##### 実施
+
+このルールは [lifetime safety profile](#SS-lifetime) の一部です。
+
+* 範囲外になったオブジェクトを指すポインタの参照剥がしをチェックしましょう
+* `nullptr`を割り当てることによって無効化された可能性のあるポインタの参照剥がしをチェックしましょう
+* `delete`によって無効化された可能性のあるポインタの参照剥がしをチェックしましょう
+* 参照剥がしによって無効化された可能性のあるコンテナ要素へのポインタの参照剥がしをチェックしましょ
+
+## ES.stmt: ステートメント (Statements)
+
+<!--
 Statements control the flow of control (except for function calls and exception throws, which are expressions).
+-->
+ステートメントは、制御の流れを制御します (式である関数呼び出しと例外スローを除く)。
 
-### <a name="Res-switch-if"></a>ES.70: Prefer a `switch`-statement to an `if`-statement when there is a choice
+### <a name="Res-switch-if"></a>ES.70: 選択の場合は、`if`文よりも`switch`文を使いましょう (Prefer a `switch`-statement to an `if`-statement when there is a choice)
 
+<!--
 ##### Reason
 
 * Readability.
@@ -16406,9 +18335,47 @@ rather than:
 ##### Enforcement
 
 Flag `if`-`then`-`else` chains that check against constants (only).
+-->
+##### 理由
 
-### <a name="Res-for-range"></a>ES.71: Prefer a range-`for`-statement to a `for`-statement when there is a choice
+* 可読性。
+* 効率性: `switch` は定数と比較されます、また、通常は `if`-`then`-`else` チェーンの一連のテストよりもよく最適化されます。
+* `switch`はヒューリスティックな整合性チェックを有効にします。たとえば、`enum`のすべての値がカバーされていますか? そうでない場合、`default`はありますか?
 
+##### 例
+
+    void use(int n)
+    {
+        switch (n) {   // 良い
+        case 0:
+            // ...
+            break;
+        case 7:
+            // ...
+            break;
+        default:
+            // ...
+            break;
+        }
+    }
+
+これよりも良い:
+
+    void use2(int n)
+    {
+        if (n == 0)   // ダメ: 定数群に対する if-then-elseチェーン
+            // ...
+        else if (n == 7)
+            // ...
+    }
+
+##### 実施
+
+定数(のみ)をチェックする`if`-`then`-`else` チェーンをチェックしましょう。
+
+### <a name="Res-for-range"></a>ES.71: 選択肢がある場合は、`for`文よりも範囲`for`文を使いましょう (Prefer a range-`for`-statement to a `for`-statement when there is a choice)
+
+<!--
 ##### Reason
 
 Readability. Error prevention. Efficiency.
@@ -16456,9 +18423,58 @@ Better still, if the loop variable isn't modified or copied:
 ##### Enforcement
 
 Look at loops, if a traditional loop just looks at each element of a sequence, and there are no side effects on what it does with the elements, rewrite the loop to a ranged-`for` loop.
+-->
+##### 理由
 
-### <a name="Res-for-while"></a>ES.72: Prefer a `for`-statement to a `while`-statement when there is an obvious loop variable
+可読性。エラーの防止。効率性。
 
+##### 例
+
+    for (gsl::index i = 0; i < v.size(); ++i)   // ダメ
+        cout << v[i] << '\n';
+
+    for (auto p = v.begin(); p != v.end(); ++p)   // ダメ
+        cout << *p << '\n';
+
+    for (auto& x : v)    // OK
+        cout << x << '\n';
+
+    for (gsl::index i = 1; i < v.size(); ++i) // 2つの要素にタッチ: 範囲forではできない
+        cout << v[i] + v[i - 1] << '\n';
+
+    for (gsl::index i = 0; i < v.size(); ++i) // 副作用の可能性: 範囲forではできない
+        cout << f(v, &v[i]) << '\n';
+
+    for (gsl::index i = 0; i < v.size(); ++i) { // ループ変数によって本体がいじられる: 範囲forではできない
+        if (i % 2 != 0)
+            cout << v[i] << '\n'; // 奇数要素を出力
+    }
+
+人間または優れた解析ツールは、実際には `f(v, &v[i])` の `v` に副作用がなく、ループを書き直すことができると判断する場合があります。
+
+通常、ループの本体で「ループ変数をいじる」ことは避けるのが最善です。
+
+##### ノート
+
+範囲`for`ループのループ変数の高価なコピーはしてはいけません:
+
+    for (string s : vs) // ...
+
+これは それぞれの要素ごとに `vs`から `s`にコピーされるでしょう。 良いのは:
+
+    for (string& s : vs) // ...
+
+もしループ変数が変更されないなら、こちらが良いです:
+
+    for (const string& s : vs) // ...
+
+##### 実施
+
+ループをみましょう。もし要素を順番にみている伝統的なループで、その要素に対して副作用がないのであれば、範囲`for`ループに書き換えましょう。
+
+### <a name="Res-for-while"></a>ES.72: 明らかなループ変数があるときは、`while`文よりも `for`文を使いましょう (Prefer a `for`-statement to a `while`-statement when there is an obvious loop variable)
+
+<!--
 ##### Reason
 
 Readability: the complete logic of the loop is visible "up front". The scope of the loop variable can be limited.
@@ -16480,9 +18496,32 @@ Readability: the complete logic of the loop is visible "up front". The scope of 
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Res-while-for"></a>ES.73: Prefer a `while`-statement to a `for`-statement when there is no obvious loop variable
+可読性: ループの完全なロジックが「前もって」表示されます。 ループ変数のスコープが限定されます。
 
+##### 例
+
+    for (gsl::index i = 0; i < vec.size(); i++) {
+        // 処理
+    }
+
+##### 悪い例
+
+    int i = 0;
+    while (i < vec.size()) {
+        // 処理
+        i++;
+    }
+
+##### 実施
+
+???
+
+### <a name="Res-while-for"></a>ES.73: 明らかなループ変数がないときは `for`文よりも `while`文を使いましょう(Prefer a `while`-statement to a `for`-statement when there is no obvious loop variable)
+
+<!--
 ##### Reason
 
 Readability.
@@ -16506,13 +18545,42 @@ Better
 ##### Enforcement
 
 Flag actions in `for`-initializers and `for`-increments that do not relate to the `for`-condition.
+-->
+##### 理由
 
-### <a name="Res-for-init"></a>ES.74: Prefer to declare a loop variable in the initializer part of a `for`-statement
+可読性。
 
+##### 例
+
+    int events = 0;
+    for (; wait_for_event(); ++events) {  // ダメ。混乱させる。
+        // ...
+    }
+
+このイベントループは、`events`カウンタがループ条件(`wait_for_event()`)と関係がないため、紛らわしいです。
+より良いのは
+
+    int events = 0;
+    while (wait_for_event()) {      // 良い
+        ++events;
+        // ...
+    }
+
+##### 実施
+
+`for`初期化式と `for`増加式のうち、`for`文の条件式と関係がないものをチェックしよう。
+
+
+### <a name="Res-for-init"></a>ES.74: ループ変数は `for`文の初期化部で宣言するようにしよう (Prefer to declare a loop variable in the initializer part of a `for`-statement)
+
+<!--
 See [ES.6](#Res-cond)
+-->
+[ES.6](#Res-cond)を参照。
 
-### <a name="Res-do"></a>ES.75: Avoid `do`-statements
+### <a name="Res-do"></a>ES.75: `do`文は使わないようにしよう (Avoid `do`-statements)
 
+<!--
 ##### Reason
 
 Readability, avoidance of errors.
@@ -16533,9 +18601,31 @@ Yes, there are genuine examples where a `do`-statement is a clear statement of a
 ##### Enforcement
 
 Flag `do`-statements.
+-->
+##### 理由
 
-### <a name="Res-goto"></a>ES.76: Avoid `goto`
+可読性、エラーの回避。
+終了条件は末端にあり(そこは見落とされる可能性があります)、そして条件は初回時にチェックされません。
 
+##### 例
+
+    int x;
+    do {
+        cin >> x;
+        // ...
+    } while (x < 0);
+
+##### ノート
+
+はい、`do`文が解決策の明解な文である本物の例はありますが、多くのバグも存在します。
+
+##### 実施
+
+`do`文をチェックしよう。
+
+### <a name="Res-goto"></a>ES.76: `goto`を使わないようにしよう (Avoid `goto`)
+
+<!--
 ##### Reason
 
 Readability, avoidance of errors. There are better control structures for humans; `goto` is for machine generated code.
@@ -16576,9 +18666,51 @@ consider `gsl::finally()` as a cleaner and more reliable alternative to `goto ex
 ##### Enforcement
 
 * Flag `goto`. Better still flag all `goto`s that do not jump from a nested loop to the statement immediately after a nest of loops.
+-->
+##### 理由
 
-### <a name="Res-continue"></a>ES.77: Minimize the use of `break` and `continue` in loops
+可読性、エラーの回避。 人間にとってより良い制御構造があります; `goto`は機械が生成するコードに対するものです。
 
+##### 例外
+
+ネストされたループの外に抜けるとき。
+この場合では、いつでも前方にジャンプします。
+
+    for (int i = 0; i < imax; ++i)
+        for (int j = 0; j < jmax; ++j) {
+            if (a[i][j] > elem_max) goto finished;
+            // ...
+        }
+    finished:
+    // ...
+
+##### 悪い例
+
+C言語の goto-exit イディオムがかなりの量使われています:
+
+    void f()
+    {
+        // ...
+            goto exit;
+        // ...
+            goto exit;
+        // ...
+    exit:
+        // ... 共通のクリーンアップコード ...
+    }
+
+これはデストラクタのアドホックな代替です。
+デストラクタでクリーンアップするハンドルを使って、リソースを宣言してください。
+何らかの理由で、デストラクタによって使用されている変数のすべてのクリーンアップができない場合は、
+`gsl::finally()` を `goto exit` のよりクリーンで信頼性の高い代替手段として検討してください。
+
+##### 実施
+
+* `goto`にフラグを立てましょう。 ネストされたループからループのネストの直後のステートメントにジャンプしないすべての `goto` にフラグを立てた方がよいでしょう。
+
+### <a name="Res-continue"></a>ES.77: ループ内の `break`と `continue`の使用は最小限にしましょう (Minimize the use of `break` and `continue` in loops)
+
+<!--
 ##### Reason
 
  In a non-trivial loop body, it is easy to overlook a `break` or a `continue`.
@@ -16656,9 +18788,88 @@ If you really need to break out a loop, a `break` is typically better than alter
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Res-break"></a>ES.78: Don't rely on implicit fallthrough in `switch` statements
+ 単純でないループ本体内では `break`や `continue`を見落としがちです。
 
+ ループ内の `break`は `switch`文内での `break`とは大きく異なる意味を持ちます
+(そしてあなたは ループに内に `switch`文を置くことも、`switch`のcase内にループを置くことも可能です)。
+
+##### 例
+
+    switch(x) {
+    case 1 :
+        while (/* ある条件 */) {
+            // ...
+        break;
+        } // おっと! switch文、while文のどちらに対するbreakを意図している?
+    case 2 :
+        // ...
+        break;
+    }
+
+##### 代替策
+
+多くの場合、 `break`を要求するループは 関数(アルゴリズム)の適切な候補です。その場合では `break`は `return`になります。
+
+    //オリジナルコード: ループ内にbreakがある
+    void use1()
+    {
+        std::vector<T> vec = {/* 何らかの値で初期化 */};
+        T value;
+        for (const T item : vec) {
+            if (/* 何らかの条件 */) {
+                value = item;
+                break;
+            }
+        }
+        /* valueを使って何か処理 */
+    }
+
+    //より良い: 関数を作成しループ内でreturn
+    T search(const std::vector<T> &vec)
+    {
+        for (const T &item : vec) {
+            if (/* 何らかの条件 */) return item;
+        }
+        return T(); //デフォルト値
+    }
+
+    void use2()
+    {
+        std::vector<T> vec = {/* 何らかの値で初期化 */};
+        T value = search(vec);
+        /* valueを使って何か処理 */
+    }
+
+多くの場合、`continue`を使ったループは、 `if`文によって等価でより明解に表現することができます。
+
+    for (int item : vec) {  // ダメ
+        if (item%2 == 0) continue;
+        if (item == 5) continue;
+        if (item > 10) continue;
+        /* itemを使って何か処理 */
+    }
+
+    for (int item : vec) {  // 良い
+        if (item%2 != 0 && item != 5 && item <= 10) {
+            /* itemを使って何か処理 */
+        }
+    }
+
+##### ノート
+
+もし本当にループから外に抜け出す必要がある場合は、 `break`は　[ループ変数の変更](#Res-loop-counter)や [`goto`](#Res-goto)などの他の方法よりも、一般的に優れています:
+
+
+##### 実施
+
+???
+
+### <a name="Res-break"></a>ES.78: `switch`文の暗黙のフォールスルーに頼らないようにしましょう (Don't rely on implicit fallthrough in `switch` statements)
+
+<!--
 ##### Reason
 
 Always end a non-empty `case` with a `break`. Accidentally leaving out a `break` is a fairly common bug.
@@ -16720,10 +18931,73 @@ In rare cases if fallthrough is deemed appropriate, be explicit and use the `[[f
 ##### Enforcement
 
 Flag all implicit fallthroughs from non-empty `case`s.
+-->
+##### 理由
+
+空でない `case`は、常に `break`を伴って終えるようにしましょう。 誤って `break`を省略してしまうことは、かなり一般的なバグです。
+意図的なフォールスルーはメンテナンス上の問題となる可能性があります。したがって意図的なフォールスルーは、レアケースであり、明示的である必要があります。
+
+##### 例
+
+    switch (eventType) {
+    case Information:
+        update_status_bar();
+        break;
+    case Warning:
+        write_event_log();
+        // ダメ - 暗黙的なフォールスルー
+    case Error:
+        display_error_window();
+        break;
+    }
+
+1つの文の複数のラベルの caseはOKです:
+
+    switch (x) {
+    case 'a':
+    case 'b':
+    case 'f':
+        do_something(x);
+        break;
+    }
+
+caseラベルでの return文もまたOKです:
+
+    switch (x) {
+    case 'a':
+        return 1;
+    case 'b':
+        return 2;
+    case 'c':
+        return 3;
+    }
+
+##### 例外
+
+フォールスルーが適切であると判断されるレアケースでは、明示的に `[[fallthrough]]`注釈を使いましょう:
+
+    switch (eventType) {
+    case Information:
+        update_status_bar();
+        break;
+    case Warning:
+        write_event_log();
+        [[fallthrough]];
+    case Error:
+        display_error_window();
+        break;
+    }
+
+##### ノート
+
+##### 実施
+
+空でない `case`の全ての暗黙のフォールスルーにフラグを立てましょう。
 
 
-### <a name="Res-default"></a>ES.79: Use `default` to handle common cases (only)
+### <a name="Res-default"></a>ES.79: 共通の場合には(そしてそのときだけ) `default`を使いましょう (Use `default` to handle common cases (only))
 
+<!--
 ##### Reason
 
  Code clarity.
@@ -16794,9 +19068,80 @@ switch over the enumerators.
 Flag `switch`-statements over an enumeration that don't handle all enumerators and do not have a `default`.
 This might yield too many false positives in some code bases; if so, flag only `switch`es that handle most but not all cases
 (that was the strategy of the very first C++ compiler).
+-->
+##### 理由
 
-### <a name="Res-noname"></a>ES.84: Don't try to declare a local variable with no name
+ コードの明確さ。
+ エラー検出の機会の向上。
 
+##### 例
+
+    enum E { a, b, c, d };
+
+    void f1(E x)
+    {
+        switch (x) {
+        case a:
+            do_something();
+            break;
+        case b:
+            do_something_else();
+            break;
+        default:
+            take_the_default_action();
+            break;
+        }
+    }
+
+ここでは、デフォルトのアクションが存在し、`a`や `b`の場合が特別であることが明確です。
+
+##### 例
+
+しかしデフォルトのアクションが存在せず、特定のケースのみを処理したい場合はどうなるでしょうか?
+このような場合、空の defaultを置いてください。さもないと、すべてのケースを処理するつもりだったのかどうかを知ることができなくなります:
+
+    void f2(E x)
+    {
+        switch (x) {
+        case a:
+            do_something();
+            break;
+        case b:
+            do_something_else();
+            break;
+        default:
+            // 残りのケースでは何もしない
+            break;
+        }
+    }
+
+もし `default`を省略してしまうと、メンテナーやコンパイラは、あなたはすべてのケースを処理する意図であると、合理的に推測するでしょう:
+
+    void f2(E x)
+    {
+        switch (x) {
+        case a:
+            do_something();
+            break;
+        case b:
+        case c:
+            do_something_else();
+            break;
+        }
+    }
+
+`d`のケースを忘れましたか? それとも意図的に省略しましたか?
+ケースの忘れは通常、列挙子を追加したとき、それに関係するすべてのswitchに対してケースを追加し忘れたときに発生します。
+
+##### 実施
+
+すべての列挙子を扱わず、かつ、 `default`を持たない `switch`文にフラグを立てましょう。
+あるコードベースでは大量の偽陽性が検出されるかもしれません; もしそうなら、ほとんどは扱うけれどすべてのケースは扱わない `switch`にだけフラグを立てましょう(これは最初期のC++コンパイラの戦略です)。
+
+
+### <a name="Res-noname"></a>ES.84: 無名のローカル変数を宣言しようとしないでください (Don't try to declare a local variable with no name)
+
+<!--
 ##### Reason
 
 There is no such thing.
@@ -16821,9 +19166,35 @@ Unnamed function arguments are fine.
 ##### Enforcement
 
 Flag statements that are just a temporary.
+-->
+##### 理由
 
-### <a name="Res-empty"></a>ES.85: Make empty statements visible
+そのようなものはありません。
+人間にとっては名前のない変数のように見えるものは、コンパイラーにとっては、すぐにスコープ外になる一時変数で構成されるステートメントです。
 
+##### 悪い例
+
+    void f()
+    {
+        lock_guard<mutex>{mx};   // ダメ
+        // ...
+    }
+
+ここでは無名の `lock_guard`オブジェクトを宣言していて、それはセミコロンの場所で即座にスコープの外になります。
+これは珍しい間違いではありません。
+特に、この特定の例では、発見が難しい競合状態が発生する可能性があります。
+
+##### ノート
+
+名前のない関数引数は問題ありません。
+
+##### 実施
+
+単なる一時的な文にフラグを立てましょう。
+
+### <a name="Res-empty"></a>ES.85: 空の文は可視化しましょう (Make empty statements visible)
+
+<!--
 ##### Reason
 
 Readability.
@@ -16841,9 +19212,28 @@ Readability.
 ##### Enforcement
 
 Flag empty statements that are not blocks and don't contain comments.
+-->
+##### 理由
 
-### <a name="Res-loop-counter"></a>ES.86: Avoid modifying loop control variables inside the body of raw for-loops
+可読性。
 
+##### 例
+
+    for (i = 0; i < max; ++i);   // ダメ: 空の文は簡単に見落とされます
+    v[i] = f(v[i]);
+
+    for (auto x : v) {           // 良い
+        // 何もしない
+    }
+    v[i] = f(v[i]);
+
+##### 実施
+
+ブロックをもたず、コメントされていない空の文にフラグを立てましょう。
+
+### <a name="Res-loop-counter"></a>ES.86: forループ本体内でループ制御変数を変更することを避けましょう (Avoid modifying loop control variables inside the body of raw for-loops)
+
+<!--
 ##### Reason
 
 The loop control up front should enable correct reasoning about what is happening inside the loop. Modifying loop counters in both the iteration-expression and inside the body of the loop is a perennial source of surprises and bugs.
@@ -16871,10 +19261,39 @@ The loop control up front should enable correct reasoning about what is happenin
 ##### Enforcement
 
 Flag variables that are potentially updated (have a non-`const` use) in both the loop control iteration-expression and the loop body.
+-->
+##### 理由
+
+ループ制御を前もって行うことで、ループ内で何が起こっているかを正確に推論できるようにする必要があります。 繰り返し式 とループ本体内部の両方でループカウンタを変更すると、驚きとバグが常に発生します。
+
+##### 例
+
+    for (int i = 0; i < 10; ++i) {
+        // iは更新されない --  ok
+    }
+
+    for (int i = 0; i < 10; ++i) {
+        //
+        if (/* 何か */) ++i; // ダメ
+        //
+    }
+
+    bool skip = false;
+    for (int i = 0; i < 10; ++i) {
+        if (skip) { skip = false; continue; }
+        //
+        if (/* 何か */) skip = true;  // ベター: 2つの概念に対して2つの変数を使用
+        //
+    }
+
+##### 実施
+
+ループの繰り返し式と本体の両方で潜在的に更新される変数(非`const`で利用)にフラグを立てましょう。
 
 
-### <a name="Res-if"></a>ES.87: Don't add redundant `==` or `!=` to conditions
+### <a name="Res-if"></a>ES.87: 冗長な `==`や `!=`を条件に追加しないようにしましょう (Don't add redundant `==` or `!=` to conditions)
 
+<!--
 ##### Reason
 
 Doing so avoids verbosity and eliminates some opportunities for mistakes.
@@ -16953,13 +19372,93 @@ The opposite condition is most easily expressed using a negation:
 ##### Enforcement
 
 Easy, just check for redundant use of `!=` and `==` in conditions.
+-->
+##### 理由
+
+そうすることで冗長さを避け、いくつかのミスをする機会がなくなります。
+スタイルを一貫性のある従来のものにするのに役立ちます。
+
+##### 例
+
+定義では、 `if`文、`while`文、`for`文での条件は、`true`または `false`のどちらかを選択します。
+数値は `0`と比較され、またポインタは `nullptr`と比較されます。
+
+    // これらはすべて "もし pが nullptrでないなら"を意味しています
+    if (p) { ... }            // 良い
+    if (p != 0) { ... }       // !=0は冗長、ダメ: 0をポインタに対して使ってはいけない
+    if (p != nullptr) { ... } // !=nullptrは冗長、おすすめしない
+
+多くの場合、 `if (p)`は "もし`p`が有効なら"と読み取られ、それはプログラマの意図を直接表現しています。
+一方、`if (p != nullptr)`はくどい表現でしょう。
+
+##### 例
+
+このルールは特に条件として宣言を使うときに便利です。
+
+    if (auto pc = dynamic_cast<Circle>(ps)) { ... } // psが Circleの一種を指しているときに実行される。良い。
+
+    if (auto pc = dynamic_cast<Circle>(ps); pc != nullptr) { ... } // おすすめしない
+
+##### 例
+
+条件部での booleへの暗黙の変換に注意しましょう。
+たとえば:
+
+    for (string s; cin >> s; ) v.push_back(s);
+
+ここでは `istream`の `operator bool()`が呼び出されます。
+
+##### ノート
+
+`0`との明示的な整数の比較は、一般的に冗長ではありません。
+その理由は、整数は多くの場合に(ポインタやブーリアンとは違って)2つ以上の意味ある値を持つためです。
+さらには、`0`はしばしば成功を示すことに使われます。
+したがって、比較については具体的に説明することが最善です。
+
+    void f(int i)
+    {
+        if (i)            // 疑わしい
+        // ...
+        if (i == success) // おそらくもっと良い
+        // ...
+    }
+
+整数は2つ以上の値を持ちうることを常に念頭に置きましょう。
+
+##### 悪い例
+
+注目されている
+
+    if(strcmp(p1, p2)) { ... }   // 2つのCスタイル文字列の比較? (間違い!)
+
+は初心者に共通する誤りです。
+Cスタイル文字列を使う場合は、`<cstring>`の関数をよく知っておく必要があります。
+冗長に次のように書くことは
+
+    if(strcmp(p1, p2) != 0) { ... }   // 2つのCスタイル文字列の比較? (間違い!)
+
+あなた自身を救うことでしょう。
+
+##### ノート
+
+反対条件は否定を使うことで最も簡単に表現できます:
+
+    // これらはすべて"もし pが nullptrであるなら"を意味する
+    if (!p) { ... }           // 良い
+    if (p == 0) { ... }       // == 0 は冗長。ダメ: ポインタに対して 0を使ってはいけない
+    if (p == nullptr) { ... } // == nullptr は冗長。おすすめしない
+
+##### 実施
+
+簡単。単に 条件式での 冗長な `!=` や `==` をチェックしましょう。
 
 
 
-## <a name="SS-numbers"></a>Arithmetic
+## <a name="SS-numbers"></a>算術 (Arithmetic)
 
-### <a name="Res-mix"></a>ES.100: Don't mix signed and unsigned arithmetic
+### <a name="Res-mix"></a>ES.100: signed と unsigned の計算をミックスしないようにしましょう (Don't mix signed and unsigned arithmetic)
 
+<!--
 ##### Reason
 
 Avoid wrong results.
@@ -16984,10 +19483,36 @@ This precludes consistency. Use `gsl::index` for subscripts; [see ES.107](#Res-s
 
 * Compilers already know and sometimes warn.
 * (To avoid noise) Do not flag on a mixed signed/unsigned comparison where one of the arguments is `sizeof` or a call to container `.size()` and the other is `ptrdiff_t`.
+-->
+##### 理由
+
+間違った結果を避けるため。
+
+##### 例
+
+    int x = -3;
+    unsigned int y = 7;
+
+    cout << x - y << '\n';  // unsignedな結果, おそらく 4294967286
+    cout << x + y << '\n';  // unsignedな結果: 4
+    cout << x * y << '\n';  // unsignedな結果, おそらく 4294967275
+
+より現実的な例では、問題を特定するのが難しくなります。
+
+##### ノート
+
+残念ながら、C++では配列の添字に符号付き整数が使用され、標準ライブラリではコンテナの添字に符号なし整数が使用されます。
+これは一貫性を失っています。添字には `gsl::index` を使いましょう; [see ES.107](#Res-subscripts).
+
+##### 実施
+
+* コンパイラはすでに知っており、時々警告を出します。
+* (ノイズを避けるため) signed/unsignedのミックスであっても、一方の引数が `sizeof`かコンテナに対する `.size()`であり、一方が `ptrdiff_t`の場合はフラグを立てないようにしましょう。
 
 
-### <a name="Res-unsigned"></a>ES.101: Use unsigned types for bit manipulation
+### <a name="Res-unsigned"></a>ES.101: ビット操作にはunsigned型を使いましょう (Use unsigned types for bit manipulation)
 
+<!--
 ##### Reason
 
 Unsigned types support bit manipulation without surprises from sign bits.
@@ -17008,9 +19533,31 @@ can be surprising for many programmers.
 
 * Just about impossible in general because of the use of unsigned subscripts in the standard library
 * ???
+-->
+##### 理由
 
-### <a name="Res-signed"></a>ES.102: Use signed types for arithmetic
+unsigned型は符号ビットによる驚きなくビット操作することができます。
 
+##### 例
+
+    unsigned char x = 0b1010'1010;
+    unsigned char y = ~x;   // y == 0b0101'0101;
+
+##### ノート
+
+unsigned型はモジュロ演算に対して便利に使うことができます。
+しかしながら、もしモジュロ演算が必要な場合は、
+ラップアラウンド動作(訳注: 最初に戻ること. 8bitなら255の次が0)に依存していることに注意するコメントを必要に応じて追加しましょう。
+そのようなコードは多くのプログラマを驚かせます。
+
+##### 実施
+
+* 一般的には不可能です。なぜなら unsignedな添え字が標準ライブラリで使われているからです。
+* ???
+
+### <a name="Res-signed"></a>ES.102: 算術計算には signedな型を使いましょう (Use signed types for arithmetic)
+
+<!--
 ##### Reason
 
 Because most arithmetic is assumed to be signed;
@@ -17073,10 +19620,75 @@ This makes surprises (and bugs) inevitable.
 * Flag results of unsigned arithmetic assigned to or printed as signed.
 * Flag negative literals (e.g. `-2`) used as container subscripts.
 * (To avoid noise) Do not flag on a mixed signed/unsigned comparison where one of the arguments is `sizeof` or a call to container `.size()` and the other is `ptrdiff_t`.
+-->
+##### 理由
+
+ほとんどの算術計算は符号付きであることを想定されているためです。
+`x - y`は、あなたがモジュロ演算を本当に求めているようなレアケースをのぞけば`y > x`であるとき、負の数を返します。
+
+##### 例
+
+unsignedの算術計算は、あなたがそれを期待していない場合は、驚くような結果を生成します。
+これはsingedとunsignedの算術計算がミックスされた場合でも発生します。
+
+    template<typename T, typename T2>
+    T subtract(T x, T2 y)
+    {
+        return x - y;
+    }
+
+    void test()
+    {
+        int s = 5;
+        unsigned int us = 5;
+        cout << subtract(s, 7) << '\n';       // -2
+        cout << subtract(us, 7u) << '\n';     // 4294967294
+        cout << subtract(s, 7u) << '\n';      // -2
+        cout << subtract(us, 7) << '\n';      // 4294967294
+        cout << subtract(s, us + 2) << '\n';  // -2
+        cout << subtract(us, s + 2) << '\n';  // 4294967294
+    }
 
 
-### <a name="Res-overflow"></a>ES.103: Don't overflow
+ここで私たちは何が起こっているかについて非常に明確に述べてきました。
+しかし、`us - (s + 2)` または `s += 2; ...; us - s`をみたとき、結果が `4294967294` として出力されると確信できましたか?
 
+##### 例外
+
+あなたが本当にモジュロ演算を求めている場合は signed型を使いましょう。
+そして、ラップアラウンド動作(訳注: 最初に戻ること. 8bitなら255の次が0)に依存していることに注意するコメントを必要に応じて追加しましょう。
+そのようなコードは多くのプログラマを驚かせます。
+
+##### 例
+
+標準ライブラリは添え字にunsigned型を使っています。
+組み込みの配列は添え字にsinged型を使っています。
+これにより驚き(とバグ)が避けられなくなります。
+
+    int a[10];
+    for (int i = 0; i < 10; ++i) a[i] = i;
+    vector<int> v(10);
+    // singedとunsignedの比較; いくつかのコンパイラは警告を表示します; しかし我々はそうすべきではない
+    for (gsl::index i = 0; i < v.size(); ++i) v[i] = i;
+
+    int a2[-2];         // エラー: 負のサイズ
+
+    // OK, しかしint値(4294967294)はあまりに大きいため例外が発生するでしょう
+    vector<int> v2(-2);
+
+ 添え字には `gsl::index` を使いましょう; [see ES.107](#Res-subscripts).
+
+##### 実施
+
+* singedとunsignedがミックスされた算術計算にフラグを立てましょう。
+* unsigned な算術計算の結果を signedとして代入または表示している場所にフラグを立てましょう。
+* コンテナの添え字に負のリテラル(例. `-2`)を使っている場所にフラグをたてましょう。
+* (ノイズを避けるため) signed/unsignedのミックスであっても、一方の引数が `sizeof`かコンテナに対する `.size()`であり、一方が `ptrdiff_t`の場合はフラグを立てないようにしましょう。
+
+
+### <a name="Res-overflow"></a>ES.103: オーバーフローしないようにしましょう (Don't overflow)
+
+<!--
 ##### Reason
 
 Overflow usually makes your numeric algorithm meaningless.
@@ -17110,9 +19722,44 @@ Use unsigned types if you really want modulo arithmetic.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Res-underflow"></a>ES.104: Don't underflow
+オーバーフローは通常あなたの数値アルゴリズムを意味のないものにします。
+最大値を超えて値を増加させることは、メモリ破壊や未定義動作へと導く可能性があります。
 
+##### 悪い例
+
+    int a[10];
+    a[10] = 7;   // ダメ, 配列範囲オーバーフロー
+
+    for (int n = 0; n <= 10; ++n)
+        a[n] = 9;   // ダメ, 配列範囲オーバーフロー
+
+##### 悪い例
+
+    int n = numeric_limits<int>::max();
+    int m = n + 1;   // ダメ, 数値オーバーフロー
+
+##### 悪い例
+
+    int area(int h, int w) { return h * w; }
+
+    auto a = area(10'000'000, 100'000'000);   // ダメ, 数値オーバーフロー
+
+##### 例外
+
+もしあなたが本当にモジュロ演算を求めているなら unsigned型を使いましょう。
+
+**代替策**: ある程度のオーバーヘッドを許容できる重要なアプリケーションの場合は、範囲チェックされた整数型や浮動小数点型を使用してください。
+
+##### 実施
+
+???
+
+### <a name="Res-underflow"></a>ES.104: アンダーフローしないようにしましょう (Don't underflow)
+
+<!--
 ##### Reason
 
 Decrementing a value beyond a minimum value can lead to memory corruption and undefined behavior.
@@ -17133,9 +19780,31 @@ Use unsigned types if you really want modulo arithmetic.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Res-zero"></a>ES.105: Don't divide by integer zero
+最小値を超えて値を減少させることは、メモリ破壊や未定義動作へと導く可能性があります。
 
+##### 悪い例
+
+    int a[10];
+    a[-2] = 7;   // ダメ
+
+    int n = 101;
+    while (n--)
+        a[n - 1] = 9;   // ダメ (2回目)
+
+##### 例外
+
+もしあなたが本当にモジュロ演算を求めているなら unsigned型を使いましょう。
+
+##### 実施
+
+???
+
+### <a name="Res-zero"></a>ES.105: 整数値0での割り算はしないようにしましょう (Don't divide by integer zero)
+
+<!--
 ##### Reason
 
 The result is undefined and probably a crash.
@@ -17172,10 +19841,48 @@ This also applies to `%`.
 ##### Enforcement
 
 * Flag division by an integral value that could be zero
+-->
+##### 理由
 
+その結果は未定義であり、おそらくクラッシュするでしょう。
 
-### <a name="Res-nonnegative"></a>ES.106: Don't try to avoid negative values by using `unsigned`
+##### ノート
 
+これは `%`にも適用されます。
+
+##### 悪い例
+
+    int divide(int a, int b)
+    {
+        // ダメ, チェックすべき(例, 事前条件の中で)
+        return a / b;
+    }
+
+##### 良い例
+
+    int divide(int a, int b)
+    {
+        // 良い, 事前条件で対応 (そして C++が cotractsに対応したときにはそれに置き換えましょう)
+        Expects(b != 0);
+        return a / b;
+    }
+
+    double divide(double a, double b)
+    {
+        // 良い, doubleを代わりに用いることで対応
+        return a / b;
+    }
+
+**代替策**: ある程度のオーバーヘッドを許容できる重要なアプリケーションの場合は、範囲チェックされた整数型や浮動小数点型を使用してください。
+
+##### 実施
+
+* 整数値 0での除算の可能性がある場所にフラグを立てましょう。
+*
+
+### <a name="Res-nonnegative"></a>ES.106: `unsigned`を用いることで、負の値を避けようとはしないでください (Don't try to avoid negative values by using `unsigned`)
+
+<!--
 ##### Reason
 
 Choosing `unsigned` implies many changes to the usual behavior of integers, including modulo arithmetic,
@@ -17237,6 +19944,67 @@ For example
 ##### Enforcement
 
 See ES.100 Enforcements.
+-->
+##### 理由
+
+`unsigned`を選択すると、モジュロ演算など、整数の通常の動作に多くの変更が加えられることになります。
+オーバーフローに関連する警告は抑制され、そして、signed/unsignedのミックスに関連するエラーの扉を開きます。
+`unsigned`を使用しても、実際には負の値の可能性が排除されるわけではありません。
+
+##### 例
+
+    unsigned int u1 = -2;   // 有効: u1は 4294967294
+    int i1 = -2;
+    unsigned int u2 = i1;   // 有効: u2は 4294967294
+    int i2 = u2;            // 有効: i2は -2
+
+このような (完全に合法な) 構造に関する問題は、実際のコードでは見つけるのが難しく、現実世界の多くのエラーの原因となります。
+考えてみましょう:
+
+    unsigned area(unsigned height, unsigned width) { return height*width; } // [see also](#Ri-expects)
+    // ...
+    int height;
+    cin >> height;
+    auto a = area(height, 2);   // -2が入力されると 4294967292 になる
+
+`-1`が `unsigned int`に代入されると 最大の `unsigned int`になることに注意しましょう。
+また、符号なし演算はモジュロ演算であるため、乗算がオーバーフローせずにラップアラウンドされます。
+
+##### 例
+
+    unsigned max = 100000;    // "タイプミス事故", 10'000のつもりだった
+    unsigned short x = 100;
+    while (x < max) x += 100; // 無限ループ
+
+`x`が符号付きの`short`であった場合、オーバーフロー時の未定義の動作について警告できたでしょう。
+
+##### 代替策
+
+* 符号付き整数を用いて `x >= 0`のチェックをしましょう。
+* 正の整数型を使いましょう
+* 部分範囲の整数型を使いましょう
+* `Assert(-1 < x)`
+
+例えば
+
+    struct Positive {
+        int val;
+        Positive(int x) :val{x} { Assert(0 < x); }
+        operator int() { return val; }
+    };
+
+    int f(Positive arg) { return arg; }
+
+    int r1 = f(2);
+    int r2 = f(-2);  // 例外がスロー
+
+##### ノート
+
+???
+
+##### 実施
+
+ES.100 の実施を参照。
 
 
 ### <a name="Res-subscripts"></a>ES.107: Don't use `unsigned` for subscripts, prefer `gsl::index`
@@ -24768,7 +27536,7 @@ Non-rule summary:
 * [NR.2: 関数内はただ1つの`return`を持つべきと主張しないでください (Don't insist to have only a single `return`-statement in a function)](#Rnr-single-return)
 * [NR.3: 例外を避けないようにしましょう (Don't avoid exceptions)](#Rnr-no-exceptions)
 * [NR.4: それぞれのクラス宣言は、それぞれのソースファイル内に置くべきと主張しないでください (Don't insist on placing each class definition in its own source file)](#Rnr-lots-of-files)
-* [NR.5: 代わりに2段階初期化を使わないようにしましょう (Don't use two-phase initialization)](#Rnr-two-phase-init)
+* [NR.5: 2段階初期化を使わないようにしましょう (Don't use two-phase initialization)](#Rnr-two-phase-init)
 * [NR.6: すべてのクリーンアップ処理は関数の最後に置いて、`goto exit`することはしないようにしましょう (Don't place all cleanup actions at the end of a function and `goto exit`)](#Rnr-goto-exit)
 * [NR.7: すべてのデータメンバを`protected`することはしないようにしよう (Don't make all data members `protected`)](#Rnr-protected-data)
 * ???
@@ -25082,18 +27850,18 @@ Remember
 
 例外に対する主な反対理由を順番に考えてみましょう
 
-* 例外は非効率的:  
+* 例外は非効率的:
 何と比較して?
 比較する際には、同じエラーセットが処理され、それらが等価に処理されることを確認しましょう。
 特に、エラーを見てすぐに終了するプログラムと、エラーを記録する前にリソースを注意深くクリーンアップするプログラムとを比較しないでください。
 たしかに、一部のシステムでは例外処理の実装が貧弱です; 時々このような実装は私たちに別のエラー処理のアプローチの利用を強制します。しかしこれは例外の本質的な問題ではありません。
 効率性の議論を取り上げるときは、どのような文脈でも、その議論のもとで問題への洞察を実際に与える良いデータをもっていることを注意してください。
-* 例外はリークとエラーをもたらす。  
+* 例外はリークとエラーをもたらす。
 それはないでしょう。
 もしあなたのプログラムがリソース管理のための全体的な戦略を持たないポインタのネズミの巣であるなら、あなたが何をしても問題が起こります。
 もしあなたのシステムが、百万ものそのようなコードから構成されているのであるなら、おそらく例外を使うことはできないでしょう。しかしそれは例外の問題というよりも、過度で規律のないポインタの使用の問題です。
-私たちの意見では、あなたには例外ベースのエラー処理を簡単で安全なものにするためにRAIIが必要です。それは他よりも簡単で安全です。  
-* 例外のパフォーマンスは予測できない。  
+私たちの意見では、あなたには例外ベースのエラー処理を簡単で安全なものにするためにRAIIが必要です。それは他よりも簡単で安全です。
+* 例外のパフォーマンスは予測できない。
 もしあなたがハードリアルタイムシステムを扱っていて、与えられた時間内でタスクが完了する保証が必要であるなら、そのような保証をバックアップするツールが必要です。
 私たちが知っている限り、そのようなツールは利用できません(少なくともほとんどのプログラマーにとってはそうではありません)。
 * 実行時の例外処理はより多くのスペースが必要。
@@ -25923,9 +28691,9 @@ pending standard committee decisions on contracts and assertion syntax.
 See [the contract proposal](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0380r1.pdf); using the attribute syntax,
 for example, `Expects(p)` will become `[[expects: p]]`.
 -->
-* `Expects`     // 事前条件アサーション。現在は関数本体に置かれています。将来は宣言に移動されるべきです。  
-                // `Expects(p)`は`p == true`でなければプログラムを終了します。  
-                // `Expect`はいつくかのオプション(強制続行、エラーメッセージ、終了の選択肢)で制御されます。  
+* `Expects`     // 事前条件アサーション。現在は関数本体に置かれています。将来は宣言に移動されるべきです。
+                // `Expects(p)`は`p == true`でなければプログラムを終了します。
+                // `Expect`はいつくかのオプション(強制続行、エラーメッセージ、終了の選択肢)で制御されます。
 * `Ensures`     // 事後条件アサーション。現在は関数本体に置かれています。将来は宣言に移動されるべきです。
 
 標準委員会の契約(constract)に対する決定とアサーション文法を待っているため、これらのアサーションは現在はマクロで(ウヘーッ!)。そして関数定義に(のみ)書くことができます。

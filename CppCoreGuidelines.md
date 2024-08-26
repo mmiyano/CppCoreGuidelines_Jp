@@ -3882,8 +3882,8 @@ Functions are the most critical part in most interfaces, so see the interface ru
 * [F.7: 通常の場合は、スマートポインタでなく`T*` や `T&`の引数を受け取ろう](#Rf-smart)
 * [F.8: 純粋関数を好んで使おう](#Rf-pure)
 * [F.9: 未使用パラメータは無名にしよう](#Rf-unused)
-* [F.10: If an operation can be reused, give it a name](#Rf-name)
-* [F.11: Use an unnamed lambda if you need a simple function object in one place only](#Rf-lambda)
+* [F.10: 再利用される可能性のある操作には名前を与えましょう (If an operation can be reused, give it a name)](#Rf-name)
+* [F.11: 一か所でのみ使われるシンプルな関数オブジェクトが必要な場合は、無名のラムダを使いましょう (Use an unnamed lambda if you need a simple function object in one place only)](#Rf-lambda)
 
 パラメータの渡し方の表現ルール:
 
@@ -3893,8 +3893,8 @@ Functions are the most critical part in most interfaces, so see the interface ru
 * [F.18: "will-move-from"パラメータに対して、`X&&`と`std::move`でパラメータを渡しましょう](#Rf-consume)
 * [F.19: For "forward" parameters, pass by `TP&&` and only `std::forward` the parameter](#Rf-forward)
 * [F.20: "出力"値に対しては出力パラメータよりも返り値を使いましょう](#Rf-out)
-* [F.21: To return multiple "out" values, prefer returning a struct or tuple](#Rf-out-multi)
-* [F.60: Prefer `T*` over `T&` when "no argument" is a valid option](#Rf-ptr-ref)
+* [F.21: 複数の"出力"値を返すときには,構造体やtupleで返すようにしましょう (To return multiple "out" values, prefer returning a struct or tuple)](#Rf-out-multi)
+* [F.60: 「引数なし」が有効なオプションであるときは、`T&`よりも`T*`を使いましょう (Prefer `T*` over `T&` when "no argument" is a valid option)](#Rf-ptr-ref)
 
 パラメータの渡し方の意味ルール:
 
@@ -3902,23 +3902,23 @@ Functions are the most critical part in most interfaces, so see the interface ru
 * [F.23: Use a `not_null<T>` to indicate that "null" is not a valid value](#Rf-nullptr)
 * [F.24: Use a `span<T>` or a `span_p<T>` to designate a half-open sequence](#Rf-range)
 * [F.25: Use a `zstring` or a `not_null<zstring>` to designate a C-style string](#Rf-zstring)
-* [F.26: Use a `unique_ptr<T>` to transfer ownership where a pointer is needed](#Rf-unique_ptr)
-* [F.27: Use a `shared_ptr<T>` to share ownership](#Rf-shared_ptr)
+* [F.26: ポインタが必要な場合で、所有権を移動させたいときは `unique_ptr<T>`を使いましょう (Use a `unique_ptr<T>` to transfer ownership where a pointer is needed)](#Rf-unique_ptr)
+* [F.27: 所有権を共有するためには `shared_ptr<T>`を使いましょう (Use a `shared_ptr<T>` to share ownership)](#Rf-shared_ptr)
 
 <a name="Rf-value-return"></a>返り値の意味ルール:
 
-* [F.42: Return a `T*` to indicate a position (only)](#Rf-return-ptr)
-* [F.43: Never (directly or indirectly) return a pointer or a reference to a local object](#Rf-dangle)
-* [F.44: Return a `T&` when copy is undesirable and "returning no object" isn't needed](#Rf-return-ref)
-* [F.45: Don't return a `T&&`](#Rf-return-ref-ref)
-* [F.46: `int` is the return type for `main()`](#Rf-main)
-* [F.47: Return `T&` from assignment operators](#Rf-assignment-op)
-* [F.48: Don't return `std::move(local)`](#Rf-return-move-local)
-* [F.49: Don't return `const T`](#Rf-return-const)
+* [F.42: 位置を示す場合に(かぎり) `T*`を返しましょう (Return a `T*` to indicate a position (only))](#Rf-return-ptr)
+* [F.43: ローカルオブジェクトへのポインタや参照を(直接的にも間接的にも)決して返さないようにしましょう (Never (directly or indirectly) return a pointer or a reference to a local object)](#Rf-dangle)
+* [F.44: コピーが望ましくなく、かつ、"オブジェクトを返さない"ことが不要な場合は、`T&`を返しましょう (Return a `T&` when copy is undesirable and "returning no object" isn't needed)](#Rf-return-ref)
+* [F.45: `T&&`を返してはいけません (Don't return a `T&&`)](#Rf-return-ref-ref)
+* [F.46: `main()`の返り値型は`int`です (`int` is the return type for `main()`)](#Rf-main)
+* [F.47: 代入演算子は `T&`を返しましょう (Return `T&` from assignment operators)](#Rf-assignment-op)
+* [F.48: `return std::move(local)`をしてはいけません (Don't return `std::move(local)`)](#Rf-return-move-local)
+* [F.49: `const T`を返してはいけません (Don't return `const T`)](#Rf-return-const)
 
 その他の関数のルール:
 
-* [F.50: Use a lambda when a function won't do (to capture local variables, or to write a local function)](#Rf-capture-vs-overload)
+* [F.50: 関数が機能しないとき(ローカル変数のキャプチャやローカル関数を書きたいとき)はラムダを使いましょう (Use a lambda when a function won't do (to capture local variables, or to write a local function))](#Rf-capture-vs-overload)
 * [F.51: Where there is a choice, prefer default arguments over overloading](#Rf-default-args)
 * [F.52: Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms](#Rf-reference-capture)
 * [F.53: Avoid capturing by reference in lambdas that will be used non-locally, including returned, stored on the heap, or passed to another thread](#Rf-value-capture)
@@ -4862,8 +4862,9 @@ Flag named unused parameters.
 
 未使用の名前付きパラメータに注意しよう。
 
-### <a name="Rf-name"></a>F.10: If an operation can be reused, give it a name
+### <a name="Rf-name"></a>F.10: 再利用される可能性のある操作には名前を与えましょう (If an operation can be reused, give it a name)
 
+<!--
 ##### Reason
 
 Documentation, readability, opportunity for reuse.
@@ -4926,9 +4927,73 @@ whether functions, lambdas, or operators.
 
 * (hard) flag similar lambdas
 * ???
+-->
+##### 理由
 
-### <a name="Rf-lambda"></a>F.11: Use an unnamed lambda if you need a simple function object in one place only
+文書化、可読性、再利用の促進
 
+##### 例
+
+    struct Rec {
+        string name;
+        string addr;
+        int id;         // ユニークな識別子
+    };
+
+    bool same(const Rec& a, const Rec& b)
+    {
+        return a.id == b.id;
+    }
+
+    vector<Rec*> find_id(const string& name);    // "name"によってすべてレコードを検索
+
+    auto x = find_if(vr.begin(), vr.end(),
+        [&](Rec& r) {
+            if (r.name.size() != n.size()) return false; // name to compare to is in n
+            for (int i = 0; i < r.name.size(); ++i)
+                if (tolower(r.name[i]) != tolower(n[i])) return false;
+            return true;
+        }
+    );
+
+ラムダの引数が大きくなるときにしばしば発生しますが、ここには有用な関数が潜んでいます(大文字小文字を無視した文字列比較)。
+
+    bool compare_insensitive(const string& a, const string& b)
+    {
+        if (a.size() != b.size()) return false;
+        for (int i = 0; i < a.size(); ++i) if (tolower(a[i]) != tolower(b[i])) return false;
+        return true;
+    }
+
+    auto x = find_if(vr.begin(), vr.end(),
+        [&](Rec& r) { return compare_insensitive(r.name, n); }
+    );
+
+あるいは(もしnに対する暗黙の名前の束縛を避けたいのであれば):
+
+    auto cmp_to_n = [&n](const string& a) { return compare_insensitive(a, n); };
+
+    auto x = find_if(vr.begin(), vr.end(),
+        [](const Rec& r) { return cmp_to_n(r.name); }
+    );
+
+##### ノート
+
+関数、ラムダ、オペレータのいずれにおいても。
+
+##### 例外
+
+* `for_each`はそれと同様のアルゴリズムの制御フローの引数のように、論理的にローカルでのみ使われるラムダ。
+* [initializers](#???)として使われているラムダ。
+
+##### 実施
+
+* (難しい) 似たラムダをチェックしましょう
+* ???
+
+### <a name="Rf-lambda"></a>F.11: 一か所でのみ使われるシンプルな関数オブジェクトが必要な場合は、無名のラムダを使いましょう (Use an unnamed lambda if you need a simple function object in one place only)
+
+<!--
 ##### Reason
 
 That makes the code concise and gives better locality than alternatives.
@@ -4946,6 +5011,24 @@ Naming a lambda can be useful for clarity even if it is used only once.
 ##### Enforcement
 
 * Look for identical and near identical lambdas (to be replaced with named functions or named lambdas).
+-->
+##### 理由
+
+これによりコードが簡潔になり、他の書き方と比べて局所性が向上します。
+
+##### 例
+
+    auto earlyUsersEnd = std::remove_if(users.begin(), users.end(),
+                                        [](const User &a) { return a.id > 100; });
+
+
+##### 例外
+
+たとえ一度だけ使われる場合であっても、ラムダに名前をつけることは明確さを与えます。
+
+##### 実施
+
+* 同一またはほぼ同一のラムダを探します (名前付き関数または名前付きラムダに置き換えられます)。
 
 ## <a name="SS-call"></a>F.call: パラメータの渡し方 (Parameter passing)
 
@@ -5283,7 +5366,7 @@ If the "will-move-from" parameter is a `shared_ptr` follow [R.34](#Rr-sharedptrp
 
 ##### 例外
 
-If the "will-move-from" parameter is a `shared_ptr` follow [R.34](#Rr-sharedptrparam-owner) and pass the `shared_ptr` by value.
+もし"will-move-from"パラメータが`shared_ptr`であるなら、[R.34](#Rr-sharedptrparam-owner)に従い、`shared_ptr`を値で渡しましょう。
 
 ##### 実施
 
@@ -5360,6 +5443,7 @@ Sometimes you may forward a composite parameter piecewise, each subobject once o
 
 ### <a name="Rf-out"></a>F.20: "出力"値に対しては出力パラメータよりも返り値を使いましょう (For "out" output values, prefer return values to output parameters)
 
+<!--
 ##### Reason
 
 A return value is self-documenting, whereas a `&` could be either in-out or out-only and is liable to be misused.
@@ -5422,9 +5506,73 @@ The return value optimization doesn't handle the assignment case, but the move a
 ##### Enforcement
 
 * Flag reference to non-`const` parameters that are not read before being written to and are a type that could be cheaply returned; they should be "out" return values.
+-->
+##### 理由
 
-### <a name="Rf-out-multi"></a>F.21: To return multiple "out" values, prefer returning a struct or tuple
+返り値は自己文書化されます、一方で`&`は入出力あるいは出力オンリーのどちらかになりうるため、誤用される可能性があります。
 
+これにはパフォーマンスおよび明示的なメモリ管理を避けるのために暗黙のムーブ操作を用いている標準コンテナのような大きなオブジェクトも含みます。
+
+もし複数の値を返したい場合は、[タプルを使いましょう](#Rf-out-multi) あるいは 同様の複数のメンバ型を使いましょう。
+
+##### 例
+
+    // OK: xを持った要素へのポインタ群を返す
+    vector<const int*> find_all(const vector<int>&, int x);
+
+    // ダメ: place pointers to elements with value x in-out
+    void find_all(const vector<int>&, vector<const int*>& out, int x);
+
+##### ノート
+
+多くの (個別には移動コストが低い) 要素からなる`struct`は、全体として移動コストが高くなる可能性があります。
+
+##### 例外
+
+* 継承階層の中に現れるような具象でない型に対しては、`unique_ptr` または `shared_ptr` でオブジェクトを返しましょう。
+* もし移動コストが高い型(例えば `array<BigPOD>`)の場合は、ヒープに確保しハンドル(例, `unique_ptr`)を返すことを考慮しましょう、あるいは(出力パラメータとして利用される)非`const`の代入用のオブジェクトへの参照を渡しましょう。
+* キャパシティを持つオブジェクト(例, `std::string`, `std::vector`)を内部ループの複数の関数呼び出しに渡って再利用するためには: [それを入出力パラメータとして扱い参照で渡しましょう](#Rf-out-multi).
+
+##### 例
+
+`Matrix`が(おそらくその要素を`std::vector`で保持することによって)ムーブ操作をもつものと仮定します:
+
+    Matrix operator+(const Matrix& a, const Matrix& b)
+    {
+        Matrix res;
+        // ... 総和をresに代入 ...
+        return res;
+    }
+
+    Matrix x = m1 + m2;  // ムーブコンストラクタ
+
+    y = m3 + m3;         // ムーブ代入
+
+
+##### ノート
+
+戻り値最適化(RVO)は代入は扱いませんが、ムーブ代入は扱います。
+
+##### 例
+
+    struct Package {      // 例外ケース: ムーブが高価なオブジェクト
+        char header[16];
+        char load[2024 - 16];
+    };
+
+    Package fill();       // ダメ: 大きな返り値
+    void fill(Package&);  // OK
+
+    int val();            // OK
+    void val(int&);       // ダメ: valはその引数を読むのか?
+
+##### 実施
+
+* 非`const`の参照パラメータで、書かれる前に読まれてなく、かつ、返すことが安価な型をチェックしましょう; それらは返り値となるべきです。
+
+### <a name="Rf-out-multi"></a>F.21: 複数の"出力"値を返すときには,構造体やtupleで返すようにしましょう (To return multiple "out" values, prefer returning a struct or tuple)
+
+<!--
 ##### Reason
 
 A return value is self-documenting as an "output-only" value.
@@ -5553,9 +5701,135 @@ Note this is different from the `return move(...)` anti-pattern from [ES.56](#Re
 
 * Output parameters should be replaced by return values.
   An output parameter is one that the function writes to, invokes a non-`const` member function, or passes on as a non-`const`.
+-->
+##### 理由
 
-### <a name="Rf-ptr-ref"></a>F.60: Prefer `T*` over `T&` when "no argument" is a valid option
+返り値は"出力オンリー"の値であることを自己文書化しています。
+C++は`tuple`(`pair`を含みます)を使うことで複数の返り値が持てます。呼び出し側のさらなる便利のために `tie`や構造化バインディング(C++17)を使うことも考慮しましょう。
+返り値に意味がある場合は名前付き構造体を使いましょう。一方、通常のコードにおいては 名前なしの`tuple`が便利です。
 
+##### 例
+
+    // ダメ: 出力オンリーのパラメータがコメントで文書化されている
+    int f(const string& input, /*出力オンリー*/ string& output_data)
+    {
+        // ...
+        output_data = something();
+        return status;
+    }
+
+    // 良い: 自己文書化
+    tuple<int, string> f(const string& input)
+    {
+        // ...
+        return {status, something()};
+    }
+
+C++98の標準ライブラリではすでにこのスタイルを使用していました。`pair`は2要素の `tuple`のようなものだからです。
+例えば、`set<string> my_set`が与えられたとしましょう:
+
+    // C++98
+    result = my_set.insert("Hello");
+    if (result.second) do_something_with(result.first);    // workaround
+
+C++11ではこのように書くことができ、ローカル変数に直接結果を入れることができます:
+
+    Sometype iter;                                // default initialize if we haven't already
+    Someothertype success;                        // used these variables for some other purpose
+
+    tie(iter, success) = my_set.insert("Hello");   // normal return value
+    if (success) do_something_with(iter);
+
+C++17では複数の変数の宣言と初期化をするために、"構造化束縛"が使えます:
+
+    if (auto [ iter, success ] = my_set.insert("Hello"); success) do_something_with(iter);
+
+##### 例外
+
+時々、そのステートを操作するために、関数にオブジェクトを渡す必要があることがあります。
+そのようなケースでは、オブジェクトを参照渡し[`T&`](#Rf-inout)することが、多くの場合正しいテクニックとなります。
+渡した入出力パラメータを返り値として明示的に再び戻すことはしばしば不必要です。
+例えば:
+
+    istream& operator>>(istream& in, string& s);    // much like std::operator>>()
+
+    for (string s; in >> s; ) {
+        // do something with line
+    }
+
+ここで、`s`と`in`の両方とも入出力パラメータとして使われています。
+`in`はそのステートを操作することが可能なように、(非`const`)参照で渡しています。
+`s`はアロケーションの繰り返しを避けるために渡しています。
+(参照渡しされた)`s`を再利用することによって、`s`のキャパシティを増やす必要があるときだけ新しいメモリがアロケートされます。
+このテクニックは時に"caller-allocated out"パターンと呼ばれ、とくに`string`や`vector`のようにヒープからのアロケーションが必要な型に対して役にたちます。
+
+比較するために、すべての値を返り値として返す場合は、次のようになるでしょう:
+
+    pair<istream&, string> get_string(istream& in)  // 推奨しない
+    {
+        string s;
+        in >> s;
+        return {in, move(s)};
+    }
+
+    for (auto p = get_string(cin); p.first; ) {
+        // p.secondを使って何か処理
+    }
+
+これは、パフォーマンスが大幅に低下し、エレガントさも大幅に低下すると考えられます。
+
+このルール (F.21) を厳密に解釈すると、この例外は、このルールで意図されている純粋な出力パラメータではなく、入出力パラメーターに依存しているため、実際には例外ではありません。
+ただし、私たちは、微妙な表現よりも、明示的な表現を好みます。
+
+##### ノート
+
+多くのケースでは、特定のユーザー定義型を返すと便利です。
+例えば:
+
+    struct Distance {
+        int value;
+        int unit = 1;   // 1 はメートルを意味
+    };
+
+    Distance d1 = measure(obj1);        // d1.value と d1.unit にアクセス
+    auto d2 = measure(obj2);            // d2.value と d2.unit にアクセス
+    auto [value, unit] = measure(obj3); // value と unitにアクセス; measure()を知っている人にとってはやや冗長
+    auto [x, y] = measure(obj4);        // やってはダメ; 混乱する可能性が高い
+
+極めて汎用的な`pair`と`tuple`は、返される値が抽象化ではなく独立したエンティティを表す場合にのみ使用する必要があります。
+
+別の例として、汎用的な`tuple`を使うよりも、特定の型の`variant<T, error_code>`を使うほうがよいでしょう。
+
+##### ノート
+
+tupleがコピーのコストが高いローカル変数によって初期化されるときは、明示的な `move`はコピーを避けるために有用です:
+
+    pair<LargeObject, LargeObject> f(const string& input)
+    {
+        LargeObject large1 = g(input);
+        LargeObject large2 = h(input);
+        // ...
+        return { move(large1), move(large2) }; // コピーが発生しない
+    }
+
+あるいは、
+
+    pair<LargeObject, LargeObject> f(const string& input)
+    {
+        // ...
+        return { g(input), h(input) }; // コピーもムーブも発生しない
+    }
+
+これは [ES.56](#Res-move)の`return move(...)`アンチパターンとは違うことに注意しましょう。
+
+##### 実施
+
+* 出力パラメータは返り値に置き換わるべきです。
+  出力パラメータとは、非`const`メンバー関数の呼び出し、あるいは非`const`オブジェクトとして渡され、関数が出力するものです。
+
+### <a name="Rf-ptr-ref"></a>F.60: 「引数なし」が有効なオプションであるときは、`T&`よりも`T*`を使いましょう (Prefer `T*` over `T&` when "no argument" is a valid option)
+
+<!--
 ##### Reason
 
 A pointer (`T*`) can be a `nullptr` and a reference (`T&`) cannot, there is no valid "null reference".
@@ -5584,6 +5858,37 @@ That error is very uncommon.
 If you prefer the pointer notation (`->` and/or `*` vs. `.`), `not_null<T*>` provides the same guarantee as `T&`.
 
 ##### Enforcement
+
+* Flag ???
+-->
+##### 理由
+
+ポインタ (`T*`)は `nullptr`になりえますが、参照(`T&`)はなりえません。「ヌル参照」はありえません。
+「オブジェクトなし」を表すことの代わりに`nullptr`を使うことは有用です。しかしそうでない場合は、参照は表記がシンプルでより良いコードになります。
+
+##### 例
+
+    string zstring_to_string(zstring p) // zstring は char*; Cスタイル文字列
+    {
+        if (!p) return string{};    // p はnullpteかもしれない; 忘れずにチェック
+        return string{p};
+    }
+
+    void print(const vector<int>& r)
+    {
+        // r は vector<int>への参照; チェック不要
+    }
+
+##### ノート
+
+C++ では、本質的に `nullptr` である参照を構築することは可能ですが、有効ではありません (例: `T* p = nullptr; T& r = *p;`)。
+このエラーは非常にまれです。
+
+##### ノート
+
+もしポインタ表記を好むのであれば(`->`あるいは/または `*` vs. `.`)、`not_null<T*>`は `T&`と同様の保証を与えます。
+
+##### 実施
 
 * Flag ???
 
@@ -5762,8 +6067,9 @@ When I call `length(s)` should I check if `s` is `nullptr` first? Should the imp
 
 **See also**: [Support library](#gsl-guidelines-support-library)
 
-### <a name="Rf-unique_ptr"></a>F.26: Use a `unique_ptr<T>` to transfer ownership where a pointer is needed
+### <a name="Rf-unique_ptr"></a>F.26: ポインタが必要な場合で、所有権を移動させたいときは `unique_ptr<T>`を使いましょう (Use a `unique_ptr<T>` to transfer ownership where a pointer is needed)
 
+<!--
 ##### Reason
 
 Using `unique_ptr` is the cheapest way to pass a pointer safely.
@@ -5791,9 +6097,38 @@ You need to pass a pointer rather than an object if what you are transferring is
 ##### Enforcement
 
 (Simple) Warn if a function returns a locally allocated raw pointer. Suggest using either `unique_ptr` or `shared_ptr` instead.
+-->
+##### 理由
 
-### <a name="Rf-shared_ptr"></a>F.27: Use a `shared_ptr<T>` to share ownership
+`unique_ptr`を使うことは安全にポインタを渡す最もコストの低い方法です。
 
+**See also**: [C.50](#Rc-factory) ファクトリから `shared_ptr`を返すときについて。
+
+##### 例
+
+    unique_ptr<Shape> get_shape(istream& is)  // 入力ストリームからShapeを組み立てる
+    {
+        auto kind = read_header(is); // 入力からヘッダを読み次のshapeが何か判別
+        switch (kind) {
+        case kCircle:
+            return make_unique<Circle>(is);
+        case kTriangle:
+            return make_unique<Triangle>(is);
+        // ...
+        }
+    }
+
+##### ノート
+
+転送するものが、インターフェイス(基本クラス) を通じて使用されるクラス階層のオブジェクトである場合は、オブジェクトではなくポインタを渡す必要があります。
+
+##### 実施
+
+(シンプル) 関数が内部で割り当てた生のポインタを返す場合に注意しましょう。 かわりに`unique_ptr` か `shared_ptr` を提案しましょう。
+
+### <a name="Rf-shared_ptr"></a>F.27: 所有権を共有するためには `shared_ptr<T>`を使いましょう (Use a `shared_ptr<T>` to share ownership)
+
+<!--
 ##### Reason
 
 Using `std::shared_ptr` is the standard way to represent shared ownership. That is, the last owner deletes the object.
@@ -5824,9 +6159,42 @@ Have a single object own the shared object (e.g. a scoped object) and destroy th
 ##### Enforcement
 
 (Not enforceable) This is a too complex pattern to reliably detect.
+-->
+##### 理由
 
-### <a name="Rf-return-ptr"></a>F.42: Return a `T*` to indicate a position (only)
+`std::shared_ptr`を使うことは所有権の共有を表現する標準的な方法です。 つまり最後の所有者がオブジェクトを deleteします。
 
+##### 例
+
+    shared_ptr<const Image> im { read_image(somewhere) };
+
+    std::thread t0 {shade, args0, top_left, im};
+    std::thread t1 {shade, args1, top_right, im};
+    std::thread t2 {shade, args2, bottom_left, im};
+    std::thread t3 {shade, args3, bottom_right, im};
+
+    // detach threads
+    // last thread to finish deletes the image
+
+##### ノート
+
+一度に複数の所有者がいない場合は `shared_ptr`より `unique_ptr`を使いましょう。
+`shared_ptr`は所有権の共有のためにあります。
+
+`shared_ptr` の広範な使用にはコストがかかることに注意してください (`shared_ptr` の参照カウントに対するアトミック操作には、測定可能な総コストがかかります)。
+
+##### 代替策
+
+単一のオブジェクトに共有オブジェクト(例えば スコープ付きオブジェクト) を所有させ、すべてのユーザーが完了したときにそれを (できれば暗黙的に) 破棄します。
+Have a single object own the shared object (e.g. a scoped object) and destroy that (preferably implicitly) when all users have completed.
+
+##### 実施
+
+(強制不能) これは確実な検出をするにはあまりにパターンが複雑です。
+
+### <a name="Rf-return-ptr"></a>F.42: 位置を示す場合に(かぎり) `T*`を返しましょう (Return a `T*` to indicate a position (only))
+
+<!--
 ##### Reason
 
 That's what pointers are good for.
@@ -5862,9 +6230,44 @@ Do not return a pointer to something that is not in the caller's scope; see [F.4
 Only owners should be deleted.
 * Flag `new`, `malloc()`, etc. assigned to a plain `T*`.
 Only owners should be responsible for deletion.
+-->
+##### 理由
 
-### <a name="Rf-dangle"></a>F.43: Never (directly or indirectly) return a pointer or a reference to a local object
+ポインタが役立つのがこれです。
+所有権を移動させるために `T*`を返すのは間違った使い方です。
 
+##### 例
+
+    Node* find(Node* t, const string& s)  // 2分木ノードから sを検索
+    {
+        if (!t || t->name == s) return t;
+        if ((auto p = find(t->left, s))) return p;
+        if ((auto p = find(t->right, s))) return p;
+        return nullptr;
+    }
+
+もし `nullptr`でなければ、`find`によって返されたポインタは `s`を保持する `Node`を指しています。
+重要なのは、これは指しているオブジェクトの所有権が、呼び出し元に譲渡されることを意味するものではありません。
+
+##### ノート
+
+位置はイテレータやインデックス、参照によっても渡すことができます。
+参照は、[`nullptr`を使う必要がない場合](#Rf-ptr-ref)や [参照されるオブジェクトが決して変更されない場合](???)、しばしばポインタよりも優れた代替になります。
+
+##### ノート
+
+呼び出し元のスコープにないものを指すポインタを返してはいけません。 [F.43](#Rf-dangle)を参照。
+
+**See also**: [ダングリングポインタの防止に関する議論](#???)
+
+##### 実施
+
+* 生の `T*`に対して適用している `delete`、`std::free()`などをチェックしましょう。 所有者のみが削除すべきです。
+* 生の `T*`に対して割り当てている `new`、 `malloc()`などをチェックしましょう。 所有者のみが削除への責任を持つべきです。
+
+### <a name="Rf-dangle"></a>F.43: ローカルオブジェクトへのポインタや参照を(直接的にも間接的にも)決して返さないようにしましょう (Never (directly or indirectly) return a pointer or a reference to a local object)
+
+<!--
 ##### Reason
 
 To avoid the crashes and data corruption that can result from the use of such a dangling pointer.
@@ -5969,9 +6372,115 @@ It can be detected/prevented with similar techniques.
 
 * Compilers tend to catch return of reference to locals and could in many cases catch return of pointers to locals.
 * Static analysis can catch many common patterns of the use of pointers indicating positions (thus eliminating dangling pointers)
+-->
+##### 理由
 
-### <a name="Rf-return-ref"></a>F.44: Return a `T&` when copy is undesirable and "returning no object" isn't needed
+そのようなダングリングポインタの利用によって引き起こされうる、クラッシュやデータ破壊を避けるため。
 
+##### ダメな例
+
+関数から返した後はそのローカルオブジェクトはもはや存在しません:
+
+    int* f()
+    {
+        int fx = 9;
+        return &fx;  // ダメ
+    }
+
+    void g(int* p)   // 十分に無実
+    {
+        int gx;
+        cout << "*p == " << *p << '\n';
+        *p = 999;
+        cout << "gx == " << gx << '\n';
+    }
+
+    void h()
+    {
+        int* p = f();
+        int z = *p;  // 放棄されたスタックフレームから読み込む (ダメ)
+        g(p);        // 放棄されたスタックフレームを指すポインタを関数に渡す (ダメ)
+    }
+
+有名な実装の一つでは私はこのような出力を得ました:
+
+    *p == 999
+    gx == 999
+
+私は原因を次のように予想しました。`g()`の呼び出しは `f()`の呼び出しによって放棄されたスタックフレームを再利用します。そのため `*p`は 今`gx`によって占有されたスペースを指しています。
+
+* もし `fx`と`gx`が異なる型だった場合に、何が起こるか想像しましょう。
+* もし `fx`や`gx`が不変値をもつ型の場合に、何が起こるか想像しましょう。
+* もし ダングリングポインタがより大きな関数群の間でやり取りされた場合に、何が起こるか想像しましょう。
+* クラッカーがダングリングポインタを用いて何ができるか想像しましょう。
+
+幸いにも、ほとんどの(全部?)現代的なコンパイラはこのシンプルなケースに対しては、捕捉し警告を発します。
+
+##### ノート
+
+これは参照に対しても同様に適用されます:
+
+    int& f()
+    {
+        int x = 7;
+        // ...
+        return x;  // ダメ: 破棄されようとしているオブジェクトへの参照を返す
+    }
+
+##### ノート
+
+これは非`static`なローカル変数に対してのみ適用されます。
+すべての `static`変数は(それらの名前が指し示すとおり)静的に割り当てられます。したがってそれらを指すポインタはダングリングになりえません。
+
+##### ダメな例
+
+ローカル変数へのポインターをリークするすべての例がそれほど明白であるわけではありません:
+
+    int* glob;       // グローバル変数は多くの点でよくありません
+
+    template<class T>
+    void steal(T x)
+    {
+        glob = x();  // BAD
+    }
+
+    void f()
+    {
+        int i = 99;
+        steal([&] { return &i; });
+    }
+
+    int main()
+    {
+        f();
+        cout << *glob << '\n';
+    }
+
+ここでは私は`f`の呼びだしによって放棄された場所をなんとか読み取ることができました。
+`glob` に格納されたポインタは、かなり後になってから使用され、予期せぬ形で問題を引き起こす可能性があります。
+
+##### ノート
+
+ローカル変数のアドレスは、return文や、`T&`出力パラメータによって、返されたオブジェクトのメンバとしてや、返された配列の要素としてなどの形で、"返され"/リークされる可能性があります。
+
+##### ノート
+
+内部スコープから外部スコープへのポインタの`リーク`が発生する同様の例を作ることができます。
+そのような例は、関数の外にポインタがリークするものと同様に扱います。
+
+この問題と少し異なる変種は、ポイントされたオブジェクトよりも長く存続するコンテナにポインタを配置することです。
+
+**See also**: ダングリングポインタを得るもう1つ別の方法が[ポインタの無効化](#???)です。
+これも同様のテクニックで検出/防ぐことができます。
+
+##### 実施
+
+* コンパイラはローカルへの参照のリターンを捕捉する傾向があります。そして、多くのケースではローカルへのポインタのリターンを捕捉できる傾向があります。
+* 静的解析では、位置を示すポインターの使用に関する多くの一般的なパターンを捕捉できます。(これにより、ダングリング ポインタが排除されます)
+
+### <a name="Rf-return-ref"></a>F.44: コピーが望ましくなく、かつ、"オブジェクトを返さない"ことが不要な場合は、`T&`を返しましょう (Return a `T&` when copy is undesirable and "returning no object" isn't needed)
+
+<!--
 ##### Reason
 
 The language guarantees that a `T&` refers to an object, so that testing for `nullptr` isn't necessary.
@@ -5999,9 +6508,38 @@ The language guarantees that a `T&` refers to an object, so that testing for `nu
 ##### Enforcement
 
 Flag functions where no `return` expression could yield `nullptr`
+-->
+##### 理由
 
-### <a name="Rf-return-ref-ref"></a>F.45: Don't return a `T&&`
+`T&`は1つのオブジェクトを参照することを言語が保証します。したがって、`nullptr`かのチェックをする必要がありません。
 
+**See also**: 参照で返すことは所有権の譲渡を意味するものではありません:
+[ダングリングポインタの防止に関する議論](#???) および [所有権に関する議論](#???).
+
+##### 例
+
+    class Car
+    {
+        array<wheel, 4> w;
+        // ...
+    public:
+        wheel& get_wheel(int i) { Expects(i < w.size()); return w[i]; }
+        // ...
+    };
+
+    void use()
+    {
+        Car c;
+        wheel& w0 = c.get_wheel(0); // w0は cと同じ寿命
+    }
+
+##### 実施
+
+`nullptr`を生み出さない`return`をもつ関数をチェックしましょう。
+
+### <a name="Rf-return-ref-ref"></a>F.45: `T&&`を返してはいけません (Don't return a `T&&`)
+
+<!--
 ##### Reason
 
 It's asking to return a reference to a destroyed temporary object.
@@ -6053,9 +6591,62 @@ Better:
 ##### Enforcement
 
 Flag any use of `&&` as a return type, except in `std::move` and `std::forward`.
+-->
+##### 理由
 
-### <a name="Rf-main"></a>F.46: `int` is the return type for `main()`
+これは破棄されたテンポラリオブジェクトへの参照を返すことを要求しています。
+`&&`はテンポラリオブジェクトのマグネットです。
 
+##### 例
+
+返されたrvalue参照は式全体の最後にスコープ外になります:
+
+    auto&& x = max(0, 1);   // ここまではOK
+    foo(x);                 // 未定義動作
+
+この種の使用は頻繁にバグの原因となり、コンパイラのバグとして誤って報告されることがよくあります。
+関数の実装者は、ユーザーに対してそのようなトラップを設定しないようにする必要があります。
+
+[寿命安全性プロファイル](#SS-lifetime) は(完全に実装されたとき)このような問題を捕捉するでしょう。
+
+
+##### 例
+
+テンポラリへの参照が呼び出し先に`下方向`に渡されるときは rvalue参照を返すことは問題ありません;
+その場合、テンポラリは関数呼び出しよりも長く存続することが保証されます ([F.18](#Rf-consume) および [F.19](#Rf-forward) を参照)。
+しかしながら、呼び出し元よりも大きなスコープの`上方向`にそのような参照を渡すことはよくありません。
+(通常の参照または完全転送によって) パラメータを渡し、値を返すパススルー関数の場合は、単純な `auto` 戻り値の型推定 (`auto&&` ではない) を使用します。
+
+`F`が値で返すと仮定しましょう:
+
+    template<class F>
+    auto&& wrapper(F f)
+    {
+        log_call(typeid(f)); // あるいはあらゆる計測
+        return f();          // ダメ: テンポラリへの参照を返している
+    }
+
+こちらがベター:
+
+    template<class F>
+    auto wrapper(F f)
+    {
+        log_call(typeid(f)); // あるいはあらゆる計測
+        return f();          // OK
+    }
+
+
+##### 例外
+
+`std::move` と `std::forward` は `&&` を返しますが、それらは単なるキャストです。-- テンポラリオブジェクトへの参照を同じ式内でテンポラリが破壊される前に渡される場合に慣例的においてのみ使用されます。 `&&`を返す別の良い例を我々は知りません。
+
+##### 実施
+
+`std::move`と`std::forward`の除き、`&&`を返り値型としているあらゆる箇所をチェックしましょう。
+
+### <a name="Rf-main"></a>F.46: `main()`の返り値型は`int`です (`int` is the return type for `main()`)
+
+<!--
 ##### Reason
 
 It's a language rule, but violated through "language extensions" so often that it is worth mentioning.
@@ -6079,9 +6670,34 @@ Note that despite its non-void return type, the main function does not require a
 
 * The compiler should do it
 * If the compiler doesn't do it, let tools flag it
+-->
+##### 理由
 
-### <a name="Rf-assignment-op"></a>F.47: Return `T&` from assignment operators
+これは言語のルールですが、「言語拡張」を通じて違反されることが非常に多いため、言及する価値があります。
+`main` (プログラムの 1つのグローバルの`main`)を`void` と宣言すると、移植性が制限されます。
 
+##### 例
+
+        void main() { /* ... */ };  // ダメ, C++ではない
+
+        int main()
+        {
+            std::cout << "This is the way to do it\n";
+        }
+
+##### ノート
+
+このエラーについて言及したのは、コミュニティ内でこのエラーが続いているためです。
+戻り値の型が void ではないにもかかわらず、main 関数は明示的な return ステートメントを必要としないことに注意してください。
+
+##### 実施
+
+* コンパイラはこのようにすべき
+* もしコンパイラがこのようにしていないなら、そのツールはチェックしましょう
+
+### <a name="Rf-assignment-op"></a>F.47: 代入演算子は `T&`を返しましょう (Return `T&` from assignment operators)
+
+<!--
 ##### Reason
 
 The convention for operator overloads (especially on concrete types) is for
@@ -6112,9 +6728,38 @@ This was primarily to avoid code of the form `(a = b) = c` -- such code is not c
 
 This should be enforced by tooling by checking the return type (and return
 value) of any assignment operator.
+-->
+##### 理由
 
-### <a name="Rf-return-move-local"></a>F.48: Don't `return std::move(local)`
+演算子のオーバーロード (特にコンクリート型) の規則は、`operator=(const T&)`では代入を行い、その後 (非`const`の)`*this`を返すことです。
+これにより、標準ライブラリの型との一貫性が確保され、「intと同じように振舞う」という原則にしたがうようになります。
 
+##### ノート
+
+歴史的には、代入演算子が `const T&` を返すようにするガイダンスがいくつかありました。
+これは主に、`(a = b) = c`という形式のコードを避けるためでした。このようなコードは、標準型との一貫性の違反を保証するほど一般的ではありません。
+
+##### 例
+
+    class Foo
+    {
+     public:
+        ...
+        Foo& operator=(const Foo& rhs)
+        {
+          // メンバをコピー
+          ...
+          return *this;
+        }
+    };
+
+##### 実施
+
+これは、ツールによってすべての代入演算子の戻り値の型 (および戻り値) をチェックして強制されるべきです。
+
+### <a name="Rf-return-move-local"></a>F.48: `return std::move(local)`をしてはいけません (Don't `return std::move(local)`)
+
+<!--
 ##### Reason
 
 With guaranteed copy elision, it is now almost always a pessimization to expressly use `std::move` in a return statement.
@@ -6138,9 +6783,34 @@ With guaranteed copy elision, it is now almost always a pessimization to express
 ##### Enforcement
 
 This should be enforced by tooling by checking the return expression .
+-->
+##### 理由
 
-### <a name="Rf-return-const"></a>F.49: Don't return `const T`
+コピーの省略が保証されているため、return文で明示的に `std::move` を使用することは、ほとんど常に良くないコード(pessimization)になります。
 
+##### ダメな例
+
+    S f()
+    {
+      S result;
+      return std::move(result);
+    }
+
+##### 良い例
+
+    S f()
+    {
+      S result;
+      return result;
+    }
+
+##### 実施
+
+これはツールによってreturn文をチェックすることで強制されるべきです。
+
+### <a name="Rf-return-const"></a>F.49: `const T`を返してはいけません (Don't return `const T`)
+
+<!--
 ##### Reason
 
 It is not recommended to return a `const` value.
@@ -6167,10 +6837,38 @@ The argument against is that it prevents (very frequent) use of move semantics.
 ##### Enforcement
 
 * Flag returning a `const` value. To fix: Remove `const` to return a non-`const` value instead.
+-->
+##### 理由
+
+`const`値を返すことは推奨されません。
+そのような古いアドバイスは今や時代遅れです; それは価値を付与せず、さらにムーブセマンティクスを妨げます。
+
+##### 理由
+
+    const vector<int> fct();    // ダメ: このような"const" は価値よりもトラブルをもたらします
+
+    void g(vector<int>& vx)
+    {
+        // ...
+        fct() = vx;   // "const"によって阻止される
+        // ...
+        vx = fct(); // 高価なコピー: "const"によってムーブセマンティクスが抑制される
+        // ...
+    }
+
+戻り値に `const` を追加する理由は、一時オブジェクトへの (非常にまれな) 誤ったアクセスを防ぐためです。
+その反対意見は、ムーブセマンティクスの (非常に頻繁な) 使用を妨げるというものです。
+
+**See also**: [F.20, 「出力」値に関する一般的な項目](#Rf-out)
+
+##### 実施
+
+* `const`値を返す箇所をチェックしましょう。 修正のためには: `const`を除去し、代わりに非`const`値を返すようにしましょう。
 
 
-### <a name="Rf-capture-vs-overload"></a>F.50: Use a lambda when a function won't do (to capture local variables, or to write a local function)
+### <a name="Rf-capture-vs-overload"></a>F.50: 関数が機能しないとき(ローカル変数のキャプチャやローカル関数を書きたいとき)はラムダを使いましょう (Use a lambda when a function won't do (to capture local variables, or to write a local function))
 
+<!--
 ##### Reason
 
 Functions can't capture local variables or be defined at local scope; if you need those things, prefer a lambda where possible, and a handwritten function object where not. On the other hand, lambdas and function objects don't overload; if you need to overload, prefer a function (the workarounds to make lambdas overload are ornate). If either will work, prefer writing a function; use the simplest tool necessary.
@@ -6203,6 +6901,38 @@ Generic lambdas offer a concise way to write function templates and so can be us
 ##### Enforcement
 
 * Warn on use of a named non-generic lambda (e.g., `auto x = [](int i) { /*...*/; };`) that captures nothing and appears at global scope. Write an ordinary function instead.
+-->
+##### 理由
+
+関数はローカル変数をキャプチャできず、また、ローカルスコープ内に定義することもできません; もしそのようなことが必要な場合は、可能ならばラムダを使いましょう。ラムダが使えなければ手書きの関数オブジェクトを使いましょう。一方で、ラムダと関数オブジェクトはオーバーロードしません; オーバーロードする必要がある場合は、関数を使用してください (ラムダをオーバーロードするための回避策は巧妙です)。どちらでも機能する場合は、関数を作成することをお勧めします; 必要な最も単純なツールを使用してください。
+
+##### 例
+
+    // intかstringのみを受け取る関数を記述
+    // -- オーバーロードが自然
+    void f(int);
+    void f(const string&);
+
+    // ローカルなステートをキャプチャーする必要があり、文や式のスコープに現れる関数を記述 -- ラムダが自然
+    vector<work> v = lots_of_work();
+    for (int tasknum = 0; tasknum < max; ++tasknum) {
+        pool.run([=, &v] {
+            /*
+            ...
+            ... process 1 / max - th of v, the tasknum - th chunk
+            ...
+            */
+        });
+    }
+    pool.join();
+
+##### 例外
+
+ジェネリックラムダは、関数テンプレートを記述するための簡潔な方法を提供するため、通常の関数テンプレートがもう少し構文を追加しても同等に機能する場合でも役立ちます。すべての関数が Concept パラメータを持つことができるようになると、この利点は将来的にはなくなるでしょう。
+
+##### 実施
+
+* 名前のついたジェネリックでないラムダで、何もキャプチャせず、グローバルスコープに現れるもの(例えば、`auto x = [](int i) { /*...*/; };`)に注意しましょう。代わりに通常の関数を書きましょう。
 
 ### <a name="Rf-default-args"></a>F.51: Where there is a choice, prefer default arguments over overloading
 
@@ -12095,9 +12825,9 @@ A valid use case for a local `const unique_ptr<T[]>` variable:
 これは、含まれているスコープまたはオブジェクトにすでに使用されているコストを超える個別の割り当ておよび割り当て解除のコストがないことを意味します。
 スコープ付きオブジェクトのメンバー自体もスコープ付きであり、スコープ付きオブジェクトのコンストラクタとデストラクタがメンバーの寿命を管理します。
 
-##### Example
+##### 例
 
-The following example is inefficient (because it has unnecessary allocation and deallocation), vulnerable to exception throws and returns in the `...` part (leading to leaks), and verbose:
+次の例は非効率的であり(不必要な割り当てと割り当て解除があるため)、`...`部分での例外スローとreturnに対して脆弱で(リークの原因となる)、冗長です:
 
     void f(int n)
     {
@@ -12106,7 +12836,7 @@ The following example is inefficient (because it has unnecessary allocation and 
         delete p;
     }
 
-Instead, use a local variable:
+代わりに、ローカル変数を使いましょう:
 
     void f(int n)
     {
@@ -12114,25 +12844,25 @@ Instead, use a local variable:
         // ...
     }
 
-##### Enforcement
+##### 実施
 
 * (Moderate) Warn if an object is allocated and then deallocated on all paths within a function. Suggest it should be a local stack object instead.
 * (Simple) Warn if a local `Unique_pointer` or `Shared_pointer` that is not moved, copied, reassigned or `reset` before its lifetime ends is not declared `const`.
 Exception: Do not produce such a warning on a local `Unique_pointer` to an unbounded array. (See below.)
 
-##### Exception
+##### 例外
 
-It is OK to create a local `const unique_ptr<T[]>` to a heap-allocated buffer, as this is a valid way to represent a scoped dynamic array.
+ヒープ割り当てバッファとしてローカルな`const unique_ptr<T[]>`を生成することはOKです。これはスコープ付きの動的配列を表現する有効な方法です。
 
-##### Example
+##### 例
 
-A valid use case for a local `const unique_ptr<T[]>` variable:
+ローカルな`const unique_ptr<T[]>`変数の有効な例:
 
     int get_median_value(const std::list<int>& integers)
     {
       const auto size = integers.size();
 
-      // OK: declaring a local unique_ptr<T[]>.
+      // OK: ローカルなunique_ptr<T[]>を宣言
       const auto local_buffer = std::make_unique_for_overwrite<int[]>(size);
 
       std::copy_n(begin(integers), size, local_buffer.get());
@@ -20521,8 +21251,9 @@ Performance is very sensitive to cache performance, and cache algorithms favor s
 
 ???
 
-# <a name="S-concurrency"></a>CP: Concurrency and parallelism
+# <a name="S-concurrency"></a>CP: 並行と並列 (Concurrency and parallelism)
 
+<!--
 We often want our computers to do many tasks at the same time (or at least appear to do them at the same time).
 The reasons for doing so vary (e.g., waiting for many events using only a single processor, processing many data streams simultaneously, or utilizing many hardware facilities)
 and so do the basic facilities for expressing concurrency and parallelism.
@@ -20560,7 +21291,6 @@ contributions are welcome,
 but please think about the majority of programmers who are struggling to get their concurrent programs correct and performant.
 
 Concurrency and parallelism rule summary:
-
 * [CP.1: Assume that your code will run as part of a multi-threaded program](#Rconc-multi)
 * [CP.2: Avoid data races](#Rconc-races)
 * [CP.3: Minimize explicit sharing of writable data](#Rconc-data)
@@ -20578,8 +21308,53 @@ Concurrency and parallelism rule summary:
 * [CP.free: Lock-free programming](#SScp-free)
 * [CP.etc: Etc. concurrency rules](#SScp-etc)
 
-### <a name="Rconc-multi"></a>CP.1: Assume that your code will run as part of a multi-threaded program
+-->
+私たちはコンピュータに多くのタスクを同時に実行してほしい (または、少なくとも同時に実行しているように見せたい) ことがよくあります。
+そうする理由はさまざまであり(例: 単一のプロセッサのみを使用して多数のイベントを待機する、多数のデータストリームを同時に処理する、または多数のハードウェア機能を利用する)、並行性と並列性を表現するための基本的な機能も異なります。
+ここでは、基本的な並行性と並列性を表現するために ISO標準C++機能を使用するための原則とルールを明確にします。
 
+スレッドは、並行/並列プログラミングのためのマシンレベルの基盤です。
+スレッドは同じメモリを共有しながらプログラムの複数のセクションを独立して実行できます。
+複数スレッド間での共有データの保護は口で言うほど簡単ではないため、並行プログラミングは難しいです。
+既存のシングルスレッドコードを並行に実行することは、`std::async` または `std::thread` を戦略的に追加するのと同じくらい簡単なこともあれば、完全に書き直すことが必要なこともあり、それは元のコードがスレッドフレンドリーな方法で記述されているかどうかに依存します。
+
+この文書での並行/並列のルールは3つのゴールを念頭においてデザインされています:
+
+* スレッド環境での使用に適したコードの記述を支援すること
+* 標準ライブラリが提供するスレッドプリミティブを用いて、クリーンで安全な方法を示すこと
+* 並行/並列処理において必要とするパフォーマンスが得られない場合での、ガイドラインを提供すること
+
+C++での並行性は未完成のストーリーであることに注意することも重要です。
+C++11は多くのコアな並行処理プリミティブを導入しました。C++14とC++17はそれらを改良しました。そしてC++で並行プログラムの記述をより容易にすることに大きな関心が集まっています。
+ここでのライブラリ関係のガイダンスのいくつかは、時間経過とともに大幅に変更されることが予想されます。
+
+このセクションは(明らかに)多くの仕事が必要です。
+比較的非エキスパート向けのルールから始めることに注意してください。
+本物のエキスパートは少し待つ必要があります;
+コントリビュートは歓迎しますが、しかし、並行プログラムを、正しく、効率的にすることに苦労している大多数のプログラマのことを考えてください。
+
+並行/並列のルールのサマリー:
+
+* [CP.1: あなたのコードが将来マルチスレッドプログラムの一部として実行されると仮定しましょう](#Rconc-multi)
+* [CP.2: データ競合を避けましょう](#Rconc-races)
+* [CP.3: 書き込み可能データの明示的な共有を最小限に抑えよう](#Rconc-data)
+* [CP.4: スレッドではなくタスクの観点から考えよう](#Rconc-task)
+* [CP.8: `volatile`を同期のために使おうとしないようにしてください](#Rconc-volatile)
+* [CP.9: 可能な限りツールを使用して並行処理コードを検証しよう](#Rconc-tools)
+
+**See also**:
+
+* [CP.con: Concurrency](#SScp-con)
+* [CP.coro: Coroutines](#SScp-coro)
+* [CP.par: Parallelism](#SScp-par)
+* [CP.mess: Message passing](#SScp-mess)
+* [CP.vec: Vectorization](#SScp-vec)
+* [CP.free: Lock-free programming](#SScp-free)
+* [CP.etc: Etc. concurrency rules](#SScp-etc)
+
+### <a name="Rconc-multi"></a>CP.1: あなたのコードが将来マルチスレッドプログラムの一部として実行されると仮定しましょう (Assume that your code will run as part of a multi-threaded program)
+
+<!--
 ##### Reason
 
 It's hard to be certain that concurrency isn't used now or won't be used sometime in the future.
@@ -20647,9 +21422,72 @@ Be careful: there are many examples where code that was "known" to never run in 
 was run as part of a multi-threaded program, often years later.
 Typically, such programs lead to a painful effort to remove data races.
 Therefore, code that is never intended to run in a multi-threaded environment should be clearly labeled as such and ideally come with compile or run-time enforcement mechanisms to catch those usage bugs early.
+-->
+##### 理由
 
-### <a name="Rconc-races"></a>CP.2: Avoid data races
+並行性が現在、あるいは将来にわたって使用されないと確信することは困難です。
+コードは再利用されます。
+スレッドを使用していないライブラリも、スレッドを使用したプログラムの一部として利用されるかもしれません。
+このルールはライブラリコードにはもっとも緊急性が高く、スタンドアローンのアプリケーションでは緊急性が低くなることに注意してください。
+しかしながら、時間が経つと、コードの断片は予期しない場所に現れる可能性があります。
 
+##### 悪い例
+
+    double cached_computation(int x)
+    {
+        // ダメ: これらのstaticはマルチスレッドで利用されたときにデータ競合を引き起こす
+        static int cached_x = 0.0;
+        static double cached_result = COMPUTATION_OF_ZERO;
+
+        if (cached_x != x) {
+            cached_x = x;
+            cached_result = computation(x);
+        }
+        return cached_result;
+    }
+
+`cached_computation`はシングルスレッド環境下においては完璧に動作しますが、マルチスレッド環境下では2つの `static`変数はデータ競合が発生し、未定義の動作を引き起こします。
+
+##### 良い例
+
+    struct ComputationCache {
+        int cached_x = 0;
+        double cached_result = COMPUTATION_OF_ZERO;
+
+        double compute(int x) {
+            if (cached_x != x) {
+                cached_x = x;
+                cached_result = computation(x);
+            }
+            return cached_result;
+        }
+    };
+
+ここではキャッシュはスタティックな共有状態としてではなく、`ComputationCache`オブジェクトのメンバ変数としてストアされています。
+このリファクタリングは基本的に、懸念事項を呼び出し元に委譲します: シングルスレッドプログラムでは依然として 1つのグローバルな`ComputationCache`を持つことを選択できるでしょう。一方、マルチスレッドプログラムでは、スレッドごとに1つの`ComputationCache`インスタンスを持つこともできますし、あらゆる定義の"context"ごとに1つ持つこともできます。
+リファクタンリングした関数ではもはや `cached_x`の割り当てを管理しようとしなくなりました。そういう意味では、これは単一責任原則(Single Responsibility Principle)の適用です。
+
+この特定の例では、スレッド安全性に対するリファクタリングが、シングルスレッドプログラム内での再利用性の向上にもなりました。
+シングルスレッドプログラムが 2つの`ComputationCache`インスタンスをプログラムの異なる部分でお互いのキャッシュデータを上書きしないで利用したくなるかもしれないと、想像することは容易でしょう。
+
+標準的なマルチスレッド環境下書かれたコードに対して、スレッド安全性を追加する方法は、他にも複数あります(一方、並行性の唯一のフォームは`std::thread`です):
+
+* ステート変数は`static`の代わりに `thread_local`にしましょう。
+* 並行性の制御を実装しましょう。例えば、`static std::mutex`によって 2つの`static`変数へのアクセスを防御しましょう。
+* マルチスレッド環境下での実行やビルドを拒否しましょう。
+* 2つの実装を与えましょう: 1つはシングルスレッド環境向けに、もう1つはマルチスレッド環境向けに。
+
+##### 例外
+
+マルチスレッド環境下では決して実行されないコード。
+
+注意しましょう: マルチスレッドプログラムでは決して実行されないと"周知された"コードが、何年かのちにマルチスレッドプログラムの一部として実行される例は多くあります。
+典型的には、このようなプログラムにはデータ競合を除去するために苦痛を伴う努力が必要になります。
+したがって、マルチスレッド環境下では決して実行されないと意図したコードは、明確にラベル付けをし、理想的には、それらに関連するバグを早期に捕捉するためのコンパイル時あるいは実行時に実施するメカニズムを搭載するべきです。
+
+### <a name="Rconc-races"></a>CP.2: データ競合を避けましょう (Avoid data races)
+
+<!--
 ##### Reason
 
 Unless you do, nothing is guaranteed to work and subtle errors will persist.
@@ -20739,9 +21577,95 @@ There are other ways you can mitigate the chance of data races:
 * Avoid `static` variables
 * More use of concrete types on the stack (and don't pass pointers around too much)
 * More use of immutable data (literals, `constexpr`, and `const`)
+-->
+##### 理由
 
-### <a name="Rconc-data"></a>CP.3: Minimize explicit sharing of writable data
+そうしない限り、何も動作する保証はなく、微妙なエラーが残ります。
 
+##### ノート
+
+簡単に言うと、2つのスレッドが (同期なしで) 同じオブジェクトに同時にアクセスでき、少なくとも 1つがライターである (非`const`操作を実行する) 場合、データ競合が発生します。
+データ競合を避けるための適切な同期を、どのように行うかのさらなる情報は、並行性に関する優れた書籍を参照してください (See [Carefully study the literature](#Rconc-literature))。
+
+##### 悪い例
+
+データ競合の例は数多く存在しており、そのうちのいくつかは現時点で製品版ソフトウェアでも使用されています。非常に単純な例を 1つ挙げます:
+
+    int get_id()
+    {
+      static int id = 1;
+      return id++;
+    }
+
+ここでのインクリメントはデータ競合の一例です。これは以下のような多くのケースでうまく動作しません:
+
+* スレッド A が `id`の値をロードし、OSがあるタイミングでA以外にコンテキストスイッチします。
+  その間に他のスレッドが数百のIDを生成します。スレッド Aの実行が再開したとき、`id`はAが読み込んだときの値に
+  1足された値に書き戻されるでしょう。
+* スレッド A と Bが `id`をロードし、それを同時にインクリメントします。すると両方とも同じIDを得るでしょう。
+
+ローカルなスタティック変数はデータ競合のよくある原因です。
+
+##### 悪い例:
+
+    void f(fstream& fs, regex pattern)
+    {
+        array<double, max> buf;
+        int sz = read_vec(fs, buf, max);            // fsからbufに読み込み
+        gsl::span<double> s {buf};
+        // ...
+        auto h1 = async([&] { sort(std::execution::par, s); });     // ソートのタスクを生成
+        // ...
+        auto h2 = async([&] { return find_all(buf, sz, pattern); });   // 検索のタスクを生成
+        // ...
+    }
+
+ここでは `buf`の要素の(厄介な)データ競合があります (`sort`は読み書きの両方を行います)。
+すべてのデータ競合は厄介です。
+ここではスタック上のデータにおいてデータ競合が発生しました。
+すべてのデータ競合がこれほど簡単に特定できるわけではありません。
+
+##### 悪い例:
+
+    // ロックによって制御されていないコード
+
+    unsigned val;
+
+    if (val < 5) {
+        // ... 他のスレッドはここで valを変更しうる ...
+        switch (val) {
+        case 0: // ...
+        case 1: // ...
+        case 2: // ...
+        case 3: // ...
+        case 4: // ...
+        }
+    }
+
+さて、`val` が変更されうることを知らないコンパイラは、5つのエントリを持つジャンプテーブルを使用してその `switch` を実装する可能性が高くなります。
+このとき、`val`が 範囲`[0..4]`を超えると、プログラム内のあらゆるアドレスへのジャンプを引き起こし、そこから実行が進みます。
+本当に、データ競合が起こると「何が起こるか予想できません」。
+実際には、さらに悪いことになる可能性があります: 生成されたコードを確認することで、指定したアドレスに対してジャンプさせることができるかもしれません;
+これはセキュリティ上のリスクとなる可能性があります。
+
+##### 実施
+
+いくつかは可能、少なくとも何かはできるでしょう。
+この問題に対する商用あるいはオープンソースのツールがいくつか存在するが、そのソリューションにはコストがかかり、盲点も存在することに注意しましょう。
+静的解析ツールはしばしば多くの偽陽性を検知し、実行時解析ツールは多大なコストがかかります。
+私たちはより良いツールを希望しています。
+複数のツールを用いることで単一のツールよりも多くの問題を捕捉できるでしょう。
+
+データ競合の発生を軽減することができる方法がいくつか存在します:
+
+* グローバルデータを避ける
+* `static`変数を避ける
+* スタック上の具体型をより多く使う (そしてポインタを大量に渡さない)
+* constデータをより多く使う (文字通り、`constexpr`、そして `const`)
+
+### <a name="Rconc-data"></a>CP.3: 書き込み可能データの明示的な共有を最小限に抑えよう (Minimize explicit sharing of writable data)
+
+<!--
 ##### Reason
 
 If you don't share writable data, you can't have a data race.
@@ -20779,10 +21703,49 @@ See also [CP.mess: Message Passing](#SScp-mess) and [CP.31: prefer pass by value
 ##### Enforcement
 
 ???
+-->
+##### 理由
+
+もし書き込み可能データを共有しなければ、データ競合は発生しえません。
+共有を少なくすればするほど、あなたがアクセスの同期を忘れる機会が少なくなります (そしてデータ競合が発生することも)。
+共有を少なくすればするほど、ロックを待つことが少なくなります (そしてパフォーマンスは改善します)。
+
+##### 例
+
+    bool validate(const vector<Reading>&);
+    Graph<Temp_node> temperature_gradients(const vector<Reading>&);
+    Image altitude_map(const vector<Reading>&);
+    // ...
+
+    void process_readings(const vector<Reading>& surface_readings)
+    {
+        auto h1 = async([&] { if (!validate(surface_readings)) throw Invalid_data{}; });
+        auto h2 = async([&] { return temperature_gradients(surface_readings); });
+        auto h3 = async([&] { return altitude_map(surface_readings); });
+        // ...
+        h1.get();
+        auto v2 = h2.get();
+        auto v3 = h3.get();
+        // ...
+    }
+
+これらの`const`がなければ、私たちはそれぞれの非同期関数呼び出しの`surface_readings`の潜在的なデータ競合に対して、レビューをしなくてはなりません。
+`surface_readings`を `const`にすることで、(この関数に対して)関数本体に対してのみ推論すれば良くなります。
+
+##### ノート
+
+不変なデータは安全で効率的に共有できます。
+ロックは不要です: 定数ではデータ競合は発生しえません。
+See also [CP.mess: Message Passing](#SScp-mess) and [CP.31: prefer pass by value](#Rconc-data-by-value).
+
+##### 実施
+
+???
 
 
-### <a name="Rconc-task"></a>CP.4: Think in terms of tasks, rather than threads
+### <a name="Rconc-task"></a>CP.4: スレッドではなくタスクの観点から考えよう (Think in terms of tasks, rather than threads)
 
+<!--
 ##### Reason
 
 A `thread` is an implementation concept, a way of thinking about the machine.
@@ -20809,9 +21772,37 @@ This is a potent argument for using higher level, more applications-oriented lib
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rconc-volatile"></a>CP.8: Don't try to use `volatile` for synchronization
+`thread`は実装での概念であり、機械に関して考える方法です。
+タスクはアプリケーションの概念であり、できれば他のタスクと並行して、あなたが行いたいことです。
+アプリケーションの概念は推論しやすくなります。
 
+##### 例
+
+    void some_fun(const std::string& msg)
+    {
+        std::thread publisher([=] { std::cout << msg; });      // ダメ: 表現不足
+                                                               //      そしてエラーが起こりやすい
+        auto pubtask = std::async([=] { std::cout << msg; });  // OK
+        // ...
+        publisher.join();
+    }
+
+##### ノート
+
+`async()`を除いて、標準ライブラリの機能は低レベルで、マシン指向で、スレッド&ロックのレベルです。
+これは必要な基盤ですが、生産性、信頼性、パフォーマンスの観点から抽象化のレベルを上げるように努める必要があります。
+これは、より高レベルでよりアプリケーション指向のライブラリ (可能であれば、標準ライブラリの機能の最上部に構築されたもの) を使用するための有力な議論です。
+
+##### 実施
+
+???
+
+### <a name="Rconc-volatile"></a>CP.8: `volatile`を同期のために使おうとしないようにしてください (Don't try to use `volatile` for synchronization)
+
+<!--
 ##### Reason
 
 In C++, unlike some other languages, `volatile` does not provide atomicity, does not synchronize between threads,
@@ -20861,9 +21852,59 @@ Use a `mutex` for more complicated examples.
 ##### See also
 
 [(rare) proper uses of `volatile`](#Rconc-volatile2)
+-->
+##### 理由
 
-### <a name="Rconc-tools"></a>CP.9: Whenever feasible use tools to validate your concurrent code
+C++では、他のいくつかの言語とは異なり、`volatile`は原子性を与えず、スレッド間の同期を行いません。
+そして、命令の並び替えを阻止しません(コンパイラにおいても、ハードウェアにおいても)。
+シンプルに同期性に関して何も行いません。
 
+##### 悪い例:
+
+    int free_slots = max_slots; // オブジェクトに対する現在のメモリソース
+
+    Pool* use()
+    {
+        if (int n = free_slots--) return &pool[n];
+    }
+
+ここには問題があります:
+シングルスレッドプログラムにおいては完璧な良いコードです。しかし2つのスレッドがこれを実行すると、`free_slots`にてデータ競合が存在するため、2つのスレッドは同じ値の`free_slots`を取得する可能性があります。
+これは(明らかに)悪いデータ競合であるため、他の言語で訓練を積んだ人は次のように直そうとするかもしれません:
+
+    volatile int free_slots = max_slots; // オブジェクトに対する現在のメモリソース
+
+    Pool* use()
+    {
+        if (int n = free_slots--) return &pool[n];
+    }
+
+これは同期に対して何も効力がありません: データ競合は依然として発生します!
+
+これに対するC++のメカニズムは `atomic`型です:
+
+    atomic<int> free_slots = max_slots; // オブジェクトに対する現在のメモリソース
+
+    Pool* use()
+    {
+        if (int n = free_slots--) return &pool[n];
+    }
+
+これで `--`操作は原子的になりました。
+一連の読み込み-インクリメント-書き出しに対して、他のスレッドが個々の操作の間に入ることがありません。
+
+##### 代替策
+
+他のいくつかの言語で`volatile`を使うような場所では `atomic`方を使いましょう。
+より複雑な例では `mutex`を使いましょう。
+
+##### See also
+
+[(rare) proper uses of `volatile`](#Rconc-volatile2)
+
+### <a name="Rconc-tools"></a>CP.9: 可能な限りツールを使用して並行処理コードを検証しよう (Whenever feasible use tools to validate your concurrent code)
+
+<!--
 Experience shows that concurrent code is exceptionally hard to get right
 and that compile-time checking, run-time checks, and testing are less effective at finding concurrency errors
 than they are at finding errors in sequential code.
@@ -20899,9 +21940,38 @@ but it can only identify races seen in a given execution.
 ##### Enforcement
 
 It is up to an application builder to choose which support tools are valuable for a particular application.
+-->
+経験上、並行処理コードを適切に実行するのは非常に難しく、コンパイル時チェック、実行時チェック、およびテストでは並行処理のエラーを発見する効果が、シーケンシャルなコードに比べて低いことがわかっています。
+ささいな並行処理のエラーが、メモリ破損、デッドロック、セキュリティの脆弱性などの、劇的な悪影響を及ぼす可能性があります。
 
-## <a name="SScp-con"></a>CP.con: Concurrency
+##### 例
 
+    ???
+
+##### ノート
+
+スレッド安全は困難であり、多くの場合、経験豊富なプログラマーの方が優れています: ツールは、これらのリスクを軽減するための重要な戦略です。
+商用ツールとオープンソースツール、研究ツールと製品ツールの両方を含め、"世の中には" 多くのツールが存在します。
+残念ながら、人々のニーズと制約は大きく異なるため、特定の推奨を行うことはできません。
+しかし、次のことについて言及できます:
+
+* 静的実施ツール: [clang](http://clang.llvm.org/docs/ThreadSafetyAnalysis.html)や[GCC](https://gcc.gnu.org/wiki/ThreadSafetyAnnotation)の古いいくつかのバージョンでは、スレッド安全性プロパティの注記のサポートがあります。
+この手法を一貫して使用すると、スレッド安全性のエラーの多くの種類がコンパイル時エラーに変わります。
+注記は一般的にはローカル(特定のmutexでガードされる特定のメンバ変数にマーク)で、覚えやすいものです。
+しかしながら、多くの静的ツールにおいて、しばしば擬陰性が存在します; 捕捉されるべきなのに、許容されてしまうケースです。
+
+* 動的実施ツール: Clangの [Thread Sanitizer](http://clang.llvm.org/docs/ThreadSanitizer.html) (aka TSAN) は動的ツールのパワフルな例です: プログラムのビルドと実行を変更してメモリアクセスの帳簿を追加し、実行したバイナリにおけるデータ競合を確実に特定します。
+これに対するコストはメモリ(多くのケースで 5-10倍)とCPU速度低下(2-20倍)の両方がかかります。
+このような動的ツールは、複数のスレッドで動作する統合テスト、カナリアプッシュ、単体テストに適用する場合に最適です。
+Workload matters: TSANが問題を発見したとき、それは常に実際のデータ競合です。しかし実行された箇所でのみ競合を検出できます。
+
+##### 実施
+
+特定のアプリケーションにとってどのサポートツールが価値があるかを選択するのは、アプリケーションビルダーの責任です。
+
+## <a name="SScp-con"></a>CP.con: 並行性 (Concurrency)
+
+<!--
 This section focuses on relatively ad-hoc uses of multiple threads communicating through shared data.
 
 * For parallel algorithms, see [parallelism](#SScp-par)
@@ -20931,9 +22001,40 @@ Concurrency rule summary:
 * ??? when to prefer `lock_guard` over `unique_lock`
 * ??? Time multiplexing
 * ??? when/how to use `new thread`
+-->
+このセクションでは、共有データを介して通信する複数のスレッドの比較的限定的な使用方法に焦点を当てます。
 
-### <a name="Rconc-raii"></a>CP.20: Use RAII, never plain `lock()`/`unlock()`
+* 並列アルゴリズムに対しては、[parallelism](#SScp-par)を参照してください
+* 明示的な共有をしないタスク間での通信に対しては、[messaging](#SScp-mess)を参照してください
+* ベクトル並列コードに対しては、 [vectorization](#SScp-vec)を参照してください
+* ロックフリープログラミングに対しては、[lock free](#SScp-free)を参照してください
 
+並行性のルールのサマリー:
+
+* [CP.20: 素の`lock()`/`unlock()`は決して使わず、RAIIを使いましょう](#Rconc-raii)
+* [CP.21: 複数の`mutex`を獲得するためには`std::lock()`か`std::scoped_lock`を使いましょう](#Rconc-lock)
+* [CP.22: ロックを保持したまま未知のコード呼び出さないようにしましょう(例えばコールバック)](#Rconc-unknown)
+* [CP.23: `thread`をjoinすることをスコープコンテナのようにみなしましょう](#Rconc-join)
+* [CP.24: `thread`をグローバルなコンテナのようにみなしましょう](#Rconc-detach)
+* [CP.25: `std::thread`よりも`gsl::joining_thread`を好むようにしましょう](#Rconc-joining_thread)
+* [CP.26: スレッドを`detach()`しないようにしましょう](#Rconc-detached_thread)
+* [CP.31: スレッド間のデータは、参照やポインタよりも、小さなデータを値渡しするようにしましょう。](#Rconc-data-by-value)
+* [CP.32: To share ownership between unrelated `thread`s use `shared_ptr`](#Rconc-shared)
+* [CP.40: Minimize context switching](#Rconc-switch)
+* [CP.41: Minimize thread creation and destruction](#Rconc-create)
+* [CP.42: Don't `wait` without a condition](#Rconc-wait)
+* [CP.43: Minimize time spent in a critical section](#Rconc-time)
+* [CP.44: Remember to name your `lock_guard`s and `unique_lock`s](#Rconc-name)
+* [CP.50: Define a `mutex` together with the data it guards. Use `synchronized_value<T>` where possible](#Rconc-mutex)
+* ??? when to use a spinlock
+* ??? when to use `try_lock()`
+* ??? when to prefer `lock_guard` over `unique_lock`
+* ??? Time multiplexing
+* ??? when/how to use `new thread`
+
+### <a name="Rconc-raii"></a>CP.20: 素の`lock()`/`unlock()`は決して使わず、RAIIを使いましょう (Use RAII, never plain `lock()`/`unlock()`)
+
+<!--
 ##### Reason
 
 Avoids nasty errors from unreleased locks.
@@ -20962,10 +22063,40 @@ Sooner or later, someone will forget the `mtx.unlock()`, place a `return` in the
 ##### Enforcement
 
 Flag calls of member `lock()` and `unlock()`.  ???
+-->
+##### 理由
+
+未解放のロックによる厄介なエラーを回避しましょう。
+
+##### 悪い例
+
+    mutex mtx;
+
+    void do_stuff()
+    {
+        mtx.lock();
+        // ... 何か処理 ...
+        mtx.unlock();
+    }
+
+早かれ遅かれ、誰かが`... do stuff ...`の中に`return`を置いたり、例外を投げたり、その他もろもろによって、`mtx.unlock()`を忘れることでしょう。
+
+    mutex mtx;
+
+    void do_stuff()
+    {
+        unique_lock<mutex> lck {mtx};
+        // ... 何か処理 ...
+    }
+
+##### 実施
+
+`lock()` と `unlock()`の呼び出しをチェックしましょう。  ???
 
 
-### <a name="Rconc-lock"></a>CP.21: Use `std::lock()` or `std::scoped_lock` to acquire multiple `mutex`es
+### <a name="Rconc-lock"></a>CP.21: 複数の`mutex`を獲得するためには`std::lock()`か`std::scoped_lock`を使いましょう (Use `std::lock()` or `std::scoped_lock` to acquire multiple `mutex`es)
 
+<!--
 ##### Reason
 
 To avoid deadlocks on multiple `mutex`es.
@@ -21021,10 +22152,67 @@ and have the `mutex` type deduced.
 
 Detect the acquisition of multiple `mutex`es.
 This is undecidable in general, but catching common simple examples (like the one above) is easy.
+-->
+##### 理由
+
+複数の`mutex`によるデッドロックを避けるため。
+
+##### 例
+
+これはデッドロックを起こします:
+
+    // thread 1
+    lock_guard<mutex> lck1(m1);
+    lock_guard<mutex> lck2(m2);
+
+    // thread 2
+    lock_guard<mutex> lck2(m2);
+    lock_guard<mutex> lck1(m1);
+
+代わりに、`lock()`を使いましょう:
+
+    // thread 1
+    lock(m1, m2);
+    lock_guard<mutex> lck1(m1, adopt_lock);
+    lock_guard<mutex> lck2(m2, adopt_lock);
+
+    // thread 2
+    lock(m2, m1);
+    lock_guard<mutex> lck2(m2, adopt_lock);
+    lock_guard<mutex> lck1(m1, adopt_lock);
+
+あるいは (C++17以降限定だが、ベター):
+
+    // thread 1
+    scoped_lock<mutex, mutex> lck1(m1, m2);
+
+    // thread 2
+    scoped_lock<mutex, mutex> lck2(m2, m1);
+
+ここでは`thread1`と`thread2`のそれぞれの書き手は、依然として `mutex`の順序について合意がありません。しかしもはや問題ではなくなりました。
+
+##### ノート
+
+実際のコードでは、複数の`mutex`に対して、プログラマに意図した関係と意図した取得順序を便利に思い出させるために、名前が付けられることはほとんどありません。
+実際のコードでは、`mutex`は必ずしも連続した行で都合よく取得できるわけではありません。
+
+##### ノート
+
+C++17では単に以下のように書けます。
+
+    lock_guard lck1(m1, adopt_lock);
+
+`mutex`型は自動推論されます。
+
+##### 実施
+
+複数の`mutex`の獲得を見つけましょう。
+一般的にこれを決定することはできませんが、よくある単純な例 (上記のような) を把握するのは簡単です。
 
 
-### <a name="Rconc-unknown"></a>CP.22: Never call unknown code while holding a lock (e.g., a callback)
+### <a name="Rconc-unknown"></a>CP.22: ロックを保持したまま未知のコード呼び出さないようにしましょう(例えばコールバック) (Never call unknown code while holding a lock (e.g., a callback))
 
+<!--
 ##### Reason
 
 If you don't know what a piece of code does, you are risking deadlock.
@@ -21065,10 +22253,53 @@ If, as it is likely, `f()` invokes operations on `*this`, we must make sure that
 
 * Flag calling a virtual function with a non-recursive `mutex` held
 * Flag calling a callback with a non-recursive `mutex` held
+-->
+##### 理由
+
+もしもあなたがコード片が何をするか分からない場合は、デッドロックのリスクがあります。
+
+##### 例
+
+    void do_this(Foo* p)
+    {
+        lock_guard<mutex> lck {my_mutex};
+        // ... 何か処理 ...
+        p->act(my_data);
+        // ...
+    }
+
+もしもあなたが`Foo::act`が何をするか分からない場合(それはまだ派生クラスが書かれていない仮想関数かもしれません)、
+それは`do_this`を(再帰的に)呼び出し、`my_mutex`のデッドロックを引き起こすかもしれません。
+それは他のmutexをロックし、適切な時間内に返ってこない場合、あらゆる`do_this`の呼び出しが遅くなるかもしれません。
+
+##### 例
+
+"不明なコードの呼び出し"問題のよくある例は、同じオブジェクトへのロックされたアクセスを取得しようとする関数の呼び出しです。
+そのような問題の多くは`recursive_mutex`を用いることで解決できます。例えば:
+
+    recursive_mutex my_mutex;
+
+    template<typename Action>
+    void do_something(Action f)
+    {
+        unique_lock<recursive_mutex> lck {my_mutex};
+        // ... 何か処理 ...
+        f(this);    // f は thisに対して何か処理
+        // ...
+    }
 
 
-### <a name="Rconc-join"></a>CP.23: Think of a joining `thread` as a scoped container
+おそらく、`f()` が `*this` に対する操作を呼び出す場合、呼び出しの前にオブジェクトの不変性が保持されていることを確認する必要があります。
 
+##### 実施
+
+* recursiveでない`mutex`を保持しながらの仮想関数呼び出しをチェックしましょう
+* recursiveでない`mutex`を保持しながらのコールバック関数呼び出しをチェックしましょう
+
+
+### <a name="Rconc-join"></a>CP.23: `thread`をjoinすることをスコープコンテナのようにみなしましょう (Think of a joining `thread` as a scoped container)
+
+<!--
 ##### Reason
 
 To maintain pointer safety and avoid leaks, we need to consider what pointers are used by a `thread`.
@@ -21104,9 +22335,46 @@ these `thread`s can be seen as just a function object called from `some_fct`.
 
 Ensure that `joining_thread`s don't `detach()`.
 After that, the usual lifetime and ownership (for local objects) enforcement applies.
+-->
+##### 理由
 
-### <a name="Rconc-detach"></a>CP.24: Think of a `thread` as a global container
+ポインタを安全に保ち、また、リークを避けるために、どのポインタが `thread`から利用されるのかを考える必要があります。
+`thread`がjoinすれば、`thread`のスコープとそれを包むスコープ内のオブジェクトに対するポインタを安全に渡すことができます。
 
+##### 例
+
+    void f(int* p)
+    {
+        // ...
+        *p = 99;
+        // ...
+    }
+    int glob = 33;
+
+    void some_fct(int* p)
+    {
+        int x = 77;
+        joining_thread t0(f, &x);           // OK
+        joining_thread t1(f, p);            // OK
+        joining_thread t2(f, &glob);        // OK
+        auto q = make_unique<int>(99);
+        joining_thread t3(f, q.get());      // OK
+        // ...
+    }
+
+`gsl::joining_thread`は、デストラクタ内でjoinし、また、`detached()`になりえない `std::thread`です。
+"OK"というのは、`thread`がオブジェクトへのポインタを使用できる間は、そのオブジェクトが("生きている")スコープ内にあることを意味します。
+`thread`が同時に実行されるという事実は、ここでは寿命や所有権に対して何も影響しません;
+これらの`thread`は`some_fct`から呼び出された単なる関数オブジェクトのように見ることができます。
+
+##### 実施
+
+`joining_thread`が`detach()`しないことを確かめましょう。
+その後、(ローカルオブジェクトに対する)通常の寿命と所有権の実施が適用されます。
+
+### <a name="Rconc-detach"></a>CP.24: `thread`をグローバルなコンテナのようにみなしましょう (Think of a `thread` as a global container)
+
+<!--
 ##### Reason
 
 To maintain pointer safety and avoid leaks, we need to consider what pointers are used by a `thread`.
@@ -21164,9 +22432,67 @@ After that, the usual lifetime and ownership (for global objects) enforcement ap
 ##### Enforcement
 
 Flag attempts to pass local variables to a thread that might `detach()`.
+-->
+##### 理由
 
-### <a name="Rconc-joining_thread"></a>CP.25: Prefer `gsl::joining_thread` over `std::thread`
+ポインタを安全に保ち、また、リークを避けるために、どのポインタが `thread`から利用されるのかを考える必要があります。
+`thread`がデタッチされれば、スタティックオブジェクトへのポインタを安全に渡したり、解放することができます。
 
+##### 例
+
+    void f(int* p)
+    {
+        // ...
+        *p = 99;
+        // ...
+    }
+
+    int glob = 33;
+
+    void some_fct(int* p)
+    {
+        int x = 77;
+        std::thread t0(f, &x);           // ダメ
+        std::thread t1(f, p);            // ダメ
+        std::thread t2(f, &glob);        // OK
+        auto q = make_unique<int>(99);
+        std::thread t3(f, q.get());      // ダメ
+        // ...
+        t0.detach();
+        t1.detach();
+        t2.detach();
+        t3.detach();
+        // ...
+    }
+
+"OK"というのは、`thread`がオブジェクトへのポインタを使用できる間は、そのオブジェクトが("生きている")スコープ内にあることを意味します。
+"ダメ"というのは、`thread`がすでにデストラクトされたオブジェクトを指すポイントを使うかもしれないことを意味します。
+`thread`が同時に実行されるという事実は、ここでは寿命や所有権に対して何も影響しません;
+これらの`thread`は`some_fct`から呼び出された単なる関数オブジェクトのように見ることができます。
+
+##### ノート
+
+静的ストレージ期間のオブジェクトであっても、デタッチされたスレッドから利用されることは、問題を引き起こすことがあります:
+もしスレッドがプログラムの終了まで実行している場合、静的ストレージ期間のオブジェクトのデストラクトと、そのようなスレッドからのアクセスは同時に実行されるかもしれません。これは競合を引き起こす可能性があります。
+
+##### ノート
+
+もしあなたが[`detach()`をしないようにしましょう](#Rconc-detached_thread) かつ [`gsl::joining_thread`を使いましょう](#Rconc-joining_thread)に従う場合は、このルールは冗長です。
+しかしながら、コードをこれらのガイドラインに従うように変換することは難しい場合がありますし、サードパーティーのライブラリに対しては不可能なこともあります。
+このような場合は、このルールは寿命安全性と、型安全性に対して不可欠なものとなります。
+
+
+一般的には、`thread`に対して、`detach()`が実行されるかどうか決定することができません。しかしシンプルで共通のケースでは簡単に見分けることができます。
+もし`thread`が`detach()`しないという確証がないのであれば、それはデタッチし、コンストラクトされたスコープを超え存続すると仮定しなければなりません;
+その後、(グローバルオブジェクトに対する)通常の寿命と所有権の実施が適用されます。
+
+##### 実施
+
+`detach()`するかもしれないスレッドに対して、ローカル変数を渡している箇所をチェックしましょう。
+
+### <a name="Rconc-joining_thread"></a>CP.25: `std::thread`よりも`gsl::joining_thread`を好むようにしましょう (Prefer `gsl::joining_thread` over `std::thread`)
+
+<!--
 ##### Reason
 
 A `joining_thread` is a thread that joins at the end of its scope.
@@ -21220,9 +22546,64 @@ Flag uses of `std::thread`:
 * Suggest use of `gsl::joining_thread` or C++20 `std::jthread`.
 * Suggest ["exporting ownership"](#Rconc-detached_thread) to an enclosing scope if it detaches.
 * Warn if it is not obvious whether a thread joins or detaches.
+-->
+##### 理由
 
-### <a name="Rconc-detached_thread"></a>CP.26: Don't `detach()` a thread
+`joining_thread`はスコープの最後でjoinするスレッドです。
+デタッチされたスレッドを監視することは難しいことです。
+デタッチされたスレッド(そして潜在的にデタッチされるスレッド)においてエラーがないことを保証することはより難しくなります。
 
+##### ダメな例
+
+    void f() { std::cout << "Hello "; }
+
+    struct F {
+        void operator()() const { std::cout << "parallel world "; }
+    };
+
+    int main()
+    {
+        std::thread t1{f};      // f() は異なるスレッドで実行される
+        std::thread t2{F()};    // F()() は異なるスレッドで実行される
+    }  // バグの発生箇所
+
+##### 例
+
+    void f() { std::cout << "Hello "; }
+
+    struct F {
+        void operator()() const { std::cout << "parallel world "; }
+    };
+
+    int main()
+    {
+        std::thread t1{f};      // f() は異なるスレッドで実行される
+        std::thread t2{F()};    // F()() は異なるスレッドで実行される
+
+        t1.join();
+        t2.join();
+    }  // 1つの悪いバグが残っている
+
+##### ノート
+
+"不死のスレッド"をグローバルにするには、`detach()`するよりも、それを囲むスコープ内に置くかあるいはフリー領域に置くようにしましょう。
+[Don't `detach`](#Rconc-detached_thread).
+
+##### ノート
+
+古いコードやサードパーティーのライブラリが `std::thread`を使っているため、このルールの導入は難しいでしょう。
+
+##### 実施
+
+`std::thread`の利用をチェックしましょう:
+
+* `gsl::joining_thread`または C++20の`std::jthread`の利用を推奨しましょう.
+* デタッチしている場合はそれを囲むスコープに["exporting ownership"](#Rconc-detached_thread)することを推奨しましょう。
+* スレッドがjoinするかデタッチするか明らかでない場合に警告しましょう。
+
+### <a name="Rconc-detached_thread"></a>CP.26: スレッドを`detach()`しないようにしましょう (Don't `detach()` a thread)
+
+<!--
 ##### Reason
 
 Often, the need to outlive the scope of its creation is inherent in the `thread`s task,
@@ -21272,10 +22653,60 @@ Sometimes, we need to separate the point of creation from the point of ownership
 #### Enforcement
 
 Flag `detach()`.
+-->
+##### 理由
+
+`thread`がその作成スコープを超えて存続する必要性が`thread`のタスクに内在することがしばしばあります。
+しかし、そのアイデアを`detach`によって実装すると、切り離されたスレッドの監視と通信が難しくなります。
+特に、スレッドが期待どおりに完了するか、期待どおり長く存続することを保証することは (不可能ではありませんが) より困難です。
+
+##### 例
+
+    void heartbeat();
+
+    void use()
+    {
+        std::thread t(heartbeat);             // joinしてはいけない; heartbeatは実行し続ける
+        t.detach();
+        // ...
+    }
+
+これはスレッドの合理的な使用法であり、通常 `detach()` が使用されます。
+しかし、これには問題があります。
+デタッチされたスレッドが生きているかどうかを確認するにはどうすればよいでしょうか?
+heartbeatに問題が発生する可能性があり、heartbeatが必要なシステムではheartbeatの喪失は非常に深刻な事態になる可能性があります。
+したがって、私たちは heartbeatスレッドと通信をする必要があります(例えば, `condition_variable`を使用した通知イベントやメッセージのストリームを通じて)。
+
+別の、そして一般的にはより優れた解決策は、作成 (またはアクティブ化) ポイントの外側のスコープにオブジェクトを配置することで、その存続期間を制御することです。
+例:
+
+    void heartbeat();
+
+    gsl::joining_thread t(heartbeat);             // heartbeat は実行し続けることを意図している
+
+この heartbeatは(エラーによる妨害や、ハードウェアの問題がなければ) プログラムが実行する限り、実行し続けるでしょう。
+
+時々、作成ポイントを所有権ポイントから分離させる必要があります。:
+
+    void heartbeat();
+
+    unique_ptr<gsl::joining_thread> tick_tock {nullptr};
+
+    void use()
+    {
+        // heartbeat は tick_tock が存在する限り実行する
+        tick_tock = make_unique<gsl::joining_thread>(heartbeat);
+        // ...
+    }
+
+#### 実施
+
+`detach()`をチェックしましょう。
 
 
-### <a name="Rconc-data-by-value"></a>CP.31: Pass small amounts of data between threads by value, rather than by reference or pointer
+### <a name="Rconc-data-by-value"></a>CP.31: スレッド間のデータは、参照やポインタよりも、小さなデータを値渡しするようにしましょう。 (Pass small amounts of data between threads by value, rather than by reference or pointer)
 
+<!--
 ##### Reason
 
 A small amount of data is cheaper to copy and access than to share it using some locking mechanism.
@@ -21307,6 +22738,38 @@ Note that this argument has nothing to do with `async` as such. It applies equal
 message passing or shared memory.
 
 ##### Enforcement
+
+???
+-->
+##### 理由
+
+小さなデータではコピーのコストは小さく、また、何らかのロック機構を使って共有するよりも、アクセスするコストが小さくなります。
+コピーすると自然にユニークな所有権が与えられ (コードが簡素化され)、データ競合の可能性が排除されます。
+
+##### ノート
+
+"小さな量"を正確に定義することは不可能です。
+
+##### 例
+
+    string modify1(string);
+    void modify2(string&);
+
+    void fct(string& s)
+    {
+        auto res = async(modify1, s);
+        async(modify2, s);
+    }
+
+`modify1`を呼び出すと、2つの`string`のコピーが生じます;  `modify2`には生じません。
+他方では、`modify1`の実装は、シングルスレッド向けに書いたコードとまったく同じですが、
+`modify2`の実装は、データ競合を避けるために何らかのロック機構が必要となるでしょう。
+もし 文字列が短い場合(例えば 10文字としましょう)、`modify1`の呼び出しは驚くほど高速です;
+基本的には全てのコストは`thread`の切り替えでしょう。もし文字列が長い場合(1,000,000文字としましょう)、2回のコピーはおそらく良いアイディアではないでしょう。
+
+この議論は`async`自体とは何の関係もないことに注意してください。これは、メッセージパッシングと共有メモリのどちらを使用するかに関する考慮事項にも同様に当てはまります。
+
+##### 実施
 
 ???
 

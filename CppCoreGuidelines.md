@@ -3919,12 +3919,12 @@ Functions are the most critical part in most interfaces, so see the interface ru
 その他の関数のルール:
 
 * [F.50: 関数が機能しないとき(ローカル変数のキャプチャやローカル関数を書きたいとき)はラムダを使いましょう (Use a lambda when a function won't do (to capture local variables, or to write a local function))](#Rf-capture-vs-overload)
-* [F.51: Where there is a choice, prefer default arguments over overloading](#Rf-default-args)
-* [F.52: Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms](#Rf-reference-capture)
-* [F.53: Avoid capturing by reference in lambdas that will be used non-locally, including returned, stored on the heap, or passed to another thread](#Rf-value-capture)
-* [F.54: If you capture `this`, capture all variables explicitly (no default capture)](#Rf-this-capture)
-* [F.55: Don't use `va_arg` arguments](#F-varargs)
-* [F.56: Avoid unnecessary condition nesting](#F-nesting)
+* [F.51: 選択肢がある場合は、オーバーロードよりもデフォルト引数を優先しましょう (Where there is a choice, prefer default arguments over overloading)](#Rf-default-args)
+* [F.52: ローカルで使われるラムダでは参照によるキャプチャを使うようにしましょう。アルゴリズムに渡されるものも含みます。 (Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms)](#Rf-reference-capture)
+* [F.53: 非ローカルで使われるラムダでは参照によるキャプチャを避けましょう。 リターンしたり、ヒープにストアされたり、他のスレッドに渡されるものも含みます。 (Avoid capturing by reference in lambdas that will be used non-locally, including returned, stored on the heap, or passed to another thread)](#Rf-value-capture)
+* [F.54: `this`をキャプチャする場合は、(デフォルトキャプチャでなく)すべての変数を明示してキャプチャしましょう (If you capture `this`, capture all variables explicitly (no default capture))](#Rf-this-capture)
+* [F.55: `va_arg`引数は使わないようにしましょう (Don't use `va_arg` arguments)](#F-varargs)
+* [F.56: 不必要な条件のネストを避けましょう (Avoid unnecessary condition nesting)](#F-nesting)
 
 関数はラムダ式や関数オブジェクトと非常によく似ています。
 
@@ -6186,7 +6186,6 @@ Have a single object own the shared object (e.g. a scoped object) and destroy th
 ##### 代替策
 
 単一のオブジェクトに共有オブジェクト(例えば スコープ付きオブジェクト) を所有させ、すべてのユーザーが完了したときにそれを (できれば暗黙的に) 破棄します。
-Have a single object own the shared object (e.g. a scoped object) and destroy that (preferably implicitly) when all users have completed.
 
 ##### 実施
 
@@ -6642,7 +6641,7 @@ Flag any use of `&&` as a return type, except in `std::move` and `std::forward`.
 
 ##### 実施
 
-`std::move`と`std::forward`の除き、`&&`を返り値型としているあらゆる箇所をチェックしましょう。
+`std::move`と`std::forward`を除き、`&&`を返り値型としているあらゆる箇所をチェックしましょう。
 
 ### <a name="Rf-main"></a>F.46: `main()`の返り値型は`int`です (`int` is the return type for `main()`)
 
@@ -6737,7 +6736,7 @@ value) of any assignment operator.
 ##### ノート
 
 歴史的には、代入演算子が `const T&` を返すようにするガイダンスがいくつかありました。
-これは主に、`(a = b) = c`という形式のコードを避けるためでした。このようなコードは、標準型との一貫性の違反を保証するほど一般的ではありません。
+これは主に、`(a = b) = c`という形式のコードを避けるためでした。このようなコードは、標準型との一貫性の違反を正当化するほど一般的ではありません。
 
 ##### 例
 
@@ -6934,8 +6933,9 @@ Generic lambdas offer a concise way to write function templates and so can be us
 
 * 名前のついたジェネリックでないラムダで、何もキャプチャせず、グローバルスコープに現れるもの(例えば、`auto x = [](int i) { /*...*/; };`)に注意しましょう。代わりに通常の関数を書きましょう。
 
-### <a name="Rf-default-args"></a>F.51: Where there is a choice, prefer default arguments over overloading
+### <a name="Rf-default-args"></a>F.51: 選択肢がある場合は、オーバーロードよりもデフォルト引数を優先しましょう (Where there is a choice, prefer default arguments over overloading()
 
+<!--
 ##### Reason
 
 Default arguments simply provide alternative interfaces to a single implementation.
@@ -6968,9 +6968,43 @@ There is not a choice when a set of functions are used to do a semantically equi
 ##### Enforcement
 
 * Warn on an overload set where the overloads have a common prefix of parameters (e.g., `f(int)`, `f(int, const string&)`, `f(int, const string&, double)`). (Note: Review this enforcement if it's too noisy in practice.)
+-->
+##### 理由
 
-### <a name="Rf-reference-capture"></a>F.52: Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms
+デフォルト引数は、単一の実装にもう1つのインターフェースを単純に与えます。
+オーバーロード関数群はすべての実装が同じ意味であるかの保証がありません。
+デフォルト引数はコードの重複を避けることができます。
 
+##### ノート
+
+同じ型の引数群のセットに対しては、デフォルト引数かオーバーロードのどちらを使うかの選択肢があります。
+例えば:
+
+    void print(const string& s, format f = {});
+
+もう一方は
+
+    void print(const string& s);  // デフォルトフォーマットを使用
+    void print(const string& s, format f);
+
+一連の型に対して意味的に等価な操作をする関数群の場合は、選択肢がありません。例えば:
+
+    void print(const char&);
+    void print(int);
+    void print(zstring);
+
+##### See also
+
+
+[Default arguments for virtual functions](#Rh-virtual-default-arg)
+
+##### 実施
+
+* パラメータが共通の始まりを持つオーバーロードがある場合に注意しましょう (例,  `f(int)`, `f(int, const string&)`, `f(int, const string&, double)`). (Note: Review this enforcement if it's too noisy in practice.)
+
+### <a name="Rf-reference-capture"></a>F.52: ローカルで使われるラムダでは参照によるキャプチャを使うようにしましょう。アルゴリズムに渡されるものも含みます。 (Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms)
+
+<!--
 ##### Reason
 
 For efficiency and correctness, you nearly always want to capture by reference when using the lambda locally. This includes when writing or calling parallel algorithms that are local because they join before returning.
@@ -7009,9 +7043,49 @@ This is a simple three-stage parallel pipeline. Each `stage` object encapsulates
 ##### Enforcement
 
 Flag a lambda that captures by reference, but is used other than locally within the function scope or passed to a function by reference. (Note: This rule is an approximation, but does flag passing by pointer as those are more likely to be stored by the callee, writing to a heap location accessed via a parameter, returning the lambda, etc. The Lifetime rules will also provide general rules that flag escaping pointers and references including via lambdas.)
+-->
+##### 理由
 
-### <a name="Rf-value-capture"></a>F.53: Avoid capturing by reference in lambdas that will be used non-locally, including returned, stored on the heap, or passed to another thread
+効率性と正確性のため、ラムダをローカルに使う場合は、参照によるキャプチャがほとんどの場合に必要になります。これはローカルな並列アルゴリズムを記述したり呼び出す場合も含みます。なぜならそれらはリターンの前に joinするためです。
 
+##### 議論
+
+効率性を考慮すると、ほとんどの型は値渡しよりも参照渡しの方がコストが安くなります。
+
+正確性に関する考慮事項は、多くの呼び出しが呼び出し元のオリジナルのオブジェクトに副作用を発生させる必要があることです (以下の例を参照)。値渡しはこれを妨げます。
+
+##### ノート
+
+不幸なことに、ローカル呼び出しの効率性と副作用を防止するために`const`参照でキャプチャするシンプルな方法はありません。
+
+##### 例
+
+ここでは、大きなオブジェクト(ネットワークメッセージ)が繰り返しアルゴリズムに渡されています。そしてメッセージ(もしかしたらコピー不可かもしれません)をコピーすることは非効率で正しくありません:
+
+    std::for_each(begin(sockets), end(sockets), [&message](auto& socket)
+    {
+        socket.send(message);
+    });
+
+##### 例
+
+これはシンプルな3ステージの並列パイプラインです。 それぞれの `stage`オブジェクトはワーカースレッドとキューをカプセル化し。ワークをキューに投入する`process`関数を持ち、そしてそのデストラクタはスレッドを終了する前にキューが空になるまで自動的に待機します。
+
+    void send_packets(buffers& bufs)
+    {
+        stage encryptor([](buffer& b) { encrypt(b); });
+        stage compressor([&](buffer& b) { compress(b); encryptor.process(b); });
+        stage decorator([&](buffer& b) { decorate(b); compressor.process(b); });
+        for (auto& b : bufs) { decorator.process(b); }
+    }  // パイプラインの完了まで自動的に待機
+
+##### 実施
+
+Flag a lambda that captures by reference, but is used other than locally within the function scope or passed to a function by reference. (Note: This rule is an approximation, but does flag passing by pointer as those are more likely to be stored by the callee, writing to a heap location accessed via a parameter, returning the lambda, etc. The Lifetime rules will also provide general rules that flag escaping pointers and references including via lambdas.)
+
+### <a name="Rf-value-capture"></a>F.53: 非ローカルで使われるラムダでは参照によるキャプチャを避けましょう。 リターンしたり、ヒープにストアされたり、他のスレッドに渡されるものも含みます。 (Avoid capturing by reference in lambdas that will be used non-locally, including returned, stored on the heap, or passed to another thread)
+
+<!--
 ##### Reason
 
 Pointers and references to locals shouldn't outlive their scope. Lambdas that capture by reference are just another place to store a reference to a local object, and shouldn't do so if they (or a copy) outlive the scope.
@@ -7044,9 +7118,43 @@ If the `this` pointer must be captured, consider using `[*this]` capture, which 
 
 * (Simple) Warn when capture-list contains a reference to a locally declared variable
 * (Complex) Flag when capture-list contains a reference to a locally declared variable and the lambda is passed to a non-`const` and non-local context
+-->
+##### 理由
 
-### <a name="Rf-this-capture"></a>F.54: If you capture `this`, capture all variables explicitly (no default capture)
+ローカルへのポインタや参照はその外のスコープでは寿命が尽きます。参照キャプチャのラムダはローカルオブジェクトへの参照を単に別の場所に保持するものであり、スコープを超えて存続(あるいはコピー)すべきではありません。
 
+##### 悪い例
+
+    int local = 42;
+
+    // ローカルへの参照.
+    // ノート, プログラムがこのスコープを抜けると,
+    // ローカルはもはや存続しません, したがって
+    // process() の呼び出しは未定義動作となるでしょう!
+    thread_pool.queue_work([&] { process(local); });
+
+##### 良い例
+
+    int local = 42;
+    // ローカルのコピー
+    // ローカルのコピーが生成されるため,
+    // その呼び出しは常に有効です.
+    thread_pool.queue_work([=] { process(local); });
+
+##### ノート
+
+ローカルでないポインタをキャプチャする必要がある場合は、`unique_ptr`の使用を考えましょう; これは寿命と同期の両方を扱うことができます。
+
+もし `this`ポインタをキャプチャする必要がある場合は、 `[*this]`でキャプチャすることを考えましょう。これはオブジェクト全体のコピーを生成します。
+
+##### 実施
+
+* (シンプル) ローカルに宣言された変数への参照を含むキャプチャリストのとき注意しましょう。
+* (複雑) ローカルに宣言された変数への参照を含むキャプチャリストで、かつ、ラムダが 非`const`または非ローカルなコンテキストに渡される場合をチェックしましょう。
+
+### <a name="Rf-this-capture"></a>F.54: `this`をキャプチャする場合は、(デフォルトキャプチャでなく)すべての変数を明示してキャプチャしましょう (If you capture `this`, capture all variables explicitly (no default capture))
+
+<!--
 ##### Reason
 
 It's confusing. Writing `[=]` in a member function appears to capture by value, but actually captures data members by reference because it actually captures the invisible `this` pointer by value. If you meant to do that, write `this` explicitly.
@@ -7086,9 +7194,50 @@ This is under active discussion in standardization, and might be addressed in a 
 ##### Enforcement
 
 * Flag any lambda capture-list that specifies a capture-default (e.g., `=` or `&`) and also captures `this` (whether explicitly such as `[&, this]` or via default capture such as `[=]` and a use of `this` in the body)
+-->
+##### 理由
 
-### <a name="F-varargs"></a>F.55: Don't use `va_arg` arguments
+混乱するためです。`[=]`とメンバ関数内で書くと、値でキャプチャするようにみえますが、実際はデータメンバを参照でキャプチャしています。なぜなら 見えない `this`ポインタを値でキャプチャしているためです。 もしあなたがそうしたい場合は、明示的に `this`を書きましょう。
 
+##### 例
+
+    class My_class {
+        int x = 0;
+        // ...
+
+        void f()
+        {
+            int i = 0;
+            // ...
+
+            auto lambda = [=] { use(i, x); };   // ダメ: コピー/値キャプチャ"のように見えます"
+            // [&] は常に同一の意味を持ち、現行のルールに基づいてthisポインタをコピーします
+            // [=,this] と [&,this] はそれほど良くありません, そして混乱しがちです
+
+            x = 42;
+            lambda(); // use(0, 42); の呼び出し
+            x = 43;
+            lambda(); // use(0, 43); の呼び出し
+
+            // ...
+
+            auto lambda2 = [i, this] { use(i, x); }; // ok, 明示的で混乱しにくい
+
+            // ...
+        }
+    };
+
+##### ノート
+
+これは標準化の議論が活発に行われており、将来のバージョンの標準では新しいキャプチャモードを追加したり、`[=]` の意味を調整したりすることで対処される可能性があります。今のところは、明示的にするだけにしてください。
+
+##### 実施
+
+* デフォルトキャプチャ（例：`=` または `&`）を指定し、`this` もキャプチャするラムダキャプチャリストにフラグを立てましょう（`[&, this]` のように明示的に指定されていたり、`[=]` などのデフォルトキャプチャが指定され、関数本体内で`this` が使用されているかどうか）。
+
+### <a name="F-varargs"></a>F.55: `va_arg`引数は使わないようにしましょう (Don't use `va_arg` arguments)
+
+<!--
 ##### Reason
 
 Reading from a `va_arg` assumes that the correct type was actually passed.
@@ -7132,10 +7281,55 @@ Declaring a `...` parameter is sometimes useful for techniques that don't involv
 
 * Issue a diagnostic for using `va_list`, `va_start`, or `va_arg`.
 * Issue a diagnostic for passing an argument to a vararg parameter of a function that does not offer an overload for a more specific type in the position of the vararg. To fix: Use a different function, or `[[suppress(types)]]`.
+-->
+##### 理由
+
+`va_arg`からの読み出しは、正しい型が実際に渡されたものと仮定します。
+可変長引数を渡すときは正しい型が読み込まれるものと仮定します。
+これは、一般的に言語内で安全であると強制することができず、正しく実行するにはプログラマーの規律に依存するため、脆弱です。
+
+##### 例
+
+    int sum(...)
+    {
+        // ...
+        while (/*...*/)
+            result += va_arg(list, int); // ダメ, int達が渡されていることを仮定
+        // ...
+    }
+
+    sum(3, 2); // ok
+    sum(3.14159, 2.71828); // ダメ, 未定義
+
+    template<class ...Args>
+    auto sum(Args... args) // 良い, さらにより柔軟
+    {
+        return (... + args); // ノート: C++17の "fold expression"
+    }
+
+    sum(3, 2); // ok: 5
+    sum(3.14159, 2.71828); // ok: ~5.85987
+
+##### 代替策
+
+* オーバーロード
+* 可変引数テンプレート (variadic templates)
+* `variant` 引数
+* `initializer_list` (同種のもの)
+
+##### ノート
+
+`...` パラメータを宣言することは、実際の引数の受け渡しを伴わなず、特にオーバーロード セット内の「その他すべて」を無効にするために「何でも取る」関数を宣言したり、テンプレートメタプログラミングで包括的なケースを表現したりする場合に便利な場合があります。
+
+##### 実施
+
+* `va_list`、`va_start`、または `va_arg` の使用に関する診断を発行しましょう。
+* vararg の位置でより具体的な型のオーバーロードを提供しない関数での vararg パラメータの引数渡しに診断を発行しましょう。修正するには、別の関数を使用するか、`[[suppress(types)]]` を使用します。
 
 
-### <a name="F-nesting"></a>F.56: Avoid unnecessary condition nesting
+### <a name="F-nesting"></a>F.56: 不必要な条件のネストを避けましょう (Avoid unnecessary condition nesting)
 
+<!--
 ##### Reason
 
 Shallow nesting of conditions makes the code easier to follow. It also makes the intent clearer.
@@ -7186,6 +7380,69 @@ Use a guard-clause to take care of exceptional cases and return early.
     }
 
     // Good: Merge conditions + return early
+    void foo() {
+        ...
+        if (!(x && y))
+            return;
+
+        computeImportantThings(x);
+    }
+
+##### Enforcement
+
+Flag a redundant `else`.
+Flag a functions whose body is simply a conditional statement enclosing a block.
+-->
+##### 理由
+
+条件のネストを浅くすると、コードが読みやすくなります。また、意図も明確になります。
+意図が不明瞭にならない限り、本質的なコードを最も外側のスコープに配置するように努めましょう。
+
+##### 例
+
+例外的なケースに対処し、早期にreturnするためにガード節を使用します。
+
+    // ダメ: 深いネスト
+    void foo() {
+        ...
+        if (x) {
+            computeImportantThings(x);
+        }
+    }
+
+    // ダメ: まだ冗長なelseがある
+    void foo() {
+        ...
+        if (!x) {
+            return;
+        }
+        else {
+            computeImportantThings(x);
+        }
+    }
+
+    // 良い: 早期のreturn, 冗長なelseはなし
+    void foo() {
+        ...
+        if (!x)
+            return;
+
+        computeImportantThings(x);
+    }
+
+##### 例
+
+    // ダメ: 不必要な条件のネスト
+    void foo() {
+        ...
+        if (x) {
+            if (y) {
+                computeImportantThings(x);
+            }
+        }
+    }
+
+    // 良い: 条件の結合 + 早期の return
     void foo() {
         ...
         if (!(x && y))

@@ -621,7 +621,7 @@ Without a philosophical basis, the more concrete/specific/checkable rules lack r
 * [P.7: 実行時エラーは早い段階で捕捉しよう](#Rp-early)
 * [P.8: あらゆるリソースリークを防ごう](#Rp-leak)
 * [P.9: 時間とスペースを無駄にしないようにしよう](#Rp-waste)
-* [P.10: 変更可能なデータより変更不可能なデータを使おう](#Rp-mutable)
+* [P.10: 変更可能なデータより変更不可能なデータを好みましょう](#Rp-mutable)
 * [P.11: 乱雑な構造はカプセル化しよう](#Rp-library)
 * [P.12: 必要に応じてサポートツールを使いましょう](#Rp-tools)
 * [P.13: 必要に応じてサポートライブラリを使いましょう](#Rp-lib)
@@ -1009,7 +1009,7 @@ For example:
 * 範囲エラー -- `span`を利用しよう
 * 縮小変換(narrowing conversions) -- 使用を最小限にしよう。必要な場合は`narrow` または `narrow_cast` (GSL) を利用しよう。
 
-### <a name="Rp-compile-time"></a>P.5: 実行時チェックよりもコンパイル時チェックを優先しよう(Prefer compile-time checking to run-time checking)
+### <a name="Rp-compile-time"></a>P.5: 実行時チェックよりもコンパイル時チェックを優先しよう (Prefer compile-time checking to run-time checking)
 
 <!--
 ##### Reason
@@ -1795,7 +1795,7 @@ C++だからです。
 
 * ユーザー定義の非デフォルトの後置 `operator++` または `operator--` 関数からの未使用の戻り値をチェックしましょう。代わりに前置形式を使用することをお勧めします。 (ノート: 「ユーザー定義の非デフォルト」は、ノイズを減らすことを目的としています。それでも実際にノイズが多すぎる場合は、この実施をレビューしてください。)
 
-### <a name="Rp-mutable"></a>P.10: 変更可能なデータより変更不可能なデータを使おう(Prefer immutable data to mutable data)
+### <a name="Rp-mutable"></a>P.10: 変更可能なデータより変更不可能なデータを好みましょう (Prefer immutable data to mutable data)
 <!--
 ##### Reason
 
@@ -2086,7 +2086,7 @@ Interface rule summary:
 * [I.22: グローバルオブジェクトの複雑な初期化は避けよう](#Ri-global-init)
 * [I.23: 関数の引数は少なく保とう](#Ri-nargs)
 * [I.24: 同じ引数でどちらの順序でも異なる意味で呼び出すことができる隣接するパラメーターを避けましょう](#Ri-unrelated)
-* [I.25: クラス階層よりもインタフェースとしての空の抽象クラスを使おう](#Ri-abstract)
+* [I.25: クラス階層よりもインタフェースとしての空の抽象クラスを好みましょう](#Ri-abstract)
 * [I.26: If you want a cross-compiler ABI, use a C-style subset](#Ri-abi)
 * [I.27: For stable library ABI, consider the Pimpl idiom](#Ri-pimpl)
 * [I.30: ルール違反はカプセル化しよう](#Ri-encapsulate)
@@ -3534,7 +3534,7 @@ We are still looking for a less-simple enforcement.
 
 私たちは単純ではない実施策をまだ探し中です。
 
-### <a name="Ri-abstract"></a>I.25: クラス階層よりもインタフェースとしての空の抽象クラスを使おう (Prefer empty abstract classes as interfaces to class hierarchies)
+### <a name="Ri-abstract"></a>I.25: クラス階層よりもインタフェースとしての空の抽象クラスを好みましょう (Prefer empty abstract classes as interfaces to class hierarchies)
 <!--
 ##### Reason
 
@@ -3887,14 +3887,14 @@ Functions are the most critical part in most interfaces, so see the interface ru
 
 パラメータの渡し方の表現ルール:
 
-* [F.15: シンプルで慣習的な情報の渡し方をしよう](#Rf-conventional)
+* [F.15: シンプルで慣習的な情報の渡し方を好みましょう](#Rf-conventional)
 * [F.16: "入力"パラメータに対しては、コピーが安価なものに対しては値渡し、そうでないものには`const`参照渡ししましょう](#Rf-in)
 * [F.17: "入力-出力"パラメータに対しては、非`const`参照渡しをしましょう](#Rf-inout)
 * [F.18: "will-move-from"パラメータに対して、`X&&`と`std::move`でパラメータを渡しましょう](#Rf-consume)
 * [F.19: For "forward" parameters, pass by `TP&&` and only `std::forward` the parameter](#Rf-forward)
 * [F.20: "出力"値に対しては出力パラメータよりも返り値を使いましょう](#Rf-out)
 * [F.21: 複数の"出力"値を返すときには,構造体やtupleで返すようにしましょう (To return multiple "out" values, prefer returning a struct or tuple)](#Rf-out-multi)
-* [F.60: 「引数なし」が有効なオプションであるときは、`T&`よりも`T*`を使いましょう (Prefer `T*` over `T&` when "no argument" is a valid option)](#Rf-ptr-ref)
+* [F.60: 「引数なし」が有効なオプションであるときは、`T&`よりも`T*`を好みましょう (Prefer `T*` over `T&` when "no argument" is a valid option)](#Rf-ptr-ref)
 
 パラメータの渡し方の意味ルール:
 
@@ -3920,7 +3920,7 @@ Functions are the most critical part in most interfaces, so see the interface ru
 
 * [F.50: 関数が機能しないとき(ローカル変数のキャプチャやローカル関数を書きたいとき)はラムダを使いましょう (Use a lambda when a function won't do (to capture local variables, or to write a local function))](#Rf-capture-vs-overload)
 * [F.51: 選択肢がある場合は、オーバーロードよりもデフォルト引数を優先しましょう (Where there is a choice, prefer default arguments over overloading)](#Rf-default-args)
-* [F.52: ローカルで使われるラムダでは参照によるキャプチャを使うようにしましょう。アルゴリズムに渡されるものも含みます。 (Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms)](#Rf-reference-capture)
+* [F.52: ローカルで使われるラムダでは参照によるキャプチャを好むようにしましょう。アルゴリズムに渡されるものも含みます。 (Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms)](#Rf-reference-capture)
 * [F.53: 非ローカルで使われるラムダでは参照によるキャプチャを避けましょう。 リターンしたり、ヒープにストアされたり、他のスレッドに渡されるものも含みます。 (Avoid capturing by reference in lambdas that will be used non-locally, including returned, stored on the heap, or passed to another thread)](#Rf-value-capture)
 * [F.54: `this`をキャプチャする場合は、(デフォルトキャプチャでなく)すべての変数を明示してキャプチャしましょう (If you capture `this`, capture all variables explicitly (no default capture))](#Rf-this-capture)
 * [F.55: `va_arg`引数は使わないようにしましょう (Don't use `va_arg` arguments)](#F-varargs)
@@ -4769,7 +4769,7 @@ We can catch many common cases of dangling pointers statically (see [lifetime sa
 * [Prefer `T*` over `T&` when "no argument" is a valid option](#Rf-ptr-ref)
 * [Smart pointer rule summary](#Rr-summary-smartptrs)
 
-### <a name="Rf-pure"></a>F.8: 純粋関数を好んで使おう(Prefer pure functions)
+### <a name="Rf-pure"></a>F.8: 純粋関数を好んで使おう (Prefer pure functions)
 
 <!--
 ##### Reason
@@ -5037,7 +5037,7 @@ There are a variety of ways to pass parameters to a function and to return value
 -->
 関数にパラメータを渡したり、返り値を返す多くの方法があります。
 
-### <a name="Rf-conventional"></a>F.15: シンプルで慣習的な情報の渡し方をしよう(Prefer simple and conventional ways of passing information)
+### <a name="Rf-conventional"></a>F.15: シンプルで慣習的な情報の渡し方を好むようにしましょう (Prefer simple and conventional ways of passing information)
 
 <!--
 ##### Reason
@@ -5827,7 +5827,7 @@ tupleがコピーのコストが高いローカル変数によって初期化さ
 * 出力パラメータは返り値に置き換わるべきです。
   出力パラメータとは、非`const`メンバー関数の呼び出し、あるいは非`const`オブジェクトとして渡され、関数が出力するものです。
 
-### <a name="Rf-ptr-ref"></a>F.60: 「引数なし」が有効なオプションであるときは、`T&`よりも`T*`を使いましょう (Prefer `T*` over `T&` when "no argument" is a valid option)
+### <a name="Rf-ptr-ref"></a>F.60: 「引数なし」が有効なオプションであるときは、`T&`よりも`T*`を好むようにしましょう (Prefer `T*` over `T&` when "no argument" is a valid option)
 
 <!--
 ##### Reason
@@ -7002,7 +7002,7 @@ There is not a choice when a set of functions are used to do a semantically equi
 
 * パラメータが共通の始まりを持つオーバーロードがある場合に注意しましょう (例,  `f(int)`, `f(int, const string&)`, `f(int, const string&, double)`). (Note: Review this enforcement if it's too noisy in practice.)
 
-### <a name="Rf-reference-capture"></a>F.52: ローカルで使われるラムダでは参照によるキャプチャを使うようにしましょう。アルゴリズムに渡されるものも含みます。 (Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms)
+### <a name="Rf-reference-capture"></a>F.52: ローカルで使われるラムダでは参照によるキャプチャを好むようにしましょう。アルゴリズムに渡されるものも含みます。 (Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms)
 
 <!--
 ##### Reason
@@ -7457,8 +7457,9 @@ Flag a redundant `else`.
 Flag a functions whose body is simply a conditional statement enclosing a block.
 
 
-# <a name="S-class"></a>C: Classes and class hierarchies
+# <a name="S-class"></a>C: クラスとクラス階層 (Classes and class hierarchies)
 
+<!--
 A class is a user-defined type, for which a programmer can define the representation, operations, and interfaces.
 Class hierarchies are used to organize related classes into hierarchical structures.
 
@@ -7482,9 +7483,35 @@ Subsections:
 * [C.hier: Class hierarchies (OOP)](#SS-hier)
 * [C.over: Overloading and overloaded operators](#SS-overload)
 * [C.union: Unions](#SS-union)
+-->
+クラスはプログラマが表現、操作、インタフェースを定義することができるユーザー定義型です。
+クラス階層はクラス間の関係を階層構造へと編成するために使用されます。
 
-### <a name="Rc-org"></a>C.1: Organize related data into structures (`struct`s or `class`es)
 
+クラスのルールまとめ:
+
+* [C.1: 関連しているデータは 構造体(`struct`や`class`)に編成しましょう](#Rc-org)
+* [C.2: クラスに不変条件がある場合は `class` を使用しましょう。データメンバーが独立して変更できる場合は `struct` を使用しましょう](#Rc-struct)
+* [C.3: クラスを使ってインタフェースと実装の違いを表現しましょう](#Rc-interface)
+* [C.4: クラスの表現に直接アクセスする必要がある場合にのみ、関数をメンバーにしましょう](#Rc-member)
+* [C.5: ヘルパー関数はそれらがサポートするクラスと同じ名前空間に配置しましょう](#Rc-helper)
+* [C.7: 同じステートメント内でクラスやenumの定義とその型の変数の宣言をしないようにしましょう](#Rc-standalone)
+* [C.8: パブリックでないメンバーを持つ場合は `struct`よりも `class`を使いましょう](#Rc-class)
+* [C.9: メンバーの露出は最小限にしましょう](#Rc-private)
+
+サブセクション:
+
+* [C.concrete: 具象型](#SS-concrete)
+* [C.ctor: コンストラクタ、代入、デストラクタ](#S-ctor)
+* [C.con: Containers and other resource handles](#SS-containers)
+* [C.lambdas: Function objects and lambdas](#SS-lambdas)
+* [C.hier: Class hierarchies (OOP)](#SS-hier)
+* [C.over: Overloading and overloaded operators](#SS-overload)
+* [C.union: Unions](#SS-union)
+
+### <a name="Rc-org"></a>C.1: 関連しているデータは 構造体(`struct`や`class`)に編成しましょう (Organize related data into structures (`struct`s or `class`es))
+
+<!--
 ##### Reason
 
 Ease of comprehension.
@@ -7506,9 +7533,32 @@ From a language perspective `class` and `struct` differ only in the default visi
 ##### Enforcement
 
 Probably impossible. Maybe a heuristic looking for data items used together is possible.
+-->
+##### 理由
 
-### <a name="Rc-struct"></a>C.2: Use `class` if the class has an invariant; use `struct` if the data members can vary independently
+わかりやすさ。
+もしデータが(基本的な理由で)関連しているのなら、その事実をコードに反映させるべきです。
 
+##### 例
+
+    void draw(int x, int y, int x2, int y2);  // ダメ: 不必要な暗黙の関係
+    void draw(Point from, Point to);          // ベター
+
+##### ノート
+
+仮想関数をもたないシンプルなクラスには空間や時間のコストのオーバーヘッドは存在しません。
+
+##### ノート
+
+言語仕様の側面からみた `class` と `struct`の違いは、メンバのデフォルトの可視性のみです。
+
+##### 実施
+
+おそらく不可能。一緒に使用されているデータ項目をヒューリスティックに検索することは可能かもしれません。
+
+### <a name="Rc-struct"></a>C.2: クラスに不変条件がある場合は `class` を使用しましょう。データメンバーが独立して変更できる場合は `struct` を使用しましょう (Use `class` if the class has an invariant; use `struct` if the data members can vary independently)
+
+<!--
 ##### Reason
 
 Readability.
@@ -7560,9 +7610,62 @@ This effectively means the definer need to define an invariant.
 ##### Enforcement
 
 Look for `struct`s with all data private and `class`es with public members.
+-->
+##### 理由
 
-### <a name="Rc-interface"></a>C.3: Represent the distinction between an interface and an implementation using a class
+可読性。
+わかりやすさ。
+`class`を使うとプログラマーに不変条件が必要であることを警告します。
+これは便利な習慣です。
 
+##### ノート
+
+不変条件とはオブジェクトのメンバーの論理条件であり、それは、パブリックメンバー関数の仮定のためにコンストラクターが確立する必要があるものです。
+不変条件が(典型的にはコンストラクタによって)確立された後は、すべてのメンバ関数をオブジェクトに対して呼び出すことができます。
+不変条件は非公式(例えばコメントで)にも記述できますし、よりフォーマルに`Expects`を使って記述することもできます。
+
+すべてのデータメンバーが互いに独立して変化できる場合、不変条件は存在しません。
+
+##### 例
+
+    struct Pair {  // メンバーは独立して変更できる
+        string name;
+        int volume;
+    };
+
+but:
+
+    class Date {
+    public:
+        // {yy, mm, dd} が有効な日付であることを検証し、初期化する
+        Date(int yy, Month mm, char dd);
+        // ...
+    private:
+        int y;
+        Month m;
+        char d;    // 日付
+    };
+
+##### ノート
+
+クラスに`private`データがある場合、ユーザーはコンストラクターを使用せずにオブジェクトを完全に初期化することはできません。
+したがって、クラスの定義者はコンストラクターを提供し、その意味を指定する必要があります。
+これは事実上、定義者が不変条件を定義する必要があることを意味します。
+
+**See also**:
+
+* [define a class with private data as `class`](#Rc-class)
+* [Prefer to place the interface first in a class](#Rl-order)
+* [minimize exposure of members](#Rc-private)
+* [Avoid `protected` data](#Rh-protected)
+
+##### 実施
+
+すべてのデータがプライベートな`struct`や、パブリックなメンバーをもつ`class`を探しましょう。
+
+### <a name="Rc-interface"></a>C.3: クラスを使ってインタフェースと実装の違いを表現しましょう (Represent the distinction between an interface and an implementation using a class)
+
+<!--
 ##### Reason
 
 An explicit distinction between interface and implementation improves readability and simplifies maintenance.
@@ -7594,9 +7697,42 @@ Ideally, and typically, an interface is far more stable than its implementation(
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rc-member"></a>C.4: Make a function a member only if it needs direct access to the representation of a class
+インタフェースと実装との区別を明確にすることは、可読性やメンテナンスしやすさを改善します。
 
+##### 例
+
+    class Date {
+    public:
+        Date();
+        // {yy, mm, dd} が有効な日付であることを検証し、初期化する
+        Date(int yy, Month mm, char dd);
+
+        int day() const;
+        Month month() const;
+        // ...
+    private:
+        // ... なんらかの表現 ...
+    };
+
+例えば、私たちは`Date`の表現を、利用者への影響なしに変更することができるようになりました。(ただし、再コンパイルが必要になる可能性があります)
+
+##### ノート
+
+もちろん、この方法でクラスを使うことがインタフェースと実装との区別を表現する唯一の方法ではありません。
+例えば、名前空間内で独立した関数群の一連の宣言や、抽象ベースクラス、あるいはインタフェースを表現するコンセプトをもったテンプレート関数としても表現できます。
+もっとも重要なことは、インタフェースと実装の「詳細」を明確に区別することです。
+理想的には、そして典型的には、インタフェースはその実装よりもはるかに安定しています。
+
+##### 実施
+
+???
+
+### <a name="Rc-member"></a>C.4: クラスの表現に直接アクセスする必要がある場合にのみ、関数をメンバーにしましょう (Make a function a member only if it needs direct access to the representation of a class)
+
+<!--
 ##### Reason
 
 Less coupling than with member functions, fewer functions that can cause trouble by modifying object state, reduces the number of functions that needs to be modified after a change in representation.
@@ -7656,9 +7792,70 @@ The snag is that many member functions that do not need to touch data members di
 * Ignore `virtual` functions.
 * Ignore functions that are part of an overload set out of which at least one function accesses `private` members.
 * Ignore functions returning `this`.
+-->
+##### 理由
 
-### <a name="Rc-helper"></a>C.5: Place helper functions in the same namespace as the class they support
+メンバー関数よりも結合が少なく、オブジェクトの状態を変更することで問題を引き起こす可能性のある関数が少なく、、表現の変更後に変更する必要がある関数の数が減ります。
 
+##### 例
+
+    class Date {
+        // ... 相対的に小さなインタフェース...
+    };
+
+    // ヘルパー関数:
+    Date next_weekday(Date);
+    bool operator==(Date, Date);
+
+「ヘルパー関数」は `Date`の内部表現へのダイレクトなアクセスが不要です。
+
+##### ノート
+
+C++が["uniform function call"](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2016/p0251r0.pdf)を得たとき、このルールはさらに良いものになります。
+
+##### 例外
+
+言語仕様では`virtual`関数がメンバーである必要がありますが、すべての`virtual`関数がデータに直接アクセスできるわけではありません。
+特に、抽象クラスのメンバーがそうすることはほとんどありません。
+
+Note [multi-methods](https://web.archive.org/web/20200605021759/https://parasol.tamu.edu/~yuriys/papers/OMM10.pdf).
+
+##### 例外
+
+言語仕様では オペレータ`=`、`()`、`[]`、そして `->`はメンバーである必要があります。
+
+##### 例外
+
+オーバーロード群は`private`データに直接アクセスしないメンバーに持つことができます:
+
+    class Foobar {
+    public:
+        void foo(long x) { /* プライベートデータを操作 */ }
+        void foo(double x) { foo(std::lround(x)); }
+        // ...
+    private:
+        // ...
+    };
+
+##### 例外
+
+同様に、一連の関数をチェーンで使用するように設計することもできます:
+
+    x.scale(0.5).rotate(45).set_color(Color::red);
+
+通常、そのような関数のすべてではありませんが、一部は`private`データに直接アクセスします。
+
+##### 実施
+
+* 非`virtual`メンバ関数で、データメンバに直接タッチしていないものを探しましょう。
+問題は、データ メンバーに直接アクセスする必要のない多くのメンバー関数が、データ メンバーに直接アクセスすることです。
+* `virtual`関数は無視しましょう。
+* オーバーロードの一部であり、それらの少なくとも一つは`private`メンバにアクセスしている関数は無視しましょう。
+* `this`を返す関数は無視しましょう。
+
+### <a name="Rc-helper"></a>C.5: ヘルパー関数はそれらがサポートするクラスと同じ名前空間に配置しましょう (Place helper functions in the same namespace as the class they support)
+
+<!--
 ##### Reason
 
 A helper function is a function (usually supplied by the writer of a class) that does not need direct access to the representation of the class, yet is seen as part of the useful interface to the class.
@@ -7684,9 +7881,36 @@ This is especially important for [overloaded operators](#Ro-namespace).
 ##### Enforcement
 
 * Flag global functions taking argument types from a single namespace.
+-->
+##### 理由
 
-### <a name="Rc-standalone"></a>C.7: Don't define a class or enum and declare a variable of its type in the same statement
+ヘルパー関数は、クラスの表現に直接アクセスする必要がない関数 (通常はクラスの作成者によって提供される) ですが、クラスへの便利なインターフェイスの一部として見なされます。
+これらをクラスと同じ名前空間に配置すると、クラスとの関係が明確になり、引数に依存した検索でそれらを見つけることができるようになります。
 
+##### 例
+
+    namespace Chrono { // ここでは時間関連のサービスを保持します
+
+        class Time { /* ... */ };
+        class Date { /* ... */ };
+
+        // ヘルパー関数:
+        bool operator==(Date, Date);
+        Date next_weekday(Date);
+        // ...
+    }
+
+##### ノート
+
+これはとりわけ [overloaded operators](#Ro-namespace) に対して重要です。
+
+##### 実施
+
+* 単一の名前空間から引数の型を受け取るグローバル関数にフラグを立てましょう。
+
+### <a name="Rc-standalone"></a>C.7: 同じステートメント内でクラスやenumの定義とその型の変数の宣言をしないようにしましょう (Don't define a class or enum and declare a variable of its type in the same statement)
+
+<!--
 ##### Reason
 
 Mixing a type definition and the definition of another entity in the same declaration is confusing and unnecessary.
@@ -7703,9 +7927,27 @@ Mixing a type definition and the definition of another entity in the same declar
 ##### Enforcement
 
 * Flag if the `}` of a class or enumeration definition is not followed by a `;`. The `;` is missing.
+-->
+##### 理由
 
-### <a name="Rc-class"></a>C.8: Use `class` rather than `struct` if any member is non-public
+同じ宣言内で型定義と別のエンティティの定義を混在させることは混乱が生じますし、不要です。
 
+##### ダメな例
+
+    struct Data { /*...*/ } data{ /*...*/ };
+
+##### 良い例
+
+    struct Data { /*...*/ };
+    Data data{ /*...*/ };
+
+##### 実施
+
+* クラスやenum型の定義の`}`の後に`;`が続いていない場合にフラグを立てましょう。 `;`が抜けています。
+
+### <a name="Rc-class"></a>C.8: パブリックでないメンバーを持つ場合は `struct`よりも `class`を使いましょう (Use `class` rather than `struct` if any member is non-public)
+
+<!--
 ##### Reason
 
 Readability.
@@ -7737,9 +7979,42 @@ Prefer to place the interface first in a class, [see NL.16](#Rl-order).
 ##### Enforcement
 
 Flag classes declared with `struct` if there is a `private` or `protected` member.
+-->
+##### 理由
 
-### <a name="Rc-private"></a>C.9: Minimize exposure of members
+可読性。
+何かが不可視/抽象化されていることを明確にします。
+これは役に立つ習慣です。
 
+##### ダメな例
+
+    struct Date {
+        int d, m;
+
+        Date(int i, Month m);
+        // ... 大量の関数 ...
+    private:
+        int y;  // 年
+    };
+
+C++言語の規則に関する限り、このコードには何も問題はありません。
+しかし、デザインの観点から見ると、ほとんどすべてが間違っています。
+プライベートデータはパブリックデータから遠く離れて隠されています。
+データはクラス宣言のさまざまな部分に分割されています。
+データの異なる部分には異なるアクセス権があります。
+これらすべてにより可読性が低下し、メンテナンスが複雑になります。
+
+##### ノート
+
+クラスの最初にインタフェースを配置するようにしましょう,  [see NL.16](#Rl-order)。
+
+##### 実施
+
+`private`や `protected`なメンバーを持つ `struct`として宣言されているクラスにフラグを立てましょう。
+
+### <a name="Rc-private"></a>C.9: メンバーの露出は最小限にしましょう (Minimize exposure of members)
+
+<!--
 ##### Reason
 
 Encapsulation.
@@ -7828,18 +8103,115 @@ Prefer the order `public` members before `protected` members before `private` me
 
 * [Flag protected data](#Rh-protected).
 * Flag mixtures of `public` and `private` data
+-->
+##### 理由
 
-## <a name="SS-concrete"></a>C.concrete: Concrete types
+カプセル化。
+情報の隠蔽。
+意図しないアクセスの機会の最小化。
+これはメンテナンスを単純化します。
 
+##### 例
+
+    template<typename T, typename U>
+    struct pair {
+        T a;
+        U b;
+        // ...
+    };
+
+`//`の部分で何をするにしても、`pair` の任意のユーザーは、その `a` と `b` を任意かつ独立して変更できます。
+大規模なコードベースでは、どのコードが`pair`のメンバーに対して何を行うのかを簡単に見つけることはできません。
+これはまさに私たちが望んでいることかもしれませんが、メンバー間の関係を強制したい場合は、メンバーを`private`にする必要があります。
+そして、コンストラクターとメンバー関数を通じてその関係 (不変条件) を強制します。
+例:
+
+    class Distance {
+    public:
+        // ...
+        double meters() const { return magnitude*unit; }
+        void set_unit(double u)
+        {
+                // ... uが 10の因数であることをチェック ...
+                // ... magnitude を適切に変更 ...
+                unit = u;
+        }
+        // ...
+    private:
+        double magnitude;
+        double unit;    // 1はメートル, 1000はキロメートル, 0.001はミリメートル, など
+    };
+
+##### ノート
+
+変数セットの直接のユーザーのセットを簡単に決定できない場合、そのセットのタイプや使用法を (簡単に) 変更/改善することはできません。
+`public`や`protected`データは、通常このケースに当てはまります。
+
+##### 例
+
+クラスはユーザーに2つのインタフェースを提供することができます。
+一つは 派生クラスに対して(`protected`)、もう1つは一般ユーザーに対して(`public`)です。
+例えば、派生クラスは実行時のチェックを、それが正しいことが保証されているため、スキップすることが許容されるかもしれません:
+
+    class Foo {
+    public:
+        int bar(int x) { check(x); return do_bar(x); }
+        // ...
+    protected:
+        int do_bar(int x); // データに何らかの処理
+        // ...
+    private:
+        // ... データ ...
+    };
+
+    class Dir : public Foo {
+        //...
+        int mem(int x, int y)
+        {
+            /* ... 何か処理 ... */
+            return do_bar(x + y); // OK: 派生クラスではチェックをバイパス可能
+        }
+    };
+
+    void user(Foo& x)
+    {
+        int r1 = x.bar(1);      // OK, チェックされる
+        int r2 = x.do_bar(2);   // エラー: チェックがバイパスされる
+        // ...
+    }
+
+##### ノート
+
+[`protected` data is a bad idea](#Rh-protected).
+
+##### ノート
+
+`public`、`protected`、`private`メンバーの順にしましょう; see [NL.16](#Rl-order).
+
+##### 実施
+
+* [protectedなデータにフラグを立てましょう](#Rh-protected).
+* `public` と `private` データの混在にフラグを立てましょう。
+
+## <a name="SS-concrete"></a>C.concrete: 具象型 (Concrete types)
+
+<!--
 Concrete type rule summary:
 
 * [C.10: Prefer concrete types over class hierarchies](#Rc-concrete)
 * [C.11: Make concrete types regular](#Rc-regular)
 * [C.12: Don't make data members `const` or references in a copyable or movable type](#Rc-constref)
+-->
+具象型ルールのまとめ:
+
+* [C.10: クラス階層よりも具象型を使いましょう](#Rc-concrete)
+* [C.11: 具象型は正則にしましょう](#Rc-regular)
+* [C.12: コピーまたはムーブ可能な型ではデータメンバーを `const`や参照にしないようにしましょう](#Rc-constref)
 
 
-### <a name="Rc-concrete"></a>C.10: Prefer concrete types over class hierarchies
+### <a name="Rc-concrete"></a>C.10: クラス階層よりも具象型を好みましょう (Prefer concrete types over class hierarchies)
 
+<!--
 ##### Reason
 
 A concrete type is fundamentally simpler than a type in a class hierarchy:
@@ -7888,10 +8260,59 @@ This is done where dynamic allocation is prohibited (e.g. hard-real-time) and to
 ##### Enforcement
 
 ???
+-->
+##### 理由
+
+具象型はクラス階層内での型よりも基本的にシンプルです:
+設計がしやすく、実装がしやすく、使いやすく、推論しやすく、より小さく、より高速です。
+あなたが階層を使用するには理由 (ユースケース) が必要です。
+
+##### 例
+
+    class Point1 {
+        int x, y;
+        // ... 操作群 ...
+        // ... 仮想関数はなし ...
+    };
+
+    class Point2 {
+        int x, y;
+        // ... 操作群、いくつかの仮想関数 ...
+        virtual ~Point2();
+    };
+
+    void use()
+    {
+        Point1 p11 {1, 2};   // スタックにオブジェクトを生成
+        Point1 p12 {p11};    // コピー
+
+        auto p21 = make_unique<Point2>(1, 2);   // ヒープにオブジェクトを生成
+        auto p22 = p21->clone();                // コピーを作成
+        // ...
+    }
+
+もしもクラスが階層の一部であるとき、私たちは、(必ずしも小さな例ではないにしても、実際のコードで) それらのオブジェクトをポインタまたは参照を通じて操作する必要があります。
+これはより多くのメモリのオーバーヘッド、より多くの確保と解放、そして結果として生じる間接参照のためより多くの実行時のオーバーヘッドを意味します。
+
+##### ノート
+
+具象型はスタックに確保できますし、ほかのクラスのメンバーにもすることができます。
+
+##### ノート
+
+間接参照の使用は、基本的には実行時の多態的なインタフェースのためです。
+確保/解放のオーバーヘッドはそうではありません(これは最も一般的なケースです)。
+基底クラスを派生クラスのスコープ付きオブジェクトのインターフェイスとして使用できます。
+これは、動的割り当てが禁止されている場合 (例えばハードリアルタイムなど)、および一部の種類のプラグインに安定したインターフェイスを提供するために行われます。
+
+##### 実施
+
+???
 
 
-### <a name="Rc-regular"></a>C.11: Make concrete types regular
+### <a name="Rc-regular"></a>C.11: 具象型は正則にしましょう (Make concrete types regular)
 
+<!--
 ##### Reason
 
 Regular types are easier to understand and reason about than types that are not regular (irregularities requires extra effort to understand and use).
@@ -7930,10 +8351,51 @@ so they can't be regular; instead, they tend to be move-only.
 ##### Enforcement
 
 ???
+-->
+##### 例
+
+正則な型は、正則でない型に比べて理解しやすく、推測がしやすくなります(正則でないものを理解して使用するには特別な努力が必要です)。
+訳注: [正則](https://cpprefjp.github.io/reference/concepts/regular.html)
+
+C++の組み込み型は正則な型です。そして標準ライブラリの`string`や`vector`、そして`map`のようなクラスもそうです。 代入演算子や比較を持たない具象型も定義できますが、しかしそれらはレアですし、また、そうであるべきです。
+
+##### 例
+
+    struct Bundle {
+        string name;
+        vector<Record> vr;
+    };
+
+    bool operator==(const Bundle& a, const Bundle& b)
+    {
+        return a.name == b.name && a.vr == b.vr;
+    }
+
+    Bundle b1 { "my bundle", {r1, r2, r3}};
+    Bundle b2 = b1;
+    if (!(b1 == b2)) error("impossible!");
+    b2.name = "the other bundle";
+    if (b1 == b2) error("No!");
+
+特に、具象型はコピー可能である場合は、比較演算子を提供しましょう。そして `a = b`が `a == b`を暗黙的に意味するようにしましょう。
+
+##### ノート
+
+Cコードと共有することを目的とした構造体の場合、`operator==`の定義は実現できない場合があります。
+
+##### ノート
+
+コピーできないリソースのハンドル(例えば、`mutex`に対する `scoped_lock`)は具象型ですが、典型的にはコピーができません (代わりに、それらは通常ムーブできます)。
+それらは正則な型にはなりえず、代わりに、ムーブオンリーになる傾向があります。
+
+##### 実施
+
+???
 
 
-### <a name="Rc-constref"></a>C.12: Don't make data members `const` or references in a copyable or movable type
+### <a name="Rc-constref"></a>C.12: コピーまたはムーブ可能な型ではデータメンバーを `const`や参照にしないようにしましょう (Don't make data members `const` or references in a copyable or movable type)
 
+<!--
 ##### Reason
 
 `const` and reference data members are not useful in a copyable or movable type, and make such types difficult to use by making them at least partly uncopyable/unmovable for subtle reasons.
@@ -7955,11 +8417,34 @@ If you need a member to point to something, use a pointer (raw or smart, and `gs
 ##### Enforcement
 
 Flag a data member that is `const`, `&`, or `&&` in a type that has any copy or move operation.
+-->
+##### 理由
+
+`const`や参照のデータメンバーはコピーやムーブ可能な型では役に立たず、わずかな理由で少なくとも部分的にコピー不可またはムーブ不可にすることで、そのような型の使用を困難にします。
+
+##### ダメな例
+
+    class bad {
+        const int i;    // ダメ
+        string& s;      // ダメ
+        // ...
+    };
+
+`const` と `&` のデータメンバーは このクラスを「ある種のコピー可能な」ものにします -- コピーコンストラクトは可能ですが、コピー代入は不可能です。
+
+##### ノート
+
+もしもメンバーが何かを指す必要がある場合は、参照でなくポインタ(生またはスマート、そしてnullになるべきでないときは `gsl::not_null`)を使いましょう。
+
+##### 実施
+
+コピーやムーブ演算子を持つ型の中の、`const`や`&`、`&&`のデータメンバにフラグを立てましょう。
 
 
 
-## <a name="S-ctor"></a>C.ctor: Constructors, assignments, and destructors
+## <a name="S-ctor"></a>C.ctor: コンストラクタ、代入、デストラクタ (Constructors, assignments, and destructors)
 
+<!--
 These functions control the lifecycle of objects: creation, copy, move, and destruction.
 Define constructors to guarantee and simplify initialization of classes.
 
@@ -8032,14 +8517,93 @@ Other default operations rules:
 * [C.87: Beware of `==` on base classes](#Rc-eq-base)
 * [C.89: Make a `hash` `noexcept`](#Rc-hash)
 * [C.90: Rely on constructors and assignment operators, not memset and memcpy](#Rc-memset)
+-->
+これらの関数はオブジェクトのライフサイクルをコントールします: 生成、コピー、ムーブ、デストラクト。
+クラスの初期化の保証とシンプル化のためにコンストラクタを定義しましょう。
 
-## <a name="SS-defop"></a>C.defop: Default Operations
+これらは *デフォルト操作*です:
 
+* デフォルトコンストラクタ: `X()`
+* コピーコンストラクタ: `X(const X&)`
+* コピー代入演算子: `operator=(const X&)`
+* ムーブコンストラクタ: `X(X&&)`
+* ムーブ代入演算子: `operator=(X&&)`
+* デストラクタ: `~X()`
+
+デフォルトでは、コンパイラはこれらの各操作が使用される場合には定義します。しかしデフォルトを抑制することもできます。
+
+デフォルトの操作は、オブジェクトのライフサイクルセマンティクスを一緒に実装する一連の関連操作です。
+デフォルトでは、C++ はクラスを値のような型として扱いますが、すべての型が値のような型であるわけではありません。
+
+デフォルト操作のルール:
+
+* [C.20: もしデフォルトの操作の定義を避けることができるならそうしましょう](#Rc-zero)
+* [C.21: もしコピー、ムーブ、あるいはデストラクタ関数を定義したり `=delete`した場合は、ほかのすべても定義するか`=delete`しましょう](#Rc-five)
+* [C.22: デフォルトの操作に一貫性を持たせましょう](#Rc-matched)
+
+デストラクタのルール:
+
+* [C.30: オブジェクトのデストラクト時に明示的にアクションが必要なクラスにかぎり、デストラクタを定義しましょう](#Rc-dtor)
+* [C.31: クラスによって獲得されたすべてのリソースは、そのクラスのデストラクタで解放しましょう](#Rc-dtor-release)
+* [C.32: もしクラスが生ポインタ(`T*`)や参照(`T&`)を持つ場合、それらを所有できないか検討しましょう](#Rc-dtor-ptr)
+* [C.33: クラスが所有権があるポインタメンバを持つ場合は、デストラクタを定義しましょう](#Rc-dtor-ptr2)
+* [C.35: ベースクラスのデストラクタは、publicかつvirtualにするか、あるいは protectedかつ非virtualのどちらかにしましょう](#Rc-dtor-virtual)
+* [C.36: デストラクタは失敗してはいけません](#Rc-dtor-fail)
+* [C.37: デストラクタは`noexcept`にしましょう](#Rc-dtor-noexcept)
+
+コンストラクタのルール:
+
+* [C.40: クラスが不変条件を持つ場合はコンストラクタを定義しましょう](#Rc-ctor)
+* [C.41: コンストラクタは完全に初期化されたオブジェクトを生成しましょう](#Rc-complete)
+* [C.42: コンストラクタが有効なオブジェクトを構築できない場合は例外を投げましょう](#Rc-throw)
+* [C.43: コピー可能なクラスにはデフォルトコンストラクタがあることを確認しましょう](#Rc-default0)
+* [C.44: デフォルトコンストラクタはシンプルで、例外を投げないものを好みましょう](#Rc-default00)
+* [C.45: データメンバを初期化するのみのデフォルトコンストラクタを定義しないようにしましょう; 代わりに クラス内メンバ初期化を使いましょう](#Rc-default)
+* [C.46: デフォルトでは、単一引数のコンストラクタは `explicit`と宣言しましょう](#Rc-explicit)
+* [C.47: メンバ変数の定義や初期化はそれが宣言されている順序で行いましょう](#Rc-order)
+* [C.48: コンストラクタによる定数でのメンバの初期化はクラス内初期化を好みましょう](#Rc-in-class-initializer)
+* [C.49: コンストラクタでの代入よりも初期化を優先しましょう](#Rc-initialize)
+* [C.50: 初期化中に「仮想的なふるまい」が必要な場合はファクトリ関数を使いましょう](#Rc-factory)
+* [C.51: クラスのすべてのコンストラクタが共通の動作を表すためには 委譲コンストラクタを使いましょう](#Rc-delegating)
+* [C.52: 追加の明示的な初期化が必要でない派生クラスのコンストラクタには継承コンストラクタを使いましょう](#Rc-inheriting)
+
+コピーとムーブのルール:
+
+* [C.60: コピー代入演算子は非`virtual`にし、`const&`によってパラメータを受け取り、非`const&`で返しましょう](#Rc-copy-assignment)
+* [C.61: コピー操作はコピーをすべきです](#Rc-copy-semantic)
+* [C.62: コピー代入演算子は自己代入に対して安全にしましょう](#Rc-copy-self)
+* [C.63: ムーブ代入演算子は非`virtual`にし、`&&`によってパラメータを受け取り、非`const&`で返しましょう](#Rc-move-assignment)
+* [C.64: ムーブ操作はムーブをすべきです。そして移動元は有効な状態を保ちましょう](#Rc-move-semantic)
+* [C.65: ムーブ代入演算子は自己代入に対して安全にしましょう](#Rc-move-self)
+* [C.66: ムーブ操作は `noexcept`にしましょう](#Rc-move-noexcept)
+* [C.67: 多相的なクラスは publicなコピー/ムーブを抑制するべきです](#Rc-copy-virtual)
+
+その他のデフォルト操作のルール:
+
+* [C.80: デフォルトのセマンティクスを使用することを明示するためには、`=default`を使いましょう](#Rc-eqdefault)
+* [C.81: デフォルトの動作を無効にしたい場合(かつ代替の動作も不要な場合)は、`=delete`を使いましょう](#Rc-delete)
+* [C.82: コンストラクタやデストラクタ内で仮想関数を呼んではいけません](#Rc-ctor-virtual)
+* [C.83: 値のような型は `noexcept`なswap関数の提供を検討しましょう](#Rc-swap)
+* [C.84: `swap`は絶対に失敗してはいけません](#Rc-swap-fail)
+* [C.85: `swap`は `noexcept`にしましょう](#Rc-swap-noexcept)
+* [C.86: `==`はオペランドに対して対称にし、また、`noexcept`にしましょう](#Rc-eq)
+* [C.87: ベースクラスの `==`に注意しましょう](#Rc-eq-base)
+* [C.89: `hash`は `noexcept`にしましょう](#Rc-hash)
+* [C.90: `memset` や `memcpy` ではなく、コンストラクタと代入演算子に頼りましょう](#Rc-memset)
+
+## <a name="SS-defop"></a>C.defop: デフォルト操作 (Default Operations)
+
+<!--
 By default, the language supplies the default operations with their default semantics.
 However, a programmer can disable or replace these defaults.
+-->
+デフォルトでは、言語はそれらのデフォルトのセマンティクスをもったデフォルトの操作を提供します。
+しかしながら、プログラマはこれらのデフォルトを無効化したり、置き換えることができます。
 
-### <a name="Rc-zero"></a>C.20: If you can avoid defining default operations, do
 
+### <a name="Rc-zero"></a>C.20: もしデフォルトの操作の定義を避けることができるならそうしましょう (If you can avoid defining default operations, do)
+
+<!--
 ##### Reason
 
 It's the simplest and gives the cleanest semantics.
@@ -8067,9 +8631,38 @@ This is known as "the rule of zero".
 
 (Not enforceable) While not enforceable, a good static analyzer can detect patterns that indicate a possible improvement to meet this rule.
 For example, a class with a (pointer, size) pair of members and a destructor that `delete`s the pointer could probably be converted to a `vector`.
+-->
+##### 理由
 
-### <a name="Rc-five"></a>C.21: If you define or `=delete` any copy, move, or destructor function, define or `=delete` them all
+これが最もシンプルかつ、最もクリーンなセマンティクスを与えるからです。
 
+##### 例
+
+    struct Named_map {
+    public:
+        // ... デフォルト操作は宣言されていない ...
+    private:
+        string name;
+        map<int, int> rep;
+    };
+
+    Named_map nm;        // デフォルトコンストラクト
+    Named_map nm2 {nm};  // コピーコンストラクト
+
+`std::map`と `string`はすべての特殊関数をもつため、これ以上の作業は必要ありません。
+
+##### ノート
+
+これは "the rule of zero"として知られています。
+
+##### 実施
+
+(強制的ではありません) 強制的ではありませんが、優れた静的アナライザーは、このルールを満たすための改善の可能性を示すパターンを検出できます。
+たとえば、(ポインタ、サイズ)ペアをメンバーに持ち、ポインタを`delete`するデストラクタを持つクラスは、おそらく`vector`に変換できます。
+
+### <a name="Rc-five"></a>C.21: もしコピー、ムーブ、あるいはデストラクタ関数を定義したり `=delete`した場合は、ほかのすべても定義するか`=delete`しましょう (If you define or `=delete` any copy, move, or destructor function, define or `=delete` them all)
+
+<!--
 ##### Reason
 
 The semantics of copy, move, and destruction are closely related, so if one needs to be declared, the odds are that others need consideration too.
@@ -8174,9 +8767,108 @@ To avoid the tedium and the possibility of errors, try to follow the [rule of ze
 ##### Enforcement
 
 (Simple) A class should have a declaration (even a `=delete` one) for either all or none of the copy/move/destructor functions.
+-->
+##### 理由
 
-### <a name="Rc-matched"></a>C.22: Make default operations consistent
+コピー、ムーブ、そしてデストラクタのセマンティクスは密接に関連しています。したがって、どれかが宣言される必要があるのならば、他のものも考慮する必要がある可能性があります。
 
+コピー/ムーブ/デストラクタのいずれかを宣言あるいは`=default`や`=delete`をすると、ムーブコンストラクタとムーブ代入演算子の暗黙の宣言は抑制されます。
+ムーブコンストラクタやムーブ代入演算子を宣言あるいは`=default`や`=delete`をすると、暗黙に定義されるコピーコンストラクタや代入演算子が削除されるでしょう。
+すべての潜在的なムーブがより高価なコピーになってしまったり、あるいはムーブオンリーなクラスを作ってしまうような、望ましくない効果を避けるために
+これらのいずれかが宣言されたらすぐに、他のものも宣言される必要があります。
+
+##### ダメな例
+
+    struct M2 {   // ダメ: 不完全なコピー/ムーブ/デストラクタ操作群
+    public:
+        // ...
+        // ... コピーやムーブ操作がない ...
+        ~M2() { delete[] rep; }
+    private:
+        pair<int, int>* rep;  // 0終端のペア群
+    };
+
+    void use()
+    {
+        M2 x;
+        M2 y;
+        // ...
+        x = y;   // デフォルト代入
+        // ...
+    }
+
+デストラクタに「特別な注意」を与えることが必要(ここではメモリ解放)なことを考えると、暗黙的に定義されたコピー代入演算子と移動代入演算子が正しい可能性は低くなります (ここでは、二重解放が発生します)。
+
+##### ノート
+
+これは "the rule of five."として知られています。
+
+##### ノート
+
+もしも(他を定義しているのにも関わらず)デフォルトの実装を望む場合は、`=default`と書いて、その関数を意図的にそうしていることを示しましょう。
+もしもデフォルトの関数の生成を望まない場合は、`=delete`を使って抑制しましょう。
+
+##### 良い例
+
+もしもデストラクタを単に `virtual`にしたいのなら、defaultとして定義が可能です。
+
+    class AbstractBase {
+    public:
+        virtual ~AbstractBase() = default;
+        // ...
+    };
+
+[C.67](#Rc-copy-virtual)にしたがってスライシングを防ぐためには、
+コピーやムーブ操作を protectedにするか`=delete`し、そして `clone`を加えます:
+
+    class CloneableBase {
+    public:
+        virtual unique_ptr<CloneableBase> clone() const;
+        virtual ~CloneableBase() = default;
+        CloneableBase() = default;
+        CloneableBase(const CloneableBase&) = delete;
+        CloneableBase& operator=(const CloneableBase&) = delete;
+        CloneableBase(CloneableBase&&) = delete;
+        CloneableBase& operator=(CloneableBase&&) = delete;
+        // ... 他のコンストラクタや関数群 ...
+    };
+
+ムーブや移動操作のみを定義することでも、ここでは同様の効果を持つでしょう。
+しかしそれぞれの特殊メンバーに意図を明示的に記述することは、読み手に対してより明確になります。
+
+##### ノート
+
+コンパイラはこのルールの多くを強制し、理想的には違反について警告します。
+
+##### ノート
+
+デストラクタを持つクラスが暗黙的に生成されたコピー操作に依存することは、非推奨になります。
+
+##### ノート
+
+これらの関数を作成すると、エラーが発生しやすくなります。
+引数の型に注意してください:
+
+    class X {
+    public:
+        // ...
+        virtual ~X() = default;            // デストラクタ (Xがベースクラスになるのなら virtual)
+        X(const X&) = default;             // コピーコンストラクタ
+        X& operator=(const X&) = default;  // コピー代入演算子
+        X(X&&) = default;                  // ムーブコンストラクタ
+        X& operator=(X&&) = default;       // ムーブ代入演算子
+    };
+
+ちょっとした間違い (スペルミス、`const`の省略、`&&`の代わりに`&`の使用、または特殊関数の省略など) によって、エラーまたは警告が発生する可能性があります。
+退屈さやエラーの可能性を避けるために、[rule of zero](#Rc-zero)に従うことにトライしてください。
+
+##### 実施
+
+(シンプル) コピー/ムーブ/デストラクタ関数の、全てを宣言(`=delete`も含みます)するか、あるいは、全ての宣言しないようにすべきです。
+
+### <a name="Rc-matched"></a>C.22: デフォルトの操作に一貫性を持たせましょう (Make default operations consistent)
+
+<!--
 ##### Reason
 
 The default operations are conceptually a matched set. Their semantics are interrelated.
@@ -8203,16 +8895,52 @@ These operations disagree about copy semantics. This will lead to confusion and 
 * (Complex) Any member variables written in a copy/move constructor should also be initialized by all other constructors.
 * (Complex) If a copy/move constructor performs a deep copy of a member variable, then the destructor should modify the member variable.
 * (Complex) If a destructor is modifying a member variable, that member variable should be written in any copy/move constructors or assignment operators.
+-->
+##### 理由
 
-## <a name="SS-dtor"></a>C.dtor: Destructors
+デフォルトの操作群は概念的には一致したセットです。それらのセマンティクスは相互に関連しています。
+もしもコピー/ムーブコンストラクタと、コピー/ムーブ代入演算子が、論理的に異なることを行ってしまうと、ユーザーは驚くでしょう。
+もしコンストラクタとデストラクタがリソース管理の観点で一貫性を持っていないと、ユーザーは驚くでしょう。
+もしコピーとムーブが、コンストラクタやデストラクタの動作方法を反映していないと、ユーザーは驚くでしょう。
 
+##### ダメな例
+
+    class Silly {   // ダメ: 一貫性のないコピー操作
+        class Impl {
+            // ...
+        };
+        shared_ptr<Impl> p;
+    public:
+        Silly(const Silly& a) : p(make_shared<Impl>()) { *p = *a.p; }   // 深いコピー
+        Silly& operator=(const Silly& a) { p = a.p; }   // 浅いコピー
+        // ...
+    };
+
+これらの操作はコピーセマンティクスに関して一致していません。これは混乱やバグを引き起こすでしょう。
+
+##### 実施
+
+* (複雑) コピー/ムーブコンストラクタとそれに対応する コピー/ムーブ代入演算子は、同じ参照剥がしレベルで、同じメンバ変数に対して記述されるべきです。
+* (複雑) コピー/ムーブコンストラクタ内で記述されたあらゆるメンバ変数は、ほかのすべてのコンストラクタ内でも初期化されるべきです。
+* (複雑) もし、コピー/ムーブコンストラクタがメンバ変数の深いコピーを行うのなら、デストラクタはそのメンバ変数を変更するべきです。
+* (複雑) もしデストラクタがメンバ変数を変更するのなら、そのメンバ変数はあらゆるコピー/ムーブコンストラクタや代入演算子内で記述されるべきです。
+
+## <a name="SS-dtor"></a>C.dtor: デストラクタ (Destructors)
+
+<!--
 "Does this class need a destructor?" is a surprisingly insightful design question.
 For most classes the answer is "no" either because the class holds no resources or because destruction is handled by [the rule of zero](#Rc-zero);
 that is, its members can take care of themselves as concerns destruction.
 If the answer is "yes", much of the design of the class follows (see [the rule of five](#Rc-five)).
+-->
+「このクラスにデストラクタは必要か?」は驚くほど洞察力に富んだ設計の質問です。
+ほとんどのクラスに対しては「いいえ」です。なぜならそのクラスはリソースを保持していなかったり、あるいは[the rule of zero](#Rc-zero)によってデストラクタが扱われるためです。
+つまり、そのメンバーはデストラクトに関して自分自身のことは自分で行うことができます。
+もし答えが「はい」であるならば、そのクラスの設計のほとんどが[the rule of five](#Rc-five)に従います。
 
-### <a name="Rc-dtor"></a>C.30: Define a destructor if a class needs an explicit action at object destruction
+### <a name="Rc-dtor"></a>C.30: オブジェクトのデストラクト時に明示的にアクションが必要なクラスにかぎり、デストラクタを定義しましょう (Define a destructor if a class needs an explicit action at object destruction)
 
+<!--
 ##### Reason
 
 A destructor is implicitly invoked at the end of an object's lifetime.
@@ -8272,9 +9000,70 @@ If the default destructor is needed, but its generation has been suppressed (e.g
 ##### Enforcement
 
 Look for likely "implicit resources", such as pointers and references. Look for classes with destructors even though all their data members have destructors.
+-->
+##### 理由
 
-### <a name="Rc-dtor-release"></a>C.31: All resources acquired by a class must be released by the class's destructor
+デストラクタはオブジェクトの寿命が尽きるときに暗黙的に呼び出されます。
+もしデフォルトのデストラクタで十分なら、それを使いましょう。
+クラスがそのメンバーのデストラクタの一部ではないコードを実行する必要がある場合にのみ、非デフォルトのデストラクターを定義しましょう。
 
+##### 例
+
+    template<typename A>
+    struct final_action {   // 若干簡略化した
+        A act;
+        final_action(A a) : act{a} {}
+        ~final_action() { act(); }
+    };
+
+    template<typename A>
+    final_action<A> finally(A act)   // アクション型を推論
+    {
+        return final_action<A>{act};
+    }
+
+    void test()
+    {
+        auto act = finally([] { cout << "Exit test\n"; });  // 終了時のアクションを構築
+        // ...
+        if (something) return;   // ここでactが実行される
+        // ...
+    } // ここでactが実行される
+
+`final_action` の目的は、デストラクト時に実行されるコード(通常はラムダ)を取得することです。
+
+##### ノート
+
+クラスがユーザー定義のデストラクタが必要になる2つの一般的なカテゴリがあります:
+
+* デストラクタを持つクラス(例えば `vector`やトランザクションクラス)として表現されていないリソースを持つクラス。
+* トレーサや `final_action`など、主にデストラクト時にアクションを実行するために存在するクラス。
+
+##### ダメな例
+
+    class Foo {   // ダメ; デフォルトコンストラクタを使いましょう
+    public:
+        // ...
+        ~Foo() { s = ""; i = 0; vi.clear(); }  // クリーンアップ
+    private:
+        string s;
+        int i;
+        vector<int> vi;
+    };
+
+デフォルトコンストラクタがベターです。より効率的で、間違いを犯すことがありません。
+
+##### ノート
+
+もしデフォルトのデストラクタが必要であっても、それの生成が抑制される場合(例えば ムーブコンストラクタが定義されているとき)には、`=default`を使いましょう。
+
+##### 実施
+
+ポインタや参照など、「暗黙的なリソース」の可能性があるものを探しましょう。すべてのデータメンバにデストラクタがあるにもかかわらず、デストラクタを持つクラスを探しましょう。
+
+### <a name="Rc-dtor-release"></a>C.31: クラスによって獲得されたすべてのリソースは、そのクラスのデストラクタで解放しましょう (All resources acquired by a class must be released by the class's destructor)
+
+<!--
 ##### Reason
 
 Prevention of resource leaks, especially in error cases.
@@ -8329,9 +9118,65 @@ Here `p` refers to `pp` but does not own it.
   (e.g., deemed owners by using `gsl::owner`), then they should be referenced in its destructor.
 * (Hard) Determine if pointer or reference member variables are owners when there is no explicit statement of ownership
   (e.g., look into the constructors).
+-->
+##### 理由
 
-### <a name="Rc-dtor-ptr"></a>C.32: If a class has a raw pointer (`T*`) or reference (`T&`), consider whether it might be owning
+リソースリークを防ぐため、とくにエラーの場合に。
 
+##### ノート
+
+リソースがデフォルト操作群の完全なセットを持ったクラスとして表現されている場合は、これは自動的に行われます。
+
+##### 例
+
+    class X {
+        ifstream f;   // ファイルを所有するかもしれない
+        // ... デフォルト操作が定義されないか、あるいは =deleted ...
+    };
+
+`X`'の `ifstream` は`X`がデストラクトされると、開いていたファイルを暗黙的にクローズします。
+
+##### ダメな例
+
+    class X2 {     // ダメ
+        FILE* f;   // ファイルを所有するかもしれない
+        // ... デフォルト操作が定義されないか、あるいは =deleted ...
+    };
+
+`X2` はファイルハンドルをリークするでしょう。
+
+##### ノート
+
+ソケットが閉じない場合はどうなりますか? デストラクタ、クローズ、またはクリーンアップ操作は [決して失敗してはなりません](#Rc-dtor-fail)。
+それでもそうなる場合は、本当に良い解決策がない問題があります。
+まず、デストラクタの作成者は、デストラクタが呼び出される理由がわからず、また例外をスローして「動作を拒否」することはできません。
+[discussion](#Sd-never-fail)を参照.
+問題をさらに悪化させるのは、多くの「クローズ/リリース」操作が再試行できないことです。
+多くの人がこの問題を解決しようと試みてきましたが、一般的な解決策は知られていません。
+可能であれば、クローズ/クリーンアップの失敗は基本的な設計エラーとして考え、実行を終了してください。
+
+##### ノート
+
+クラスは自身が保有していないオブジェクトへのポインタや参照をもつことができます。
+明らかに、そのようなオブジェクトはそのクラスのデストラクタによって `delete`されるべきではありません。
+例えば:
+
+    Preprocessor pp { /* ... */ };
+    Parser p { pp, /* ... */ };
+    Type_checker tc { p, /* ... */ };
+
+ここで `p` は `pp`を参照していますが、それを保有していはいません。
+
+##### 実施
+
+* (Simple) If a class has pointer or reference member variables that are owners
+  (e.g., deemed owners by using `gsl::owner`), then they should be referenced in its destructor.
+* (Hard) Determine if pointer or reference member variables are owners when there is no explicit statement of ownership
+  (e.g., look into the constructors).
+
+### <a name="Rc-dtor-ptr"></a>C.32: もしクラスが生ポインタ(`T*`)や参照(`T&`)を持つ場合、それらを所有できないか検討しましょう (If a class has a raw pointer (`T*`) or reference (`T&`), consider whether it might be owning)
+
+<!--
 ##### Reason
 
 There is a lot of code that is non-specific about ownership.
@@ -8354,9 +9199,33 @@ pointers and [R.3](#Rr-ptr) for non-owning pointers.  References should never ow
 ##### Enforcement
 
 Look at the initialization of raw member pointers and member references and see if an allocation is used.
+-->
+##### 理由
 
-### <a name="Rc-dtor-ptr2"></a>C.33: If a class has an owning pointer member, define a destructor
+所有権について具体的ではないコードがたくさんあります。
 
+##### 例
+
+    class legacy_class
+    {
+        foo* m_owning;   // ダメ: unique_ptr<T> か owner<T*> に変更しましょう
+        bar* m_observer; // OK: このまま
+    }
+
+所有権を判定する唯一の方法はコード解析でしょう。
+
+##### ノート
+
+新しいコード(そしてリファクタリングされたレガシーコード)では、所有するポインタに対しては[R.20](#Rr-owner)によって、所有しないポインタに対しては[R.3](#Rr-ptr)によって、
+所有権は明確にされるべきです。 参照は決して所有しません [R.4](#Rr-ref)。
+
+##### Enforcement
+
+Look at the initialization of raw member pointers and member references and see if an allocation is used.
+
+### <a name="Rc-dtor-ptr2"></a>C.33: クラスが所有権があるポインタメンバを持つ場合は、デストラクタを定義しましょう (If a class has an owning pointer member, define a destructor)
+
+<!--
 ##### Reason
 
 An owned object must be `deleted` upon destruction of the object that owns it.
@@ -8427,10 +9296,82 @@ That would sometimes require non-trivial code changes and might affect ABIs.
 
 * A class with a pointer data member is suspect.
 * A class with an `owner<T>` should define its default operations.
+-->
+##### 理由
+
+所有されたオブジェクトはそれを保有するオブジェクトのデストラクタによって`deleted`されなければなりません。
+
+##### 例
+
+ポインタメンバはリソースを表現できます。
+[`T*`はそれをすべきではありません](#Rr-ptr)、しかし古いコードでは、それが一般的です。
+`T*` は潜在的な所有者であるため、疑わしいと考えてください。
+
+    template<typename T>
+    class Smart_ptr {
+        T* p;   // ダメ: *pの所有権についてあいまい
+        // ...
+    public:
+        // ... ユーザー定義デフォルト操作がない ...
+    };
+
+    void use(Smart_ptr<int> p1)
+    {
+        // エラー: p2.p がリーク (もし nullptrでなく、何か他のコードによって所有されていない場合)
+        auto p2 = p1;
+    }
+
+デストラクタを定義する場合は、[すべてのデフォルト操作](#Rc-five) を定義または削除する必要があることに注意してください:
+
+    template<typename T>
+    class Smart_ptr2 {
+        T* p;   // ダメ: *pの所有権についてあいまい
+        // ...
+    public:
+        // ... ユーザー定義コピー操作がない ...
+        ~Smart_ptr2() { delete p; }  // pは所有者!
+    };
+
+    void use(Smart_ptr2<int> p1)
+    {
+        auto p2 = p1;   // エラー: 2重解放
+    }
+
+デフォルトのコピー操作は単に`p1.p`を`p2.p`にコピーするだけなので、`p1.p`の2重解放が発生するでしょう。所有権について明示しましょう:
+
+    template<typename T>
+    class Smart_ptr3 {
+        owner<T*> p;   // OK: *pの所有権を明示
+        // ...
+    public:
+        // ...
+        // ... コピー操作とムーブ操作 ...
+        ~Smart_ptr3() { delete p; }
+    };
+
+    void use(Smart_ptr3<int> p1)
+    {
+        auto p2 = p1;   // OK: 2重解放は発生しない
+    }
+
+##### ノート
+
+多くの場合、デストラクタを取得する最も簡単な方法は、ポインタをスマートポインタ (例: `std::unique_ptr`) に置き換え、適切な破棄が暗黙的に行われるようにコンパイラに手配させることです。
+
+##### ノート
+
+所有するすべてのポインタを「スマートポインタ」にすることを要求しないのはなぜでしょうか?
+それは、場合によっては重要なコード変更が必要となり、ABI に影響を与える可能性があるためです。
+
+##### Enforcement
+
+* A class with a pointer data member is suspect.
+* A class with an `owner<T>` should define its default operations.
 
 
-### <a name="Rc-dtor-virtual"></a>C.35: A base class destructor should be either public and virtual, or protected and non-virtual
+### <a name="Rc-dtor-virtual"></a>C.35: ベースクラスのデストラクタは、publicかつvirtualにするか、あるいは protectedかつ非virtualのどちらかにしましょう (A base class destructor should be either public and virtual, or protected and non-virtual)
 
+<!--
 ##### Reason
 
 To prevent undefined behavior.
@@ -8489,9 +9430,69 @@ We can imagine one case where you could want a protected virtual destructor: Whe
 
 * A class with any virtual functions should have a destructor that is either public and virtual or else protected and non-virtual.
 * If a class inherits publicly from a base class, the base class should have a destructor that is either public and virtual or else protected and non-virtual.
+-->
+##### 理由
 
-### <a name="Rc-dtor-fail"></a>C.36: A destructor must not fail
+未定義動作を防ぐため。
+デストラクタがpublicの場合、呼び出し元のコードはベースクラスのポインタを介して派生クラスのオブジェクトのデストラクトを試みることができます。ベースクラスのデストラクタが非virtualの場合、その結果は未定義です。
+デストラクタがprotectedの場合、呼び出し元のコードはベースクラスのポインタを介してデストラクトできず、デストラクタはvirtualである必要はありません。派生のデストラクタから呼び出せるように、privateではなくprotectedにする必要があります。
+一般に、ベースクラスの作成者は、デストラクト時に実行すべき適切なアクションを知りません。
 
+##### 議論
+
+[this in the Discussion section](#Sd-dtor)を参照.
+
+##### ダメな例
+
+    struct Base {  // ダメ: publicで非virtualなデストラクタを暗黙的にもつ
+        virtual void f();
+    };
+
+    struct D : Base {
+        string s {"a resource needing cleanup"};
+        ~D() { /* ... 何らかのクリーンアップ処理 ... */ }
+        // ...
+    };
+
+    void use()
+    {
+        unique_ptr<Base> p = make_unique<D>();
+        // ...
+    } // pのデストラクタ呼び出しは ~D()でなく ~Base()になり、D::s やその他がリークします
+
+##### ノート
+
+virtual関数は、派生クラスを参照せずに使用できる派生クラスへのインターフェイスを定義します。
+インターフェイスでデストラクトが許可されている場合は、安全にデストラクトできるようにするべきです。
+
+##### ノート
+
+デストラクタは非privateである必要があります、そもないと、その型の利用を妨げます:
+
+    class X {
+        ~X();   // privateなデストラクタ
+        // ...
+    };
+
+    void use()
+    {
+        X a;                        // エラー: デストラクトできない
+        auto p = make_unique<X>();  // エラー: デストラクトできない
+    }
+
+##### 例外
+
+protectedでvirtualなデストラクタが必要になるケースを想像できます。それは、派生型(そしてそのような型のみ)のオブジェクトが、ベースクラスへのポインタを介して *別の*オブジェクト(自分自身ではない)をデストラクトできるようにする必要がある場合です。ただし、実際にはそのようなケースは見たことがありません。
+
+
+##### 実施
+
+* 何らかのvirtual関数をもつクラスは、publicかつvirtualであるか、protectedかつ非virtualのどちらかのデストラクタをもつ必要があります。
+* クラスがベースクラスからパブリックに継承している場合、ベースクラスはpublicかつvirtualであるか、protectedかつ非virtualのどちらかのデストラクタをもつ必要があります。
+
+### <a name="Rc-dtor-fail"></a>C.36: デストラクタは失敗してはいけません (A destructor must not fail)
+
+<!--
 ##### Reason
 
 In general we do not know how to write error-free code if a destructor should fail.
@@ -8543,9 +9544,62 @@ If a destructor uses operations that could fail, it can catch exceptions and in 
 ##### Enforcement
 
 (Simple) A destructor should be declared `noexcept` if it could throw.
+-->
+##### 理由
 
-### <a name="Rc-dtor-noexcept"></a>C.37: Make destructors `noexcept`
+一般に、デストラクタが失敗した場合にエラーのないコードを記述する方法はわかりません。
+標準ライブラリは処理するすべてのクラスに、例外スローによって終了しないデストラクタを持つことを要求しています。
 
+##### 例
+
+    class X {
+    public:
+        ~X() noexcept;
+        // ...
+    };
+
+    X::~X() noexcept
+    {
+        // ...
+        if (cannot_release_a_resource) terminate();
+        // ...
+    }
+
+##### ノート
+
+多くの人が、デストラクタの失敗に対処するための絶対確実なスキームを考案しようと試みてきました。
+一般的なスキームを思いつくことに成功した人は誰もいません。
+これは実際的な問題になる可能性があります: たとえば、閉じないソケットはどうなるでしょうか?
+デストラクタの作成者は、デストラクタが呼び出される理由がわからないため、例外をスローして「動作を拒否」することはできません。
+[discussion](#Sd-never-fail)を参照してください。
+問題をさらに悪化させるのは、多くの「クローズ/リリース」操作が再試行できないことです。
+可能であれば、クローズ/クリーンアップの失敗を根本的な設計エラーとし、プログラムの実行を終了することを検討してください。
+
+##### ノート
+
+デストラクタを`noexcept`と宣言しましょう。こうすることで正常に処理されるか、あるいは、プログラムが終了するかのどちらかを確実にできるでしょう。
+
+##### ノート
+
+リソースを解放できず、プログラムが失敗してはいけない場合は、何らかの方法でシステムの残りの部分に失敗を通知することを試しましょう
+(おそらく、何らかのグローバルなステートを変更することで、何かが問題に気づき、それに対処できることを期待します)。
+この手法は特殊な目的に使用され、間違いが発生しやすいことを十分に認識してください。
+「接続がクローズされない」という例を考えてみましょう。
+おそらく、接続のもう一方の端に問題があり、接続の両端を担当するコードのみが問題を適切に処理できます。
+デストラクタはシステムの責任部分にメッセージを(何らかの方法で)送信し、それが接続を閉じたとみなして、通常どおりに戻ることができます。
+
+##### ノート
+
+デストラクタが失敗しうる操作を行う場合、例外をキャッチし、場合によっては正常に完了する可能性があります
+(例: 例外をスローしたメカニズムとは異なるクリーンアップメカニズムを使用するなど)。
+
+##### 実施
+
+(Simple) A destructor should be declared `noexcept` if it could throw.
+
+### <a name="Rc-dtor-noexcept"></a>C.37: デストラクタは`noexcept`にしましょう (Make destructors `noexcept`)
+
+<!--
 ##### Reason
 
  [A destructor must not fail](#Rc-dtor-fail). If a destructor tries to exit with an exception, it's a bad design error and the program had better terminate.
@@ -8574,13 +9628,48 @@ Because that would in many cases -- especially simple cases -- be distracting cl
 ##### Enforcement
 
 (Simple) A destructor should be declared `noexcept` if it could throw.
+-->
+##### 理由
 
-## <a name="SS-ctor"></a>C.ctor: Constructors
+ [デストラクタは失敗してはいけません](#Rc-dtor-fail)。 もしデストラクタが例外をスローして抜け出したい場合は、それは悪い設計エラーであるため、プログラムを終了したほうがよいでしょう。
 
+##### ノート
+
+デストラクタ(ユーザー定義でもコンパイラ自動生成でも)は、そのクラスのすべてのメンバが `noexcept`なデストラクタを持つ場合は、暗黙的に`noexcept`と(本体内のコードの内容に関係なく)宣言されます。
+デストラクタに明示的に `noexcept`とマークすることにより、作成者は、クラスメンバーの追加または変更によってデストラクタが暗黙的に`noexcept(false)`になることを防げます。
+
+##### 例
+
+すべてのデストラクタがデフォルトで `noexcept` であるわけではありません。 1人の例外を投げるメンバーが、クラス階層全体に毒を与えます。
+
+    struct X {
+        Details x;  // 図らずも例外を投げるデストラクタ
+        // ...
+        ~X() { }    // 暗黙的に noexcept(false); つまり、例外をスローしうる
+    };
+
+したがって、疑わしい場合は、デストラクタを`noexcept`と宣言してください。
+
+##### ノート
+
+それでは、なぜすべてのデストラクタを `noexcept`として宣言しないのでしょうか?
+それは多くの場合、特に単純な場合には、気が散る乱雑さになるからです。
+
+##### 実施
+
+(Simple) A destructor should be declared `noexcept` if it could throw.
+
+## <a name="SS-ctor"></a>C.ctor: コンストラクタ (Constructors)
+
+<!--
 A constructor defines how an object is initialized (constructed).
+-->
+コンストラクタはオブジェクトがどのように初期化(コンストラクト)されるかを定義します。
 
-### <a name="Rc-ctor"></a>C.40: Define a constructor if a class has an invariant
 
+### <a name="Rc-ctor"></a>C.40: クラスが不変条件を持つ場合はコンストラクタを定義しましょう (Define a constructor if a class has an invariant)
+
+<!--
 ##### Reason
 
 That's what constructors are for.
@@ -8636,9 +9725,65 @@ Also, the default for `int` would be better done as a [member initializer](#Rc-i
 ##### Enforcement
 
 * Flag classes with user-defined copy operations but no constructor (a user-defined copy is a good indicator that the class has an invariant)
+-->
+##### 理由
 
-### <a name="Rc-complete"></a>C.41: A constructor should create a fully initialized object
+それがコンストラクタの目的です。
 
+##### 例
+
+    class Date {  // Dateは1900年1月1日から2100年12月31日の範囲内の有効な日付を表現する
+        Date(int dd, int mm, int yy)
+            :d{dd}, m{mm}, y{yy}
+        {
+            if (!is_valid(d, m, y)) throw Bad_date{};  // 不変条件を強制
+        }
+        // ...
+    private:
+        int d, m, y;
+    };
+
+コンストラクタの`Ensures`によって不変条件を表現することは、良い考えです。
+
+##### ノート
+
+クラスが不変条件を持っていない場合でも、コンストラクタは便利に使えます。 例えば:
+
+    struct Rec {
+        string s;
+        int i {0};
+        Rec(const string& ss) : s{ss} {}
+        Rec(int ii) :i{ii} {}
+    };
+
+    Rec r1 {7};
+    Rec r2 {"Foo bar"};
+
+##### ノート
+
+C++の初期化子リストのルールは、多くのコンストラクタの必要性をなくします。例えば:
+
+    struct Rec2{
+        string s;
+        int i;
+        Rec2(const string& ss, int ii = 0) :s{ss}, i{ii} {}   // 冗長
+    };
+
+    Rec2 r1 {"Foo", 7};
+    Rec2 r2 {"Bar"};
+
+`Rec2`のコンストラクタは冗長です。
+また、`int` のデフォルトは [メンバー初期化子](#Rc-in-class-initializer) として行う方がよいでしょう。
+
+**See also**: [construct valid object](#Rc-complete) and [constructor throws](#Rc-throw).
+
+##### 実施
+
+* ユーザー定義コピー演算子を持つけれど、コンストラクタを持たないクラスにフラグを立てましょう(ユーザー定義コピーはクラスが不変条件をもつ良いインジケーターになります)。
+
+### <a name="Rc-complete"></a>C.41: コンストラクタは完全に初期化されたオブジェクトを生成しましょう (A constructor should create a fully initialized object)
+
+<!--
 ##### Reason
 
 A constructor establishes the invariant for a class. A user of a class should be able to assume that a constructed object is usable.
@@ -8679,9 +9824,51 @@ If a valid object cannot conveniently be constructed by a constructor, [use a fa
 
 If a constructor acquires a resource (to create a valid object), that resource should be [released by the destructor](#Rc-dtor-release).
 The idiom of having constructors acquire resources and destructors release them is called [RAII](#Rr-raii) ("Resource Acquisition Is Initialization").
+-->
+##### 理由
 
-### <a name="Rc-throw"></a>C.42: If a constructor cannot construct a valid object, throw an exception
+コンストラクタはクラスに対して不変条件を確立します。 クラスのユーザーはコンストラクトされたオブジェクトは使用可能であると推測できるようにするべきです。
 
+##### ダメな例
+
+    class X1 {
+        FILE* f;   // 他の関数より前に init() を呼び出すこと
+        // ...
+    public:
+        X1() {}
+        void init();   // fの初期化
+        void read();   // fから読み込み
+        // ...
+    };
+
+    void f()
+    {
+        X1 file;
+        file.read();   // クラッシュ または 間違った読み込み!
+        // ...
+        file.init();   // 遅すぎる
+        // ...
+    }
+
+コンパイラはコメントを読みません。
+
+##### 例外
+
+有効なオブジェクトをコンストラクタで簡単に構築できない場合は、[ファクトリ関数を使用](#Rc-factory)してください。
+
+##### 実施
+
+* (シンプル) すべてのコンストラクタはすべてのメンバ変数を初期化するべき (明示的に、あるいはコンストラクタ呼び出しで委譲、あるいはデフォルトコンストラクタによって)。
+* (Unknown) If a constructor has an `Ensures` contract, try to see if it holds as a postcondition.
+
+##### ノート
+
+コンストラクタが(有効なオブジェクトを生成するために)リソースを取得する場合は、それらのリソースは[デストラクタで解放](#Rc-dtor-release)されるです。
+コンストラクタがリソースを取得し、デストラクタがそれらを解放するイディオムは、[RAII](#Rr-raii) (「リソースの確保は初期化時に」)と呼ばれます。
+
+### <a name="Rc-throw"></a>C.42: コンストラクタが有効なオブジェクトを構築できない場合は例外を投げましょう (If a constructor cannot construct a valid object, throw an exception)
+
+<!--
 ##### Reason
 
 Leaving behind an invalid object is asking for trouble.
@@ -8768,9 +9955,97 @@ Another reason has been to delay initialization until an object is needed; the s
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rc-default0"></a>C.43: Ensure that a copyable class has a default constructor
+無効なオブジェクトを残すとトラブルが発生します。
 
+##### 例
+
+    class X2 {
+        FILE* f;
+        // ...
+    public:
+        X2(const string& name)
+            :f{fopen(name.c_str(), "r")}
+        {
+            if (!f) throw runtime_error{"could not open" + name};
+            // ...
+        }
+
+        void read();      // fから読み込む
+        // ...
+    };
+
+    void f()
+    {
+        X2 file {"Zeno"}; // fileがオープンできない場合は例外をスロー
+        file.read();      // fine
+        // ...
+    }
+
+##### ダメな例
+
+    class X3 {     // ダメ: コンストラクタは無効なオブジェクトを残す
+        FILE* f;   // 他のあらゆる関数呼び出し前に is_valid() を呼ぶこと
+        bool valid;
+        // ...
+    public:
+        X3(const string& name)
+            :f{fopen(name.c_str(), "r")}, valid{false}
+        {
+            if (f) valid = true;
+            // ...
+        }
+
+        bool is_valid() { return valid; }
+        void read();   // f から読み込む
+        // ...
+    };
+
+    void f()
+    {
+        X3 file {"Heraclides"};
+        file.read();   // クラッシュ または 間違った読み込み!
+        // ...
+        if (file.is_valid()) {
+            file.read();
+            // ...
+        }
+        else {
+            // ... エラー処理 ...
+        }
+        // ...
+    }
+
+##### ノート
+
+変数定義(スタック上または別のオブジェクトのメンバーなど)の場合、エラーコードが返される明示的な関数呼び出しはありません。
+無効なオブジェクトを残し、使用前にユーザーが `is_valid()` 関数を一貫してチェックすることに依存するのは、面倒でエラーが発生しやすく、非効率的です。
+
+##### 例外
+
+一部のハードリアルタイムシステム(飛行機の制御を考えてください) など、(追加のツールサポートがなければ)例外処理がタイミングの観点から十分に予測できない領域があります。
+そこでは `is_valid()` テクニックを使用する必要があります。このような場合は、`is_valid()` を一貫して即座にチェックすることで、[RAII](#Rr-raii) をシミュレートします。
+
+##### 代替策
+
+「コンストラクタ後の初期化」または「2段階の初期化」というイディオムを使用したくなる場合は、それを使用しないようにしてください。
+どうしても必要な場合は、[ファクトリ関数](#Rc-factory) を参照してください。
+
+##### ノート
+
+人々がコンストラクタで初期化作業を行うのではなく `init()` 関数を使用する理由の 1つは、コードの複製を避けるためです。
+[委譲コンストラクタ](#Rc-delegating) や [デフォルトメンバー初期化](#Rc-in-class-initializer) はそれをより良くこなします。
+もう1つの理由は、オブジェクトが必要になるまで初期化を遅らせることです。その解決策は多くの場合、[適切に初期化できるまで変数を宣言しない](#Res-init) です。
+
+##### 実施
+
+???
+
+### <a name="Rc-default0"></a>C.43: コピー可能なクラスにはデフォルトコンストラクタがあることを確認しましょう (Ensure that a copyable class has a default constructor)
+
+<!--
 ##### Reason
 
 That is, ensure that if a concrete class is copyable it also satisfies the rest of "semiregular."
@@ -8887,10 +10162,127 @@ However, it is preferable to have a default constructor default to a meaningful 
 
 * Flag classes that are copyable by `=` without a default constructor
 * Flag classes that are comparable with `==` but not copyable
+-->
+##### 理由
+
+つまり、具象クラスがコピー可能であれば、それが残りの「準正則」も満たしていることを確認してください。
+
+多くの言語やライブラリの機能は、それらの要素の初期化のためにデフォルトコンストラクタに頼っています。 例えば、`T a[10]`や`std::vector<T> v(10)`などです。
+多くの場合、デフォルトコンストラクタはコピーも可能な型に対して、適切な[ムーブ元の状態](#???)の定義をするタスクを簡単にします。
+
+##### 例
+
+    class Date { // ダメ: デフォルトコンストラクタがない
+    public:
+        Date(int dd, int mm, int yyyy);
+        // ...
+    };
+
+    vector<Date> vd1(1000);   // デフォルトの日付が必要
+    vector<Date> vd2(1000, Date{7, Month::October, 1885});   // 代替策
+
+デフォルトコンストラクタはユーザー定義コンストラクタがない場合にかぎり、自動生成されます。したがって、上の例では vector `vd1`の初期化は不可能です。
+デフォルト値の欠如は、ユーザーに驚きをもたらし、利用することが複雑になります。したがって、それがリーズナブルに定義できるのなら、そうするべきです。
+
+`Date`は思考を促すために選択されています:
+「自然な」デフォルトの日付がありません(ビッグバンはあまりにも昔すぎて、ほとんどの人にとって役に立ちません)。したがって、この例は簡単ではありません。
+`{0, 0, 0}` は多くのカレンダーシステムでは有効な日付ではありません。 したがってそれを選択すると、浮動小数点数の`NaN`のようなものを導入することになります。
+しかしながら、多くの現実的な `Date`クラスは 「最初の日」(例えば、1970年1月1日がポピュラーです)を持ちます。したがって、それをデフォルトにすることが、通常簡単です。
+
+    class Date {
+    public:
+        Date(int dd, int mm, int yyyy);
+        Date() = default; // [See also](#Rc-default)
+        // ...
+    private:
+        int dd {1};
+        int mm {1};
+        int yyyy {1970};
+        // ...
+    };
+
+    vector<Date> vd1(1000);
+
+##### ノート
+
+メンバーのすべてがデフォルトコンストラクタをもつクラスは、暗黙的にデフォルトコンストラクタを得ます:
+
+    struct X {
+        string s;
+        vector<int> v;
+    };
+
+    X x; // X{{}, {}}を意味する; これは空の文字列と空のvector
+
+組み込み型はデフォルトで適切にコンストラクトされないことに注意してください:
+
+    struct X {
+        string s;
+        int i;
+    };
+
+    void f()
+    {
+        X x;    // x.s は空文字列で初期化される; x.i は初期化されない
+
+        cout << x.s << ' ' << x.i << '\n';
+        ++x.i;
+    }
+
+スタティックに割り当てられた組み込み型のオブジェクトはデフォルトで '0' に初期化されますが、ローカルの組み込み型の変数は初期化されません。
+コンパイラはデフォルトでローカルの組み込み型変数を初期化する場合がありますが、最適化されたビルドでは初期化されないことに注意してください。
+したがって、上記の例のようなコードは動作しているように見えますが、未定義の動作に依存しています。
+初期化が必要な場合は、明示的なデフォルトの初期化が役立ちます:
+
+    struct X {
+        string s;
+        int i {};   // デフォルトの初期化 (0になる)
+    };
+
+##### ノート
+
+リーズナブルなデフォルトコンストラクタを持たないクラスは、多くの場合、コピー不可になります。したがってこのガイドラインには該当しません。
+
+例えば、ベースクラスはコピー不可にするべきで、したがって、デフォルトコンストラクタは不要です:
+
+    // Shape は抽象ベースクラスでコピー不可な型
+    // デフォルトのコンストラクタが必要な場合もあれば、必要ない場合もあります
+    struct Shape {
+        virtual void draw() = 0;
+        virtual void rotate(int) = 0;
+        // =delete copy/move functions
+        // ...
+    };
+
+コンストラクト中に呼び出し元が提供するリソースを取得する必要があるクラスは、デフォルトのコンストラクタを持つことができないことがよくありますが、そのようなクラスは通常はいずれにせよコピーできないため、このガイドラインには当てはまりません:
+
+    // std::lock_guard はコピー不可な型
+    // デフォルトコンストラクタは持たない
+    lock_guard g {mx};  // guard the mutex mx
+    lock_guard g2;      // error: guarding nothing
+
+メンバ関数やユーザーから他のステートとは分けて扱われるべき「特別なステート」を持つクラスは余分な作業が発生します(そしておそらくさらに多くのエラーが生じます)。
+そのような型はコピーの可/不可にかかわらず、デフォルトでコンストラクトされる値として特殊なステートを自然に使います:
+
+    // std::ofstream はコピー不可な型
+    // "not open"という特殊なステートになるデフォルトのコンストラクタを持つ
+    ofstream out {"Foobar"};
+    // ...
+    out << log(time, transaction);
+
+コピー可能な同様な特殊な型、たとえば"==nullptr"という特殊ステートを持つコピー可能なスマートポインタのようなものですが、それらは特殊なステートをデフォルトでコンストラクトされる値として扱うべきです。
+
+ただし、デフォルトコンストラクタを `std::string` の `""` や `std::vector` の `{}` などのような意味のあるステートにデフォルト設定することが望ましいです。
+
+##### 実施
+
+* `=`によってコピー可能であり、デフォルトコンストラクタを持たないクラスにフラグを立てましょう。
+* `==`で比較可能であるがコピー不可なクラスにフラグを立てましょう。
 
 
-### <a name="Rc-default00"></a>C.44: Prefer default constructors to be simple and non-throwing
+### <a name="Rc-default00"></a>C.44: デフォルトコンストラクタはシンプルで、例外を投げないものを好みましょう (Prefer default constructors to be simple and non-throwing)
 
+<!--
 ##### Reason
 
 Being able to set a value to "the default" without operations that might fail simplifies error handling and reasoning about move operations.
@@ -8936,9 +10328,56 @@ Setting a `Vector1` to empty after detecting an error is trivial.
 ##### Enforcement
 
 * Flag throwing default constructors
+-->
+##### 理由
 
-### <a name="Rc-default"></a>C.45: Don't define a default constructor that only initializes data members; use in-class member initializers instead
+失敗する可能性のある操作を行わずに値を「デフォルト」に設定できるため、エラー処理やムーブ操作に関する推論が簡素化されます。
 
+##### 問題のある例
+
+    template<typename T>
+    // elem points to space-elem element allocated using new
+    class Vector0 {
+    public:
+        Vector0() :Vector0{0} {}
+        Vector0(int n) :elem{new T[n]}, space{elem + n}, last{elem} {}
+        // ...
+    private:
+        own<T*> elem;
+        T* space;
+        T* last;
+    };
+
+これは一般的で便利ですが、エラー後に `Vector0` を空に設定することは、割り当てが必要になり、失敗する可能性があります。
+また、デフォルトの `Vector` を `{new T[0], 0, 0}` として表すのは無駄に思えます。
+例えば、`Vector0<int> v[100]`は100回のアロケーションのコストがかかります。
+
+##### 例
+
+    template<typename T>
+    // elem is nullptr or elem points to space-elem element allocated using new
+    class Vector1 {
+    public:
+        // sets the representation to {nullptr, nullptr, nullptr}; doesn't throw
+        Vector1() noexcept {}
+        Vector1(int n) :elem{new T[n]}, space{elem + n}, last{elem} {}
+        // ...
+    private:
+        own<T*> elem {};
+        T* space {};
+        T* last {};
+    };
+
+`{nullptr, nullptr, nullptr}` は `Vector1{}` を安価にします。しかし特殊なケースとなり、実行時チェックを意味します。
+エラー後に`Vector1`を空に設定することは容易です。
+
+##### 実施
+
+* 例外を投げるデフォルトコンストラクタにフラグを立てましょう。
+
+### <a name="Rc-default"></a>C.45: データメンバを初期化するのみのデフォルトコンストラクタを定義しないようにしましょう; 代わりに クラス内メンバ初期化を使いましょう (Don't define a default constructor that only initializes data members; use in-class member initializers instead)
+
+<!--
 ##### Reason
 
 Using in-class member initializers lets the compiler generate the function for you. The compiler-generated function can be more efficient.
@@ -8966,9 +10405,38 @@ Using in-class member initializers lets the compiler generate the function for y
 ##### Enforcement
 
 (Simple) A default constructor should do more than just initialize member variables with constants.
+-->
+##### 理由
 
-### <a name="Rc-explicit"></a>C.46: By default, declare single-argument constructors explicit
+クラス内メンバ初期化を使用すると、コンパイラはあなたのために関数を生成します。コンパイラが生成した関数はより効率的です。
 
+##### 悪い例
+
+    class X1 { // ダメ: メンバ初期化を使わない
+        string s;
+        int i;
+    public:
+        X1() :s{"default"}, i{1} { }
+        // ...
+    };
+
+##### 例
+
+    class X2 {
+        string s {"default"};
+        int i {1};
+    public:
+        // コンパイラ生成のデフォルトコンストラクタを使用
+        // ...
+    };
+
+##### 実施
+
+(シンプル) デフォルトコンストラクタはメンバ変数の定数による初期化よりも複雑なことをすべきです。
+
+### <a name="Rc-explicit"></a>C.46: デフォルトでは、単一引数のコンストラクタは `explicit`と宣言しましょう (By default, declare single-argument constructors explicit)
+
+<!--
 ##### Reason
 
 To avoid unintended conversions.
@@ -9004,9 +10472,46 @@ Copy and move constructors should not be made `explicit` because they do not per
 ##### Enforcement
 
 (Simple) Single-argument constructors should be declared `explicit`. Good single argument non-`explicit` constructors are rare in most code bases. Warn for all that are not on a "positive list".
+-->
+##### 理由
 
-### <a name="Rc-order"></a>C.47: Define and initialize member variables in the order of member declaration
+意図しない変換を避けるため。
 
+##### 悪い例
+
+    class String {
+    public:
+        String(int);   // ダメ
+        // ...
+    };
+
+    String s = 10;   // サプライズ: サイズが 10の string
+
+##### 例外
+
+コンストラクタの引数型からクラス型への暗黙の変換が本当に欲しい場合は `explicit`を使わないようにしましょう:
+
+    class Complex {
+    public:
+        Complex(double d);   // OK: dから {d, 0}への変換がほしい
+        // ...
+    };
+
+    Complex z = 10.7;   // サプライズのない変換
+
+**See also**: [Discussion of implicit conversions](#Ro-conversion)
+
+##### ノート
+
+コピーやムーブコンストラクタは変換として振舞わないため `explicit`にするべきではありません。`explicit`なコピー/ムーブコンストラクタは値を渡したり返したりすることが難しくなります。
+
+##### 実施
+
+(シンプル) 単一引数のコンストラクタは `explicit`宣言されるべきです。 良い単一引数の`explicit`でないコンストラクタは多くのコードベースでレアです。「ポジティブリスト」にないすべてに対して警告しましょう。
+
+### <a name="Rc-order"></a>C.47: メンバ変数の定義や初期化はそれが宣言されている順序で行いましょう (Define and initialize member variables in the order of member declaration)
+
+<!--
 ##### Reason
 
 To minimize confusion and errors. That is the order in which the initialization happens (independent of the order of member initializers).
@@ -9026,11 +10531,32 @@ To minimize confusion and errors. That is the order in which the initialization 
 ##### Enforcement
 
 (Simple) A member initializer list should mention the members in the same order they are declared.
+-->
+##### 理由
+
+混乱とエラーを最小限にするため。 これが初期化が実行される順序です(メンバの初期化の順序とは独立)。
+
+##### ダメな例
+
+    class Foo {
+        int m1;
+        int m2;
+    public:
+        Foo(int x) :m2{x}, m1{++x} { }   // ダメ: 誤解を招く初期化順
+        // ...
+    };
+
+    Foo x(1); // サプライズ: x.m1 == x.m2 == 2
+
+##### 実施
+
+(シンプル) A member initializer list should mention the members in the same order they are declared.
 
 **See also**: [Discussion](#Sd-order)
 
-### <a name="Rc-in-class-initializer"></a>C.48: Prefer in-class initializers to member initializers in constructors for constant initializers
+### <a name="Rc-in-class-initializer"></a>C.48: コンストラクタによる定数でのメンバの初期化はクラス内初期化を好みましょう (Prefer in-class initializers to member initializers in constructors for constant initializers)
 
+<!--
 ##### Reason
 
 Makes it explicit that the same value is expected to be used in all constructors. Avoids repetition. Avoids maintenance problems. It leads to the shortest and most efficient code.
@@ -9077,9 +10603,57 @@ How would a maintainer know whether `j` was deliberately uninitialized (probably
 
 * (Simple) Every constructor should initialize every member variable (either explicitly, via a delegating ctor call or via default construction).
 * (Simple) Default arguments to constructors suggest an in-class initializer might be more appropriate.
+-->
+##### 理由
 
-### <a name="Rc-initialize"></a>C.49: Prefer initialization to assignment in constructors
+すべてのコンストラクタで同じ値が使用されることが期待されることを明示します。繰り返しを避けます。メンテナンスの問題を回避します。これにより、最短かつ最も効率的なコードが得られます。
 
+##### 悪い例
+
+    class X {   // ダメ
+        int i;
+        string s;
+        int j;
+    public:
+        X() :i{666}, s{"qqq"} { }   // jは初期化されない
+        X(int ii) :i{ii} {}         // sは"" で jは初期化されない
+        // ...
+    };
+
+メンテナーは、`j` が意図的に初期化されていないのか (いずれにせよ、おそらく悪い考え) かどうか、また、`s` に、ある場合にはデフォルト値 `""` を、別の場合には `qqq` を与えるのが意図的であるかどうか (ほぼ間違いなくバグ) をどのようにして知るのでしょうか? `j` に関する問題 (メンバーの初期化を忘れる) は、新しいメンバが既存のクラスに追加されるときによく発生します。
+
+##### 例
+
+    class X2 {
+        int i {666};
+        string s {"qqq"};
+        int j {0};
+    public:
+        X2() = default;        // すべてのメンバはそれらのデフォルトで初期化される
+        X2(int ii) :i{ii} {}   // sとjはそれらのデフォルトで初期化される
+        // ...
+    };
+
+**代替策**: コンストラクタのデフォルト引数からも利点の一部を得ることができますし、これは古いコードでは珍しいことではありません。ただし、これはあまり明示的ではなく、より多くの引数が渡されることになり、複数のコンストラクターがある場合は繰り返しになります:
+
+    class X3 {   // ダメ: 明示的でない, 引数渡しのオーバーヘッド
+        int i;
+        string s;
+        int j;
+    public:
+        X3(int ii = 666, const string& ss = "qqq", int jj = 0)
+            :i{ii}, s{ss}, j{jj} { }   // すべてのメンバはそれらのデフォルトで初期化される
+        // ...
+    };
+
+##### 実施
+
+* (Simple) Every constructor should initialize every member variable (either explicitly, via a delegating ctor call or via default construction).
+* (Simple) Default arguments to constructors suggest an in-class initializer might be more appropriate.
+
+### <a name="Rc-initialize"></a>C.49: コンストラクタでの代入よりも初期化を優先しましょう (Prefer initialization to assignment in constructors)
+
+<!--
 ##### Reason
 
 An initialization explicitly states that initialization, rather than assignment, is done and can be more elegant and efficient. Prevents "use before set" errors.
@@ -9120,9 +10694,50 @@ as [a more general way to present arguments to a function](#Rstr-view):
         D(string_view v) : s1{v} { }    // GOOD: directly construct
         // ...
     };
+-->
+##### 理由
 
-### <a name="Rc-factory"></a>C.50: Use a factory function if you need "virtual behavior" during initialization
+初期化は、代入よりも初期化が行われることを明示的に示しており、よりエレガントで効率的になります。 「設定前に使用」エラーを防ぎます。
 
+##### 良い例
+
+    class A {   // 良い
+        string s1;
+    public:
+        A(czstring p) : s1{p} { }    // 良い: ダイレクトにコンストラクト (そして C文字列であることが明示的に名づけられている)
+        // ...
+    };
+
+##### ダメな例
+
+    class B {   // ダメ
+        string s1;
+    public:
+        B(const char* p) { s1 = p; }   // ダメ: デフォルトコンストラクタとそれに続く代入
+        // ...
+    };
+
+    class C {   // 醜い、別名非常に悪い
+        int* p;
+    public:
+        C() { cout << *p; p = new int{10}; }   // 初期化前に使用する事故
+        // ...
+    };
+
+##### さらに良い例
+
+これらの`const char*`の代わりに、C++17の`std::string_view`や`gsl::span<char>`を[a more general way to present arguments to a function](#Rstr-view)として利用できます:
+
+    class D {   // 良い
+        string s1;
+    public:
+        D(string_view v) : s1{v} { }    // 良い: ダイレクトにコンストラクト
+        // ...
+    };
+
+### <a name="Rc-factory"></a>C.50: 初期化中に「仮想的なふるまい」が必要な場合はファクトリ関数を使いましょう (Use a factory function if you need "virtual behavior" during initialization)
+
+<!--
 ##### Reason
 
 If the state of a base class object must depend on the state of a derived part of the object, we need to use a virtual function (or equivalent) while minimizing the window of opportunity to misuse an imperfectly constructed object.
@@ -9191,9 +10806,79 @@ By providing the factory function `create()`, we make construction (on the free 
 Conventional factory functions allocate on the free store, rather than on the stack or in an enclosing object.
 
 **See also**: [Discussion](#Sd-factory)
+-->
+##### 理由
 
-### <a name="Rc-delegating"></a>C.51: Use delegating constructors to represent common actions for all constructors of a class
+ベースクラスのオブジェクトの状態がオブジェクトの派生部分の状態に依存する必要がある場合は、不完全に構築されたオブジェクトが悪用される機会を最小限に抑えながら、仮想関数(または同等のもの)を使用する必要があります。
 
+##### ノート
+
+ファクトリの返り値型は通常は `unique_ptr`にすべきです; 共有したい場合は呼び出し元は`unique_ptr`を `shared_ptr`にムーブすることができます。 ただし、返されたオブジェクトが共有使用になることをファクトリ作成者が知っている場合は、`shared_ptr` を返し、本文で `make_shared` を使用することで、割り当て回数を減らすことができます。
+
+##### 悪い例
+
+    class B {
+    public:
+        B()
+        {
+            /* ... */
+            f(); // ダメ: C.82: コンストラクタやデストラクタ内で仮想関数を呼んではいけません
+            /* ... */
+        }
+
+        virtual void f() = 0;
+    };
+
+##### 例
+
+    class B {
+    protected:
+        class Token {};
+
+    public:
+        explicit B(Token) { /* ... */ }  // 完全には初期化されていないオブジェクトを生成
+        virtual void f() = 0;
+
+        template<class T>
+        static shared_ptr<T> create()    // 共有オブジェクト生成のためのインタフェース
+        {
+            auto p = make_shared<T>(typename T::Token{});
+            p->post_initialize();
+            return p;
+        }
+
+    protected:
+        virtual void post_initialize()   // コンストラクトの後にすぐ呼ばれる
+            { /* ... */ f(); /* ... */ } // 良い: 仮想ディスパッチは安全
+    };
+
+    class D : public B {                 // ある派生クラス
+    protected:
+        class Token {};
+
+    public:
+        explicit D(Token) : B{ B::Token{} } {}
+        void f() override { /* ...  */ };
+
+    protected:
+        template<class T>
+        friend shared_ptr<T> B::create();
+    };
+
+    shared_ptr<D> p = D::create<D>();  // Dオブジェクトを生成
+
+`make_shared`はコンストラクタがpublicであることを要求します。 protectedな `Token`をコンストラクタが要求することによってどこからもパブリックに呼び出されることがありません。これによって、不完全にコンストラクトされたオブジェクトが野生に流出することを避けています。
+ファクトリ関数 `create()`を提供することによって、(フリーストア上での)コンストラクトを便利に行えます。
+
+##### ノート
+
+伝統的なファクトリ関数はスタックやそれを包んでいるオブジェクト上でなく、フリーストア上に割り当てます。
+
+**See also**: [Discussion](#Sd-factory)
+
+### <a name="Rc-delegating"></a>C.51: クラスのすべてのコンストラクタが共通の動作を表すためには 委譲コンストラクタを使いましょう (Use delegating constructors to represent common actions for all constructors of a class)
+
+<!--
 ##### Reason
 
 To avoid repetition and accidental differences.
@@ -9238,9 +10923,55 @@ The common action gets tedious to write and might accidentally not be common.
 ##### Enforcement
 
 (Moderate) Look for similar constructor bodies.
+-->
+##### 理由
 
-### <a name="Rc-inheriting"></a>C.52: Use inheriting constructors to import constructors into a derived class that does not need further explicit initialization
+繰り返しや、偶発的な違いを避けるため。
 
+##### ダメな例
+
+    class Date {   // ダメ: 繰り返し
+        int d;
+        Month m;
+        int y;
+    public:
+        Date(int dd, Month mm, year yy)
+            :d{dd}, m{mm}, y{yy}
+            { if (!valid(d, m, y)) throw Bad_date{}; }
+
+        Date(int dd, Month mm)
+            :d{dd}, m{mm} y{current_year()}
+            { if (!valid(d, m, y)) throw Bad_date{}; }
+        // ...
+    };
+
+共通のアクションは書くのが面倒で、誤って共通でなくなる可能性があります。
+
+##### 例
+
+    class Date2 {
+        int d;
+        Month m;
+        int y;
+    public:
+        Date2(int dd, Month mm, year yy)
+            :d{dd}, m{mm}, y{yy}
+            { if (!valid(d, m, y)) throw Bad_date{}; }
+
+        Date2(int dd, Month mm)
+            :Date2{dd, mm, current_year()} {}
+        // ...
+    };
+
+**See also**: 「繰り返しアクション」がシンプルな初期化であるなら [クラス内メンバ初期化](#Rc-in-class-initializer)を検討しましょう。
+
+##### 実施
+
+(適度) 同じコンストラクタ本体を探しましょう。
+
+### <a name="Rc-inheriting"></a>C.52: 追加の明示的な初期化が必要でない派生クラスのコンストラクタには継承コンストラクタを使いましょう (Use inheriting constructors to import constructors into a derived class that does not need further explicit initialization)
+
+<!--
 ##### Reason
 
 If you need those constructors for a derived class, re-implementing them is tedious and error-prone.
@@ -9272,15 +11003,53 @@ If you need those constructors for a derived class, re-implementing them is tedi
 ##### Enforcement
 
 Make sure that every member of the derived class is initialized.
+-->
+##### 理由
 
-## <a name="SS-copy"></a>C.copy: Copy and move
+派生クラスにこれらのコンストラクタが必要な場合、再実装するのは面倒でエラーが発生しやすくなります。
 
+##### 例
+
+`std::vector`は多くのトリッキーなコンストラクタを持ちます, そこでもし独自の`vector`がほしい場合はそれを再実装したくありません:
+
+    class Rec {
+        // ... データと、多くのナイスなコンストラクタ ...
+    };
+
+    class Oper : public Rec {
+        using Rec::Rec;
+        // ... データメンバなし ...
+        // ... 多くのナイスなユーティリティ関数 ...
+    };
+
+##### ダメな例
+
+    struct Rec2 : public Rec {
+        int x;
+        using Rec::Rec;
+    };
+
+    Rec2 r {"foo", 7};
+    int val = r.x;   // 初期化されていない
+
+##### 実施
+
+派生クラスのすべてのメンバが初期化されていることを確認しましょう。
+
+## <a name="SS-copy"></a>C.copy: コピーとムーブ (Copy and move)
+
+<!--
 Concrete types should generally be copyable, but interfaces in a class hierarchy should not.
 Resource handles might or might not be copyable.
 Types can be defined to move for logical as well as performance reasons.
+-->
+具象型は一般的にコピー可能であるべきです。しかしクラス階層内のインタフェースはそうあるべきではありません。
+リソースハンドルはコピー可能かもしれないし、不可能かもしれません。
+型はパフォーマンス的な理由だけでなく、論理的な理由のためにもムーブを定義できます。
 
-### <a name="Rc-copy-assignment"></a>C.60: Make copy assignment non-`virtual`, take the parameter by `const&`, and return by non-`const&`
+### <a name="Rc-copy-assignment"></a>C.60: コピー代入演算子は非`virtual`にし、`const&`によってパラメータを受け取り、非`const&`で返しましょう (Make copy assignment non-`virtual`, take the parameter by `const&`, and return by non-`const&`)
 
+<!--
 ##### Reason
 
 It is simple and efficient. If you want to optimize for rvalues, provide an overload that takes a `&&` (see [F.18](#Rf-consume)).
@@ -9348,9 +11117,78 @@ See [copy constructor vs. `clone()`](#Rc-copy-virtual).
 * (Simple) An assignment operator should return `T&` to enable chaining, not alternatives like `const T&` which interfere with composability and putting objects in containers.
 * (Moderate) An assignment operator should (implicitly or explicitly) invoke all base and member assignment operators.
   Look at the destructor to determine if the type has pointer semantics or value semantics.
+-->
+##### 理由
 
-### <a name="Rc-copy-semantic"></a>C.61: A copy operation should copy
+シンプルかつ効率的です。 もしrvalueに対して最適化したい場合は、`&&`を受け取るオーバーロードを提供しましょう ([F.18](#Rf-consume)を参照)。
 
+##### 例
+
+    class Foo {
+    public:
+        Foo& operator=(const Foo& x)
+        {
+            // 良い: 自己代入に対するチェックが不要 (パフォーマンスを除く)
+            auto tmp = x;
+            swap(tmp); // C.83 参照
+            return *this;
+        }
+        // ...
+    };
+
+    Foo a;
+    Foo b;
+    Foo f();
+
+    a = b;    // lvalueを代入: コピー
+    a = f();  // rvalueを代入: ムーブする可能性がある
+
+##### ノート
+
+この `swap`実装手法は [強力な保証](#Abrahams01)を提供します。
+
+##### 例
+
+しかし、一時コピーを作成しないことでパフォーマンスが大幅に向上する場合はどうなるでしょうか? 大きな同じサイズの`Vector`の割り当てが一般的なドメイン向けの単純な`Vector`を考えてみましょう。 このケースでは、`swap`実装手法によってもたらされる要素のコピーにより、コストが桁違いに増加する可能性があります:
+
+    template<typename T>
+    class Vector {
+    public:
+        Vector& operator=(const Vector&);
+        // ...
+    private:
+        T* elem;
+        int sz;
+    };
+
+    Vector& Vector::operator=(const Vector& a)
+    {
+        if (a.sz > sz) {
+            // ... swap手法を使う. これ以上は良くならない ...
+            return *this;
+        }
+        // ... *a.elemから elemeへの sz個の要素のコピー ...
+        if (a.sz < sz) {
+            // ... *this内の余分な要素を破棄し、サイズを調整 ...
+        }
+        return *this;
+    }
+
+ターゲット要素に直接書き込むことにより、`swap`手法によって提供される強力な保証ではなく、[基本的な保証](#Abrahams01) のみが得られます。 [自己代入](#Rc-copy-self) に注意してください。
+
+**代替策**: `virtual`代入演算子が必要だと考えており、それがなぜ深刻な問題であるかを理解している場合は、それを`operator=`と呼ばないでください。`virtual void assign(const Foo&)`のような名前の関数を作りましょう。
+[copy constructor vs. `clone()`](#Rc-copy-virtual)を参照。
+
+##### 実施
+
+* (Simple) An assignment operator should not be virtual. Here be dragons!
+* (Simple) An assignment operator should return `T&` to enable chaining, not alternatives like `const T&` which interfere with composability and putting objects in containers.
+* (Moderate) An assignment operator should (implicitly or explicitly) invoke all base and member assignment operators.
+  Look at the destructor to determine if the type has pointer semantics or value semantics.
+
+### <a name="Rc-copy-semantic"></a>C.61: コピー操作はコピーをすべきです (A copy operation should copy)
+
+<!--
 ##### Reason
 
 That is the generally assumed semantics. After `x = y`, we should have `x == y`.
@@ -9419,9 +11257,79 @@ Prefer value semantics unless you are building a "smart pointer". Value semantic
 ##### Enforcement
 
 (Not enforceable)
+-->
+##### 理由
 
-### <a name="Rc-copy-self"></a>C.62: Make copy assignment safe for self-assignment
+それが一般的に想定されているセマンティクスです。 `x = y`の後には、`x == y`となるべきです。
+コピーの後は、`x` と `y`は独立したオブジェクト(値のセマンティクス、非ポインタ組み込み型と標準ライブラリ型の動作)になることも、共有オブジェクトを参照することもできます(ポインタのセマンティクス、ポインタの動作)。
 
+##### 例
+
+    class X {   // OK: 値セマンティクス
+    public:
+        X();
+        X(const X&);     // Xのコピー
+        void modify();   // Xの値を変更
+        // ...
+        ~X() { delete[] p; }
+    private:
+        T* p;
+        int sz;
+    };
+
+    bool operator==(const X& a, const X& b)
+    {
+        return a.sz == b.sz && equal(a.p, a.p + a.sz, b.p, b.p + b.sz);
+    }
+
+    X::X(const X& a)
+        :p{new T[a.sz]}, sz{a.sz}
+    {
+        copy(a.p, a.p + sz, p);
+    }
+
+    X x;
+    X y = x;
+    if (x != y) throw Bad{};
+    x.modify();
+    if (x == y) throw Bad{};   // 値セマンティクスを持つと仮定
+
+##### 例
+
+    class X2 {  // OK: ポインタセマンティクス
+    public:
+        X2();
+        X2(const X2&) = default; // 浅いコピー
+        ~X2() = default;
+        void modify();          // 参照先の値を変更
+        // ...
+    private:
+        T* p;
+        int sz;
+    };
+
+    bool operator==(const X2& a, const X2& b)
+    {
+        return a.sz == b.sz && a.p == b.p;
+    }
+
+    X2 x;
+    X2 y = x;
+    if (x != y) throw Bad{};
+    x.modify();
+    if (x != y) throw Bad{};  // ポインタセマンティクスを持つと仮定
+
+##### ノート
+
+「スマートポインタ」を構築する場合を除き、値セマンティクスを優先しましょう。値セマンティクスは、標準ライブラリ機能が何を期待しているかを推論するのに最も簡単です。
+
+##### Enforcement
+
+(Not enforceable)
+
+### <a name="Rc-copy-self"></a>C.62: コピー代入演算子は自己代入に対して安全にしましょう (Make copy assignment safe for self-assignment)
+
+<!--
 ##### Reason
 
 If `x = x` changes the value of `x`, people will be surprised and bad errors will occur (often including leaks).
@@ -9485,9 +11393,74 @@ Consider:
 ##### Enforcement
 
 (Simple) Assignment operators should not contain the pattern `if (this == &a) return *this;` ???
+-->
+##### 理由
 
-### <a name="Rc-move-assignment"></a>C.63: Make move assignment non-`virtual`, take the parameter by `&&`, and return by non-`const&`
+もし `x = x`が `x`の値を変更するなら、人々は驚き、良くないエラーが発生するでしょう (しばしばリークも含みます)。
 
+##### 例
+
+標準ライブラリのコンテナは自己代入をエレガントかつ効率的に扱います:
+
+    std::vector<int> v = {3, 1, 4, 1, 5, 9};
+    v = v;
+    // vの値は依然として {3, 1, 4, 1, 5, 9}
+
+##### ノート
+
+自己代入を正しく扱えるメンバからなるデフォルト代入演算子は自己代入を正しく扱えます。
+
+    struct Bar {
+        vector<pair<int, int>> v;
+        map<string, int> m;
+        string s;
+    };
+
+    Bar b;
+    // ...
+    b = b;   // 正しくかつ効率的
+
+##### ノート
+
+自己代入を明示的にテストすることで自己代入を処理できますが、多くの場合、そのようなテストを行わずに対処する方が速くて洗練されています (例: [`swap` を使用する](#Rc-swap))。
+
+    class Foo {
+        string s;
+        int i;
+    public:
+        Foo& operator=(const Foo& a);
+        // ...
+    };
+
+    Foo& Foo::operator=(const Foo& a)   // OKだがコストがかかる
+    {
+        if (this == &a) return *this;
+        s = a.s;
+        i = a.i;
+        return *this;
+    }
+
+これは明らかに安全で明らかに効率的です。
+しかし、100 万件の代入ごとに 1つの自己代入を行う場合はどうなるでしょうか?
+これは約100万回の冗長テストに相当します (ただし、答えは基本的に常に同じであるため、コンピューターの分岐予測機能は基本的に毎回正しく推測します)。
+考えてみましょう：
+
+    Foo& Foo::operator=(const Foo& a)   // よりシンプルで、おそらくより良い
+    {
+        s = a.s;
+        i = a.i;
+        return *this;
+    }
+
+`std::string`は自己代入に対して安全であり、`int`もそうです。すべてのコストは(まれな)自己代入のケースにのみ発生します。
+
+##### 実施
+
+(Simple) Assignment operators should not contain the pattern `if (this == &a) return *this;` ???
+
+### <a name="Rc-move-assignment"></a>C.63: ムーブ代入演算子は非`virtual`にし、`&&`によってパラメータを受け取り、非`const&`で返しましょう (Make move assignment non-`virtual`, take the parameter by `&&`, and return by non-`const&`)
+
+<!--
 ##### Reason
 
 It is simple and efficient.
@@ -9501,9 +11474,24 @@ Equivalent to what is done for [copy-assignment](#Rc-copy-assignment).
 * (Simple) An assignment operator should not be virtual. Here be dragons!
 * (Simple) An assignment operator should return `T&` to enable chaining, not alternatives like `const T&` which interfere with composability and putting objects in containers.
 * (Moderate) A move assignment operator should (implicitly or explicitly) invoke all base and member move assignment operators.
+-->
+##### 理由
 
-### <a name="Rc-move-semantic"></a>C.64: A move operation should move and leave its source in a valid state
+シンプルかつ効率的です。
 
+**See**: [The rule for copy-assignment](#Rc-copy-assignment).
+
+##### 実施
+
+Equivalent to what is done for [copy-assignment](#Rc-copy-assignment).
+
+* (Simple) An assignment operator should not be virtual. Here be dragons!
+* (Simple) An assignment operator should return `T&` to enable chaining, not alternatives like `const T&` which interfere with composability and putting objects in containers.
+* (Moderate) A move assignment operator should (implicitly or explicitly) invoke all base and member move assignment operators.
+
+### <a name="Rc-move-semantic"></a>C.64: ムーブ操作はムーブをすべきです。そして移動元は有効な状態を保ちましょう (A move operation should move and leave its source in a valid state)
+
+<!--
 ##### Reason
 
 That is the generally assumed semantics.
@@ -9555,9 +11543,62 @@ Unless there is an exceptionally strong reason not to, make `x = std::move(y); y
 ##### Enforcement
 
 (Not enforceable) Look for assignments to members in the move operation. If there is a default constructor, compare those assignments to the initializations in the default constructor.
+-->
+##### 理由
 
-### <a name="Rc-move-self"></a>C.65: Make move assignment safe for self-assignment
+これが一般的に前提とされているセマンティクスです。
+`y = std::move(x)`の後には、`y`の値は`x`の値になっており、`x`は有効な状態であるべきです。
 
+##### 例
+
+    class X {   // OK: 値セマンティクス
+    public:
+        X();
+        X(X&& a) noexcept;  // Xをムーブ
+        X& operator=(X&& a) noexcept; // Xのムーブ代入
+        void modify();     // Xの値を変更
+        // ...
+        ~X() { delete[] p; }
+    private:
+        T* p;
+        int sz;
+    };
+
+    X::X(X&& a) noexcept
+        :p{a.p}, sz{a.sz}  // 表現を盗む
+    {
+        a.p = nullptr;     // "empty"に設定
+        a.sz = 0;
+    }
+
+    void use()
+    {
+        X x{};
+        // ...
+        X y = std::move(x);
+        x = X{};   // OK
+    } // OK: xはデストラクト可能
+
+##### ノート
+
+理想的には、移動元はその型のデフォルト値となるべきです。
+特別な理由がない限り、そのようにしてください。
+ただし、すべての型にデフォルト値があるわけではなく、また、一部の型ではデフォルト値の構築にコストがかかる場合があります。
+C++標準では、移動元オブジェクトが破棄できることのみが要求されます。
+多くの場合、より良い方法を簡単かつ低コストで実行できます: 標準ライブラリは、移動元のオブジェクトに代入できることを前提としています。
+移動元オブジェクトは、常に何らかの (必要と指定された) 有効な状態のままにしておきましょう。
+
+##### ノート
+
+特別な強い理由がない限り、`x = std::move(y); y = z;`は従来のセマンティクスで動作するようにしましょう。
+
+##### 実施
+
+(Not enforceable) Look for assignments to members in the move operation. If there is a default constructor, compare those assignments to the initializations in the default constructor.
+
+### <a name="Rc-move-self"></a>C.65: ムーブ代入演算子は自己代入に対して安全にしましょう (Make move assignment safe for self-assignment)
+
+<!--
 ##### Reason
 
 If `x = x` changes the value of `x`, people will be surprised and bad errors can occur. However, people don't usually directly write a self-assignment that turn into a move, but it can occur. However, `std::swap` is implemented using move operations so if you accidentally do `swap(a, b)` where `a` and `b` refer to the same object, failing to handle self-move could be a serious and subtle error.
@@ -9604,9 +11645,57 @@ Here is a way to move a pointer without a test (imagine it as code in the implem
 
 * (Moderate) In the case of self-assignment, a move assignment operator should not leave the object holding pointer members that have been `delete`d or set to `nullptr`.
 * (Not enforceable) Look at the use of standard-library container types (incl. `string`) and consider them safe for ordinary (not life-critical) uses.
+-->
+##### 理由
 
-### <a name="Rc-move-noexcept"></a>C.66: Make move operations `noexcept`
+もし `x = x`が `x`の値を変更してしまうと、人々は驚き、そして悪いエラーが発生するでしょう。 しかしながらムーブにつながる自己代入を直接記述しなくても、それは発生しえます。 `std::swap`はムーブ操作を使うことで実装されています。したがって `a`と`b`が同じオブジェクトを参照している状態で、偶発的に`swap(a, b)`を行ってしまうと、自己ムーブの扱いに失敗し、深刻かつ気づくのが難しいエラーになりえます。
 
+##### 例
+
+    class Foo {
+        string s;
+        int i;
+    public:
+        Foo& operator=(Foo&& a);
+        // ...
+    };
+
+    Foo& Foo::operator=(Foo&& a) noexcept  // OKだがコストがかかる
+    {
+        if (this == &a) return *this;  // この行は冗長
+        s = std::move(a.s);
+        i = a.i;
+        return *this;
+    }
+
+[自己代入](#Rc-copy-self)の議論での 100万分の1の引数に対する`if (this == &a) return *this;`のテストは、自己ムーブに対しても多く関係があります。
+
+##### ノート
+
+ムーブ代入の `if (this == &a) return *this;` テストを回避して正しい答えを得る一般的な方法は知られていません (つまり、`x = x` の後、`x` の値は変更されません)。
+
+##### ノート
+
+ISO標準は、標準ライブラリのコンテナに対して「有効だが指定されていない」状態のみを保証します。どうやら、これは約10年間の実験および運用環境で問題が発生していないようです。反例を見つけた場合は編集者までご連絡ください。ここでのルールはより慎重であり、完全な安全性を主張します。
+
+##### 例
+
+これはテストなしにポインタをムーブする方法です(ムーブ代入演算の実装内のコードと想像してください):
+
+    // other.ptrから this->ptrへムーブ
+    T* temp = other.ptr;
+    other.ptr = nullptr;
+    delete ptr; // 自己ムーブの場合、this->ptrもnullである; deleteは何もしない
+    ptr = temp; // 自己ムーブの場合、オリジナルの ptrは復元される
+
+##### 実施
+
+* (Moderate) In the case of self-assignment, a move assignment operator should not leave the object holding pointer members that have been `delete`d or set to `nullptr`.
+* (Not enforceable) Look at the use of standard-library container types (incl. `string`) and consider them safe for ordinary (not life-critical) uses.
+
+### <a name="Rc-move-noexcept"></a>C.66: ムーブ操作は `noexcept`にしましょう (Make move operations `noexcept`)
+
+<!--
 ##### Reason
 
 A throwing move violates most people's reasonable assumptions.
@@ -9645,9 +11734,49 @@ This `Vector2` is not just inefficient, but since a vector copy requires allocat
 ##### Enforcement
 
 (Simple) A move operation should be marked `noexcept`.
+-->
+##### 理由
 
-### <a name="Rc-copy-virtual"></a>C.67: A polymorphic class should suppress public copy/move
+例外を投げるムーブは、ほとんどの人の合理的な想定に違反します。
+例外を投げないムーブは、標準ライブラリや言語機能によってより効果的に利用されます。
 
+##### 例
+
+    template<typename T>
+    class Vector {
+    public:
+        Vector(Vector&& a) noexcept :elem{a.elem}, sz{a.sz} { a.sz = 0; a.elem = nullptr; }
+        Vector& operator=(Vector&& a) noexcept { elem = a.elem; sz = a.sz; a.sz = 0; a.elem = nullptr; }
+        // ...
+    private:
+        T* elem;
+        int sz;
+    };
+
+これらのオペレーションでは例外を投げません。
+
+##### 悪い例
+
+    template<typename T>
+    class Vector2 {
+    public:
+        Vector2(Vector2&& a) { *this = a; }             // 単なるコピーの使用
+        Vector2& operator=(Vector2&& a) { *this = a; }  // 単なるコピーの使用
+        // ...
+    private:
+        T* elem;
+        int sz;
+    };
+
+この`Vector2`は非効率なだけでなく、ベクタのコピーはアロケーションを必要としそれは例外をスローする可能性があります。
+
+##### 実施
+
+(シンプル) ムーブ操作は `noexcept`とマークされるべきです。
+
+### <a name="Rc-copy-virtual"></a>C.67: 多相的なクラスは publicなコピー/ムーブを抑制するべきです (A polymorphic class should suppress public copy/move)
+
+<!--
 ##### Reason
 
 A *polymorphic class* is a class that defines or inherits at least one virtual function. It is likely that it will be used as a base class for other derived classes with polymorphic behavior. If it is accidentally passed by value, with the implicitly generated copy constructor and assignment, we risk slicing: only the base portion of a derived object will be copied, and the polymorphic behavior will be corrupted.
@@ -9713,15 +11842,86 @@ Classes that represent exception objects need both to be polymorphic and copy-co
 
 * Flag a polymorphic class with a public copy operation.
 * Flag an assignment of polymorphic class objects.
+-->
+##### 理由
 
-## C.other: Other default operation rules
+*ポリフォーミック(多相的)クラス*とは少なくとも1つの仮想関数を定義あるいは継承するクラスです。 おそらく、多相的なふるまいを持つ他の派生クラスのベースクラスとして使用されるでしょう。 もしもそれが偶発的に値として渡されると、暗黙的に生成されたコピーコンストラクタや代入演算子によって、スライシングのリスクが生じます: 派生クラスのオブジェクト内のベース部分のみがコピーされ、多相的なふるまいは破壊されるでしょう。
 
+もしクラスがデータを持たないなら、コピー/ムーブ関数を `=delete`にしましょう。そうでないなら、それらを protected にしましょう。
+
+##### ダメな例
+
+    class B { // ダメ: 多相的ベースクラスがコピーを抑制していない
+    public:
+        virtual char m() { return 'B'; }
+        // ... コピーに関してなにもない, つまりデフォルトが使用される ...
+    };
+
+    class D : public B {
+    public:
+        char m() override { return 'D'; }
+        // ...
+    };
+
+    void f(B& b)
+    {
+        auto b2 = b; // おっと、オブジェクトのスライス: b2.m()は 'B'を返すでしょう
+    }
+
+    D d;
+    f(d);
+
+##### 例
+
+    class B { // 良い: 多相的クラスはコピーを抑制
+    public:
+        B() = default;
+        B(const B&) = delete;
+        B& operator=(const B&) = delete;
+        virtual char m() { return 'B'; }
+        // ...
+    };
+
+    class D : public B {
+    public:
+        char m() override { return 'D'; }
+        // ...
+    };
+
+    void f(B& b)
+    {
+        auto b2 = b; // ok, コンパイラは不注意なコピーを検出し、抗議するでしょう
+    }
+
+    D d;
+    f(d);
+
+##### ノート
+
+もしも多相的オブジェクトの深いコピーの生成が必要なら、`clone()`関数を使いましょう: [C.130](#Rh-copy)を参照。
+
+##### 例外
+
+例外を表現するオブジェクトは多相的であり、かつ、コピーコンストラクト可能である必要があります。
+
+##### 実施
+
+* publicなコピー操作をもつ多相的なクラスをチェックしましょう。
+* 多相的なクラスのオブジェクトの代入をチェックしましょう。
+
+## C.other: その他のデフォルト操作に関するルール (Other default operation rules)
+
+<!--
 In addition to the operations for which the language offers default implementations,
 there are a few operations that are so foundational that specific rules for their definition are needed:
 comparisons, `swap`, and `hash`.
+-->
+言語がデフォルトの実装を提供する操作に加えて、非常に基本的な操作がいくつかあるため、その定義には特定のルールが必要です:
+比較、`swap`そして `hash`です。
 
-### <a name="Rc-eqdefault"></a>C.80: Use `=default` if you have to be explicit about using the default semantics
+### <a name="Rc-eqdefault"></a>C.80: デフォルトのセマンティクスを使用することを明示するためには、`=default`を使いましょう (Use `=default` if you have to be explicit about using the default semantics)
 
+<!--
 ##### Reason
 
 The compiler is more likely to get the default semantics right and you cannot implement these functions better than the compiler.
@@ -9761,9 +11961,50 @@ Writing out the bodies of the copy and move operations is verbose, tedious, and 
 ##### Enforcement
 
 (Moderate) The body of a special operation should not have the same accessibility and semantics as the compiler-generated version, because that would be redundant
+-->
+##### 理由
 
-### <a name="Rc-delete"></a>C.81: Use `=delete` when you want to disable default behavior (without wanting an alternative)
+コンパイラはデフォルトのセマンティクスを正しく理解する可能性が高く、これらの関数をコンパイラより適切に実装することはできません。
 
+##### 例
+
+    class Tracer {
+        string message;
+    public:
+        Tracer(const string& m) : message{m} { cerr << "entering " << message << '\n'; }
+        ~Tracer() { cerr << "exiting " << message << '\n'; }
+
+        Tracer(const Tracer&) = default;
+        Tracer& operator=(const Tracer&) = default;
+        Tracer(Tracer&&) = default;
+        Tracer& operator=(Tracer&&) = default;
+    };
+
+デストラクタを定義したため、コピーとムーブ操作を定義する必要があります。`= default`はベストかつ最もシンプルにそれを行う方法です。
+
+##### 悪い例
+
+    class Tracer2 {
+        string message;
+    public:
+        Tracer2(const string& m) : message{m} { cerr << "entering " << message << '\n'; }
+        ~Tracer2() { cerr << "exiting " << message << '\n'; }
+
+        Tracer2(const Tracer2& a) : message{a.message} {}
+        Tracer2& operator=(const Tracer2& a) { message = a.message; return *this; }
+        Tracer2(Tracer2&& a) :message{a.message} {}
+        Tracer2& operator=(Tracer2&& a) { message = a.message; return *this; }
+    };
+
+コピーやムーブ操作の本体を記述することは冗長で、退屈で、エラーのもとです。コンパイラはそれをベターに行います。
+
+##### 実施
+
+(Moderate) The body of a special operation should not have the same accessibility and semantics as the compiler-generated version, because that would be redundant
+
+### <a name="Rc-delete"></a>C.81: デフォルトの動作を無効にしたい場合(かつ代替の動作も不要な場合)は、`=delete`を使いましょう (Use `=delete` when you want to disable default behavior (without wanting an alternative))
+
+<!--
 ##### Reason
 
 In a few cases, a default operation is not desirable.
@@ -9813,9 +12054,60 @@ Note that deleted functions should be public.
 ##### Enforcement
 
 The elimination of a default operation is (should be) based on the desired semantics of the class. Consider such classes suspect, but maintain a "positive list" of classes where a human has asserted that the semantics is correct.
+-->
+##### 理由
 
-### <a name="Rc-ctor-virtual"></a>C.82: Don't call virtual functions in constructors and destructors
+場合によっては、デフォルトの操作が望ましくない場合があります。
 
+##### 例
+
+    class Immortal {
+    public:
+        ~Immortal() = delete;   // デストラクトを許可しない
+        // ...
+    };
+
+    void use()
+    {
+        Immortal ugh;   // エラー: ughはデストラクトできない
+        Immortal* p = new Immortal{};
+        delete p;       // エラー: *pはデストラクトできない
+    }
+
+##### 例
+
+`unique_ptr`はムーブはできますが、コピーはできません。 それを実現するためにコピー操作は削除されています。コピーをさけるために lvalueからのコピー操作には `=delete`が必要です。
+
+    template<class T, class D = default_delete<T>> class unique_ptr {
+    public:
+        // ...
+        constexpr unique_ptr() noexcept;
+        explicit unique_ptr(pointer p) noexcept;
+        // ...
+        unique_ptr(unique_ptr&& u) noexcept;   // ムーブコンストラクタ
+        // ...
+        unique_ptr(const unique_ptr&) = delete; // lvalueからのコピーを無効にする
+        // ...
+    };
+
+    unique_ptr<int> make();   // 「何か」を生成し、ムーブで返す
+
+    void f()
+    {
+        unique_ptr<int> pi {};
+        auto pi2 {pi};      // エラー: lvalueからのムーブコンストラクタがない
+        auto pi3 {make()};  // OK, ムーブ: make()の返り値は rvalue
+    }
+
+deleteされた関数は publicにすることに注意しましょう。
+
+##### 実施
+
+The elimination of a default operation is (should be) based on the desired semantics of the class. Consider such classes suspect, but maintain a "positive list" of classes where a human has asserted that the semantics is correct.
+
+### <a name="Rc-ctor-virtual"></a>C.82: コンストラクタやデストラクタ内で仮想関数を呼んではいけません (Don't call virtual functions in constructors and destructors)
+
+<!--
 ##### Reason
 
 The function called will be that of the object constructed so far, rather than a possibly overriding function in a derived class.
@@ -9866,9 +12158,61 @@ However, experience shows that such calls are rarely needed, easily confuse main
 ##### Enforcement
 
 * Flag calls of virtual functions from constructors and destructors.
+-->
+##### 理由
 
-### <a name="Rc-swap"></a>C.83: For value-like types, consider providing a `noexcept` swap function
+呼び出される関数は、派生クラスでオーバーライドされた可能性のある関数ではなく、これまでに構築されたオブジェクトの関数になります。
+これは大きな混乱を招く可能性があります。
+さらに悪いことに、コンストラクタまたはデストラクタから未実装の純粋仮想関数を直接または間接的に呼び出すと、未定義の動作が発生します。
 
+##### ダメな例
+
+    class Base {
+    public:
+        virtual void f() = 0;   // 未実装
+        virtual void g();       // ベースクラスのバージョンで実装
+        virtual void h();       // ベースクラスのバージョンで実装
+        virtual ~Base();        // ベースクラスのバージョンで実装
+    };
+
+    class Derived : public Base {
+    public:
+        void g() override;   // 派生クラスの実装を提供
+        void h() final;      // 派生クラスの実装を提供
+
+        Derived()
+        {
+            // ダメ: 未実装の仮想関数の呼び出し
+            f();
+
+            // ダメ: Derived::g が呼び出され、仮想的にディスパッチされない
+            g();
+
+            // GOOD: 可視バージョンのみを呼び出す意図を明示的に示す
+            Derived::g();
+
+            // ok, 修飾はないが hは final
+            h();
+        }
+    };
+
+明示的に修飾された特定の関数の呼び出しは、関数が「仮想」であっても仮想呼び出しではないことに注意してください。
+
+**See also** [ファクトリ関数](#Rc-factory) は未定義動作のリスクなしに、派生クラスの関数呼び出しを行う方法です。
+
+##### ノート
+
+コンストラクタやデストラクタから仮想関数を呼び出すことには、本質的に何も問題はありません。
+このような呼び出しのセマンティクスは型安全です。
+ただし、経験上、そのような呼び出しが必要になることはほとんどなく、メンテナーを混乱させやすく、初心者が使用するとエラーの原因になることがわかっています。
+
+##### 実施
+
+* コンストラクタやデストラクタからの仮想関数呼び出しをチェックしましょう。
+
+### <a name="Rc-swap"></a>C.83: 値のような型は `noexcept`なswap関数の提供を検討しましょう (For value-like types, consider providing a `noexcept` swap function)
+
+<!--
 ##### Reason
 
 A `swap` can be handy for implementing a number of idioms, from smoothly moving objects around to implementing assignment easily to providing a guaranteed commit function that enables strongly error-safe calling code. Consider using swap to implement copy assignment in terms of copy construction. See also [destructors, deallocation, and swap must never fail](#Re-never-fail).
@@ -9898,9 +12242,40 @@ Providing a non-member `swap` function in the same namespace as your type for ca
 
 * Non-trivially copyable types should provide a member swap or a free swap overload.
 * (Simple) When a class has a `swap` member function, it should be declared `noexcept`.
+-->
+##### 理由
 
-### <a name="Rc-swap-fail"></a>C.84: A `swap` function must not fail
+`swap`は、オブジェクトのスムーズな移動から、簡単な代入の実装、強力にエラーセーフなコード呼び出しが保証されたコミット関数の提供まで、さまざまなイディオムの実装に便利です。コピーコンストラクトでは、スワップを使用してコピー割り当てを実装することを検討してください。 [デストラクタ、割り当て解除、およびスワップは決して失敗してはならない](#Re-never-fail) も参照してください。
 
+##### 良い例
+
+    class Foo {
+    public:
+        void swap(Foo& rhs) noexcept
+        {
+            m1.swap(rhs.m1);
+            std::swap(m2, rhs.m2);
+        }
+    private:
+        Bar m1;
+        int m2;
+    };
+
+メンバ関数でない `swap`関数をあなたの型と同じ名前空間内で提供すると、呼び出し側は便利です。
+
+    void swap(Foo& a, Foo& b)
+    {
+        a.swap(b);
+    }
+
+##### 実施
+
+* Non-trivially copyable types should provide a member swap or a free swap overload.
+* (Simple) When a class has a `swap` member function, it should be declared `noexcept`.
+
+### <a name="Rc-swap-fail"></a>C.84: `swap`は絶対に失敗してはいけません (A `swap` function must not fail)
+
+<!--
 ##### Reason
 
  `swap` is widely used in ways that are assumed never to fail and programs cannot easily be written to work correctly in the presence of a failing `swap`. The standard-library containers and algorithms will not work correctly if a swap of an element type fails.
@@ -9919,9 +12294,29 @@ This is not just slow, but if a memory allocation occurs for the elements in `tm
 ##### Enforcement
 
 (Simple) When a class has a `swap` member function, it should be declared `noexcept`.
+-->
+##### 理由
 
-### <a name="Rc-swap-noexcept"></a>C.85: Make `swap` `noexcept`
+`swap`は、決して失敗しないと想定される方法で広く使用されており、`swap`が失敗した場合に正しく動作するようにプログラムを作成することは容易ではありません。要素型の交換が失敗すると、標準ライブラリのコンテナとアルゴリズムは正しく動作しなくなります。
 
+##### 悪い例
+
+    void swap(My_vector& x, My_vector& y)
+    {
+        auto tmp = x;   // 要素のコピー
+        x = y;
+        y = tmp;
+    }
+
+これは単に遅いだけでなく、 もし`tmp`内の要素のメモリ割り当てが発生すると、`swap`は例外をスローする可能性があり、それを使用するSTLアルゴリズムは失敗するかもしれません。
+
+##### 実施
+
+(シンプル) クラスが `swap`関数を持つ場合、それは `noexcept`と宣言されるべきです。
+
+### <a name="Rc-swap-noexcept"></a>C.85: `swap`は `noexcept`にしましょう (Make `swap` `noexcept`)
+
+<!--
 ##### Reason
 
  [A `swap` must not fail](#Rc-swap-fail).
@@ -9930,9 +12325,19 @@ If a `swap` tries to exit with an exception, it's a bad design error and the pro
 ##### Enforcement
 
 (Simple) When a class has a `swap` member function, it should be declared `noexcept`.
+-->
+##### 理由
 
-### <a name="Rc-eq"></a>C.86: Make `==` symmetric with respect to operand types and `noexcept`
+ [`swap`は絶対に失敗してはいけません](#Rc-swap-fail).
+ もしも `swap`が例外をスローして抜けようとするのなら、それは悪い設計エラーであり、プログラムは終了したほうがよいでしょう。
 
+##### 実施
+
+(シンプル) クラスが `swap`関数を持つ場合、それは `noexcept`と宣言されるべきです。
+
+### <a name="Rc-eq"></a>C.86: `==`はオペランドに対して対称にし、また、`noexcept`にしましょう (Make `==` symmetric with respect to operand types and `noexcept`)
+
+<!--
 ##### Reason
 
 Asymmetric treatment of operands is surprising and a source of errors where conversions are possible.
@@ -9975,9 +12380,53 @@ This rule applies to all the usual comparison operators: `!=`, `<`, `<=`, `>`, a
 
 * Flag an `operator==()` for which the argument types differ; same for other comparison operators: `!=`, `<`, `<=`, `>`, and `>=`.
 * Flag member `operator==()`s; same for other comparison operators: `!=`, `<`, `<=`, `>`, and `>=`.
+-->
+##### 理由
 
-### <a name="Rc-eq-base"></a>C.87: Beware of `==` on base classes
+オペランドの非対称な処理は驚くべきことであり、変換の可能性がある場合にエラーの原因となります。
+`==` は基本的な操作であり、プログラマは失敗を恐れずにこれを使用できる必要があります。
 
+##### 例
+
+    struct X {
+        string name;
+        int number;
+    };
+
+    bool operator==(const X& a, const X& b) noexcept {
+        return a.name == b.name && a.number == b.number;
+    }
+
+##### ダメな例
+
+    class B {
+        string name;
+        int number;
+        bool operator==(const B& a) const {
+            return name == a.name && number == a.number;
+        }
+        // ...
+    };
+
+`B` の比較では、2番目のオペランドの変換は受け入れられますが、最初のオペランドの変換は受け入れられません。
+
+##### ノート
+
+もしクラスが `double`における `NaN`のようなエラー状態を持つのであれば、エラー状態をスローしないで比較をしたい誘惑があります。
+別の方法は、2つのエラー状態の比較をイコールと、あらゆる有効な状態とエラー状態との比較をfalseとすることです。
+
+##### ノート
+
+このルールは他のすべての通常の比較演算子に適用されます: `!=`, `<`, `<=`, `>`, そして `>=`です。
+
+##### 実施
+
+* Flag an `operator==()` for which the argument types differ; same for other comparison operators: `!=`, `<`, `<=`, `>`, and `>=`.
+* Flag member `operator==()`s; same for other comparison operators: `!=`, `<`, `<=`, `>`, and `>=`.
+
+### <a name="Rc-eq-base"></a>C.87: ベースクラスの `==`に注意しましょう (Beware of `==` on base classes)
+
+<!--
 ##### Reason
 
 It is really hard to write a foolproof and useful `==` for a hierarchy.
@@ -10025,9 +12474,58 @@ This rule applies to all the usual comparison operators: `!=`, `<`, `<=`, `>`, `
 ##### Enforcement
 
 * Flag a virtual `operator==()`; same for other comparison operators: `!=`, `<`, `<=`, `>`, `>=`, and `<=>`.
+-->
+##### 理由
 
-### <a name="Rc-hash"></a>C.89: Make a `hash` `noexcept`
+階層に対して確実かつ便利な `==` を書くのは本当に難しいです。
 
+##### 悪い例
+
+    class B {
+        string name;
+        int number;
+    public:
+        virtual bool operator==(const B& a) const
+        {
+             return name == a.name && number == a.number;
+        }
+        // ...
+    };
+
+`B` の比較では、2番目のオペランドの変換は受け入れられますが、最初のオペランドの変換は受け入れられません。
+
+    class D : public B {
+        char character;
+    public:
+        virtual bool operator==(const D& a) const
+        {
+            return B::operator==(a) && character == a.character;
+        }
+        // ...
+    };
+
+    B b = ...
+    D d = ...
+    b == d;    // nameとnumberで比較し、 dのcharactorは無視される
+    d == b;    // nameとnumberで比較し、 dのcharactorは無視される
+    D d2;
+    d == d2;   // name, number, characterで比較される
+    B& b2 = d2;
+    b2 == d;   // name, numberで比較され、d2'とd'のcharacterは無視される
+
+もちろん、`==`を階層内で機能させる方法はありますが、単純なアプローチではスケールできません。
+
+##### ノート
+
+このルールは他のすべての通常の比較演算子に適用されます: `!=`, `<`, `<=`, `>`, `>=`, そして `<=>`です。
+
+##### 実施
+
+* Flag a virtual `operator==()`; same for other comparison operators: `!=`, `<`, `<=`, `>`, `>=`, and `<=>`.
+
+### <a name="Rc-hash"></a>C.89: `hash`は `noexcept`にしましょう (Make a `hash` `noexcept`)
+
+<!--
 ##### Reason
 
 Users of hashed containers use hash indirectly and don't expect simple access to throw.
@@ -10062,9 +12560,45 @@ That tends to work better than "cleverness" for non-specialists.
 ##### Enforcement
 
 * Flag throwing `hash`es.
+-->
+##### 理由
 
-### <a name="Rc-memset"></a>C.90: Rely on constructors and assignment operators, not `memset` and `memcpy`
+ハッシュコンテナの利用者は hashを間接的に利用し、シンプルなアクセスが例外をスローすることは期待していません。
+これは標準ライブラリの要求です。
 
+##### ダメな例
+
+    template<>
+    struct hash<My_type> {  // 完全に悪いハッシュ特殊化
+        using result_type = size_t;
+        using argument_type = My_type;
+
+        size_t operator()(const My_type & x) const
+        {
+            size_t xs = x.s.size();
+            if (xs < 4) throw Bad_My_type{};    // 「誰もスペインの異端審問を期待していません！」
+            return hash<size_t>()(x.s.size()) ^ trim(x.s);
+        }
+    };
+
+    int main()
+    {
+        unordered_map<My_type, int> m;
+        My_type mt{ "asdfg" };
+        m[mt] = 7;
+        cout << m[My_type{ "asdfg" }] << '\n';
+    }
+
+もし `hash`の特殊化の定義が必要になった場合は、単純に標準ライブラリの `hash` 特殊化と `^`(xor) を組み合わせてみてください。
+非専門家にとっては「賢さ」よりもそのほうが効果がある傾向にあります。
+
+##### 実施
+
+* 例外を投げる `hash`をチェックしましょう。
+
+### <a name="Rc-memset"></a>C.90: `memset` や `memcpy` ではなく、コンストラクタと代入演算子に頼りましょう (Rely on constructors and assignment operators, not `memset` and `memcpy`)
+
+<!--
 ##### Reason
 
 The standard C++ mechanism to construct an instance of a type is to call its constructor. As specified in guideline [C.41](#Rc-complete): a constructor should create a fully initialized object. No additional initialization, such as by `memcpy`, should be required.
@@ -10102,9 +12636,48 @@ This is also type-unsafe and overwrites the vtable.
 ##### Enforcement
 
 * Flag passing a non-trivially-copyable type to `memset` or `memcpy`.
+-->
+##### 理由
 
-## <a name="SS-containers"></a>C.con: Containers and other resource handles
+型のインスタンスを構築するための標準C++のメカニズムは、そのコンストラクタを呼び出すことです。ガイドライン[C.41](#Rc-complete) で指定されているように、コンストラクタは完全に初期化されたオブジェクトを作成する必要があります。 `memcpy`などによる追加の初期化は必要とされるべきではありません。
+型は、その不変条件を保持しながらクラスのコピーを適切に作成するためのコピーコンストラクターやコピー代入演算子を提供するでしょう。 memcpy を使用して、トリビアルでないコピー可能型をコピーすると、未定義動作が発生します。 多くの場合、これによりスライシングやデータ破損が発生します。
 
+##### 良い例
+
+    struct base {
+        virtual void update() = 0;
+        std::shared_ptr<int> sp;
+    };
+
+    struct derived : public base {
+        void update() override {}
+    };
+
+##### 悪い例
+
+    void init(derived& a)
+    {
+        memset(&a, 0, sizeof(derived));
+    }
+
+これは型安全でなく、vtableを上書きします。
+
+##### 悪い例
+
+    void copy(derived& a, derived& b)
+    {
+        memcpy(&a, &b, sizeof(derived));
+    }
+
+これもまた、型安全でなく、vtableを上書きします。
+
+##### 実施
+
+* Flag passing a non-trivially-copyable type to `memset` or `memcpy`.
+
+## <a name="SS-containers"></a>C.con: コンテナやその他のリソースハンドル (Containers and other resource handles)
+
+<!--
 A container is an object holding a sequence of objects of some type; `std::vector` is the archetypical container.
 A resource handle is a class that owns a resource; `std::vector` is the typical resource handle; its resource is its sequence of elements.
 
@@ -10119,10 +12692,26 @@ Summary of container rules:
 * [C.109: If a resource handle has pointer semantics, provide `*` and `->`](#Rcon-ptr)
 
 **See also**: [Resources](#S-resource)
+-->
+コンテナはある型のオブジェクトの列を保持するオブジェクトです; `std::vector`は典型的なコンテナです。
+リソースハンドルはリソースをもつクラスです; `std::vector`は典型的なリソースハンドルです; そのリソースは要素の列です。
+
+コンテナのルールのまとめ:
+
+* [C.100: コンテナを定義するときは STLに従いましょう](#Rcon-stl)
+* [C.101: コンテナに値セマンティクスを与えましょう](#Rcon-val)
+* [C.102: コンテナにムーブ操作を与えましょう](#Rcon-move)
+* [C.103: コンテナに初期化子リストコンストラクタを与えましょう](#Rcon-init)
+* [C.104: コンテナに空の状態にするデフォルトコンストラクタを与えましょう](#Rcon-empty)
+* ???
+* [C.109: もしリソースハンドルがポインタセマンティクスを持つ場合は `*`と`->`を与えましょう](#Rcon-ptr)
+
+**See also**: [Resources](#S-resource)
 
 
-### <a name="Rcon-stl"></a>C.100: Follow the STL when defining a container
+### <a name="Rcon-stl"></a>C.100: コンテナを定義するときは STLに従いましょう (Follow the STL when defining a container)
 
+<!--
 ##### Reason
 
 The STL containers are familiar to most C++ programmers and a fundamentally sound design.
@@ -10181,9 +12770,68 @@ Here, special constructors from `std::vector` were added.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rcon-val"></a>C.101: Give a container value semantics
+STLコンテナはほとんどの C++ プログラマにとって馴染みのあるものであり、基本的に健全な設計です。
 
+##### ノート
+
+もちろん、他にも基本的に健全な設計スタイルもあり、場合によっては標準ライブラリのスタイルから逸脱する理由もあります。
+しかし、異なる明確な理由がない場合は、標準にしたがうことが、実装者とユーザーの双方にとってシンプルかつ簡単です。
+
+特に、`std::vector` と `std::map` は、有用で比較的単純なモデルを提供します。
+
+##### 例
+
+    // 単純化しています (例えば アロケータがない):
+
+    template<typename T>
+    class Sorted_vector {
+        using value_type = T;
+        // ... イテレータ型 ...
+
+        Sorted_vector() = default;
+        Sorted_vector(initializer_list<T>);    // 初期化子リストによるコンストラクタ: ソートし、格納
+        Sorted_vector(const Sorted_vector&) = default;
+        Sorted_vector(Sorted_vector&&) = default;
+        Sorted_vector& operator=(const Sorted_vector&) = default;   // コピー代入
+        Sorted_vector& operator=(Sorted_vector&&) = default;        // ムーブ代入
+        ~Sorted_vector() = default;
+
+        Sorted_vector(const std::vector<T>& v);   // 格納とソート
+        Sorted_vector(std::vector<T>&& v);        // ソートと、「表現を盗む」
+
+        const T& operator[](int i) const { return rep[i]; }
+        // 順序を維持するために非constの直接アクセスはなし
+
+        void push_back(const T&);   // 適切な位置へ挿入 (末尾である必要はない)
+        void push_back(T&&);        // 適切な位置へ挿入 (末尾である必要はない)
+
+        // ... cbegin(), cend() ...
+    private:
+        std::vector<T> rep;  // 要素の保持のために std::vector を利用
+    };
+
+    template<typename T> bool operator==(const Sorted_vector<T>&, const Sorted_vector<T>&);
+    template<typename T> bool operator!=(const Sorted_vector<T>&, const Sorted_vector<T>&);
+    // ...
+
+ここでは STL スタイルに従っていますが、不完全です。
+それは珍しいことではありません。
+特定のコンテナにとって意味のある機能のみを提供します。
+重要なのは、従来のコンストラクタ、代入、デストラクタ、イテレータを定義することです。
+(特定のコンテナにとって意味のあるものとして) 従来のセマンティクスを使用します。
+そのベースから、必要に応じてコンテナを拡張できます。
+ここでは、`std::vector` の特別なコンストラクタが追加されました。
+
+##### 実施
+
+???
+
+### <a name="Rcon-val"></a>C.101: コンテナに値セマンティクスを与えましょう (Give a container value semantics)
+
+<!--
 ##### Reason
 
 Regular objects are simpler to think and reason about than irregular ones.
@@ -10207,9 +12855,34 @@ In particular, ensure that an object compares equal to its copy.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rcon-move"></a>C.102: Give a container move operations
+正則なオブジェクトは、正則でないオブジェクトよりも考えたり推論したりするのが簡単です。
+親しみやすさ。
 
+##### ノート
+
+意味があるときは、コンテナを `Regular(正則)`(概念)にしましょう。
+特に、オブジェクトがそのコピーと同等であることを確認してください。
+
+##### 例
+
+    void f(const Sorted_vector<string>& v)
+    {
+        Sorted_vector<string> v2 {v};
+        if (v != v2)
+            cout << "Behavior against reason and logic.\n";
+        // ...
+    }
+
+##### 実施
+
+???
+
+### <a name="Rcon-move"></a>C.102: コンテナにムーブ操作を与えましょう (Give a container move operations)
+
+<!--
 ##### Reason
 
 Containers tend to get large; without a move constructor and a copy constructor an object can be
@@ -10231,9 +12904,31 @@ A user can reasonably assume that returning a standard-like container is cheap.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rcon-init"></a>C.103: Give a container an initializer list constructor
+コンテナは大きくなる傾向があります; ムーブコンストラクタなしで、オブジェクトのコピーコンストラクタはオブジェクトの移動に高価なコストがかかる可能性があります。
+このために、人々はそれをポインタで渡す傾向があり、リソース管理の問題になることがあります。
 
+##### 例
+
+    Sorted_vector<int> read_sorted(istream& is)
+    {
+        vector<int> v;
+        cin >> v;   // vectorへの読み込み操作を仮定
+        Sorted_vector<int> sv = v;  // ソート
+        return sv;
+    }
+
+ユーザーは標準ライクなコンテナを返すことは安価であると合理的に仮定できます。
+
+##### 実施
+
+???
+
+### <a name="Rcon-init"></a>C.103: コンテナに初期化子リストコンストラクタを与えましょう (Give a container an initializer list constructor)
+
+<!--
 ##### Reason
 
 People expect to be able to initialize a container with a set of values.
@@ -10246,9 +12941,23 @@ Familiarity.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rcon-empty"></a>C.104: Give a container a default constructor that sets it to empty
+人々は値のセットを用いてコンテナが初期化できると期待します。
+親しみやすさ。
 
+##### 例
+
+    Sorted_vector<int> sv {1, 3, -1, 7, 0, 0}; // Sorted_vector は必要に応じて要素をソート
+
+##### 実施
+
+???
+
+### <a name="Rcon-empty"></a>C.104: コンテナに空の状態にするデフォルトコンストラクタを与えましょう (Give a container a default constructor that sets it to empty)
+
+<!--
 ##### Reason
 
 To make it `Regular`.
@@ -10260,9 +12969,22 @@ To make it `Regular`.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rcon-ptr"></a>C.109: If a resource handle has pointer semantics, provide `*` and `->`
+`Regular(正則)`にするためです。
 
+##### 例
+
+    vector<Sorted_sequence<string>> vs(100);    // 100個の Sorted_sequencesでそれぞれの値は ""
+
+##### 実施
+
+???
+
+### <a name="Rcon-ptr"></a>C.109: もしリソースハンドルがポインタセマンティクスを持つ場合は `*`と`->`を与えましょう (If a resource handle has pointer semantics, provide `*` and `->`)
+
+<!--
 ##### Reason
 
 That's what is expected from pointers.
@@ -10275,9 +12997,23 @@ Familiarity.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-## <a name="SS-lambdas"></a>C.lambdas: Function objects and lambdas
+これがポインタに期待されることです。
+親しみやすさ。
 
+##### 例
+
+    ???
+
+##### 実施
+
+???
+
+## <a name="SS-lambdas"></a>C.lambdas: 関数オブジェクトとラムダ (Function objects and lambdas)
+
+<!--
 A function object is an object supplying an overloaded `()` so that you can call it.
 A lambda expression (colloquially often shortened to "a lambda") is a notation for generating a function object.
 Function objects should be cheap to copy (and therefore [passed by value](#Rf-in)).
@@ -10290,9 +13026,23 @@ Summary:
 * [F.52: Prefer capturing by reference in lambdas that will be used locally, including passed to algorithms](#Rf-reference-capture)
 * [F.53: Avoid capturing by reference in lambdas that will be used non-locally, including returned, stored on the heap, or passed to another thread](#Rf-value-capture)
 * [ES.28: Use lambdas for complex initialization, especially of `const` variables](#Res-lambda-init)
+-->
+関数オブジェクトは`()`のオーバーロードが与えられたオブジェクトであり、それを呼び出すことができます。
+ラムダ式(口語的には「ラムダ」と短縮されることが多い)は関数オブジェクトを生成する記法です。
+関数オブジェクトはコピーが安価であるべきです(ゆえに [値渡し](#Rf-in)されます)。
 
-## <a name="SS-hier"></a>C.hier: Class hierarchies (OOP)
+まとめ:
 
+* [F.10: 再利用される可能性のある操作には名前を与えましょう](#Rf-name)
+* [F.11: 一か所でのみ使われるシンプルな関数オブジェクトが必要な場合は、無名のラムダを使いましょう](#Rf-lambda)
+* [F.50: 関数が機能しないとき(ローカル変数のキャプチャやローカル関数を書きたいとき)はラムダを使いましょう](#Rf-capture-vs-overload)
+* [F.52: ローカルで使われるラムダでは参照によるキャプチャを好むようにしましょう。アルゴリズムに渡されるものも含みます。](#Rf-reference-capture)
+* [F.53: 非ローカルで使われるラムダでは参照によるキャプチャを避けましょう。 リターンしたり、ヒープにストアされたり、他のスレッドに渡されるものも含みます。](#Rf-value-capture)
+* [ES.28: とくに`const`変数の複雑な初期化にはラムダ式を使いましょう](#Res-lambda-init)
+
+## <a name="SS-hier"></a>C.hier: クラス階層 (オブジェクト指向プログラミング) (Class hierarchies (OOP))
+
+<!--
 A class hierarchy is constructed to represent a set of hierarchically organized concepts (only).
 Typically base classes act as interfaces.
 There are two major uses for hierarchies, often named implementation inheritance and interface inheritance.
@@ -10332,9 +13082,50 @@ Accessing objects in a hierarchy rule summary:
 * [C.151: Use `make_shared()` to construct objects owned by `shared_ptr`s](#Rh-make_shared)
 * [C.152: Never assign a pointer to an array of derived class objects to a pointer to its base](#Rh-array)
 * [C.153: Prefer virtual function to casting](#Rh-use-virtual)
+-->
+クラス階層は、階層的に編成された概念 (のみ) の集合を表すために構築されます。
+典型的にはベースクラスはインタフェースとして機能します。
+階層には 2つの主な用途があり、多くの場合、実装の継承とインターフェイスの継承と呼ばれます。
 
-### <a name="Rh-domain"></a>C.120: Use class hierarchies to represent concepts with inherent hierarchical structure (only)
+クラス階層ルールのまとめ:
 
+* [C.120: クラス階層を使用して、固有の階層構造を持つ概念(のみ)を表現しましょう](#Rh-domain)
+* [C.121: ベースクラスがインタフェースとして使用される場合は、純粋抽象クラスにしましょう](#Rh-abstract)
+* [C.122: インタフェースと実装の完全な分離が必要なときには 抽象クラスをインタフェースとして使いましょう](#Rh-separation)
+
+階層内でのクラス設計ルールのまとめ:
+
+* [C.126: 抽象クラスは通常はユーザー定義のコンストラクタを必要としません](#Rh-abstract-ctor)
+* [C.127: 仮想関数をもつクラスは仮想あるいはprotectedなデストラクタを持つべきです](#Rh-dtor)
+* [C.128: 仮想関数は `virtual`, `override`, あるいは`final`のいずれか1つを正確に指定する必要があります](#Rh-override)
+* [C.129: クラス階層を設計するときには、実装インスタンスとインタフェースインスタンスを区別しましょう](#Rh-kind)
+* [C.130: 多相的クラスの深いコピーをするためには publicなコピーコンストラクタ/代入演算子の代わりに 仮想`clone`関数を使いましょう](#Rh-copy)
+* [C.131: 単純なゲッターとセッターを避けましょう](#Rh-get)
+* [C.132: 理由なしに 関数を`virtual`にしないようにしましょう](#Rh-virtual)
+* [C.133: `protected`なデータを避けましょう](#Rh-protected)
+* [C.134: 全ての非`const`のメンバ変数が同じアクセスレベルを持つようにしましょう](#Rh-public)
+* [C.135: Use multiple inheritance to represent multiple distinct interfaces](#Rh-mi-interface)
+* [C.136: Use multiple inheritance to represent the union of implementation attributes](#Rh-mi-implementation)
+* [C.137: Use `virtual` bases to avoid overly general base classes](#Rh-vbase)
+* [C.138: Create an overload set for a derived class and its bases with `using`](#Rh-using)
+* [C.139: Use `final` on classes sparingly](#Rh-final)
+* [C.140: Do not provide different default arguments for a virtual function and an overrider](#Rh-virtual-default-arg)
+
+階層内でのオブジェクトのアクセスのルールのまとめ:
+
+* [C.145: Access polymorphic objects through pointers and references](#Rh-poly)
+* [C.146: Use `dynamic_cast` where class hierarchy navigation is unavoidable](#Rh-dynamic_cast)
+* [C.147: Use `dynamic_cast` to a reference type when failure to find the required class is considered an error](#Rh-ref-cast)
+* [C.148: Use `dynamic_cast` to a pointer type when failure to find the required class is considered a valid alternative](#Rh-ptr-cast)
+* [C.149: Use `unique_ptr` or `shared_ptr` to avoid forgetting to `delete` objects created using `new`](#Rh-smart)
+* [C.150: Use `make_unique()` to construct objects owned by `unique_ptr`s](#Rh-make_unique)
+* [C.151: Use `make_shared()` to construct objects owned by `shared_ptr`s](#Rh-make_shared)
+* [C.152: Never assign a pointer to an array of derived class objects to a pointer to its base](#Rh-array)
+* [C.153: Prefer virtual function to casting](#Rh-use-virtual)
+
+### <a name="Rh-domain"></a>C.120: クラス階層を使用して、固有の階層構造を持つ概念(のみ)を表現しましょう (Use class hierarchies to represent concepts with inherent hierarchical structure (only))
+
+<!--
 ##### Reason
 
 Direct representation of ideas in code eases comprehension and maintenance. Make sure the idea represented in the base class exactly matches all derived types and there is not a better way to express it than using the tight coupling of inheritance.
@@ -10397,9 +13188,72 @@ not using this (over)general interface in favor of a particular interface found 
 
 * Look for classes with lots of members that do nothing but throw.
 * Flag every use of a non-public base class `B` where the derived class `D` does not override a virtual function or access a protected member in `B`, and `B` is not one of the following: empty, a template parameter or parameter pack of `D`, a class template specialized with `D`.
+-->
+##### 理由
 
-### <a name="Rh-abstract"></a>C.121: If a base class is used as an interface, make it a pure abstract class
+アイデアをコードで直接表現すると、理解と保守が容易になります。ベースクラスで表現されるアイデアがすべての派生型と正確に一致することを確認してください。そしてそれを表現するには、継承の密結合を使用するより良い方法はありません。
 
+データメンバを持つだけで十分な場合は、継承を使用*しない*でください。通常、これは、派生型がベースクラスの仮想関数をオーバーライドする必要があるか、保護されたメンバにアクセスする必要があることを意味します。
+
+##### 例
+
+    class DrawableUIElement {
+    public:
+        virtual void render() const = 0;
+        // ...
+    };
+
+    class AbstractButton : public DrawableUIElement {
+    public:
+        virtual void onClick() = 0;
+        // ...
+    };
+
+    class PushButton : public AbstractButton {
+        void render() const override;
+        void onClick() override;
+        // ...
+    };
+
+    class Checkbox : public AbstractButton {
+    // ...
+    };
+
+##### 悪い例
+
+非階層的なドメインの概念をクラス階層として表現*しない*でください。
+
+    template<typename T>
+    class Container {
+    public:
+        // リスト操作:
+        virtual T& get() = 0;
+        virtual void put(T&) = 0;
+        virtual void insert(Position) = 0;
+        // ...
+        // ベクター操作:
+        virtual T& operator[](int) = 0;
+        virtual void sort() = 0;
+        // ...
+        // ツリー操作:
+        virtual void balance() = 0;
+        // ...
+    };
+
+ここで、ほとんどのオーバーライドクラスは、インターフェイスに必要なほとんどの機能を適切に実装できません。
+したがって、このベースクラスは実装の負担になります。
+さらに、`Container`のユーザーは、意味のある操作を実際に合理的に効率的に実行するメンバー関数に依存することはできません;
+代わりに例外がスローされる可能性があります。
+したがって、ユーザーは実行時チェックや、この一般的(すぎる)インターフェースを使用せず、実行時のタイプの問い合わせによって見つかった特定のインターフェース(例:`dynamic_cast`) を優先する必要があります。
+
+##### 実施
+
+* Look for classes with lots of members that do nothing but throw.
+* Flag every use of a non-public base class `B` where the derived class `D` does not override a virtual function or access a protected member in `B`, and `B` is not one of the following: empty, a template parameter or parameter pack of `D`, a class template specialized with `D`.
+
+### <a name="Rh-abstract"></a>C.121: ベースクラスがインタフェースとして使用される場合は、純粋抽象クラスにしましょう (If a base class is used as an interface, make it a pure abstract class)
+
+<!--
 ##### Reason
 
 A class is more stable (less brittle) if it does not contain data.
@@ -10440,9 +13294,52 @@ Give `Goof` a virtual destructor and all is well.
 ##### Enforcement
 
 * Warn on any class that contains data members and also has an overridable (non-`final`) virtual function that wasn't inherited from a base class.
+-->
+##### 理由
 
-### <a name="Rh-separation"></a>C.122: Use abstract classes as interfaces when complete separation of interface and implementation is needed
+クラスにデータが含まれていない場合、クラスはより安定します(不安定さが少なくなります)。
+通常、インターフェイスは完全にpublicの純粋仮想関数とデフォルト/空の仮想デストラクターで構成される必要があります。
 
+##### 例
+
+    class My_interface {
+    public:
+        // ...ここには純粋仮想関数のみ ...
+        virtual ~My_interface() {}   // あるいは =default
+    };
+
+##### ダメな例
+
+    class Goof {
+    public:
+        // ...ここには純粋仮想関数のみ ...
+        // 非仮想なデストラクタ
+    };
+
+    class Derived : public Goof {
+        string s;
+        // ...
+    };
+
+    void use()
+    {
+        unique_ptr<Goof> p {new Derived{"here we go"}};
+        f(p.get()); // Goofインタフェースを通じて Derivedを使用
+        g(p.get()); // Goofインタフェースを通じて Derivedを使用
+    } // リーク
+
+The `Derived` is `delete`d through its `Goof` interface, so its `string` is leaked.
+Give `Goof` a virtual destructor and all is well.
+`Derived`は`Goof`のインタフェースを通じて `delete`されるため、 その`string`はリークします。
+`Goof`に仮想デストラクタを与えることによって、すべてが解決します。
+
+##### 実施
+
+* Warn on any class that contains data members and also has an overridable (non-`final`) virtual function that wasn't inherited from a base class.
+
+### <a name="Rh-separation"></a>C.122: インタフェースと実装の完全な分離が必要なときには 抽象クラスをインタフェースとして使いましょう (Use abstract classes as interfaces when complete separation of interface and implementation is needed)
+
+<!--
 ##### Reason
 
 Such as on an ABI (link) boundary.
@@ -10475,11 +13372,45 @@ Furthermore, we can update `D1` and `D2` in ways that are not binary compatible 
 ##### Enforcement
 
     ???
+-->
+##### 理由
 
-## C.hierclass: Designing classes in a hierarchy:
+ABI(リンク) 境界など。
 
-### <a name="Rh-abstract-ctor"></a>C.126: An abstract class typically doesn't need a user-written constructor
+##### 例
 
+    struct Device {
+        virtual ~Device() = default;
+        virtual void write(span<const char> outbuf) = 0;
+        virtual void read(span<char> inbuf) = 0;
+    };
+
+    class D1 : public Device {
+        // ... データ ...
+
+        void write(span<const char> outbuf) override;
+        void read(span<char> inbuf) override;
+    };
+
+    class D2 : public Device {
+        // ... 異なるデータ ...
+
+        void write(span<const char> outbuf) override;
+        void read(span<char> inbuf) override;
+    };
+
+ユーザーは、`Device`が提供するインターフェースを通じて`D1`と`D2`を交互に使用できるようになりました。
+さらに、すべてのアクセスが`Device`を経由する限り、古いバージョンとのバイナリ互換性がない方法で`D1`と`D2`を更新できます。
+
+##### 実施
+
+    ???
+
+## C.hierclass: 階層内でのクラス設計 (Designing classes in a hierarchy):
+
+### <a name="Rh-abstract-ctor"></a>C.126: 抽象クラスは通常はユーザー定義のコンストラクタを必要としません (An abstract class typically doesn't need a user-written constructor)
+
+<!--
 ##### Reason
 
 An abstract class typically does not have any data for a constructor to initialize.
@@ -10510,9 +13441,40 @@ An abstract class typically does not have any data for a constructor to initiali
 ##### Enforcement
 
 Flag abstract classes with constructors.
+-->
+##### 理由
 
-### <a name="Rh-dtor"></a>C.127: A class with a virtual function should have a virtual or protected destructor
+通常、抽象クラスには、コンストラクタが初期化するデータがありません。
 
+##### 例
+
+    class Shape {
+    public:
+        // 抽象ベースクラスではユーザー定義コンストラクタは不要
+        virtual Point center() const = 0;    // 純粋仮想
+        virtual void move(Point to) = 0;
+        // ... さらにいくつかの純粋仮想関数...
+        virtual ~Shape() {}                 // デストラクタ
+    };
+
+    class Circle : public Shape {
+    public:
+        Circle(Point p, int rad);           // 派生クラスのコンストラクタ
+        Point center() const override { return x; }
+    };
+
+##### 例外
+
+* ベースクラスのコンストラクタが、オブジェクトをどこかに登録するような仕事をする場合には、コンストラクタが必要となるかもしれません。
+* 極めてまれなケースでは、抽象クラスがすべての派生クラス間で共有される小さなデータをもつことが合理的とわかることがあるかもしれません(例えば、統計データ、デバッグ情報など); そのようなクラスはコンストラクタをもつ傾向があります。しかし注意してください: そのようなクラスは仮想継承を必要とする傾向もあります。
+
+##### 実施
+
+コンストラクタをもつ仮想クラスをチェックしましょう。
+
+### <a name="Rh-dtor"></a>C.127: 仮想関数をもつクラスは仮想あるいはprotectedなデストラクタを持つべきです (A class with a virtual function should have a virtual or protected destructor)
+
+<!--
 ##### Reason
 
 A class with a virtual function is usually (and in general) used via a pointer to base. Usually, the last user has to call delete on a pointer to base, often via a smart pointer to base, so the destructor should be public and virtual. Less commonly, if deletion through a pointer to base is not intended to be supported, the destructor should be protected and non-virtual; see [C.35](#Rc-dtor-virtual).
@@ -10544,9 +13506,42 @@ There are people who don't follow this rule because they plan to use a class onl
 
 * A class with any virtual functions should have a destructor that is either public and virtual or else protected and non-virtual.
 * Flag `delete` of a class with a virtual function but no virtual destructor.
+-->
+##### 理由
 
-### <a name="Rh-override"></a>C.128: Virtual functions should specify exactly one of `virtual`, `override`, or `final`
+仮想関数を持つクラスは、通常(そして一般的に) ベースクラスへのポインタを介して使用されます。通常、最後のユーザーはベースへのポインタに対して、多くの場合ベースへのスマートポインタを介して delete を呼び出す必要があるため、デストラクタはpublicかつ仮想である必要があります。あまり一般的ではありませんが、ベースへのポインタによる削除をサポートする意図がない場合は、デストラクタをprotectedにし、非仮想にする必要があります; [C.35](#Rc-dtor-virtual) を参照してください。
 
+##### ダメな例
+
+    struct B {
+        virtual int f() = 0;
+        // ... ユーザー定義デストラクタなし, デフォルトの publicで非仮想のデストラクタ ...
+    };
+
+    // ダメ: 仮想デストラクタをもｔないクラスからの継承
+    struct D : B {
+        string s {"default"};
+        // ...
+    };
+
+    void use()
+    {
+        unique_ptr<B> p = make_unique<D>();
+        // ...
+    } // 未定義動作, B::~Bだけが呼び出され、stringがリーク
+
+##### ノート
+
+このルールに従わない人々がいます。彼らは`shared_ptr`のみを通じてクラスを利用するように計画しているためです: `std::shared_ptr<B> p = std::make_shared<D>(args);`ではshared_ptrが削除を処理するため、ベースクラスの不適切な`delete`によるリークが発生しません。 これを一貫して行う人は誤検知を受ける可能性がありますが、このルールは重要です。`make_unique`を使用して割り当てられた場合はどうなるでしょうか? `B` の作成者が、すべてのコンストラクタをプライベートにし、`make_shared` で割り当てを強制するファクトリ関数を提供するなどして、決して悪用されないことを保証しない限り、安全ではありません。
+
+##### 実施
+
+* A class with any virtual functions should have a destructor that is either public and virtual or else protected and non-virtual.
+* Flag `delete` of a class with a virtual function but no virtual destructor.
+
+### <a name="Rh-override"></a>C.128: 仮想関数は `virtual`, `override`, あるいは`final`のいずれか1つを正確に指定する必要があります (Virtual functions should specify exactly one of `virtual`, `override`, or `final`)
+
+<!--
 ##### Reason
 
 Readability.
@@ -10600,9 +13595,64 @@ Note: Use `final` on functions sparingly. It does not necessarily lead to optimi
 * Compare virtual function names in base and derived classes and flag uses of the same name that does not override.
 * Flag overrides with neither `override` nor `final`.
 * Flag function declarations that use more than one of `virtual`, `override`, and `final`.
+-->
+##### 理由
 
-### <a name="Rh-kind"></a>C.129: When designing a class hierarchy, distinguish between implementation inheritance and interface inheritance
+可読性。
+間違いの発見。
+明示的な `virtual`、`override`、または `final` を記述することは自己文書化であり、コンパイラがベースクラスと派生クラスの間の型や名前の不一致を検出できるようになります。ただし、これら 3つのうち複数を記述することは冗長であり、エラーの原因となる可能性があります。
 
+シンプルかつ明確です:
+
+* `virtual` は正確に「これは新しい仮想関数です」のみを意味します。
+* `override` は正確に「これはfinalでないオーバーライドです」のみを意味します。
+* `final` は正確に「これはfinalのオーバーライドです」のみを意味します。
+
+##### 悪い例
+
+    struct B {
+        void f1(int);
+        virtual void f2(int) const;
+        virtual void f3(int);
+        // ...
+    };
+
+    struct D : B {
+        void f1(int);        // ダメ(警告が望ましい): D::f1()は B::f1()を隠す
+        void f2(int) const;  // ダメ(しかし伝統的かつ有効): オーバーライドが明示されていない
+        void f3(double);     // ダメ(警告が望ましい): D::f3() は B::f3()を隠す
+        // ...
+    };
+
+##### 良い例
+
+    struct Better : B {
+        void f1(int) override;        // エラー: Better::f1() は B::f1()を隠す
+        void f2(int) const override;
+        void f3(double) override;     // エラー: Better::f3() は B::f3()を隠す
+        // ...
+    };
+
+#### 議論
+
+我々は次の 2つの特定のクラスのエラーを排除したいと考えています:
+
+* **暗黙のvirtual**: プログラマは関数が暗黙的に仮想であることを意図しており、実際にそうなっている (ただし、コードを読む人にはわからない)。または、プログラマは関数が暗黙的に仮想的であることを意図していたが、そうなっていない（たとえば、パラメータリストの微妙な不一致のため)。または、プログラマは関数を仮想にするつもりはなかったが、仮想になっている (ベースクラスの仮想と同じシグネチャを偶然持っているため)。
+* **暗黙のoverride**: プログラマは関数が暗黙的にオーバーライドであることを意図しており、実際にオーバーライドになっている (ただし、コードを読む人にはわからない)。または、プログラマは関数が暗黙的にオーバーライドであることを意図していたが、そうなっていない（たとえば、パラメータリストの微妙な不一致のため）。または、プログラマはその関数をオーバーライドにするつもりはなかったがオーバーライドになった（たまたまベースクラスの仮想と同じシグネチャを持っているため。この問題は、関数が明示的に仮想宣言されているかどうかに関係なく発生することに注意してください。プログラマは新しい仮想関数または新しい非仮想関数のいずれかを作成するつもりだった可能性があるためです）。
+
+ノート: クラスが `final`として定義されている場合、`override`あるいは `final`をそれぞれの仮想関数に付与することは重要ではありません。
+
+ノート: 関数での`final`の使用は控えめにしてください。これは必ずしも最適化につながるわけではなく、さらなるオーバーライドを妨ぎます。
+
+##### 実施
+
+* Compare virtual function names in base and derived classes and flag uses of the same name that does not override.
+* Flag overrides with neither `override` nor `final`.
+* Flag function declarations that use more than one of `virtual`, `override`, and `final`.
+
+### <a name="Rh-kind"></a>C.129: クラス階層を設計するときには、実装インスタンスとインタフェースインスタンスを区別しましょう (When designing a class hierarchy, distinguish between implementation inheritance and interface inheritance)
+
+<!--
 ##### Reason
 
 Implementation details in an interface make the interface brittle;
@@ -10831,10 +13881,233 @@ at the cost of the functionality being available only to users of the hierarchy.
 * Flag a derived to base conversion to a base with both data and virtual functions
 (except for calls from a derived class member to a base class member)
 * ???
+-->
+##### 理由
+
+インターフェイス内の実装詳細は、インターフェイスを脆弱にします;
+つまり、ユーザーは実装の変更後に再コンパイルが必要になる可能性があります。
+ベースクラス内のデータにより、ベースクラスの実装が複雑になり、コードの重複が発生する可能性があります。
+
+##### ノート
+
+定義:
+
+* インターフェースの継承は、ユーザーを実装から分離するために継承を使用することです。
+特に、ベースクラスのユーザーに影響を与えることなく派生クラスを追加および変更できるようにします。
+* 実装の継承は、新しい機能の実装を簡素化するために継承を使用することです。 関連する新しい操作の実装者に対して便利な操作を利用できるようにすることによって行われます(「programming by difference(差分プログラミング)」と呼ばれることもあります)。
+
+純粋インタフェースクラスはシンプルに純粋仮想関数の集合です; [I.25](#Ri-abstract)を参照してください。
+
+初期の OOPでは(例えば 1980年代から1990年代)、実装の継承とインターフェイスの継承が混在することがよくありました。そして悪い習慣はなかなか消えません。
+現在でも、古いコードベースや古い形式の教材で混合物が使用されることは珍しくありません。
+
+2種類の継承を維持することの重要性は、以下に応じて増加します。
+
+* 階層のサイズ(例えば 数十の派生クラス)
+* 階層が使用される期間の長さ (たとえば、数十年)
+* 階層が使用されている個別の組織の数 (例: ベースクラスに対する更新を配布するのは難しい場合があります)
 
 
-### <a name="Rh-copy"></a>C.130: For making deep copies of polymorphic classes prefer a virtual `clone` function instead of public copy construction/assignment
+##### ダメな例
 
+    class Shape {   // ダメ, インタフェースと実装の混在
+    public:
+        Shape();
+        Shape(Point ce = {0, 0}, Color co = none): cent{ce}, col {co} { /* ... */}
+
+        Point center() const { return cent; }
+        Color color() const { return col; }
+
+        virtual void rotate(int) = 0;
+        virtual void move(Point p) { cent = p; redraw(); }
+
+        virtual void redraw();
+
+        // ...
+    private:
+        Point cent;
+        Color col;
+    };
+
+    class Circle : public Shape {
+    public:
+        Circle(Point c, int r) : Shape{c}, rad{r} { /* ... */ }
+
+        // ...
+    private:
+        int rad;
+    };
+
+    class Triangle : public Shape {
+    public:
+        Triangle(Point p1, Point p2, Point p3); // 重心を計算
+        // ...
+    };
+
+問題:
+
+* 階層が成長し、より多くのデータが`Shape`に追加されると、コンストラクタの作成と保守が難しくなります。
+* なぜ`Triangle`の中心を計算するのでしょうか?私たちはそれを決して使わないかもしれません。
+* データメンバ(描画スタイルやキャンバスなど)を `Shape`  に追加すると、`Shape` から派生したすべてのクラスと `Shape` を使用するすべてのコードを確認し、場合によっては変更し、おそらく再コンパイルする必要があります。
+
+`Shape::move()`は実装の継承の例です:
+すべての派生クラスに対して、`move()` をきっぱりと定義しました。
+このようなベースクラスのメンバ関数の実装に含まれるコードが増えるほど、より多くのデータがベースクラスに配置されて共有されます。
+得られる利益が増えれば増えるほど、階層構造の安定性は低下します。
+
+##### 例
+
+Shape階層はインタフェースの継承を用いて書き直すことができます:
+
+    class Shape {  // 純粋インタフェース
+    public:
+        virtual Point center() const = 0;
+        virtual Color color() const = 0;
+
+        virtual void rotate(int) = 0;
+        virtual void move(Point p) = 0;
+
+        virtual void redraw() = 0;
+
+        // ...
+    };
+
+純粋インタフェースがコンストラクタを持つことは稀なことに注意しましょう: コンストラクタは必要ありません。
+
+    class Circle : public Shape {
+    public:
+        Circle(Point c, int r, Color c) : cent{c}, rad{r}, col{c} { /* ... */ }
+
+        Point center() const override { return cent; }
+        Color color() const override { return col; }
+
+        // ...
+    private:
+        Point cent;
+        int rad;
+        Color col;
+    };
+
+インターフェイスの脆弱性は軽減されましたが、メンバ関数の実装にはさらに多くの作業が必要です。
+たとえば、`center` は、`Shape` から派生したすべてのクラスで実装する必要があります。
+
+##### 2重階層の例
+
+インタフェース階層からの安定した階層の利点と、実装の継承からの実装の再利用の利点をどのようにして得ることができるでしょうか?
+1つのポピュラーなテクニックが2重階層です。
+2重階層のアイディアを実装する方法が多くあります; ここでは多重継承の変異体を使用します。
+
+まず、インターフェイスクラスの階層を考案します:
+
+    class Shape {   // 純粋インタフェース
+    public:
+        virtual Point center() const = 0;
+        virtual Color color() const = 0;
+
+        virtual void rotate(int) = 0;
+        virtual void move(Point p) = 0;
+
+        virtual void redraw() = 0;
+
+        // ...
+    };
+
+    class Circle : public virtual Shape {   // 純粋インタフェース
+    public:
+        virtual int radius() = 0;
+        // ...
+    };
+
+このインタフェースを有用にするために、その実装クラス (ここでは同じ名前が付けられていますが、`Impl` 名前空間内にあります) を提供する必要があります:
+
+    class Impl::Shape : public virtual ::Shape { // 実装
+    public:
+        // コンストラクタ, デストラクタ
+        // ...
+        Point center() const override { /* ... */ }
+        Color color() const override { /* ... */ }
+
+        void rotate(int) override { /* ... */ }
+        void move(Point p) override { /* ... */ }
+
+        void redraw() override { /* ... */ }
+
+        // ...
+    };
+
+さて、`Shape` は実装を備えたクラスの悪い例ですが、
+ただし、これはより複雑な階層を対象としたテクニックの単純な例にすぎないため、ご了承ください。
+
+    class Impl::Circle : public virtual ::Circle, public Impl::Shape {   // 実装
+    public:
+        // コンストラクタ, デストラクタ
+
+        int radius() override { /* ... */ }
+        // ...
+    };
+
+そして、 Smileyクラス(:-)を追加して階層を拡張することできます:
+
+    class Smiley : public virtual Circle { // 純粋インタフェース
+    public:
+        // ...
+    };
+
+    class Impl::Smiley : public virtual ::Smiley, public Impl::Circle {   // 実装
+    public:
+        // コンストラクタ, デストラクタ
+        // ...
+    }
+
+今2つの階層があります:
+
+* インタフェース: Smiley -> Circle -> Shape
+* 実装: Impl::Smiley -> Impl::Circle -> Impl::Shape
+
+各実装はそのインターフェイスとその実装ベースクラスから派生しているため、格子(DAG(有向非巡回グラフ)) が得られます:
+
+    Smiley     ->         Circle     ->  Shape
+      ^                     ^               ^
+      |                     |               |
+    Impl::Smiley -> Impl::Circle -> Impl::Shape
+
+前述したように、これは2重階層を構築する 1つの方法にすぎません。
+
+実装階層は、抽象インターフェイスを介さずに直接使用できます。
+
+    void work_with_shape(Shape&);
+
+    int user()
+    {
+        Impl::Smiley my_smiley{ /* args */ };   // 具象 shapeを構築
+        // ...
+        my_smiley.some_member();        // 実装クラスを直接使用
+        // ...
+        work_with_shape(my_smiley);     // 抽象インタフェースを通じて実装を使用
+        // ...
+    }
+
+これは、抽象インターフェイスで提供されていないメンバーが実装クラスにある場合、またはメンバを直接使用することで最適化の機会が提供される場合 (たとえば、実装メンバ関数が`final`である場合) に便利です。
+
+##### ノート
+
+インタフェースと実装を分離する他の(関連した)テクニックが、[Pimpl](#Ri-pimpl)です。
+
+##### ノート
+
+多くの場合、共通の機能を (実装された) ベースクラス関数として提供するか、(実装名前空間内の) 独立した関数として提供するかの選択が必要になります。
+ベースクラスを使用すると、階層のユーザーのみが利用できる機能と引き換えに、表記が短縮され、(ベースクラス内の) 共有データに簡単にアクセスできるようになります。
+
+##### 実施
+
+* Flag a derived to base conversion to a base with both data and virtual functions
+(except for calls from a derived class member to a base class member)
+* ???
+
+
+### <a name="Rh-copy"></a>C.130: 多相的クラスの深いコピーをするためには publicなコピーコンストラクタ/代入演算子の代わりに 仮想`clone`関数を使いましょう (For making deep copies of polymorphic classes prefer a virtual `clone` function instead of public copy construction/assignment)
+
+<!--
 ##### Reason
 
 Copying a polymorphic class is discouraged due to the slicing problem, see [C.67](#Rc-copy-virtual). If you really need copy semantics, copy deeply: Provide a virtual `clone` function that will copy the actual most-derived type and return an owning pointer to the new object, and then in derived classes return the derived type (use a covariant return type).
@@ -10863,11 +14136,41 @@ Copying a polymorphic class is discouraged due to the slicing problem, see [C.67
     };
 
 Generally, it is recommended to use smart pointers to represent ownership (see [R.20](#Rr-owner)). However, because of language rules, the covariant return type cannot be a smart pointer: `D::clone` can't return a `unique_ptr<D>` while `B::clone` returns `unique_ptr<B>`. Therefore, you either need to consistently return `unique_ptr<B>` in all overrides, or use `owner<>` utility from the [Guidelines Support Library](#SS-views).
+-->
+##### 理由
+
+多相的クラスのコピーは、スライシングの問題のため推奨されません。[C.67](#Rc-copy-virtual) を参照してください。 もしも本当にコピーセマンティクスが必要であるなら深いコピーをしましょう: 実際の最も派生した型をコピーし、新しいオブジェクトへの所有ポインタを返す仮想 `clone` 関数を提供します。そして、派生クラスでは派生型を返します (共変戻り値型(covariant return type)を使用します)。
+
+##### 例
+
+    class B {
+    public:
+        B() = default;
+        virtual ~B() = default;
+        virtual gsl::owner<B*> clone() const = 0;
+    protected:
+         B(const B&) = default;
+         B& operator=(const B&) = default;
+         B(B&&) = default;
+         B& operator=(B&&) = default;
+        // ...
+    };
+
+    class D : public B {
+    public:
+        gsl::owner<D*> clone() const override
+        {
+            return new D{*this};
+        };
+    };
+
+一般的に、所有権を表現するのにスマートポインタの使用が推奨されます([R.20](#Rr-owner)を参照してください)。 しかしながら、言語ルールのために、共変戻り値型はスマートポインタにできません: `B::clone`は`unique_ptr<B>`を返しますが、`D::clone`は `unique_ptr<D>`を返すことができません。そこで、すべてのオーバーライドでは一貫して `unique_ptr<B>`を返すか、あるいは[Guidelines Support Library](#SS-views)の`owner<>`ユーティリティを使う必要があります。
 
 
 
-### <a name="Rh-get"></a>C.131: Avoid trivial getters and setters
+### <a name="Rh-get"></a>C.131: 単純なゲッターとセッターを避けましょう (Avoid trivial getters and setters)
 
+<!--
 ##### Reason
 
 A trivial getter or setter adds no semantic value; the data item could just as well be `public`.
@@ -10902,9 +14205,45 @@ The key to this rule is whether the semantics of the getter/setter are trivial. 
 ##### Enforcement
 
 Flag multiple `get` and `set` member functions that simply access a member without additional semantics.
+-->
+##### 理由
 
-### <a name="Rh-virtual"></a>C.132: Don't make a function `virtual` without reason
+単純なゲッターとセッターは意味のある価値を与えません; データは単なる `public`と同様になります。
 
+##### 例
+
+    class Point {   // ダメ: 冗長
+        int x;
+        int y;
+    public:
+        Point(int xx, int yy) : x{xx}, y{yy} { }
+        int get_x() const { return x; }
+        void set_x(int xx) { x = xx; }
+        int get_y() const { return y; }
+        void set_y(int yy) { y = yy; }
+        // 動作メンバ関数はなし
+    };
+
+そのようなクラスは `struct`にすることを考慮しましょう -- つまり、動作のない変数の束であり、すべてpublicデータであり、メンバ関数はありません。
+
+    struct Point {
+        int x {0};
+        int y {0};
+    };
+
+メンバ変数にデフォルトの初期化子を設定できることに注意してください: [C.49: コンストラクタでの代入よりも初期化を優先しましょう](#Rc-initialize)。
+
+##### ノート
+
+このルールの鍵は、ゲッター/セッターのセマンティクスが「trivial(トリビアル)」かどうかです。 これは「trivial」の完全な定義ではありませんが、ゲッター/セッターがpublicな データメンバーだった場合と、構文以外に違いがあるかどうかを検討してください。 重要なセマンティクスの例としては、クラスの不変条件の維持や、内部型とインターフェイス型の間の変換などが挙げられます。
+
+##### 実施
+
+Flag multiple `get` and `set` member functions that simply access a member without additional semantics.
+
+### <a name="Rh-virtual"></a>C.132: 理由なしに 関数を`virtual`にしないようにしましょう (Don't make a function `virtual` without reason)
+
+<!--
 ##### Reason
 
 Redundant `virtual` increases run-time and object-code size.
@@ -10929,9 +14268,35 @@ This kind of "vector" isn't meant to be used as a base class at all.
 
 * Flag a class with virtual functions but no derived classes.
 * Flag a class where all member functions are virtual and have implementations.
+-->
+##### 理由
 
-### <a name="Rh-protected"></a>C.133: Avoid `protected` data
+冗長な `virtual`は実行時間とオブジェクトコードサイズを増加させます。
+仮想関数はオーバーライドできるため、派生クラスで間違いが発生する可能性があります。
+仮想関数により、テンプレート化された階層内でのコードの複製が保証されます。
 
+##### ダメな例
+
+    template<class T>
+    class Vector {
+    public:
+        // ...
+        virtual int size() const { return sz; }   // ダメ: 派生クラスに何ができるでしょうか?
+    private:
+        T* elem;   // 要素群
+        int sz;    // 要素数
+    };
+
+この種の「vector」は、ベースクラスとして使用されることをまったく意図していません。
+
+##### 実施
+
+* Flag a class with virtual functions but no derived classes.
+* Flag a class where all member functions are virtual and have implementations.
+
+### <a name="Rh-protected"></a>C.133: `protected`なデータを避けましょう (Avoid `protected` data)
+
+<!--
 ##### Reason
 
 `protected` data is a source of complexity and errors.
@@ -10973,9 +14338,51 @@ Protected member function can be just fine.
 ##### Enforcement
 
 Flag classes with `protected` data.
+-->
+##### 理由
 
-### <a name="Rh-public"></a>C.134: Ensure all non-`const` data members have the same access level
+`protected`なデータは複雑さとエラーの元となります。
+`protected`なデータは不変条件の記述を複雑にします。
+`protected`なデータは本質的に、データをベースクラスに配置することに対するガイドラインに違反しており、通常は仮想継承にも対処する必要があります。
 
+##### ダメな例
+
+    class Shape {
+    public:
+        // ... インタフェース関数群 ...
+    protected:
+        // 派生クラスで利用するデータ:
+        Color fill_color;
+        Color edge_color;
+        Style st;
+    };
+
+protectedなデータが正しく扱われるかどうかは、今やすべての `Shape`の派生クラスにかかっています。
+これはよく知られていますが、メンテナンス上の問題の主な原因でもあります。
+大規模なクラス階層では、多くのクラスに広がったコードが大量に存在する可能性があるため、protectedなデータの一貫した使用を維持するのは困難です。
+そのデータにアクセスできるクラスの集合はオープンです: 誰でも新しいクラスを派生して、protectedなデータの操作を開始できます。
+多くの場合、クラスの完全な集合を調べることはできないため、クラスの表現を変更することは不可能になります。
+protectedなデータには強制的な不変条件はありません; これはグローバル変数の集合によく似ています。
+protectedなデータは事実上、コードの大部分に対してグローバルになっています。
+
+##### ノート
+
+protectedなデータは、多くの場合、派生を通じて任意の改善を可能にする誘惑に駆られます。
+多くの場合、無原則な変更やエラーが発生します。
+うまく規定された[`private`データを好みましょう](#Rc-private)、そして不変条件を使用しましょう。
+代替策としては、しばしばより好ましいのは、[インタフェースを使ってクラスからデータをなくすことです](#Rh-abstract)。
+
+##### ノート
+
+protectedなメンバ関数は問題ありません。
+
+##### 実施
+
+`protected`データをもつクラスをチェックしましょう。
+
+### <a name="Rh-public"></a>C.134: 全ての非`const`のメンバ変数が同じアクセスレベルを持つようにしましょう (Ensure all non-`const` data members have the same access level)
+
+<!--
 ##### Reason
 
 Prevention of logical confusion leading to errors.
@@ -11006,6 +14413,40 @@ Most classes are either all A or all B:
 Occasionally classes will mix A and B, usually for debug reasons. An encapsulated object might contain something like non-`const` debug instrumentation that isn't part of the invariant and so falls into category A -- it isn't really part of the object's value or meaningful observable state either. In that case, the A parts should be treated as A's (made `public`, or in rarer cases `protected` if they should be visible only to derived classes) and the B parts should still be treated like B's (`private` or `const`).
 
 ##### Enforcement
+
+Flag any class that has non-`const` data members with different access levels.
+-->
+##### 理由
+
+エラーにつながる論理的な混乱の防止。
+もしも非`const`なメンバ変数が異なるアクセスレベルを持つと、型は何をしようとしているのか混乱してしまいます。
+それは不変条件を維持する型ですか、それとも単に値のコレクションですか?
+
+##### 議論
+
+中心的な質問は どのコードがその変数の意味のある正しい値を維持する役割を果たしているのか? ということです。
+
+メンバ変数には正確に 2種類があります:
+
+* A: オブジェクトの不変条件に関与しないもの。これらのメンバの値は任意の組み合わせが有効です。
+* B: オブジェクトの不変条件に関与するもの。 すべての値の組み合わせが意味があるわけではありません(そうでない場合、不変条件は存在しません)。 したがって、これらの変数への書き込みアクセスを持つすべてのコードは、不変条件について理解し、セマンティクスを理解し、値を正しく保つためのルールを知っている (そして積極的に実装および強制する) 必要があります。
+
+カテゴリAに属するメンバ変数は 単に `public`となるべきです(あるいは、稀に、それらを派生クラスのみから見たい場合は `protected`)。 それらはカプセル化する必要がありません。 システムのすべてのコードはそれらを見て、操作するでしょう。
+
+カテゴリBに属するメンバ変数は `private`あるいは `const`となるべきです。 なぜならばカプセル化が重要だからです。 それらを 非`private`かつ 非`const`にすることは、オブジェクトが自身の状態をコントロールできないことを意味します: クラス外部の無制限な量のコードは、不変条件について認識し、それを正確に維持することに参加する必要があります -- もしこれらのメンバ変数が `public`だったなら、そのオブジェクトを利用する全ての呼び出しコードになります; もし `protected`だったなら、現在または未来の派生クラス内のすべてのコードになります。 これにより、コードが脆弱で緊密に結合され、保守がすぐに悪夢のようなものになってしまいます。
+メンバ変数を無効または予期しない値の組み合わせに誤って設定するコードは、オブジェクトとその後のオブジェクトのすべての使用を破壊する可能性があります。
+
+ほとんどのクラスはオールAかオールBのどちらかです:
+
+* *全てpublic*: これらの変数にわたる不変条件を持たない集合的な変数の束を作成する場合、すべての変数を`public`にする必要があります。
+  [クラスに不変条件がある場合は `class` を使用しましょう。データメンバーが独立して変更できる場合は `struct` を使用しましょう](#Rc-struct)
+* *全てprivate*: 不変条件を維持する型を作成している場合、`const`以外の変数はすべてprivateである必要があり、カプセル化する必要があります。
+
+##### 例外
+
+場合によっては、通常はデバッグ上の理由から、クラスに Aと Bが混在することがあります。カプセル化されたオブジェクトには、不変条件の一部ではない非`const`のデバッグ計測のようなものが含まれる可能性があり、それはカテゴリA に分類されます -- それはオブジェクトの実際の部分でなく、意味のある観測可能な状態でもありません。その場合、A部分は Aとして扱われ (`public`にされるか、まれに、派生クラスのみから見える必要がある場合は`protected`にされます)、B部分は依然として Bのもの (`private`または`const`) として扱われる必要があります。
+
+##### 実施
 
 Flag any class that has non-`const` data members with different access levels.
 
@@ -12544,13 +15985,13 @@ Here, we ignore such cases.
   * [R.11: 明示的な `new` と `delete`の呼び出しを避けましょう](#Rr-newdelete)
   * [R.12: 明示的なリソース割り当ての結果は、即座に管理オブジェクトに与えましょう](#Rr-immediate-alloc)
   * [R.13: 単一の式ステートメント内には、明示的なリソース割り当ては最大で1つにしましょう](#Rr-single-alloc)
-  * [R.14: `[]`パラメータを避けましょう。`span`を使いましょう](#Rr-ap)
+  * [R.14: `[]`パラメータを避けましょう。`span`を好みましょう](#Rr-ap)
   * [R.15: 常に、割り当てと解放をペアにしてオーバーロードしましょう](#Rr-pair)
 
 * <a name="Rr-summary-smartptrs"></a>スマートポインタのルールまとめ:
 
   * [R.20: 所有権を表現するために`unique_ptr`や`shared_ptr`を使いましょう](#Rr-owner)
-  * [R.21: 共有所有権が必要なければ `shared_ptr`よりも `unique_ptr`を使いましょう](#Rr-unique)
+  * [R.21: 共有所有権が必要なければ `shared_ptr`よりも `unique_ptr`を好みましょう](#Rr-unique)
   * [R.22: `shared_ptr`を作るときは `make_shared()`を使いましょう](#Rr-make_shared)
   * [R.23: `unique_ptr`を作るときは `make_unique()`を使いましょう](#Rr-make_unique)
   * [R.24: `shared_ptr`の循環参照を防ぐためには、`std::weak_ptr`を使いましょう](#Rr-weak_ptr)
@@ -13398,7 +16839,7 @@ Write your own factory wrapper if there is not one already.
 
 * 複数の明示的なリソース割り当てを伴う式をチェックしましょう (問題: どれだけの直接的なリソース割り当てを私たちは認識できるでしょうか?)
 
-### <a name="Rr-ap"></a>R.14: `[]`パラメータを避けましょう。`span`を使いましょう (Avoid `[]` parameters, prefer `span`)
+### <a name="Rr-ap"></a>R.14: `[]`パラメータを避けましょう。`span`を好みましょう (Avoid `[]` parameters, prefer `span`)
 
 <!--
 ##### Reason
@@ -13533,7 +16974,7 @@ This will leak the object used to initialize `p1` (only).
 * (シンプル) `new`の返り値が生ポインタに代入されている場合に警告しましょう。
 * (シンプル) 生の所有ポインタを返す関数の返り値を生ポインタに代入されている場合に警告しましょう。
 
-### <a name="Rr-unique"></a>R.21: 共有所有権が必要なければ `shared_ptr`よりも `unique_ptr`を使いましょう (Prefer `unique_ptr` over `shared_ptr` unless you need to share ownership)
+### <a name="Rr-unique"></a>R.21: 共有所有権が必要なければ `shared_ptr`よりも `unique_ptr`を好みましょう (Prefer `unique_ptr` over `shared_ptr` unless you need to share ownership)
 
 <!--
 ##### Reason
@@ -14163,7 +17604,7 @@ For naming, commenting, and indentation rules, see [NL: Naming and layout](#S-na
 
 General rules:
 
-* [ES.1: 他のライブラリやお手製コードより標準ライブラリを使うようにしましょう (Prefer the standard library to other libraries and to "handcrafted code")](#Res-lib)
+* [ES.1: 他のライブラリやお手製コードより標準ライブラリを好みましょう (Prefer the standard library to other libraries and to "handcrafted code")](#Res-lib)
 * [ES.2: 言語機能を直接使用するよりも、適切な抽象化を優先しましょう (Prefer suitable abstractions to direct use of language features)](#Res-abstr)
 * [ES.3: DRY(同じことを繰り返すな)の原則に従い、冗長なコードは避けましょう (Don't repeat yourself, avoid redundant code)](#Res-DRY)
 
@@ -14216,11 +17657,11 @@ Expression rules:
 
 Statement rules:
 
-* [ES.70: 選択の場合は、`if`文よりも`switch`文を使いましょう (Prefer a `switch`-statement to an `if`-statement when there is a choice)](#Res-switch-if)
-* [ES.71: 選択肢がある場合は、`for`文よりも範囲`for`文を使いましょう (Prefer a range-`for`-statement to a `for`-statement when there is a choice)](#Res-for-range)
-* [ES.72: 明らかなループ変数があるときは、`while`文よりも `for`文を使いましょう (Prefer a `for`-statement to a `while`-statement when there is an obvious loop variable)](#Res-for-while)
-* [ES.73: 明らかなループ変数がないときは `for`文よりも `while`文を使いましょう (Prefer a `while`-statement to a `for`-statement when there is no obvious loop variable)](#Res-while-for)
-* [ES.74: ループ変数は `for`文の初期化部で宣言するようにしよう (Prefer to declare a loop variable in the initializer part of a `for`-statement)](#Res-for-init)
+* [ES.70: 選択の場合は、`if`文よりも`switch`文を好みましょう (Prefer a `switch`-statement to an `if`-statement when there is a choice)](#Res-switch-if)
+* [ES.71: 選択肢がある場合は、`for`文よりも範囲`for`文を好みましょう (Prefer a range-`for`-statement to a `for`-statement when there is a choice)](#Res-for-range)
+* [ES.72: 明らかなループ変数があるときは、`while`文よりも `for`文を好みましょう (Prefer a `for`-statement to a `while`-statement when there is an obvious loop variable)](#Res-for-while)
+* [ES.73: 明らかなループ変数がないときは `for`文よりも `while`文を好みましょう (Prefer a `while`-statement to a `for`-statement when there is no obvious loop variable)](#Res-while-for)
+* [ES.74: ループ変数は `for`文の初期化部で宣言することを好みましよう (Prefer to declare a loop variable in the initializer part of a `for`-statement)](#Res-for-init)
 * [ES.75: `do`文は使わないようにしよう (Avoid `do`-statements)](#Res-do)
 * [ES.76: `goto`を使わないようにしよう (Avoid `goto`)](#Res-goto)
 * [ES.77: ループ内の `break`と `continue`の使用は最小限にしましょう (Minimize the use of `break` and `continue` in loops)](#Res-continue)
@@ -14242,7 +17683,7 @@ Arithmetic rules:
 * [ES.106: `unsigned`を用いることで、負の値を避けようとはしないでください (Don't try to avoid negative values by using `unsigned`)](#Res-nonnegative)
 * [ES.107: Don't use `unsigned` for subscripts, prefer `gsl::index`](#Res-subscripts)
 
-### <a name="Res-lib"></a>ES.1: 他のライブラリやお手製コードより標準ライブラリを使うようにしましょう (Prefer the standard library to other libraries and to "handcrafted code")
+### <a name="Res-lib"></a>ES.1: 他のライブラリやお手製コードより標準ライブラリを使うことを好みましょう (Prefer the standard library to other libraries and to "handcrafted code")
 
 <!--
 ##### Reason
@@ -19283,7 +22724,7 @@ Statements control the flow of control (except for function calls and exception 
 -->
 ステートメントは、制御の流れを制御します (式である関数呼び出しと例外スローを除く)。
 
-### <a name="Res-switch-if"></a>ES.70: 選択の場合は、`if`文よりも`switch`文を使いましょう (Prefer a `switch`-statement to an `if`-statement when there is a choice)
+### <a name="Res-switch-if"></a>ES.70: 選択の場合は、`if`文よりも`switch`文を好みましょう (Prefer a `switch`-statement to an `if`-statement when there is a choice)
 
 <!--
 ##### Reason
@@ -19360,7 +22801,7 @@ Flag `if`-`then`-`else` chains that check against constants (only).
 
 定数(のみ)をチェックする`if`-`then`-`else` チェーンをチェックしましょう。
 
-### <a name="Res-for-range"></a>ES.71: 選択肢がある場合は、`for`文よりも範囲`for`文を使いましょう (Prefer a range-`for`-statement to a `for`-statement when there is a choice)
+### <a name="Res-for-range"></a>ES.71: 選択肢がある場合は、`for`文よりも範囲`for`文を好みましょう (Prefer a range-`for`-statement to a `for`-statement when there is a choice)
 
 <!--
 ##### Reason
@@ -19459,7 +22900,7 @@ Look at loops, if a traditional loop just looks at each element of a sequence, a
 
 ループをみましょう。もし要素を順番にみている伝統的なループで、その要素に対して副作用がないのであれば、範囲`for`ループに書き換えましょう。
 
-### <a name="Res-for-while"></a>ES.72: 明らかなループ変数があるときは、`while`文よりも `for`文を使いましょう (Prefer a `for`-statement to a `while`-statement when there is an obvious loop variable)
+### <a name="Res-for-while"></a>ES.72: 明らかなループ変数があるときは、`while`文よりも `for`文を好みましょう (Prefer a `for`-statement to a `while`-statement when there is an obvious loop variable)
 
 <!--
 ##### Reason
@@ -19506,7 +22947,7 @@ Readability: the complete logic of the loop is visible "up front". The scope of 
 
 ???
 
-### <a name="Res-while-for"></a>ES.73: 明らかなループ変数がないときは `for`文よりも `while`文を使いましょう(Prefer a `while`-statement to a `for`-statement when there is no obvious loop variable)
+### <a name="Res-while-for"></a>ES.73: 明らかなループ変数がないときは `for`文よりも `while`文を好みましょう(Prefer a `while`-statement to a `for`-statement when there is no obvious loop variable)
 
 <!--
 ##### Reason
@@ -19558,7 +22999,7 @@ Flag actions in `for`-initializers and `for`-increments that do not relate to th
 `for`初期化式と `for`増加式のうち、`for`文の条件式と関係がないものをチェックしよう。
 
 
-### <a name="Res-for-init"></a>ES.74: ループ変数は `for`文の初期化部で宣言するようにしよう (Prefer to declare a loop variable in the initializer part of a `for`-statement)
+### <a name="Res-for-init"></a>ES.74: ループ変数は `for`文の初期化部で宣言することを好みましょう (Prefer to declare a loop variable in the initializer part of a `for`-statement)
 
 <!--
 See [ES.6](#Res-cond)
@@ -28067,7 +31508,7 @@ Help other people when you make improvements.
 他の人が改善したときは、その方から恩恵を受けましょう。
 あなたが改善したときは、他の方に恩恵を与えましょう。
 
-### <a name="Rsl-sl"></a>SL.2: 標準ライブラリを他のライブラリより優先しよう(Prefer the standard library to other libraries)
+### <a name="Rsl-sl"></a>SL.2: 標準ライブラリを他のライブラリより優先しよう (Prefer the standard library to other libraries)
 
 <!--
 ##### Reason
@@ -28155,12 +31596,12 @@ Container rule summary:
 
 コンテナルールまとめ:
 
-* [SL.con.1: Cの配列の代わりにSTLの`array`や`vector`を使おう (Prefer using STL `array` or `vector` instead of a C array)](#Rsl-arrays)
-* [SL.con.2: 他のコンテナを使う理由がない限りはSTLの`vector`を使おう (Prefer using STL `vector` by default unless you have a reason to use a different container)](#Rsl-vector)
+* [SL.con.1: Cの配列の代わりにSTLの`array`や`vector`を好みましょう (Prefer using STL `array` or `vector` instead of a C array)](#Rsl-arrays)
+* [SL.con.2: 他のコンテナを使う理由がない限りはSTLの`vector`を好みましょう (Prefer using STL `vector` by default unless you have a reason to use a different container)](#Rsl-vector)
 * [SL.con.3: 範囲エラーを避けよう (Avoid bounds errors)](#Rsl-bounds)
 * [SL.con.4: don't use `memset` or `memcpy` for arguments that are not trivially-copyable](#Rsl-copy)
 
-### <a name="Rsl-arrays"></a>SL.con.1: Cの配列の代わりにSTLの`array`や`vector`を使おう(Prefer using STL `array` or `vector` instead of a C array)
+### <a name="Rsl-arrays"></a>SL.con.1: Cの配列の代わりにSTLの`array`や`vector`を好みましょう (Prefer using STL `array` or `vector` instead of a C array)
 
 <!--
 ##### Reason
@@ -28233,7 +31674,7 @@ Cの配列は安全性が低く、`array`と`vector`に対する利点は全く�
 
 * 関数やクラス内で宣言されている C配列をチェックしましょう。最低限`std::array`に直しましょう。
 
-### <a name="Rsl-vector"></a>SL.con.2: 他のコンテナを使う理由がない限りはSTLの`vector`を使おう(Prefer using STL `vector` by default unless you have a reason to use a different container)
+### <a name="Rsl-vector"></a>SL.con.2: 他のコンテナを使う理由がない限りはSTLの`vector`を好みましょう (Prefer using STL `vector` by default unless you have a reason to use a different container)
 
 <!--
 ##### Reason
@@ -28863,7 +32304,7 @@ IOストリームのルールまとめ:
 
 * [SL.io.1: 本当に必要なときに限り、文字レベルの入力を使いましょう](#Rio-low)
 * [SL.io.2: 読み込み時は、常に不正な入力のことを考慮しよう](#Rio-validate)
-* [SL.io.3: I/Oに対しては`iostream`を使おう](#Rio-streams)
+* [SL.io.3: I/Oに対しては`iostream`を好みましょう](#Rio-streams)
 * [SL.io.10: `ios_base::sync_with_stdio(false)`を使わずに`printf`ファミリーの関数を使わないようにしよう`](#Rio-sync)
 * [SL.io.50: `endl`を避けよう](#Rio-endl)
 * [???](#???)
@@ -28956,7 +32397,7 @@ If input isn't validated, every function must be written to cope with bad data (
 ???
 -->
 
-### <a name="Rio-streams"></a>SL.io.3: I/Oに対しては`iostream`を使おう (Prefer `iostream`s for I/O)
+### <a name="Rio-streams"></a>SL.io.3: I/Oに対しては`iostream`を好みましょう (Prefer `iostream`s for I/O)
 
 ##### 理由
 

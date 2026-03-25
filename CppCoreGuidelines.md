@@ -13104,24 +13104,24 @@ Accessing objects in a hierarchy rule summary:
 * [C.132: 理由なしに 関数を`virtual`にしないようにしましょう](#Rh-virtual)
 * [C.133: `protected`なデータを避けましょう](#Rh-protected)
 * [C.134: 全ての非`const`のメンバ変数が同じアクセスレベルを持つようにしましょう](#Rh-public)
-* [C.135: Use multiple inheritance to represent multiple distinct interfaces](#Rh-mi-interface)
-* [C.136: Use multiple inheritance to represent the union of implementation attributes](#Rh-mi-implementation)
-* [C.137: Use `virtual` bases to avoid overly general base classes](#Rh-vbase)
-* [C.138: Create an overload set for a derived class and its bases with `using`](#Rh-using)
-* [C.139: Use `final` on classes sparingly](#Rh-final)
-* [C.140: Do not provide different default arguments for a virtual function and an overrider](#Rh-virtual-default-arg)
+* [C.135: 複数の異なるインタフェースを表すために多重継承を使いましょう](#Rh-mi-interface)
+* [C.136: 実装属性の和集合を表すために多重継承を使いましょう](#Rh-mi-implementation)
+* [C.137: 過度に一般的なベースクラスを避けるために `virtual`ベースクラスを使いましょう](#Rh-vbase)
+* [C.138: 派生クラスのオーバーロードセットを作成し、ベースクラスに 'using'を使いましょう](#Rh-using)
+* [C.139: クラスへの `final`の利用は控えめに](#Rh-final)
+* [C.140: 仮想関数とそのオーバーライドに異なるデフォルト引数を与えないようにしましょう](#Rh-virtual-default-arg)
 
 階層内でのオブジェクトのアクセスのルールのまとめ:
 
-* [C.145: Access polymorphic objects through pointers and references](#Rh-poly)
-* [C.146: Use `dynamic_cast` where class hierarchy navigation is unavoidable](#Rh-dynamic_cast)
-* [C.147: Use `dynamic_cast` to a reference type when failure to find the required class is considered an error](#Rh-ref-cast)
-* [C.148: Use `dynamic_cast` to a pointer type when failure to find the required class is considered a valid alternative](#Rh-ptr-cast)
-* [C.149: Use `unique_ptr` or `shared_ptr` to avoid forgetting to `delete` objects created using `new`](#Rh-smart)
-* [C.150: Use `make_unique()` to construct objects owned by `unique_ptr`s](#Rh-make_unique)
-* [C.151: Use `make_shared()` to construct objects owned by `shared_ptr`s](#Rh-make_shared)
-* [C.152: Never assign a pointer to an array of derived class objects to a pointer to its base](#Rh-array)
-* [C.153: Prefer virtual function to casting](#Rh-use-virtual)
+* [C.145: 多態的なオブジェクトにはポインタと参照を使ってアクセスしましょう](#Rh-poly)
+* [C.146: クラス階層のナビゲーションが避けられない場合は `dynamic_cast`を使いましょう](#Rh-dynamic_cast)
+* [C.147: 必要なクラスを取得できないことをエラーとみなす場合には参照型への `dynamic_cast`を使いましょう](#Rh-ref-cast)
+* [C.148: 必要なクラスを取得できないときに有効な回避策がある場合にはポインタ型への `dynamic_cast`を使いましょう](#Rh-ptr-cast)
+* [C.149: `new`で生成したオブジェクトの `delete`忘れを避けるために `unique_ptr`か`shared_ptr`を使いましょう](#Rh-smart)
+* [C.150: `unique_ptr`によって所有されるオブジェクトの構築には `make_unique()`を使いましょう](#Rh-make_unique)
+* [C.151: `shared_ptr`によって所有されるオブジェクトの構築には `make_shared()`を使いましょう](#Rh-make_shared)
+* [C.152: 派生クラスのオブジェクトの配列へのポインタをその基底クラスへのポインタに代入しないでください](#Rh-array)
+* [C.153: キャストよりも仮想関数を使いましょう](#Rh-use-virtual)
 
 ### <a name="Rh-domain"></a>C.120: クラス階層を使用して、固有の階層構造を持つ概念(のみ)を表現しましょう (Use class hierarchies to represent concepts with inherent hierarchical structure (only))
 
@@ -14450,8 +14450,9 @@ Flag any class that has non-`const` data members with different access levels.
 
 Flag any class that has non-`const` data members with different access levels.
 
-### <a name="Rh-mi-interface"></a>C.135: Use multiple inheritance to represent multiple distinct interfaces
+### <a name="Rh-mi-interface"></a>C.135: 複数の異なるインタフェースを表すために多重継承を使いましょう (Use multiple inheritance to represent multiple distinct interfaces)
 
+<!--
 ##### Reason
 
 Not all classes will necessarily support all interfaces, and not all callers will necessarily want to deal with all operations.
@@ -14478,9 +14479,36 @@ Such interfaces are typically abstract classes.
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rh-mi-implementation"></a>C.136: Use multiple inheritance to represent the union of implementation attributes
+すべてのクラスが必ずしもすべてのインタフェースをサポートするわけではなく、すべての呼び出し元が必ずしもすべての操作を処理する必要もありません。
+特に、モノリシックなインターフェースを、特定の派生クラスがサポートする動作の"側面"に分解することが重要です。
 
+##### 例
+
+    class iostream : public istream, public ostream {   // とてもシンプル化
+        // ...
+    };
+
+`istream` は入力操作のインタフェースを与えます; `ostream` は出力操作のインタフェースを与えます。
+`iostream` は`istream` と `ostream` のインタフェースの和集合と、単一のストリームに両方を許可するために必要な同期メカニズムを与えます。
+
+##### ノート
+
+これは継承の非常に一般的な使い方です。実装には複数の異なるインターフェースが必要になることが一般的であり、そのようなインタフェースは単一ルートの階層に簡単に、あるいは自然に編成できないことが多いためです。
+
+##### ノート
+
+これらのインタフェースは通常、抽象クラスです。
+
+##### 実施
+
+???
+
+### <a name="Rh-mi-implementation"></a>C.136: 実装属性の和集合を表すために多重継承を使いましょう (Use multiple inheritance to represent the union of implementation attributes)
+
+<!--
 ##### Reason
 
 Some forms of mixins have state and often operations on that state.
@@ -14509,9 +14537,37 @@ or various bases from boost.intrusive (e.g. `list_base_hook` or `intrusive_ref_c
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rh-vbase"></a>C.137: Use `virtual` bases to avoid overly general base classes
+一部の形式のミックスインには状態があり、多くの場合、その状態に対する操作があります。
+操作が仮想的な場合は継承を使用する必要がありますが、そうでなくても継承を使うことで定型句や転送を回避できます。
 
+##### 例
+
+    class iostream : public istream, public ostream {   // とてもシンプル化
+        // ...
+    };
+
+`istream` は入力操作のインタフェース(といくつかのデータ)を与えます; `ostream` は出力操作のインタフェース(といくつかのデータ)を与えます。
+`iostream` は`istream` と `ostream` のインタフェースの和集合と、単一のストリームに両方を許可するために必要な同期メカニズムを与えます。
+
+##### ノート
+
+これは比較的まれな使用法です。なぜなら実装は単一ルートの階層に編成されることが多いためです。
+
+##### 例
+
+場合によっては、「実装属性」は、実装の動作を決定し、必要なポリシーの実装を可能にするメンバーを挿入する「ミックスイン」に似たものになります。
+例えば、`std::enable_shared_from_this`や、boost.intrusiveのいくつかのベースクラス(例えば`list_base_hook` や `intrusive_ref_counter`)を参照してください。
+
+##### 実施
+
+???
+
+### <a name="Rh-vbase"></a>C.137: 過度に一般的なベースクラスを避けるために `virtual`ベースクラスを使いましょう (Use `virtual` bases to avoid overly general base classes)
+
+<!--
 ##### Reason
 
  Allow separation of shared data and interface.
@@ -14562,9 +14618,61 @@ Often, linearization of a hierarchy is a better solution.
 ##### Enforcement
 
 Flag mixed interface and implementation hierarchies.
+-->
+##### 理由
 
-### <a name="Rh-using"></a>C.138: Create an overload set for a derived class and its bases with `using`
+共有データとインターフェースを分離できるようにします.
+全ての共有データが最終的な基底クラスに配置されることを避けるためです.
 
+##### 例
+
+    struct Interface {
+        virtual void f();
+        virtual int g();
+        // ... ここにはデータはない ...
+    };
+
+    class Utility {  // データをもつ
+        void utility1();
+        virtual void utility2();    // カスタマイズポイント
+    public:
+        int x;
+        int y;
+    };
+
+    class Derive1 : public Interface, virtual protected Utility {
+        // Interfaceの関数をオーバーライド
+        // おそらく Utilityの仮想関数もオーバーライド
+        // ...
+    };
+
+    class Derive2 : public Interface, virtual protected Utility {
+        // Interfaceの関数をオーバーライド
+        // おそらく Utilityの仮想関数もオーバーライド
+        // ...
+    };
+
+多くの派生クラスで大量の「実装詳細」を共有している場合は, `Utility`をくくりだすことは理にかなっています.
+
+
+##### ノート
+
+明らかにこの例はあまりにも「理論的」ですが、*小さな*現実的な例を見つけるのは困難です.
+`Interface` は [インタフェース階層](#Rh-abstract)のルートです.
+そして `Utility`は [実装階層](#Rh-kind)のルートです.
+ここに [もう少し現実的な例](https://www.quora.com/What-are-the-uses-and-advantages-of-virtual-base-class-in-C%2B%2B/answer/Lance-Diduck) が説明付きであります。
+
+##### ノート
+
+しばしば、階層の線形化がより適切な解決策となります.
+
+##### 実施
+
+Flag mixed interface and implementation hierarchies.
+
+### <a name="Rh-using"></a>C.138: 派生クラスのオーバーロードセットを作成し、ベースクラスに 'using'を使いましょう (Create an overload set for a derived class and its bases with `using`)
+
+<!--
 ##### Reason
 
 Without a using declaration, member functions in the derived class hide the entire inherited overload sets.
@@ -14611,9 +14719,57 @@ For variadic bases, C++17 introduced a variadic form of the using-declaration,
 ##### Enforcement
 
 Diagnose name hiding
+-->
+##### 理由
 
-### <a name="Rh-final"></a>C.139: Use `final` on classes sparingly
+using 宣言がない場合, 派生クラスのメンバー関数は継承されたオーバーロード セット全体を隠します。
 
+##### ダメな例
+
+    #include <iostream>
+    class B {
+    public:
+        virtual int f(int i) { std::cout << "f(int): "; return i; }
+        virtual double f(double d) { std::cout << "f(double): "; return d; }
+        virtual ~B() = default;
+    };
+    class D: public B {
+    public:
+        int f(int i) override { std::cout << "f(int): "; return i + 1; }
+    };
+    int main()
+    {
+        D d;
+        std::cout << d.f(2) << '\n';   // "f(int): 3" と出力
+        std::cout << d.f(2.3) << '\n'; // "f(int): 3" と出力
+    }
+
+##### 良い例
+
+    class D: public B {
+    public:
+        int f(int i) override { std::cout << "f(int): "; return i + 1; }
+        using B::f; // f(double)を公開する
+    };
+
+##### ノート
+
+この問題は virtual, 非virtualのメンバー関数の両方に影響します。
+
+可変個ベースクラスに対しては、C++17で using宣言の可変個形式が導入されました,
+
+    template<class... Ts>
+    struct Overloader : Ts... {
+        using Ts::operator()...; // すべてのベースの operator() を公開
+    };
+
+##### 実施
+
+名前の隠蔽を診断しましょう.
+
+### <a name="Rh-final"></a>C.139: クラスへの `final`の利用は控えめに (Use `final` on classes sparingly)
+
+<!--
 ##### Reason
 
 Capping a hierarchy with `final` classes is rarely needed for logical reasons and can be damaging to the extensibility of a hierarchy.
@@ -14651,10 +14807,49 @@ However, misuses are (or at least have been) far more common.
 ##### Enforcement
 
 Flag uses of `final` on classes.
+-->
+##### 理由
+
+論理的な理由によって `final`クラスで階層をふさぐ必要があることはまれであり,  階層の拡張性を損なう可能性があります.
+
+##### ダメな例
+
+    class Widget { /* ... */ };
+
+    // 誰もMy_widgetを改良したいとは思わないだろう（少なくともあなたはそう思っていた）
+    class My_widget final : public Widget { /* ... */ };
+
+    class My_improved_widget : public My_widget { /* ... */ };  // エラー: こうすることができない
+
+##### ノート
+
+すべてのクラスがベースクラスになるわけではありません.
+たいていの標準ライブラリのクラスはそのような例です. (例えば, `std::vector`や `std::string` は派生されるようにデザインされていません).
+このルールは仮想関数をもち, クラス階層のインタフェースになるクラスにおいて `final`を利用することについてのものです。
+
+##### ノート
+
+個々の仮想関数を `final` でふさぐと、一連の関数を定義/オーバーライドするときに `final` が簡単に見落とされる可能性があるため, エラーが発生しやすくなります.
+幸運にも, コンパイラはそのようなミスを捕捉します: 派生クラス内の `final` メンバーを再宣言/再オープンすることはできません.
+
+##### ノート
+
+`final` によるパフォーマンス向上の主張には 裏付けが必要です.
+多くの場合, こうした主張は推測や他の言語での経験に基づいています.
+
+論理上かつパフォーマンス上の理由の両方によって `final`が重要となるような例があります.
+一つの例は コンパイラや言語解析ツール内の パフォーマンスクリティカルな 抽象構文木(AST)階層です。
+新しい派生クラスは毎年追加されるわけではなく, ライブラリ実装者によってのみ追加されます.
+しかし、誤用は（少なくともこれまでは）はるかに一般的でした.
+
+##### 実施
+
+`final`宣言されたクラスの使用をチェックしましょう.
 
 
-### <a name="Rh-virtual-default-arg"></a>C.140: Do not provide different default arguments for a virtual function and an overrider
+### <a name="Rh-virtual-default-arg"></a>C.140: 仮想関数とそのオーバーライドに異なるデフォルト引数を与えないようにしましょう (Do not provide different default arguments for a virtual function and an overrider)
 
+<!--
 ##### Reason
 
 That can cause confusion: An overrider does not inherit default arguments.
@@ -14681,11 +14876,39 @@ That can cause confusion: An overrider does not inherit default arguments.
 ##### Enforcement
 
 Flag default arguments on virtual functions if they differ between base and derived declarations.
+-->
+##### 理由
 
-## C.hier-access: Accessing objects in a hierarchy
+混乱を招くためです: オーバーライドはデフォルト引数を継承しません.
 
-### <a name="Rh-poly"></a>C.145: Access polymorphic objects through pointers and references
+##### ダメな例
 
+    class Base {
+    public:
+        virtual int multiply(int value, int factor = 2) = 0;
+        virtual ~Base() = default;
+    };
+
+    class Derived : public Base {
+    public:
+        int multiply(int value, int factor = 10) override;
+    };
+
+    Derived d;
+    Base& b = d;
+
+    b.multiply(10);  // これらの2つの呼び出しは同じ関数を呼び出します
+    d.multiply(10);  // しかし異なるデフォルト引数のため結果が異なります
+
+##### Enforcement
+
+Flag default arguments on virtual functions if they differ between base and derived declarations.
+
+## C.hier-access: 階層内でのオブジェクトへのアクセス (Accessing objects in a hierarchy)
+
+### <a name="Rh-poly"></a>C.145: 多相的なオブジェクトにはポインタと参照を使ってアクセスしましょう (Access polymorphic objects through pointers and references)
+
+<!--
 ##### Reason
 
 If you have a class with a virtual function, you don't (in general) know which class provided the function to be used.
@@ -14727,9 +14950,52 @@ You can safely access a named polymorphic object in the scope of its definition,
 ##### Enforcement
 
 Flag all slicing.
+-->
+##### 理由
 
-### <a name="Rh-dynamic_cast"></a>C.146: Use `dynamic_cast` where class hierarchy navigation is unavoidable
+仮想関数をもったクラスがあるとき, 使用される関数をどのクラス提供しているかを(一般的には)知ることはできません.
 
+##### 例
+
+    struct B { int a; virtual int f(); virtual ~B() = default };
+    struct D : B { int b; int f() override; };
+
+    void use(B b)
+    {
+        D d;
+        B b2 = d;   // スライス
+        B b3 = b;
+    }
+
+    void use2()
+    {
+        D d;
+        use(d);   // スライス
+    }
+
+両方の`d`はスライスされています.
+
+##### 例外
+
+名前をもった多相的なオブジェクトに対しては, それが定義されたスコープ内においては安全にアクセスできます. ただしスライスしないでください.
+
+    void use3()
+    {
+        D d;
+        d.f();   // OK
+    }
+
+##### See also
+
+[多相的なクラスはコピーを抑制すべきです](#Rc-copy-virtual)
+
+##### Enforcement
+
+Flag all slicing.
+
+### <a name="Rh-dynamic_cast"></a>C.146: クラス階層のナビゲーションが避けられない場合は `dynamic_cast`を使いましょう (Use `dynamic_cast` where class hierarchy navigation is unavoidable)
+
+<!--
 ##### Reason
 
 `dynamic_cast` is checked at run time.
@@ -14864,9 +15130,143 @@ Consider:
 
 * Flag all uses of `static_cast` for downcasts, including C-style casts that perform a `static_cast`.
 * This rule is part of the [type-safety profile](#Pro-type-downcast).
+-->
+##### 理由
 
-### <a name="Rh-ref-cast"></a>C.147: Use `dynamic_cast` to a reference type when failure to find the required class is considered an error
+`dynamic_cast`は実行時にチェックされます.
 
+##### 例
+
+    struct B {   // インタフェース
+        virtual void f();
+        virtual void g();
+        virtual ~B();
+    };
+
+    struct D : B {   // より多くの関数をもったインタフェース
+        void f() override;
+        virtual void h();
+    };
+
+    void user(B* pb)
+    {
+        if (D* pd = dynamic_cast<D*>(pb)) {
+            // ... Dのインタフェースを使用 ...
+        }
+        else {
+            // ... Bのインタフェースを使用 ...
+        }
+    }
+
+その他のキャストを使用すると、型の安全性が損なわれ、プログラムが実際には型 `X` である変数に、無関係な型 `Z` であるかのようにアクセスする可能性があります:
+
+    void user2(B* pb)   // ダメ
+    {
+        D* pd = static_cast<D*>(pb);    // 私は pbは実際には Dへのポインタであることを知っている; トラストミー
+        // ... Dのインタフェースを使用 ...
+    }
+
+    void user3(B* pb)    // 安全ではない
+    {
+        if (some_condition) {
+            D* pd = static_cast<D*>(pb);   // 私は pbは実際には Dへのポインタであることを知っている; トラストミー
+            // ... Dのインタフェースを使用 ...
+        }
+        else {
+            // ... Bのインタフェースを使用 ...
+        }
+    }
+
+    void f()
+    {
+        B b;
+        user(&b);   // OK
+        user2(&b);  // エラー
+        user3(&b);  // *もし* プログラマが some_conditionを正しくチェックしているなら OK
+    }
+
+##### ノート
+
+他のキャストと同様に、`dynamic_cast`は過剰に使用されています。
+[キャストよりも仮想関数を好みましょう](#Rh-use-virtual).
+静的ポリモーフィズムが可能であり(実行時の解決が不要)、十分便利であるならば、階層ナビゲーションよりも [静的ポリモーフィズム](#???) を好みましょう。
+
+##### ノート
+
+`typeid`のほうが適切な場合でも `dynamic_cast`を使用する人たちがいます;
+`dynamic_cast` は、オブジェクトへの最適なインターフェースを見つけるための一般的な「is kind of」操作です。一方、`typeid` は、オブジェクトの実際の型を見つけるための「このオブジェクトの正確な型を教えてください」という操作です。
+後者は本質的に単純な操作であり、より高速になるはずです。
+後者（`typeid`）は、必要に応じて簡単に手動で作成できます（たとえば、何らかの理由でRTTIが禁止されているシステムで作業している場合など）。
+一般的に、前者 (`dynamic_cast`) を正しく実装するのははるかに困難です。
+
+考えてみましょう:
+
+    struct B {
+        const char* name {"B"};
+        // もし pb1->id() == pb2->id() ならば *pb1 は *pb2 と同じ型です
+        virtual const char* id() const { return name; }
+        // ...
+    };
+
+    struct D : B {
+        const char* name {"D"};
+        const char* id() const override { return name; }
+        // ...
+    };
+
+    void use()
+    {
+        B* pb1 = new B;
+        B* pb2 = new D;
+
+        cout << pb1->id(); // "B"
+        cout << pb2->id(); // "D"
+
+
+        if (pb1->id() == "D") {         // looks innocent
+            D* pd = static_cast<D*>(pb1);
+            // ...
+        }
+        // ...
+    }
+
+`pb2->id() == "D"` の結果は、実際には実装によって定義されます。
+自作の RTTI の危険性を警告するためにこれを追加しました。
+このコードは、何年も期待どおりに動作する可能性がありますが、新しいマシン、新しいコンパイラ、または文字リテラルを統合しない新しいリンカーでは失敗する可能性があります。
+
+もしもあなたが独自の RTTIを実装する場合には注意しましょう。
+
+##### 例外
+
+実装で非常に遅い `dynamic_cast` が提供された場合は、回避策を使用する必要があるかもしれません。
+ただし、静的に解決できないすべての回避策は明示的なキャスト (通常は `static_cast`) を伴うため、エラーが発生しやすくなります。
+基本的には、独自の特別な目的の `dynamic_cast` を作成することになります。
+そのため、まずは `dynamic_cast` が本当にあなたが思っているほど遅いのかを確認してください（裏付けのない噂がかなりあります）、
+そして、`dynamic_cast` の使用はパフォーマンスにとって非常に重要であることがわかります。
+
+私たちは、`dynamic_cast` の現在の実装は不必要に遅いと考えています。
+たとえば、適切な条件下では、[高速な定数時間](http://www.stroustrup.com/fast_dynamic_casting.pdf)で `dynamic_cast` を実行することが可能です。
+ただし、最適化の努力は価値があると全員が同意したとしても、互換性のために変更は困難になります。
+
+非常にまれなケースですが、`dynamic_cast` のオーバーヘッドが重要だと測定した場合、ダウンキャストが成功することを静的に保証する他の手段があり (CRTP を慎重に使用している場合など)、仮想継承が関与していない場合は、戦略的に `static_cast` に頼ることを検討してください。その場合には目立つコメントと免責事項、この段落の要約および、型システムでは正確性を検証できないためメンテナンス時に人間の注意が必要であることを付記してください。
+
+##### 例外
+
+考えてみましょう:
+
+    template<typename B>
+    class Dx : B {
+        // ...
+    };
+
+##### Enforcement
+
+* Flag all uses of `static_cast` for downcasts, including C-style casts that perform a `static_cast`.
+* This rule is part of the [type-safety profile](#Pro-type-downcast).
+
+### <a name="Rh-ref-cast"></a>C.147: 必要なクラスを取得できないことをエラーとみなす場合には参照型への `dynamic_cast`を使いましょう (Use `dynamic_cast` to a reference type when failure to find the required class is considered an error)
+
+<!--
 ##### Reason
 
 Casting to a reference expresses that you intend to end up with a valid object, so the cast must succeed. `dynamic_cast` will then throw if it does not succeed.
@@ -14881,9 +15281,26 @@ Casting to a reference expresses that you intend to end up with a valid object, 
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Rh-ptr-cast"></a>C.148: Use `dynamic_cast` to a pointer type when failure to find the required class is considered a valid alternative
+参照へのキャストは、有効なオブジェクトを作成することを意図していることを表すため、キャストは成功する必要があります。
+`dynamic_cast` は成功しない場合には例外をスローするでしょう。
 
+##### 例
+
+    std::string f(Base& b)
+    {
+        return dynamic_cast<Derived&>(b).to_string();
+    }
+
+##### Enforcement
+
+???
+
+### <a name="Rh-ptr-cast"></a>C.148: 必要なクラスを取得できないときに有効な回避策がある場合にはポインタ型への `dynamic_cast`を使いましょう (Use `dynamic_cast` to a pointer type when failure to find the required class is considered a valid alternative)
+
+<!--
 ##### Reason
 
 The `dynamic_cast` conversion allows to test whether a pointer is pointing at a polymorphic object that has a given class in its hierarchy. Since failure to find the class merely returns a null value, it can be tested during run time. This allows writing code that can choose alternative paths depending on the results.
@@ -14921,9 +15338,49 @@ Therefore the result of the `dynamic_cast` should always be treated as if it mig
 ##### Enforcement
 
 * (Complex) Unless there is a null test on the result of a `dynamic_cast` of a pointer type, warn upon dereference of the pointer.
+-->
+##### 理由
+,
+`dynamic_cast` 変換を使用すると、ポインターが階層内に特定のクラスを持つポリモーフィックオブジェクトを指しているかどうかをテストできます。クラスが見つからない場合はnull値を返すだけなので、実行時にテストできます。これにより、結果に応じて代替パスを選択するコードを作成できます。
 
-### <a name="Rh-smart"></a>C.149: Use `unique_ptr` or `shared_ptr` to avoid forgetting to `delete` objects created using `new`
+対照的に[C.147](#Rh-ref-cast)では失敗はエラーになります。したがって条件付き実行には使うべきではありません。
 
+##### 例
+
+以下の例は `Shape_owner`という コンストラクタされた `Shape`オブジェクトの所有権をもつクラスの `add`関数について説明します。
+オブジェクトはまた、それらの幾何的な属性によっていくつかのビューに分類されます。
+この例では、`Shape` は `Geometric_attributes` を継承していません。継承するのはサブクラスのみです。
+
+    void add(Shape* const item)
+    {
+      // 所有権は常に取得される
+      owned_shapes.emplace_back(item);
+
+      // Geometric_attributes をチェックし、shapeを 0 or 1 or n or すべて 個の viewに追加します
+
+      if (auto even = dynamic_cast<Even_sided*>(item))
+      {
+        view_of_evens.emplace_back(even);
+      }
+
+      if (auto trisym = dynamic_cast<Trilaterally_symmetrical*>(item))
+      {
+        view_of_trisyms.emplace_back(trisym);
+      }
+    }
+
+##### ノート
+
+要求するクラスの検索が失敗すると `dynamic_cast`は null値を返します。そして nullポインタの参照剥がしは未定義動作を引き起こします。
+したがって `dynamic_cast`の結果は常に nullかもしれないとして扱い、テストをするべきです。
+
+##### Enforcement
+
+* (Complex) Unless there is a null test on the result of a `dynamic_cast` of a pointer type, warn upon dereference of the pointer.
+
+### <a name="Rh-smart"></a>C.149: `new`で生成したオブジェクトの `delete`忘れを避けるために `unique_ptr`か`shared_ptr`を使いましょう (Use `unique_ptr` or `shared_ptr` to avoid forgetting to `delete` objects created using `new`)
+
+<!--
 ##### Reason
 
 Avoid resource leaks.
@@ -14942,17 +15399,37 @@ Avoid resource leaks.
 
 * Flag initialization of a naked pointer with the result of a `new`
 * Flag `delete` of local variable
+-->
+##### 理由
 
-### <a name="Rh-make_unique"></a>C.150: Use `make_unique()` to construct objects owned by `unique_ptr`s
+リソースのリークを避けるためです。
+
+##### 例
+
+    void use(int i)
+    {
+        auto p = new int {7};           // ダメ: newｓでローカルなポインタを初期化
+        auto q = make_unique<int>(9);   // ok: 確保したメモリの解放を保証
+        if (0 < i) return;              // returnするかもしれず そのときにはリークする
+        delete p;                       // 遅すぎる
+    }
+
+##### Enforcement
+
+* Flag initialization of a naked pointer with the result of a `new`
+* Flag `delete` of local variable
+
+### <a name="Rh-make_unique"></a>C.150: `unique_ptr`によって所有されるオブジェクトの構築には `make_unique()`を使いましょう (Use `make_unique()` to construct objects owned by `unique_ptr`s)
 
 See [R.23](#Rr-make_unique)
 
-### <a name="Rh-make_shared"></a>C.151: Use `make_shared()` to construct objects owned by `shared_ptr`s
+### <a name="Rh-make_shared"></a>C.151: `shared_ptr`によって所有されるオブジェクトの構築には `make_shared()`を使いましょう (Use `make_shared()` to construct objects owned by `shared_ptr`s)
 
 See [R.22](#Rr-make_shared)
 
-### <a name="Rh-array"></a>C.152: Never assign a pointer to an array of derived class objects to a pointer to its base
+### <a name="Rh-array"></a>C.152: 派生クラスのオブジェクトの配列へのポインタをその基底クラスへのポインタに代入しないでください。 (Never assign a pointer to an array of derived class objects to a pointer to its base)
 
+<!--
 ##### Reason
 
 Subscripting the resulting base pointer will lead to invalid object access and probably to memory corruption.
@@ -14974,10 +15451,33 @@ Subscripting the resulting base pointer will lead to invalid object access and p
 
 * Flag all combinations of array decay and base to derived conversions.
 * Pass an array as a `span` rather than as a pointer, and don't let the array name suffer a derived-to-base conversion before getting into the `span`
+-->
+##### 理由
+
+結果のベース ポインターに添字を付けると、無効なオブジェクト アクセスが発生し、メモリ破損が発生する可能性があります。
+
+##### 例
+
+    struct B { int x; };
+    struct D : B { int y; };
+
+    void use(B*);
+
+    D a[] = {{1, 2}, {3, 4}, {5, 6}};
+    B* p = a;     // ダメ: aは&a[0]に退化し、B*に変換される。
+    p[1].x = 7;   //  a[0].y を上書きする
+
+    use(a);       // ダメ: aは&a[0]に退化し、B*に変換される。
+
+##### Enforcement
+
+* Flag all combinations of array decay and base to derived conversions.
+* Pass an array as a `span` rather than as a pointer, and don't let the array name suffer a derived-to-base conversion before getting into the `span`
 
 
-### <a name="Rh-use-virtual"></a>C.153: Prefer virtual function to casting
+### <a name="Rh-use-virtual"></a>C.153: キャストよりも仮想関数を使いましょう (Prefer virtual function to casting)
 
+<!--
 ##### Reason
 
 A virtual function call is safe, whereas casting is error-prone.
@@ -14991,9 +15491,23 @@ give a wrong result (especially as a hierarchy is modified during maintenance).
 ##### Enforcement
 
 See [C.146](#Rh-dynamic_cast) and ???
+-->
+##### 理由
 
-## <a name="SS-overload"></a>C.over: Overloading and overloaded operators
+仮想関数の呼び出しは安全ですが、キャストはエラーが発生しやすくなります。
+仮想関数呼び出しは最も派生した関数に到達しますが、キャストは中間クラスに到達する可能性があり、その結果間違った結果が返される可能性があります（特にメンテナンス中に階層が変更された場合）。
 
+##### 例
+
+    ???
+
+##### Enforcement
+
+See [C.146](#Rh-dynamic_cast) and ???
+
+## <a name="SS-overload"></a>C.over: オーバーロードとオーバーロードされた演算子 (Overloading and overloaded operators)
+
+<!--
 You can overload ordinary functions, function templates, and operators.
 You cannot overload function objects.
 
@@ -15009,9 +15523,27 @@ Overload rule summary:
 * [C.167: Use an operator for an operation with its conventional meaning](#Ro-overload)
 * [C.168: Define overloaded operators in the namespace of their operands](#Ro-namespace)
 * [C.170: If you feel like overloading a lambda, use a generic lambda](#Ro-lambda)
+-->
+通常の関数や、テンプレート関数、そして演算子をオーバーロードすることができます。
+関数オブジェクトはオーバーロードできません。
 
-### <a name="Ro-conventional"></a>C.160: Define operators primarily to mimic conventional usage
+オーバーロードのルール一覧:
 
+* [C.160: 演算子を定義するときには従来の使用法を模倣することを最優先しましょう](#Ro-conventional)
+* [C.161: 対称な演算子には非メンバ関数を使いましょう](#Ro-symmetric)
+* [C.162: ほぼ同等な操作はオーバーロードしましょう](#Ro-equivalent)
+* [C.163: ほぼ同等な操作のみオーバーロードしましょう](#Ro-equivalent-2)
+* [C.164: 暗黙の変換を避けましょう](#Ro-conversion)
+* [C.165: カスタマイズポイントでは `using`を使いましょう](#Ro-custom)
+* [C.166: 単項演算子の`&`はスマートポインタや参照システムの一部の場合にかぎりオーバーロードしましょう](#Ro-address-of)
+* [C.167: 演算子をその通常の意味で使用しましょう](#Ro-overload)
+* [C.168: オーバーロード演算子は そのオペランドの名前空間内で定義しましょう](#Ro-namespace)
+* [C.170: ラムダをオーバーロードしたくなったら ジェネリックラムダを使いましょう](#Ro-lambda)
+
+
+### <a name="Ro-conventional"></a>C.160: 演算子を定義するときには従来の使用法を模倣することを最優先しましょう (Define operators primarily to mimic conventional usage)
+
+<!--
 ##### Reason
 
 Minimize surprises.
@@ -15041,9 +15573,39 @@ Non-member operators should be either friends or defined in [the same namespace 
 ##### Enforcement
 
 Possibly impossible.
+-->
+##### 理由
 
-### <a name="Ro-symmetric"></a>C.161: Use non-member functions for symmetric operators
+驚きを最小化するため。
 
+##### 例
+
+    class X {
+    public:
+        // ...
+        X& operator=(const X&); // 代入を定義しているメンバー関数
+        friend bool operator==(const X&, const X&); // == は a = b の後は a == bであるように定義する必要がある
+        // ...
+    };
+
+ここでは従来の意味論が保たれています: [Copies compare equal](#SS-copy).
+
+##### ダメな例
+
+    X operator+(X a, X b) { return a.v - b.v; }   // ダメ: + で引き算している
+
+##### ノート
+
+非メンバ演算子は、フレンドであるか、[オペランドと同じ名前空間](#Ro-namespace)で定義されている必要があります。
+[二項演算子はオペランドを同等に扱うべきです](#Ro-symmetric)。
+
+##### Enforcement
+
+Possibly impossible.
+
+### <a name="Ro-symmetric"></a>C.161: 対称な演算子には非メンバ関数を使いましょう (Use non-member functions for symmetric operators)
+
+<!--
 ##### Reason
 
 If you use member functions, you need two.
@@ -15056,9 +15618,23 @@ Unless you use a non-member function for (say) `==`, `a == b` and `b == a` will 
 ##### Enforcement
 
 Flag member operator functions.
+-->
+##### 理由
 
-### <a name="Ro-equivalent"></a>C.162: Overload operations that are roughly equivalent
+もしメンバー関数にすると、2つ必要になります。
+非メンバ関数（例えば`==`）を使用しない限り、`a == b`と`b == a`は微妙に異なる結果になります。
 
+##### 例
+
+    bool operator==(Point a, Point b) { return a.x == b.x && a.y == b.y; }
+
+##### Enforcement
+
+Flag member operator functions.
+
+### <a name="Ro-equivalent"></a>C.162: ほぼ同等な操作はオーバーロードしましょう (Overload operations that are roughly equivalent)
+
+<!--
 ##### Reason
 
 Having different names for logically equivalent operations on different argument types is confusing, leads to encoding type information in function names, and inhibits generic programming.
@@ -15082,9 +15658,34 @@ These three functions all print their arguments (appropriately). Adding to the n
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Ro-equivalent-2"></a>C.163: Overload only for operations that are roughly equivalent
+異なる引数をもつが論理的に同等な操作に対して、異なる名前を付けることは、混乱を招き、関数名に型情報を組み込むことになり、ジェネリックプログラミングを阻害します。
 
+##### 例
+
+考えてみましょう:
+
+    void print(int a);
+    void print(int a, int base);
+    void print(const string&);
+
+これら3つの関数はすべて引数を(適切に)表示します。 逆に:
+
+    void print_int(int a);
+    void print_based(int a, int base);
+    void print_string(const string&);
+
+これら3つの関数はすべて引数を(適切に)表示します。名前に引数を追加すると冗長になり、ジェネリックプログラミングが阻害されます。
+
+##### Enforcement
+
+???
+
+### <a name="Ro-equivalent-2"></a>C.163: ほぼ同等な操作のみオーバーロードしましょう (Overload only for operations that are roughly equivalent)
+
+<!--
 ##### Reason
 
 Having the same name for logically different functions is confusing and leads to errors when using generic programming.
@@ -15111,9 +15712,37 @@ Be particularly careful about common and popular names, such as `open`, `move`, 
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Ro-conversion"></a>C.164: Avoid implicit conversion operators
+論理的に異なる関数に対して同じ名前を付けることは、混乱を招き、ジェネリックプログラミングを行うときにエラーを発生させます。
 
+##### Example
+
+考えてみましょう:
+
+    void open_gate(Gate& g);   // ガレージ出口車線から障害物を取り除く
+    void fopen(const char* name, const char* mode);   // ファイルを開く
+
+この2つの操作は根本的に異なり、無関係です。したがって名前が異なるのは良いことです。逆に：
+
+    void open(Gate& g);   // ガレージ出口車線から障害物を取り除く
+    void open(const char* name, const char* mode ="r");   // ファイルを開く
+
+この2つの操作は以前として根本的に異なり、無関係です。しかしその名前が (一般的な)最小限にまで短縮されたことで、混乱が生じる可能性が高まっています。
+幸い、型システムはそのような間違いの多くを捕捉するでしょう。
+
+##### ノート
+
+`open`、`move`、`+`、`==`などの一般的でよく使われる名前には特に注意してください。
+
+##### Enforcement
+
+???
+
+### <a name="Ro-conversion"></a>C.164: 暗黙の変換を避けましょう (Avoid implicit conversion operators)
+
+<!--
 ##### Reason
 
 Implicit conversions can be essential (e.g., `double` to `int`) but often cause surprises (e.g., `String` to C-style string).
@@ -15160,9 +15789,56 @@ The string returned by `ff()` is destroyed before the returned pointer into it c
 ##### Enforcement
 
 Flag all non-explicit conversion operators.
+-->
+##### 理由
 
-### <a name="Ro-custom"></a>C.165: Use `using` for customization points
+暗黙的な型変換は不可欠な場合もありますが(例：`double`から`int`への変換)、予期せぬ結果を招くこともよくあります (例：`String`からCスタイルの文字列への変換)。
 
+##### ノート
+
+切実な必要性が示されるまでは、明示的に名前を指定した変換を優先してください。
+「切実な必要性」とは、アプリケーション領域において根本的な理由(例えば、整数から複素数への変換など)があり、かつ頻繁に必要とされる場合を指します。
+些細な利便性を得るためだけに、暗黙的な型変換(変換演算子や`explicit`でないコンストラクタによるもの)を導入しないでください。
+
+##### 例
+
+    struct S1 {
+        string s;
+        // ...
+        operator char*() { return s.data(); }  // ダメ, 驚きの原因となります
+    };
+
+    struct S2 {
+        string s;
+        // ...
+        explicit operator char*() { return s.data(); }
+    };
+
+    void f(S1 s1, S2 s2)
+    {
+        char* x1 = s1;     // OK, しかし多くの文脈で驚きの原因となります
+        char* x2 = s2;     // エラー (そしてそれはたいていの場合は良いことです)
+        char* x3 = static_cast<char*>(s2); // 明示的には行えます (結果がどうであれ最終的な責任はあなたにある)
+    }
+
+驚くべき、そして潜在的に有害な暗黙の変換は、見つけにくい任意のコンテキストで発生する可能性があります。例えば、
+
+    S1 ff();
+
+    char* g()
+    {
+        return ff();
+    }
+
+`ff()`によって返された Stringは 返されたポインタが使用されるよりも前に破壊されます。
+
+##### Enforcement
+
+Flag all non-explicit conversion operators.
+
+### <a name="Ro-custom"></a>C.165: カスタマイズポイントでは `using`を使いましょう (Use `using` for customization points)
+
+<!--
 ##### Reason
 
 To find function objects and functions defined in a separate namespace to "customize" a common function.
@@ -15207,9 +15883,55 @@ This is done by including the general function in the lookup for the function:
 
 Unlikely, except for known customization points, such as `swap`.
 The problem is that the unqualified and qualified lookups both have uses.
+-->
+##### 理由
 
-### <a name="Ro-address-of"></a>C.166: Overload unary `&` only as part of a system of smart pointers and references
+共通関数を「カスタマイズする」ために分離された名前空間で定義された関数オブジェクトや関数を、見つけるためです。
 
+##### 例
+
+`swap`を考えてみましょう。 これは汎用的な (標準ライブラリの)関数であり、ほぼすべての型に対応した定義を持っています。
+しかし、特定の型に対して専用の `swap()` を定義することが望ましいです。
+例えば、汎用の `swap()`は 交換される2つの`vector`を要素をコピーするでしょう。 一方で特化された良い実装は要素のコピーを全く行わないでしょう。
+
+    namespace N {
+        My_type X { /* ... */ };
+        void swap(X&, X&);   // N::Xに対する最適化された swap
+        // ...
+    }
+
+    void f1(N::X& a, N::X& b)
+    {
+        std::swap(a, b);   // おそらく望んだものではない: std::swap()を呼び出し
+    }
+
+`f1()`内の `std::swap()`は、まさに私たちが要求したとおりに動作します。 つまり `std`名前空間の `swap()`を呼び出します。
+不幸なことに、これはおそらく私たちが望んだものではありません。
+`N::X`を得るにはどうすれば良いのでしょうか?
+
+    void f2(N::X& a, N::X& b)
+    {
+        swap(a, b);   // N::swap を呼び出し
+    }
+
+しかしジェネリックなコードに対して、私たちが望むものにはならないでしょう。
+ここでは、特定の関数が存在する場合はそれを、存在しない場合は一般的な関数を求めます。
+これは、関数のルックアップに汎用関数を含めることによって可能です:
+
+    void f3(N::X& a, N::X& b)
+    {
+        using std::swap;  // std::swap を有効にする
+        swap(a, b);        // N::swap が存在すればそちらを、なければ std::swap を呼び出し
+    }
+
+##### Enforcement
+
+Unlikely, except for known customization points, such as `swap`.
+The problem is that the unqualified and qualified lookups both have uses.
+
+### <a name="Ro-address-of"></a>C.166: 単項演算子の`&`はスマートポインタや参照システムの一部の場合にかぎりオーバーロードしましょう (Overload unary `&` only as part of a system of smart pointers and references)
+
+<!--
 ##### Reason
 
 The `&` operator is fundamental in C++.
@@ -15241,9 +15963,42 @@ Note that `std::addressof()` always yields a built-in pointer.
 ##### Enforcement
 
 Tricky. Warn if `&` is user-defined without also defining `->` for the result type.
+-->
+##### 理由
 
-### <a name="Ro-overload"></a>C.167: Use an operator for an operation with its conventional meaning
+`&`演算子は C++において基本的なものです。
+C++のセマンティクスの多くの部分は、デフォルトの意味を前提としています。
 
+##### 例
+
+    class Ptr { // ちょっと賢いポインタ
+        Ptr(X* pp) : p(pp) { /* チェック */ }
+        X* operator->() { /* チェック */ return p; }
+        X operator[](int i);
+        X operator*();
+    private:
+        T* p;
+    };
+
+    class X {
+        Ptr operator&() { return Ptr{this}; }
+        // ...
+    };
+
+##### ノート
+
+`&`演算子を「いじる」場合は、結果の型に対して、その定義が `->`、`[]`、`*`、および `.` と一致する意味を持つことを確認してください。
+`.`演算子は現在オーバーロードできないため、完璧なシステムは不可能であることに注意してください。
+私たちはそれを改善したいと考えています: [ドット演算子 (R2)](http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2015/n4477.pdf).
+`std::addressof()`は常にビルトインのポインタを生成することに注意してください。
+
+##### Enforcement
+
+Tricky. Warn if `&` is user-defined without also defining `->` for the result type.
+
+### <a name="Ro-overload"></a>C.167: 演算子をその通常の意味で使用しましょう (Use an operator for an operation with its conventional meaning)
+
+<!--
 ##### Reason
 
 Readability. Convention. Reusability. Support for generic code
@@ -15280,9 +16035,47 @@ Don't define those unconventionally and don't invent your own names for them.
 ##### Enforcement
 
 Tricky. Requires semantic insight.
+-->
+##### 理由
 
-### <a name="Ro-namespace"></a>C.168: Define overloaded operators in the namespace of their operands
+可読性。慣習。再利用性。ジェネリックプログラミングのサポート。
 
+##### 例
+
+    void cout_my_class(const My_class& c) // 混乱を招き、慣習的でなく、ジェネリックではない
+    {
+        std::cout << /* ここにクラスメンバ */;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const my_class& c) // OK
+    {
+        return os << /* ここにクラスメンバ */;
+    }
+
+`cout_my_class` 単体では問題ありませんが、出力に `<<` 規約を使用するコードとは互換性がなく利用できません:
+
+    My_class var { /* ... */ };
+    // ...
+    cout << "var = " << var << '\n';
+
+##### ノート
+
+ほとんどの演算子の意味については、強力かつ厳格な慣習が存在します。
+
+* 比較 (`==`, `!=`, `<`, `<=`, `>`, `>=`, `<=>`),
+* 算術演算 (`+`, `-`, `*`, `/`, `%`)
+* アクセス操作 (`.`, `->`, 単項の`*`, `[]`)
+* 代入 (`=`)
+
+これらを型破りな方法で定義したり、独自の名称を付けたりしないでください。
+
+##### Enforcement
+
+Tricky. Requires semantic insight.
+
+### <a name="Ro-namespace"></a>C.168: オーバーロード演算子は そのオペランドの名前空間内で定義しましょう (Define overloaded operators in the namespace of their operands)
+
+<!--
 ##### Reason
 
 Readability.
@@ -15343,9 +16136,71 @@ This is a special case of the rule that [helper functions should be defined in t
 ##### Enforcement
 
 * Flag operator definitions that are not in the namespace of their operands
+-->
+##### 理由
 
-### <a name="Ro-lambda"></a>C.170: If you feel like overloading a lambda, use a generic lambda
+可読性。
+ADLを用いて演算子を検索する能力。
+異なる名前空間における定義の不整合を回避するため。
 
+##### 例
+
+    struct S { };
+    S operator+(S, S);   // OK: Sと同じ名前空間, そしてさらには Sのとなり
+    S s;
+
+    S r = s + s;
+
+##### 例
+
+    namespace N {
+        struct S { };
+        S operator+(S, S);   // OK: Sと同じ名前空間, そしてさらには Sのとなり
+    }
+
+    N::S s;
+
+    S r = s + s;  // ADLによって N::operator+() を検索
+
+##### ダメな例
+
+    struct S { };
+    S s;
+
+    namespace N {
+        bool operator!(S a) { return true; }
+        bool not_s = !s;
+    }
+
+    namespace M {
+        bool operator!(S a) { return false; }
+        bool not_s = !s;
+    }
+
+ここでは、 `!s`の意味が `N`の中か `M`の中かで異なります。
+これは非常に紛らわしいです。
+`namespace M` の定義を削除すると、混乱は誤りを犯す機会に置き換わります。
+
+##### ノート
+
+異なる名前空間で定義された2つの型に対して二項演算子が定義されている場合、この規則に従うことはできません。
+例えば:
+
+    Vec::Vector operator*(const Vec::Vector&, const Mat::Matrix&);
+
+これは避けた方が賢明かもしれません。
+
+##### こちらも参照
+
+これは[ヘルパー関数はそれらがサポートするクラスと同じ名前空間に配置しましょう](#Rc-helper)の特別な場合です。
+
+##### Enforcement
+
+* Flag operator definitions that are not in the namespace of their operands
+
+### <a name="Ro-lambda"></a>C.170: ラムダをオーバーロードしたくなったら ジェネリックラムダを使いましょう (If you feel like overloading a lambda, use a generic lambda)
+
+<!--
 ##### Reason
 
 You cannot overload by defining two different lambdas with the same name.
@@ -15364,9 +16219,29 @@ You cannot overload by defining two different lambdas with the same name.
 ##### Enforcement
 
 The compiler catches the attempt to overload a lambda.
+-->
+##### 理由
 
-## <a name="SS-union"></a>C.union: Unions
+同じ名前で2つの異なるラムダをオーバーロード定義することはできません。
 
+##### 例
+
+    void f(int);
+    void f(double);
+    auto f = [](char);   // エラー: 変数と関数はオーバーロードできません
+
+    auto g = [](int) { /* ... */ };
+    auto g = [](double) { /* ... */ };   // エラー: 変数はオーバーロードできません
+
+    auto h = [](auto) { /* ... */ };   // OK
+
+##### Enforcement
+
+The compiler catches the attempt to overload a lambda.
+
+## <a name="SS-union"></a>C.union: 共用体 (Unions)
+
+<!--
 A `union` is a `struct` where all members start at the same address so that it can hold only one member at a time.
 A `union` does not keep track of which member is stored so the programmer has to get it right;
 this is inherently error-prone, but there are ways to compensate.
@@ -15380,9 +16255,24 @@ Union rule summary:
 * [C.182: Use anonymous `union`s to implement tagged unions](#Ru-anonymous)
 * [C.183: Don't use a `union` for type punning](#Ru-pun)
 * ???
+-->
+`union` は すべてのメンバが同じアドレスに配置され、したがってある瞬間ではたった一つのメンバのみを保持できる `struct`です。
+`union` は どのメンバが格納されているかを追跡しないために、プログラマがそれを正しく行う必要があります;
+これは本質的にエラーが発生しやすいですが、それを補う方法が存在します。
 
-### <a name="Ru-union"></a>C.180: Use `union`s to save memory
+`union` に現在どのメンバを保持しているかのインジケーターを追加したものは、*tagged union*、や *discriminated union*、または*variant* と呼ばれます。
 
+共用体ルールのまとめ:
+
+* [C.180: メモリを節約するために `union`を使いましょう](#Ru-union)
+* [C.181: 「裸の」`union`を避けましょう](#Ru-naked)
+* [C.182: タグ付きunionを実装するために 匿名の`union`を使いましょう](#Ru-anonymous)
+* [C.183: 型パンニングのために `union`を使わないようにしましょう](#Ru-pun)
+* ???
+
+### <a name="Ru-union"></a>C.180: メモリを節約するために `union`を使いましょう (Use `union`s to save memory)
+
+<!--
 ##### Reason
 
 A `union` allows a single piece of memory to be used for different types of objects at different times.
@@ -15446,9 +16336,74 @@ But heed the warning: [Avoid "naked" `union`s](#Ru-naked)
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Ru-naked"></a>C.181: Avoid "naked" `union`s
+`union`を使用すると、単一のメモリ領域を異なる種類のオブジェクトに異なるタイミングで使用することができます。
+したがって、同時に使用されることのない複数のオブジェクトがある場合に、メモリを節約するために使用できます。
 
+##### 例
+
+    union Value {
+        int x;
+        double d;
+    };
+
+    Value v = { 123 };  // 現在 vは intを保持
+    cout << v.x << '\n';    // 123 と出力される
+    v.d = 987.654;  // 現在 vはdoubleを保持
+    cout << v.d << '\n';    // 987.654 と出力される
+
+しかし、警告に注意してください: [「裸の」`union`を避けましょう](#Ru-naked)
+
+##### 例
+
+    // 短い文字列の最適化
+
+    constexpr size_t buffer_size = 16; // ポインタサイズよりもわずかに大きい
+
+    class Immutable_string {
+    public:
+        Immutable_string(const char* str) :
+            size(strlen(str))
+        {
+            if (size < buffer_size)
+                strcpy_s(string_buffer, buffer_size, str);
+            else {
+                string_ptr = new char[size + 1];
+                strcpy_s(string_ptr, size + 1, str);
+            }
+        }
+
+        ~Immutable_string()
+        {
+            if (size >= buffer_size)
+                delete[] string_ptr;
+        }
+
+        const char* get_str() const
+        {
+            return (size < buffer_size) ? string_buffer : string_ptr;
+        }
+
+    private:
+        // 文字列が十分短ければ、文字列へのポインタへの代わりに、文字列をそれ自身に格納する
+        // instead of a pointer to the string.
+        union {
+            char* string_ptr;
+            char string_buffer[buffer_size];
+        };
+
+        const size_t size;
+    };
+
+##### Enforcement
+
+???
+
+### <a name="Ru-naked"></a>C.181: 「裸の」`union`を避けましょう (Avoid "naked" `union`s)
+
+<!--
 ##### Reason
 
 A *naked union* is a union without an associated indicator which member (if any) it holds,
@@ -15493,9 +16448,55 @@ The C++17 `variant` type (found in `<variant>`) does that for you:
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Ru-anonymous"></a>C.182: Use anonymous `union`s to implement tagged unions
+`裸のunion`は どのメンバー（存在する場合）を保持しているかを示す関連インジケータを持たないunionのことです。
+そのため、プログラマーは追跡する必要があります。
+裸のunionは型エラーの源となります。
 
+##### ダメな例
+
+    union Value {
+        int x;
+        double d;
+    };
+
+    Value v;
+    v.d = 987.654;  // v は doubleを保持
+
+ここまでは問題ないが、`union`は簡単に誤用されてしまう可能性がある:
+
+    cout << v.x << '\n';    // ダメ, 未定義動作: v は doubleを保持しているが intとして読みだされている
+
+いかなる明示的なキャストもなしに型エラーが生じていることに注意してください。
+そのプログラムをテストしたところ、最後に表示された値は`1683627180`で、これは`987.654`のビットパターンの整数値です。
+ここで問題となっているのは、一見無害に見える結果をもたらす「目に見えない」型エラーです。
+
+そして、「目に見えない」という点について言えば、このコードは何も出力しませんでした:
+
+    v.x = 123;
+    cout << v.d << '\n';    // ダメ: 未定義動作
+
+##### 代替策
+
+`union`を型フィールドとともにクラスでラップします。
+
+C++17の`variant`型（`<variant>`内にあります）は、それを自動的に行ってくれます:
+
+    variant<int, double> v;
+    v = 123;        // v は intを保持
+    int x = get<int>(v);
+    v = 123.456;    // v は doubleを保持
+    w = get<double>(v);
+
+##### Enforcement
+
+???
+
+### <a name="Ru-anonymous"></a>C.182: タグ付きunionを実装するために 匿名の`union`を使いましょう (Use anonymous `union`s to implement tagged unions)
+
+<!--
 ##### Reason
 
 A well-designed tagged union is type safe.
@@ -15594,9 +16595,109 @@ Saving programmers from having to write such code is one reason for including `v
 ##### Enforcement
 
 ???
+-->
+##### 理由
 
-### <a name="Ru-pun"></a>C.183: Don't use a `union` for type punning
+うまくデザインされたタグ付きunionは型安全です。
+`匿名の`unionは (タグ, union)のペアによってクラスの定義を簡略化します。
 
+##### 例
+
+この例はほとんどを TC++PL4 pp216-218 から借用しています。
+あなたはそこで説明を見ることができます。
+
+このコードはやや複雑です。
+ユーザー定義の代入の扱いやデストラクタはトリッキーです。
+プログラマーがそのようなコードを書かなくて済むようにすることが、`variant`を標準規格に含める理由の一つです。
+
+    class Value { // unionによって2つの別の表現をもつ
+    private:
+        enum class Tag { number, text };
+        Tag type; // 判別式
+
+        union { // 表現(ノート: 匿名のunion)
+            int i;
+            string s; // string はデフォルトのコンストラクタ, コピー操作, デストラクタを持つ
+        };
+    public:
+        struct Bad_entry { }; // 例外に用いる
+
+        ~Value();
+        Value& operator=(const Value&);   // stringの variantのために必要
+        Value(const Value&);
+        // ...
+        int number() const;
+        string text() const;
+
+        void set_number(int n);
+        void set_text(const string&);
+        // ...
+    };
+
+    int Value::number() const
+    {
+        if (type != Tag::number) throw Bad_entry{};
+        return i;
+    }
+
+    string Value::text() const
+    {
+        if (type != Tag::text) throw Bad_entry{};
+        return s;
+    }
+
+    void Value::set_number(int n)
+    {
+        if (type == Tag::text) {
+            s.~string();      // 明示的に stringをデストラクト
+            type = Tag::number;
+        }
+        i = n;
+    }
+
+    void Value::set_text(const string& ss)
+    {
+        if (type == Tag::text)
+            s = ss;
+        else {
+            new(&s) string{ss};   // placement new: 明示的に文字列をコンストラクト
+            type = Tag::text;
+        }
+    }
+
+    Value& Value::operator=(const Value& e)   // stringの variantのために必要
+    {
+        if (type == Tag::text && e.type == Tag::text) {
+            s = e.s;    // 通常の文字列割り当て
+            return *this;
+        }
+
+        if (type == Tag::text) s.~string(); // 明示的にデストラクト
+
+        switch (e.type) {
+        case Tag::number:
+            i = e.i;
+            break;
+        case Tag::text:
+            new(&s) string(e.s);   // placement new: 明示的にコンストラクト
+        }
+
+        type = e.type;
+        return *this;
+    }
+
+    Value::~Value()
+    {
+        if (type == Tag::text) s.~string(); // 明示的にデストラクト
+    }
+
+##### Enforcement
+
+???
+
+### <a name="Ru-pun"></a>C.183: 型パンニングのために `union`を使わないようにしましょう (Don't use a `union` for type punning)
+
+<!--
 ##### Reason
 
 It is undefined behavior to read a `union` member with a different type from the one with which it was written.
@@ -15640,15 +16741,74 @@ C++17 introduced a distinct type `std::byte` to facilitate operations on raw obj
 ##### Enforcement
 
 ???
+-->
+##### 理由
+
+書き込まれた*union*のメンバの型と異なるメンバを読みだすことは未定義動作です。
+こうした型パンニングは目に見えないか、あるいは少なくとも名前付きのキャストを使うよりも見つけにくいです。
+`union`を使った型パンニングはエラーの元です。
+
+##### ダメな例
+
+    union Pun {
+        int x;
+        unsigned char c[sizeof(int)];
+    };
+
+`Pun`のアイディアは `int`の文字表現を見ることができるようにすることです。
+
+    void bad(Pun& u)
+    {
+        u.x = 'x';
+        cout << u.c[0] << '\n';     // 未定義動作
+    }
+
+もし `int`のバイト列を見たいのなら, (名前付き)キャストを用いましょう:
+
+    void if_you_must_pun(int& x)
+    {
+        auto p = reinterpret_cast<std::byte*>(&x);
+        cout << p[0] << '\n';     // OK; ベター
+        // ...
+    }
+
+オブジェクトが宣言された型から `char*`や`unsigned char*`、`std::byte*`への `reinterpret_cast`の結果にアクセスすることは定義された動作です。 (`reinterpret_cast`を推奨されませんが、少なくとも何らかの厄介なことが起こっていることが見て取れます。)
+
+##### ノート
+
+不幸なことに、 `union`は型パンニングのためによく使われています。
+「時々、期待通りに動作する」という主張は、決定的な論拠とはみなされません。
+
+C++17では、生のオブジェクト表現に対する操作を容易にするために、`std::byte`という独自の型が導入されました。これらの操作には、`unsigned char`や`char`の代わりに、この型を使用してください。
+
+##### Enforcement
+
+???
 
 
 
-# <a name="S-enum"></a>Enum: Enumerations
+# <a name="S-enum"></a>Enum: 列挙型 (Enumerations)
 
+<!--
 Enumerations are used to define sets of integer values and for defining types for such sets of values.
 There are two kinds of enumerations, "plain" `enum`s and `class enum`s.
 
 Enumeration rule summary:
+
+* [Enum.1: Prefer enumerations over macros](#Renum-macro)
+* [Enum.2: Use enumerations to represent sets of related named constants](#Renum-set)
+* [Enum.3: Prefer `enum class`es over "plain" `enum`s](#Renum-class)
+* [Enum.4: Define operations on enumerations for safe and simple use](#Renum-oper)
+* [Enum.5: Don't use `ALL_CAPS` for enumerators](#Renum-caps)
+* [Enum.6: Avoid unnamed enumerations](#Renum-unnamed)
+* [Enum.7: Specify the underlying type of an enumeration only when necessary](#Renum-underlying)
+* [Enum.8: Specify enumerator values only when necessary](#Renum-value)
+-->
+
+列挙型は、整数値の集合を定義するため、およびそのような値の集合の型を定義するために使用されます。
+「単純な」`enum`と、 `class enum`の 2つの列挙型があります。
+
+列挙型のルール一覧:
 
 * [Enum.1: Prefer enumerations over macros](#Renum-macro)
 * [Enum.2: Use enumerations to represent sets of related named constants](#Renum-set)
